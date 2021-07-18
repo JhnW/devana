@@ -1,0 +1,10 @@
+Changelog
+=========
+
+
+Future release
+--------------
+- Genesis. [JohanW]
+- Initial commit. [JhnW]
+
+

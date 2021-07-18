@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Roadmap &mdash; devana 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://jhnw.github.io/devana/roadmap.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing guide" href="contributing.html" />
+    <link rel="prev" title="devana.utility" href="api/devana.utility.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> devana
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_start.html">How to start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-generator">Code generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility">Utility</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintenance.html">Maintenance</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">devana</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Roadmap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="roadmap">
+<h1>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h1>
+<p>Devana is still under development. Two main functional modules are planned: a parser and a code generator.
+For now, only parser is mostly done. Many additional functionalities, not assigned to these modules, are also missing.</p>
+<div class="section" id="parser">
+<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+<p>The main purpose of this part is to ensure correct translation of the C++17 headers code to python objects
+representing types and declarations. Standard preprocessor is not supported: code is parsed after preprocessor
+transformation.</p>
+<p>If some parser functionality (in the context of C++ and headers) does not work in the current version of the
+project and is not included in the list of future functionalities, then most likely it should be treated as a bug.</p>
+<p>In addition to the properties listed below, the most important thing at the moment is to prepare tests for unsupported
+language features to ensure that valid exceptions are thrown.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Parsing types and types traits</strong></dt><dd><ul>
+<li><p>Functions pointers: <em>medium priority</em></p></li>
+<li><p>Array: <em>medium priority</em></p></li>
+<li><p>Nested pointers: <em>medium priority</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Other code</strong></dt><dd><ul>
+<li><p>Using directive: <em>medium priority</em></p></li>
+<li><p>Auto keyword: <em>extreme low priority</em></p></li>
+<li><p>Decltype: <em>extreme low priority</em></p></li>
+<li><p>Function declaration as trailing-return-type: <em>extreme low priority</em></p></li>
+<li><p>Noexcept and throw function declaration: <em>medium priority</em></p></li>
+<li><p>Final class attribute: <em>extreme low priority</em></p></li>
+<li><p>C++ standard attributes: <em>medium priority</em></p></li>
+<li><p>GCC attributes: <em>medium priority</em></p></li>
+<li><p>Except destructor: <em>extreme low priority</em></p></li>
+<li><p>Comment in code: <em>low priority</em></p></li>
+<li><p>Headers guard: <em>medium priority</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Other</strong></dt><dd><ul>
+<li><p>Includes list as an alternative to relative paths: <em>low priority</em></p></li>
+<li><p>Prevent re-parsing unchanged files: <em>low priority</em></p></li>
+<li><p>Better exceptions: <em>medium priority</em></p></li>
+<li><p>Reducing memory usage: <em>medium priority</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="code-generator">
+<h2>Code generator<a class="headerlink" href="#code-generator" title="Permalink to this headline">¶</a></h2>
+<p>Currently, this part of the project is not yet operational in any aspect. The main goal is to be able to edit and
+represent C ++ headers using Python code representations and to make it easy to generate implementations
+(as text based). Code generation is now the main focus of the project.</p>
+<p>Each element present in the parser module should be available for editing and creation for generation purposes.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Code generator</strong></dt><dd><ul>
+<li><p>Allow fully modifiable and create Devana code representation: <em>high priority</em></p></li>
+<li><p>Printing code representation to C++ sources files: <em>high priority</em></p></li>
+<li><p>High level code generation rules as framework: <em>low priority</em></p></li>
+<li><p>Low level code generation rules as  in code directives: <em>medium priority</em></p></li>
+<li><p>Context aware preprocessor: <em>high priority</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="utility">
+<h2>Utility<a class="headerlink" href="#utility" title="Permalink to this headline">¶</a></h2>
+<p>Devana is young project, a wide range of minor elements needs to be refined.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Utility</strong></dt><dd><ul>
+<li><p>Speed up parsing code: <em>low priority</em></p></li>
+<li><p>More examples: <em>low priority</em></p></li>
+<li><p>Build-in preprocessor: <em>low priority</em></p></li>
+<li><p>Serialize code representation: <em>low priority</em></p></li>
+<li><p>Better documentation: <em>medium priority</em></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api/devana.utility.html" class="btn btn-neutral float-left" title="devana.utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, JhnW.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

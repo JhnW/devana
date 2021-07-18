@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Coverage report</title>
+    <link rel="icon" sizes="32x32" href="favicon_32.png">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.ba-throttle-debounce.min.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.index_ready);
+    </script>
+</head>
+<body class="indexfile">
+<div id="header">
+    <div class="content">
+        <h1>Coverage report:
+            <span class="pc_cov">86%</span>
+        </h1>
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+        <form id="filter_container">
+            <input id="filter" type="text" value="" placeholder="filter..." />
+        </form>
+    </div>
+</div>
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">n</span>
+        <span class="key">s</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        <span class="key">c</span> &nbsp; change column sorting
+    </p>
+    </div>
+</div>
+<div id="index">
+    <table class="index">
+        <thead>
+            <tr class="tablehead" title="Click to sort">
+                <th class="name left headerSortDown shortkey_n">Module</th>
+                <th class="shortkey_s">statements</th>
+                <th class="shortkey_m">missing</th>
+                <th class="shortkey_x">excluded</th>
+                <th class="right shortkey_c">coverage</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="total">
+                <td class="name left">Total</td>
+                <td>2609</td>
+                <td>368</td>
+                <td>0</td>
+                <td class="right" data-ratio="2241 2609">86%</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr class="file">
+                <td class="name left"><a href="src_devana___init___py.html">src/devana/__init__.py</a></td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="2 2">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana__version_py.html">src/devana/_version.py</a></td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="5 5">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_code_generation___init___py.html">src/devana/code_generation/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_configuration_py.html">src/devana/configuration.py</a></td>
+                <td>11</td>
+                <td>11</td>
+                <td>0</td>
+                <td class="right" data-ratio="0 11">0%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction___init___py.html">src/devana/syntax_abstraction/__init__.py</a></td>
+                <td>11</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="11 11">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_classinfo_py.html">src/devana/syntax_abstraction/classinfo.py</a></td>
+                <td>578</td>
+                <td>69</td>
+                <td>0</td>
+                <td class="right" data-ratio="509 578">88%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_codepiece_py.html">src/devana/syntax_abstraction/codepiece.py</a></td>
+                <td>50</td>
+                <td>7</td>
+                <td>0</td>
+                <td class="right" data-ratio="43 50">86%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_enuminfo_py.html">src/devana/syntax_abstraction/enuminfo.py</a></td>
+                <td>181</td>
+                <td>38</td>
+                <td>0</td>
+                <td class="right" data-ratio="143 181">79%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_functioninfo_py.html">src/devana/syntax_abstraction/functioninfo.py</a></td>
+                <td>294</td>
+                <td>39</td>
+                <td>0</td>
+                <td class="right" data-ratio="255 294">87%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_namespaceinfo_py.html">src/devana/syntax_abstraction/namespaceinfo.py</a></td>
+                <td>55</td>
+                <td>6</td>
+                <td>0</td>
+                <td class="right" data-ratio="49 55">89%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_organizers___init___py.html">src/devana/syntax_abstraction/organizers/__init__.py</a></td>
+                <td>4</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="4 4">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_codecontainer_py.html">src/devana/syntax_abstraction/organizers/codecontainer.py</a></td>
+                <td>70</td>
+                <td>27</td>
+                <td>0</td>
+                <td class="right" data-ratio="43 70">61%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_lexicon_py.html">src/devana/syntax_abstraction/organizers/lexicon.py</a></td>
+                <td>230</td>
+                <td>32</td>
+                <td>0</td>
+                <td class="right" data-ratio="198 230">86%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_sourcefile_py.html">src/devana/syntax_abstraction/organizers/sourcefile.py</a></td>
+                <td>183</td>
+                <td>29</td>
+                <td>0</td>
+                <td class="right" data-ratio="154 183">84%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_sourcemodule_py.html">src/devana/syntax_abstraction/organizers/sourcemodule.py</a></td>
+                <td>69</td>
+                <td>3</td>
+                <td>0</td>
+                <td class="right" data-ratio="66 69">96%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_templateinfo_py.html">src/devana/syntax_abstraction/templateinfo.py</a></td>
+                <td>288</td>
+                <td>47</td>
+                <td>0</td>
+                <td class="right" data-ratio="241 288">84%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_typedefinfo_py.html">src/devana/syntax_abstraction/typedefinfo.py</a></td>
+                <td>52</td>
+                <td>7</td>
+                <td>0</td>
+                <td class="right" data-ratio="45 52">87%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_typeexpression_py.html">src/devana/syntax_abstraction/typeexpression.py</a></td>
+                <td>302</td>
+                <td>24</td>
+                <td>0</td>
+                <td class="right" data-ratio="278 302">92%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_unioninfo_py.html">src/devana/syntax_abstraction/unioninfo.py</a></td>
+                <td>71</td>
+                <td>13</td>
+                <td>0</td>
+                <td class="right" data-ratio="58 71">82%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_usingnamespace_py.html">src/devana/syntax_abstraction/usingnamespace.py</a></td>
+                <td>63</td>
+                <td>8</td>
+                <td>0</td>
+                <td class="right" data-ratio="55 63">87%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_syntax_abstraction_variable_py.html">src/devana/syntax_abstraction/variable.py</a></td>
+                <td>70</td>
+                <td>7</td>
+                <td>0</td>
+                <td class="right" data-ratio="63 70">90%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_utility___init___py.html">src/devana/utility/__init__.py</a></td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="2 2">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_utility_errors_py.html">src/devana/utility/errors.py</a></td>
+                <td>4</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="4 4">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="src_devana_utility_lazy_py.html">src/devana/utility/lazy.py</a></td>
+                <td>14</td>
+                <td>1</td>
+                <td>0</td>
+                <td class="right" data-ratio="13 14">93%</td>
+            </tr>
+        </tbody>
+    </table>
+    <p id="no_rows">
+        No items found using the specified filter.
+    </p>
+</div>
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
+            created at 2021-07-18 20:14 +0200
+        </p>
+    </div>
+</div>
+</body>
+</html>

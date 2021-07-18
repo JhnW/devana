@@ -28,6 +28,8 @@ share/python-wheels/
 .egg-info
 .idea
 MANIFEST
+docs_src/.doctrees/
+docs/.buildinfo
 
 
 # PyInstaller
@@ -53,6 +55,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+doc_src/changelog_list.rst
 
 # Translations
 *.mo

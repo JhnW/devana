@@ -1,6 +1,9 @@
 #!/bin/bash/python3
 import subprocess
+from subprocess import PIPE
 import argparse
+import time
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--no_test_coverage', action='store_true', required=False)
@@ -18,7 +21,7 @@ if not args.no_test_coverage:
     result.check_returncode()
     if verbose:
         print(result.stdout)
-    result = subprocess.run('coverage html -d doc/test_coverage', shell=True)
+    result = subprocess.run('coverage html -d docs/test_coverage', shell=True)
     result.check_returncode()
     if verbose:
         print(result.stdout)
@@ -34,15 +37,15 @@ if not args.no_api:
 if not args.no_changelog:
     print("Generate changelog")
     print("-----------------")
-    result = subprocess.run('gitchangelog', shell=True)
+    result = subprocess.run('gitchangelog', stdout=PIPE, shell=True)
     result.check_returncode()
-    f = open("./doc/changelog_list.rst", "wt")
-    f.write(str(result.stdout))
-    f.close()
+    changelog_path = "./doc_src/changelog_list.rst"
+    with open(changelog_path, "wt") as f:
+        f.write(result.stdout.decode("utf-8"))
 
 print("Render documentation")
 print("-----------------")
-result = subprocess.run('sphinx-build doc ./doc -E', shell=True)
+result = subprocess.run('sphinx-build doc_src ./docs -E', shell=True)
 result.check_returncode()
 if verbose:
     print(result.stdout)
