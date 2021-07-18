@@ -12,7 +12,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/core_types.hpp", args=["-xc++", "-target x86_64-pc-linux-gnu"]).cursor
+        self.cursor = index.parse(sys.path[0] + r"/source_files/core_types.hpp", args=["-stdlib=libc++"]).cursor # todo args=["-stdlib=libc++"]
 
     def test_basic_types(self):
         cases = (
