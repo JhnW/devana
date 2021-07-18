@@ -1,4 +1,4 @@
-#ifndef __OSX__
+#ifndef __APPLE__
 #include <cstdint>
 #else
 #include <tr1/cstdint>
