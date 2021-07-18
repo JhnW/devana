@@ -1,4 +1,8 @@
+#ifndef __OSX__
 #include <cstdint>
+#else
+#include <tr1/cstdint>
+#endif
 
 typedef char typechar;
 typedef char* typemodchar;
