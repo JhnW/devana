@@ -1,7 +1,7 @@
 Graph of internal dependencies
 ==================================================
 
-Please find demo code in our `GitHub <https://github.com/JhnW/devana/examples/includes_graph>`_.
+Please find demo code in our `GitHub <devana/tree/main/examples/includes_graph>`_.
 
 This demo program will download and unpack `dlib <http://dlib.net/>`_. This step is optional and can be controlled
 by programs argument. Then, the header files are parsed. On this basis, a dependency graph is generated.
