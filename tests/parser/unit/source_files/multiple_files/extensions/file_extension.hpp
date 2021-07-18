@@ -1,0 +1,4 @@
+class A
+{
+    int *data;
+};
