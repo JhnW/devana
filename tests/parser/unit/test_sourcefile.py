@@ -4,6 +4,7 @@ import clang
 import sys
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, SourceFileType
 from devana.syntax_abstraction.classinfo import *
+from pathlib import Path
 
 
 class TestSourceFile(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestSourceFile(unittest.TestCase):
             file = SourceFile(cursor)
             self.assertEqual(file.name, "file_1.hpp")
             self.assertEqual(file.parent, None)
-            self.assertEqual(str(file.path), sys.path[0] + r"/source_files/multiple_files/file_1.hpp")
+            self.assertEqual(str(file.path.as_posix()), str(Path(sys.path[0] + r"/source_files/multiple_files/file_1.hpp").as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
             self.assertEqual(file.text_source.text, """class A
@@ -31,7 +32,8 @@ class TestSourceFile(unittest.TestCase):
             file = SourceFile(sys.path[0] + r"/source_files/multiple_files/file_1.hpp")
             self.assertEqual(file.name, "file_1.hpp")
             self.assertEqual(file.parent, None)
-            self.assertEqual(str(file.path), sys.path[0] + r"/source_files/multiple_files/file_1.hpp")
+            self.assertEqual(str(file.path.as_posix()),
+                             str(Path(sys.path[0] + r"/source_files/multiple_files/file_1.hpp").as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
             self.assertEqual(file.text_source.text, """class A
@@ -59,7 +61,7 @@ class TestSourceFile(unittest.TestCase):
                 file = SourceFile(base_path+ex[0])
                 self.assertEqual(file.name, "file_extension."+ex[0])
                 self.assertEqual(file.parent, None)
-                self.assertEqual(str(file.path), base_path+ex[0])
+                self.assertEqual(str(file.path.as_posix()), str(Path(base_path+ex[0]).as_posix()))
                 self.assertEqual(file.namespace, None)
                 self.assertEqual(file.type, ex[1])
                 self.assertEqual(file.extension, ex[0])
@@ -88,4 +90,3 @@ class TestSourceFile(unittest.TestCase):
 {
     int *data;
 };""")
-
