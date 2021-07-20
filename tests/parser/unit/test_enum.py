@@ -11,10 +11,8 @@ class TestEnum(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/enum.hpp", args=["-std=c++17"]).cursor
-# -std=c++17
-    # args=["-xc++"])
-    #args=["-std=c++17"]
+        self.cursor = index.parse(sys.path[0] + r"/source_files/enum.hpp").cursor
+
     def test_enum_value(self):
         expected_values = (
             ("VALUE_TEST_1", 0, True),
