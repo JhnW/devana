@@ -23,7 +23,7 @@ to raw string field "body". It is planned to introduce more control over this ty
 (almost full coverage of development plans). Please check [roadmap](http://jhnw.github.io/devana/roadmap.html).
 
 ## Installation
-Devana is published on [PyPI](https://pypi.org/project/devana/) and can be installed from there:\
+Devana is published on [PyPI](https://pypi.org/project/devana/) and can be installed from there:
 >pip install -U devana
 
 If you wish to install Devana for development purposes, refer to the contributors guide.
