@@ -90,7 +90,8 @@ class TestFunctionsSimple(unittest.TestCase):
         self.assertEqual(result.template, None)
         self.assertTrue(result.is_definition)
         self.assertFalse(result.is_declaration)
-        self.assertEqual(result.body,
+        # to compare platform independent
+        self.assertEqual(result.body.replace("\r\n", "\n"),
 """{
     int a = 6*8;
     int b = 2*a;

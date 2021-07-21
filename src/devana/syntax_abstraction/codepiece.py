@@ -47,14 +47,13 @@ class CodePiece:
     @property
     def text(self) -> str:
         """Raw text of code, from begin to end."""
-
         try:
             # standard file
-            with open(self.file, "r") as f:
+            with open(self.file, "rb") as f:
                 begin = self._cursor.extent.start.offset
                 end = self._cursor.extent.end.offset
                 f.seek(begin)
-                return self._remove_base_indent(f.read(end - begin))
+                return self._remove_base_indent(f.read(end - begin).decode())
         except IOError:
             # clang in memory file (special dragon case) - do not look
             return self._cursor.spelling
