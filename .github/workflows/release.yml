@@ -1,0 +1,68 @@
+name: release
+
+on:
+  create:
+     tags:        
+       - v*
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9]
+        os-environment: [ubuntu-20.04, windows-2019, macos-10.15]
+    runs-on: ${{ matrix.os-environment }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
+    - name: run tets
+      run: |
+        python -m tox -e py
+  release:
+    needs: tests 
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: [3.8]
+        os-environment: [ubuntu-20.04]
+    runs-on: ${{ matrix.os-environment }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
+    - name: Build package
+      run: |
+        python -m build
+    - name: Upload package
+      shell: bash
+      env:
+        UPLOAD_PASS: ${{ package_upload.PIP_UPLOAD_DEVANA }}
+      run: |
+        python -m twine upload dist/*  -u __token__ -c $UPLOAD_PASS
+    - name: Build documentation
+      shell: bash
+      run: |
+        rmdir ./docs
+        python build_doc.py
+    - name: Upload documentation
+      shell: bash
+      run: |
+        git config --global user.name 'JhnW'
+        git config --global user.email 'jhnw@users.noreply.github.com'
+        git add docs/.
+        git checkout main
+        git commit -am "chg: doc: Automated doc generated."
+        git push origin main
