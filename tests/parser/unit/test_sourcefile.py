@@ -20,7 +20,7 @@ class TestSourceFile(unittest.TestCase):
             self.assertEqual(str(file.path.as_posix()), str(Path(sys.path[0] + r"/source_files/multiple_files/file_1.hpp").as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
-            self.assertEqual(file.text_source.text, """class A
+            self.assertEqual(file.text_source.text.replace("\r\n", "\n"), """class A
 {
     int *data;
 };""")
@@ -36,7 +36,7 @@ class TestSourceFile(unittest.TestCase):
                              str(Path(sys.path[0] + r"/source_files/multiple_files/file_1.hpp").as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
-            self.assertEqual(file.text_source.text, """class A
+            self.assertEqual(file.text_source.text.replace("\r\n", "\n"), """class A
 {
     int *data;
 };""")
