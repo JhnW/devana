@@ -54,7 +54,7 @@ jobs:
     - name: Build documentation
       shell: bash
       run: |
-        rmdir ./docs
+        rm -d -r docs
         python build_doc.py
     - name: Upload documentation
       shell: bash
