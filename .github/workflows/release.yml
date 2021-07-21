@@ -54,6 +54,7 @@ jobs:
     - name: Build documentation
       shell: bash
       run: |
+        python build_local.py
         rm -d -r docs
         python build_doc.py
     - name: Upload documentation
