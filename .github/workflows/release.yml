@@ -49,7 +49,7 @@ jobs:
     - name: Upload package
       shell: bash
       env:
-        UPLOAD_PASS: ${{ package_upload.PIP_UPLOAD_DEVANA }}
+        UPLOAD_PASS: ${{ secrets.PIP_UPLOAD_DEVANA }}
       run: |
         python -m twine upload dist/*  -u __token__ -c $UPLOAD_PASS
     - name: Build documentation
