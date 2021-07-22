@@ -12,6 +12,7 @@ Devana
 ![PyPI](https://img.shields.io/pypi/v/devana)
 ![GitHub issues](https://img.shields.io/github/issues/jhnw/devana)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fjhnw.github.io%2Fdevana%2F)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/devana)
 
 Devana is a python tool that make it easy to parsing, format, transform and generate C++ (or C) code. 
 This tool uses libclang to parse the code. Fundamental problems, bugs and missing features of libclang are fixed in 

@@ -129,7 +129,7 @@ class SourceFile(CodeContainer):
             else:
                 import clang
                 index = clang.cindex.Index.create()
-                cursor = index.parse(source, args=["-xc++"]).cursor
+                cursor = index.parse(source, args=["-xc++", "-std=c++17"]).cursor
         super().__init__(cursor, parent)
         self._source = source
         self._cursor = cursor

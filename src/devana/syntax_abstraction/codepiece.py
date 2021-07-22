@@ -57,7 +57,6 @@ class CodePiece:
         except IOError:
             # clang in memory file (special dragon case) - do not look
             return self._cursor.spelling
-            pass
 
     @staticmethod
     def _remove_base_indent(text: Optional[str]) -> Optional[str]:
