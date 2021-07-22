@@ -183,7 +183,7 @@
     <p id="t129" class="pln"><span class="n"><a href="#t129">129</a></span><span class="t">            <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t130" class="run"><span class="n"><a href="#t130">130</a></span><span class="t">                <span class="key">import</span> <span class="nam">clang</span>&nbsp;</span><span class="r"></span></p>
     <p id="t131" class="run"><span class="n"><a href="#t131">131</a></span><span class="t">                <span class="nam">index</span> <span class="op">=</span> <span class="nam">clang</span><span class="op">.</span><span class="nam">cindex</span><span class="op">.</span><span class="nam">Index</span><span class="op">.</span><span class="nam">create</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t132" class="run"><span class="n"><a href="#t132">132</a></span><span class="t">                <span class="nam">cursor</span> <span class="op">=</span> <span class="nam">index</span><span class="op">.</span><span class="nam">parse</span><span class="op">(</span><span class="nam">source</span><span class="op">,</span> <span class="nam">args</span><span class="op">=</span><span class="op">[</span><span class="str">"-xc++"</span><span class="op">]</span><span class="op">)</span><span class="op">.</span><span class="nam">cursor</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t132" class="run"><span class="n"><a href="#t132">132</a></span><span class="t">                <span class="nam">cursor</span> <span class="op">=</span> <span class="nam">index</span><span class="op">.</span><span class="nam">parse</span><span class="op">(</span><span class="nam">source</span><span class="op">,</span> <span class="nam">args</span><span class="op">=</span><span class="op">[</span><span class="str">"-xc++"</span><span class="op">,</span> <span class="str">"-std=c++17"</span><span class="op">]</span><span class="op">)</span><span class="op">.</span><span class="nam">cursor</span>&nbsp;</span><span class="r"></span></p>
     <p id="t133" class="run"><span class="n"><a href="#t133">133</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="nam">cursor</span><span class="op">,</span> <span class="nam">parent</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t134" class="run"><span class="n"><a href="#t134">134</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_source</span> <span class="op">=</span> <span class="nam">source</span>&nbsp;</span><span class="r"></span></p>
     <p id="t135" class="run"><span class="n"><a href="#t135">135</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_cursor</span> <span class="op">=</span> <span class="nam">cursor</span>&nbsp;</span><span class="r"></span></p>
@@ -298,7 +298,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-07-18 19:34 +0200
+            created at 2021-07-22 20:38 +0000
         </p>
     </div>
 </div>
