@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
@@ -13,7 +13,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/simple_functions.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp").cursor
 
     def test_function_procedure(self):
         node = find_by_name(self.cursor, "procedure_forward")
@@ -196,7 +196,7 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/template_functions.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_functions.hpp").cursor
 
     def test_common_function_template(self):
         node = find_by_name(self.cursor, "simple_function_typename")
@@ -322,7 +322,7 @@ class TestFunctionsTemplate(unittest.TestCase):
 class TestFunctionsOverload(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/overload.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/overload.hpp").cursor
         self.file = SourceFile(self.cursor)
 
     def test_simple_overload(self):

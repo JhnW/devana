@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
@@ -13,7 +13,7 @@ class TestDeclarationDefinition(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/definition_declaration.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/definition_declaration.hpp").cursor
         self.file = SourceFile(self.cursor)
 
     def test_declaration_only(self):

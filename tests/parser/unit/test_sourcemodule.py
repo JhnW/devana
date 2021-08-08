@@ -1,13 +1,12 @@
 import unittest
-import sys
+import os
 from devana.syntax_abstraction.organizers.sourcemodule import SourceModule, ModuleFilter
 
 
 class TestSourceModule(unittest.TestCase):
 
     def setUp(self):
-        pass
-        self.module_path = sys.path[0] + r"/source_files/multiple_files/module"
+        self.module_path = os.path.dirname(__file__) + r"/source_files/multiple_files/module"
 
     def test_simple_creation(self):
         module = SourceModule("Test_1", self.module_path)

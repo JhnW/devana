@@ -1,6 +1,7 @@
 from clang import cindex
 from typing import List, Optional, Union
 from enum import Enum, auto, IntFlag
+from copy import copy
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -107,6 +108,76 @@ class TypeModification(IntFlag):
     RVALUE_REF = auto()
     RESTRICT = auto()
     CONSTEXPR = auto()
+
+    def __init__(self, _):
+        super().__init__()
+        self._pointer_order = None
+
+    def __call__(self, pointer_order: int):
+        result = copy(self)
+        result._pointer_order = pointer_order
+        return result
+
+    @property
+    def pointer_order(self) -> Optional[int]:
+        if not hasattr(self, "_pointer_order"):
+            self._pointer_order = None
+        if self._pointer_order is None:
+            if self.value & TypeModification.POINTER.value:
+                self._pointer_order = 1
+        return self._pointer_order
+
+    @pointer_order.setter
+    def pointer_order(self, value):
+        self._pointer_order = value
+
+    def __and__(self, other):
+        result = super().__and__(other)
+        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+            return result
+        if self.pointer_order is not None and other.pointer_order is not None:
+            if self.pointer_order != other.pointer_order:
+                result.value = 0
+        return result
+
+    def __or__(self, other):
+        result = super().__or__(other)
+        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+            return result
+        if self.pointer_order is not None and other.pointer_order is not None:
+            if self.pointer_order != other.pointer_order:
+                result.value = 0
+        if self.pointer_order is not None:
+            result.pointer_order = self.pointer_order
+        elif other.pointer_order is not None:
+            result.pointer_order = other.pointer_order
+        return result
+
+    def __xor__(self, other):
+        result = super().__xor__(other)
+        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+            return result
+        if self.pointer_order is not None and other.pointer_order is not None:
+            if self.pointer_order != other.pointer_order:
+                result.value = 0
+        if self.pointer_order is not None:
+            result.pointer_order = self.pointer_order
+        elif other.pointer_order is not None:
+            result.pointer_order = other.pointer_order
+        return result
+
+    __ror__ = __or__
+    __rand__ = __and__
+    __rxor__ = __xor__
+
+    def __eq__(self, other):
+        result = super().__eq__(other)
+        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+            return result
+        if self.pointer_order is not None and other.pointer_order is not None:
+            if self.pointer_order != other.pointer_order:
+                return False
+        return result
 
     @property
     def is_reference(self) -> bool:
@@ -221,7 +292,8 @@ class TypeExpression:
             name += ">"
 
         if self.modification.is_pointer:
-            name += r"*"
+            for i in range(self.modification.pointer_order):
+                name += r"*"
         elif self.modification.is_reference:
             name += r"&"
         elif self.modification.is_array:
@@ -249,19 +321,25 @@ class TypeExpression:
         if type_c.kind == cindex.TypeKind.LVALUEREFERENCE:
             tmp_modification |= TypeModification.REFERENCE
         if type_c.kind == cindex.TypeKind.POINTER:
-            tmp_modification |= TypeModification.POINTER
-            if type_c.get_pointee().kind == cindex.TypeKind.POINTER \
-                    or type_c.get_pointee().kind == cindex.TypeKind.LVALUEREFERENCE \
-                    or type_c.get_pointee().kind == cindex.TypeKind.CONSTANTARRAY \
-                    or type_c.get_pointee().kind == cindex.TypeKind.FUNCTIONPROTO \
-                    or type_c.get_pointee().kind == cindex.TypeKind.INCOMPLETEARRAY \
-                    or type_c.get_pointee().kind == cindex.TypeKind.CONSTANTARRAY:
-                raise NotImplementedError("Pointer to other type modification is not allowed yet.")
+            order = 0
+            tmp_type = type_c
+            while True:
+                if tmp_type.kind != cindex.TypeKind.POINTER:
+                    break
+                if tmp_type.is_const_qualified() or tmp_type.is_volatile_qualified():
+                    raise NotImplementedError("Pointer to modified types are not supported (e.g. int * const ptr, but "
+                                              "const int *ptr is valid.")
+                tmp_type = tmp_type.get_pointee()
+                order += 1
+            tmp_modification |= TypeModification.POINTER(order)
         if type_c.kind == cindex.TypeKind.RVALUEREFERENCE:
             tmp_modification |= TypeModification.RVALUE_REF
         type_source = type_c
         if tmp_modification.is_pointer or tmp_modification.is_reference or tmp_modification.is_rvalue_ref:
-            type_source = type_c.get_pointee()
+            if tmp_modification.is_pointer:
+                type_source = TypeExpression.cursor_parse_from_pointer(type_c)
+            else:
+                type_source = type_c.get_pointee()
         if type_source.is_const_qualified():
             if self.text_source is not None and self.text_source.text.find("constexpr ") != -1:
                 tmp_modification |= TypeModification.CONSTEXPR
@@ -302,7 +380,10 @@ class TypeExpression:
         self._template_arguments = []
         type_c = self._base_type_c
         if self.modification.is_pointer or self.modification.is_reference or self.modification.is_rvalue_ref:
-            type_c = type_c.get_pointee()
+            if self.modification.is_pointer:
+                type_c = TypeExpression.cursor_parse_from_pointer(type_c)
+            else:
+                type_c = type_c.get_pointee()
         for i in range(type_c.get_num_template_arguments()):
             el = type_c.get_template_argument_type(i)
             self._template_arguments.append(TypeExpression(el, self))
@@ -330,7 +411,14 @@ class TypeExpression:
         information, so jump to root of typedef declaration may be needed."""
         type_c = self._base_type_c
         if self.modification.is_pointer or self.modification.is_reference or self.modification.is_rvalue_ref:
-            type_c = type_c.get_pointee()
+            if self.modification.is_pointer:
+                type_c = TypeExpression.cursor_parse_from_pointer(type_c)
+            else:
+                type_c = type_c.get_pointee()
+
+        if type_c.kind == cindex.TypeKind.FUNCTIONPROTO:
+            raise NotImplementedError("Function pointers are not supported yet.")
+
         self._details = BasicType.from_cursor(type_c)
 
         # check template
@@ -385,3 +473,11 @@ class TypeExpression:
         if isinstance(other, type(self)):
             return self.modification == other.modification and self.details == other.details
         return False
+
+    @staticmethod
+    def cursor_parse_from_pointer(cursor):
+        result = cursor
+        while True:
+            if result.kind != cindex.TypeKind.POINTER:
+                return result
+            result = result.get_pointee()

@@ -17,7 +17,7 @@ verbose = args.verbose
 if not args.no_test_coverage:
     print("Generate coverage report")
     print("-----------------")
-    result = subprocess.run('coverage run  --source=devana -m unittest discover -v -s tests/parser/unit -q', shell=True)
+    result = subprocess.run('coverage run  --source=devana -m unittest discover -v -s tests -q', shell=True)
     result.check_returncode()
     if verbose:
         print(result.stdout)

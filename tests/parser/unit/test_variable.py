@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
@@ -11,7 +11,7 @@ class TestVariableBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/core_types.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_types.hpp").cursor
 
     def test_basic_types(self):
         cases = (

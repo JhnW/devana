@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 
@@ -10,7 +10,7 @@ class TestUsingNamespace(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/using_namespace.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/using_namespace.hpp").cursor
         self.file = SourceFile(self.cursor)
 
     def test_simple_using(self):

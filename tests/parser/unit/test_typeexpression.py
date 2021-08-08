@@ -1,6 +1,7 @@
 import unittest
 import clang.cindex
 import clang
+import os
 import sys
 from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType, TypeModification
@@ -12,7 +13,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/core_types.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_types.hpp").cursor
 
     def test_basic_types(self):
         cases = (
@@ -45,6 +46,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertEqual(result.modification, TypeModification.NONE)
+                self.assertEqual(result.modification.pointer_order, None)
 
     def test_const_types(self):
         cases = (
@@ -77,6 +79,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertTrue(result.modification.is_const)
+                self.assertEqual(result.modification.pointer_order, None)
 
     def test_ref_types(self):
         cases = (
@@ -109,6 +112,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertTrue(result.modification.is_reference)
+                self.assertEqual(result.modification.pointer_order, None)
 
     def test_pointer_types(self):
         cases = (
@@ -141,6 +145,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertTrue(result.modification.is_pointer)
+                self.assertEqual(result.modification.pointer_order, 1)
 
     def test_static_types(self):
         cases = (
@@ -173,6 +178,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertTrue(result.modification.is_static)
+                self.assertEqual(result.modification.pointer_order, None)
 
     def test_volatile_types(self):
         cases = (
@@ -205,6 +211,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertTrue(result.modification.is_volatile)
+                self.assertEqual(result.modification.pointer_order, None)
 
     def test_mixed_types(self):
         cases = (
@@ -227,6 +234,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_const)
             self.assertTrue(result.modification.is_reference)
+            self.assertEqual(result.modification.pointer_order, None)
 
         c = cases[1]
         with self.subTest(c[0]):
@@ -242,6 +250,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_static)
             self.assertTrue(result.modification.is_pointer)
+            self.assertEqual(result.modification.pointer_order, 1)
 
         c = cases[2]
         with self.subTest(c[0]):
@@ -256,6 +265,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertNotEqual(result.text_source, None)
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_pointer)
+            self.assertEqual(result.modification.pointer_order, 1)
 
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
     def test_td_type_t_types(self):
@@ -283,6 +293,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertNotEqual(result.text_source, None)
                 self.assertEqual(result.parent, None)
                 self.assertEqual(result.modification, TypeModification.NONE)
+                self.assertEqual(result.modification.pointer_order, None)
 
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
     def test_modification_std_type_t_types(self):
@@ -311,6 +322,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_const)
             self.assertTrue(result.modification.is_reference)
+            self.assertEqual(result.modification.pointer_order, None)
 
         with self.subTest("unknown_ptr_int16"):
             node = find_by_name(self.cursor, "unknown_ptr_int16")
@@ -323,6 +335,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertNotEqual(result.text_source, None)
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_pointer)
+            self.assertEqual(result.modification.pointer_order, 1)
 
         with self.subTest("unknown_static_int16"):
             node = find_by_name(self.cursor, "unknown_static_int16")
@@ -335,6 +348,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertNotEqual(result.text_source, None)
             self.assertEqual(result.parent, None)
             self.assertTrue(result.modification.is_static)
+            self.assertEqual(result.modification.pointer_order, None)
 
     def test_custom_typedefs(self):
 
@@ -412,11 +426,57 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertTrue(result.modification.is_pointer)
             self.assertEqual(len(result.namespaces), 0)
 
-    def test_not_allowed_mod_pointer_to_pointer(self):
-        node = find_by_name(self.cursor, "tab")
-        result: TypeExpression = TypeExpression(node)
-        with self.assertRaises(NotImplementedError):
-            print(result.modification)
+    def test_multiple_pointers(self):
+
+        name = "ptr_ptr_value"
+        with self.subTest():
+            node = find_by_name(self.cursor, name)
+            result = TypeExpression(node)
+            self.assertEqual(result.name, "double**")
+            self.assertEqual(result.template_arguments, None)
+            self.assertFalse(result.is_generic)
+            self.assertNotEqual(result.text_source, None)
+            self.assertTrue(result.modification.is_pointer)
+            self.assertEqual(result.modification.pointer_order, 2)
+            self.assertEqual(result.details, BasicType.DOUBLE)
+
+        name = "ptr_ptr_ptr_value"
+        with self.subTest():
+            node = find_by_name(self.cursor, name)
+            result = TypeExpression(node)
+            self.assertEqual(result.name, "char***")
+            self.assertEqual(result.template_arguments, None)
+            self.assertFalse(result.is_generic)
+            self.assertNotEqual(result.text_source, None)
+            self.assertTrue(result.modification.is_pointer)
+            self.assertEqual(result.modification.pointer_order, 3)
+            self.assertEqual(result.details, BasicType.CHAR)
+
+        name = "ptr_ptr_const_value"
+        with self.subTest():
+            node = find_by_name(self.cursor, name)
+            result = TypeExpression(node)
+            self.assertEqual(result.name, "const int**")
+            self.assertEqual(result.template_arguments, None)
+            self.assertFalse(result.is_generic)
+            self.assertNotEqual(result.text_source, None)
+            self.assertTrue(result.modification.is_pointer)
+            self.assertTrue(result.modification.is_const)
+            self.assertEqual(result.modification.pointer_order, 2)
+            self.assertEqual(result.details, BasicType.INT)
+
+        name = "ptr_ptr_ptr_static_value"
+        with self.subTest():
+            node = find_by_name(self.cursor, name)
+            result = TypeExpression(node)
+            self.assertEqual(result.name, "static float***")
+            self.assertEqual(result.template_arguments, None)
+            self.assertFalse(result.is_generic)
+            self.assertNotEqual(result.text_source, None)
+            self.assertTrue(result.modification.is_pointer)
+            self.assertTrue(result.modification.is_static)
+            self.assertEqual(result.modification.pointer_order, 3)
+            self.assertEqual(result.details, BasicType.FLOAT)
 
     def test_not_allowed_mod_array(self):
         node = find_by_name(self.cursor, "array")
@@ -435,6 +495,12 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
     def test_not_allowed_function_pointer(self):
         node = find_by_name(self.cursor, "callback")
+        result: TypeExpression = TypeExpression(node)
+        with self.assertRaises(NotImplementedError):
+            print(result.details)
+
+    def test_not_allowed_pointer_subtype(self):
+        node = find_by_name(self.cursor, "ptr_ptr_const_ptr_value")
         result: TypeExpression = TypeExpression(node)
         with self.assertRaises(NotImplementedError):
             print(result.modification)

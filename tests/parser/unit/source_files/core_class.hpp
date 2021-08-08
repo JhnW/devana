@@ -191,10 +191,9 @@ class FinalClass final
 
 struct ClassNotAllowedElements
 {
-    double **a;
-    double b[23];
-    double *c[4];
-    double d[];
+    double a[23];
+    double *b[4];
+    double c[];
 };
 
 class DefaultFieldsValue

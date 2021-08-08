@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from tests.helpers import find_by_name
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.classinfo import ClassInfo
@@ -11,7 +11,7 @@ class TestUnion(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/union.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/union.hpp").cursor
 
     def test_stand_alone_union(self):
         node = find_by_name(self.cursor, "TestUnion")

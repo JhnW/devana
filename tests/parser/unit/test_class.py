@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from tests.helpers import find_by_name
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.classinfo import *
@@ -13,7 +13,7 @@ class TestClassBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/core_class.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp").cursor
 
     def test_struct_simple_def(self):
         node = find_by_name(self.cursor, "SimpleStructTest")
@@ -270,7 +270,7 @@ class TestClassBasic(unittest.TestCase):
 
     def test_method_modification(self):
         index = clang.cindex.Index.create()
-        cursor = index.parse(sys.path[0] + r"/source_files/core_class.hpp").cursor
+        cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp").cursor
         file = SourceFile(cursor)
         result: ClassInfo = file.content[13]
         self.assertEqual(result.name, "MethodMods")
@@ -310,10 +310,6 @@ class TestClassBasic(unittest.TestCase):
         self.assertEqual(field.name, "c")
         with self.assertRaises(NotImplementedError):
             print(field.type.details)
-        field: FieldInfo = result.content[3]
-        self.assertEqual(field.name, "d")
-        with self.assertRaises(NotImplementedError):
-            print(field.type.details)
 
     def test_default_field_value(self):
         node = find_by_name(self.cursor, "DefaultFieldsValue")
@@ -338,7 +334,7 @@ class TestInheritance(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/core_class.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp").cursor
         self.file = SourceFile(self.cursor)
 
     def test_simple_child(self):
@@ -427,7 +423,7 @@ class TestClassTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/template_class.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_class.hpp").cursor
 
     def test_simple_template_class(self):
         node = find_by_name(self.cursor, "simple_template_struct_1")
@@ -674,12 +670,29 @@ class TestClassTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[2].default_value, None)
         self.assertTrue(result.template.parameters[2].is_variadic)
 
+    def test_multiple_pointer_type_template(self):
+        node = find_by_name(self.cursor, "multiple_pointer_struct")
+        result = ClassInfo(node)
+        self.assertTrue(result.is_struct)
+        self.assertFalse(result.template is None)
+        self.assertEqual(result.name, "multiple_pointer_struct")
+        self.assertEqual(len(result.template.parameters), 1)
+        self.assertEqual(result.template.parameters[0].name, "T")
+        self.assertEqual(len(result.content), 1)
+        content = result.content[0]
+        self.assertEqual(content.access_specifier, AccessSpecifier.PUBLIC)
+        self.assertTrue(content.type.modification.is_pointer)
+        self.assertTrue(content.type.is_generic)
+        self.assertEqual(content.type.modification.pointer_order, 2)
+        x = content.type.details.name
+        self.assertEqual(content.type.details.name, "T")
+
 
 class TestClassTemplatePartial(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/template_class.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_class.hpp").cursor
         self.nodes = []
         for c in self.cursor.get_children():
             if c.spelling == "template_struct" or c.spelling == "multiple_types":
@@ -817,7 +830,7 @@ class TestClassLexicon(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/advanced_class.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_class.hpp").cursor
         self.file = SourceFile(self.cursor)
         self.assertEqual(len(self.file.content), 4)
 

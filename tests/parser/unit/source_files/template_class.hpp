@@ -97,3 +97,9 @@ struct multiple_types<P, T, P*>
 {
     double a;
 }
+
+template<typename T>
+struct multiple_pointer_struct
+{
+    T** a;
+}

@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from tests.helpers import find_by_name, stub_lexicon
@@ -14,7 +14,7 @@ class TestTemplateAdvanced(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/advanced_template.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_template.hpp").cursor
         self.file = SourceFile(self.cursor)
         self.assertEqual(len(self.file.content), 32)
 

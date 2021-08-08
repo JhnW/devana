@@ -137,7 +137,7 @@ const test_namespace::typereal typedef_namespace_typereal;
 static test_namespace::test_namespace_v2::typeint16 typedef_namespace_static_nested;
 depend_typereal* typedef_namespace_depend_typereal_ptr;
 
-char **tab;
+
 float array[20];
 float arrayofarray[4][60];
 void (*callback)(char);
@@ -149,3 +149,9 @@ void arrayGetFunction(int inTab[]);
 char* global_var;
 
 constexpr int constexpr_global_var = 77;
+
+double **ptr_ptr_value;
+char ***ptr_ptr_ptr_value;
+const int **ptr_ptr_const_value;
+static float ***ptr_ptr_ptr_static_value;
+double** const* ptr_ptr_const_ptr_value;

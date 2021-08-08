@@ -1,7 +1,7 @@
 import unittest
 import clang.cindex
 import clang
-import sys
+import os
 from tests.helpers import find_by_name
 from devana.syntax_abstraction.typeexpression import BasicType
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
@@ -15,7 +15,7 @@ class TestNamespaces(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/namespaces.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/namespaces.hpp").cursor
 
     def test_simple_namespace(self):
         node = find_by_name(self.cursor, "SimpleNamespace")
@@ -48,7 +48,7 @@ class TestNamespacesLexicon(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(sys.path[0] + r"/source_files/advanced_namespace.hpp").cursor
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_namespace.hpp").cursor
         self.file = SourceFile(self.cursor)
 
     def test_function_return(self):
