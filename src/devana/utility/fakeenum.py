@@ -1,4 +1,6 @@
 class FakeEnum(type):
+    """Helper metaclass for provide emus with variable values in instance-level (standard enum do it in class-level).
+    You must provide enum_source argument."""
 
     def __new__(mcs, name, bases, args):
         mcs.__enum_source__ = args["enum_source"]

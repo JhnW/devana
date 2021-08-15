@@ -218,6 +218,9 @@ class TypeModification(metaclass=FakeEnum):
         result = TypeModification(~self.value)
         return result
 
+    def __bool__(self):
+        return bool(self.value)
+
     __ror__ = __or__
     __rand__ = __and__
     __rxor__ = __xor__
