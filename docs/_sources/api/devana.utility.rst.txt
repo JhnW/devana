@@ -11,6 +11,14 @@ devana.utility.errors
    :undoc-members:
    :show-inheritance:
 
+devana.utility.fakeenum
+-----------------------
+
+.. automodule:: devana.utility.fakeenum
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.utility.lazy
 -------------------
 

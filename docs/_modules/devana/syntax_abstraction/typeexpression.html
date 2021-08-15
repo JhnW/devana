@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.typeexpression &mdash; devana 0.1.4 documentation</title>
+  <title>devana.syntax_abstraction.typeexpression &mdash; devana 0.1.5 documentation</title>
   
 
   
@@ -167,10 +167,10 @@
 <span></span><span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntFlag</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">lazy_invoke</span><span class="p">,</span> <span class="n">LazyNotInit</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
+<span class="kn">from</span> <span class="nn">devana.utility.fakeenum</span> <span class="kn">import</span> <span class="n">FakeEnum</span>
 
 
 <div class="viewcode-block" id="BasicType"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType">[docs]</a><span class="k">class</span> <span class="nc">BasicType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -262,132 +262,199 @@
         <span class="k">return</span> <span class="n">result</span></div></div>
 
 
-<div class="viewcode-block" id="TypeModification"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification">[docs]</a><span class="k">class</span> <span class="nc">TypeModification</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
-    <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">REFERENCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">POINTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">CONST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">VOLATILE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">TEMPLATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">STATIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">ARRAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">RVALUE_REF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">RESTRICT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
-    <span class="n">CONSTEXPR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<div class="viewcode-block" id="TypeModification"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification">[docs]</a><span class="k">class</span> <span class="nc">TypeModification</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">FakeEnum</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<div class="viewcode-block" id="TypeModification.ModificationKind"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind">[docs]</a>    <span class="k">class</span> <span class="nc">ModificationKind</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+        <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">REFERENCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">POINTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">CONST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">VOLATILE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">TEMPLATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">STATIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">ARRAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">RVALUE_REF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">RESTRICT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">CONSTEXPR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+    <span class="n">enum_source</span> <span class="o">=</span> <span class="n">ModificationKind</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pointer_order</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">pointer_order</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="n">NONE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">NONE</span>
+    <span class="n">REFERENCE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">REFERENCE</span>
+    <span class="n">POINTER</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span>
+    <span class="n">CONST</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONST</span>
+    <span class="n">VOLATILE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">VOLATILE</span>
+    <span class="n">TEMPLATE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">TEMPLATE</span>
+    <span class="n">STATIC</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">STATIC</span>
+    <span class="n">ARRAY</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">ARRAY</span>
+    <span class="n">RVALUE_REF</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">RVALUE_REF</span>
+    <span class="n">RESTRICT</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">RESTRICT</span>
+    <span class="n">CONSTEXPR</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTEXPR</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pointer_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pointer_order</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="n">pointer_order</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pointer_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="n">pointer_order</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">NONE</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pointer_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_pointer_order&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span>
-
-    <span class="nd">@pointer_order</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">pointer_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModificationKind</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
 
     <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__and__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">:</span>
+                            <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
             <span class="k">return</span> <span class="n">result</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">and</span> <span class="n">other</span> <span class="o">==</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">|</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
             <span class="k">return</span> <span class="n">result</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
-        <span class="k">elif</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
-        <span class="k">return</span> <span class="n">result</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">|</span> <span class="n">other</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__xor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__xor__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
             <span class="k">return</span> <span class="n">result</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
-        <span class="k">elif</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">other</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="p">(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
     <span class="fm">__ror__</span> <span class="o">=</span> <span class="fm">__or__</span>
     <span class="fm">__rand__</span> <span class="o">=</span> <span class="fm">__and__</span>
     <span class="fm">__rxor__</span> <span class="o">=</span> <span class="fm">__xor__</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;pointer_order&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">result</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; (Pointer order: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pointer_order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span>
+
+    <span class="nd">@pointer_order</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">pointer_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Pointer order must be greater than zero.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pointer_order</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">REFERENCE</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">REFERENCE</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_pointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_const</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">CONST</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONST</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_template</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">TEMPLATE</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">TEMPLATE</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_static</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">STATIC</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">STATIC</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_array</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">ARRAY</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_rvalue_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">RVALUE_REF</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">RVALUE_REF</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_volatile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">VOLATILE</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">VOLATILE</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">RESTRICT</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">RESTRICT</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_constexpr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">CONSTEXPR</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTEXPR</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_no_modification</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">NONE</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">NONE</span></div>
 
 
 <div class="viewcode-block" id="TypeExpression"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression">[docs]</a><span class="k">class</span> <span class="nc">TypeExpression</span><span class="p">:</span>
