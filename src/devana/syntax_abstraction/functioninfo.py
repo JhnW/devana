@@ -88,7 +88,7 @@ class FunctionInfo:
                 if cursor.kind != cindex.CursorKind.PARM_DECL:
                     raise ParserError("It is not a valid type cursor.")
 
-    def __init__(self, cursor: Optional[cindex.Cursor], parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         self._cursor = cursor
         self._parent = parent
 
