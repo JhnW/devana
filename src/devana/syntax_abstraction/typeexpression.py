@@ -1,10 +1,10 @@
 from clang import cindex
 from typing import List, Optional, Union
 from enum import Enum, auto, IntFlag
-from copy import copy
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.fakeenum import FakeEnum
 
 
 class BasicType(Enum):
@@ -96,132 +96,196 @@ class BasicType(Enum):
         return result
 
 
-class TypeModification(IntFlag):
-    NONE = auto()
-    REFERENCE = auto()
-    POINTER = auto()
-    CONST = auto()
-    VOLATILE = auto()
-    TEMPLATE = auto()
-    STATIC = auto()
-    ARRAY = auto()
-    RVALUE_REF = auto()
-    RESTRICT = auto()
-    CONSTEXPR = auto()
+class TypeModification(metaclass=FakeEnum):
 
-    def __init__(self, _):
-        super().__init__()
+    class ModificationKind(IntFlag):
+        NONE = auto()
+        REFERENCE = auto()
+        POINTER = auto()
+        CONST = auto()
+        VOLATILE = auto()
+        TEMPLATE = auto()
+        STATIC = auto()
+        ARRAY = auto()
+        RVALUE_REF = auto()
+        RESTRICT = auto()
+        CONSTEXPR = auto()
+
+    enum_source = ModificationKind
+
+    def __call__(self, pointer_order):
+        if self.value is TypeModification.ModificationKind.POINTER:
+            return TypeModification(self.value, pointer_order)
+        else:
+            raise NotImplementedError()
+
+    NONE = ModificationKind.NONE
+    REFERENCE = ModificationKind.REFERENCE
+    POINTER = ModificationKind.POINTER
+    CONST = ModificationKind.CONST
+    VOLATILE = ModificationKind.VOLATILE
+    TEMPLATE = ModificationKind.TEMPLATE
+    STATIC = ModificationKind.STATIC
+    ARRAY = ModificationKind.ARRAY
+    RVALUE_REF = ModificationKind.RVALUE_REF
+    RESTRICT = ModificationKind.RESTRICT
+    CONSTEXPR = ModificationKind.CONSTEXPR
+
+    def __init__(self, value: Optional[int] = None, pointer_order: Optional[int] = None):
         self._pointer_order = None
-
-    def __call__(self, pointer_order: int):
-        result = copy(self)
-        result._pointer_order = pointer_order
-        return result
+        if value is not None:
+            self._value = TypeModification.ModificationKind(value)
+            if value & TypeModification.ModificationKind.POINTER:
+                if pointer_order is None:
+                    self._pointer_order = 1
+                else:
+                    self._pointer_order = pointer_order
+        else:
+            self._value = TypeModification.ModificationKind.NONE
 
     @property
-    def pointer_order(self) -> Optional[int]:
-        if not hasattr(self, "_pointer_order"):
-            self._pointer_order = None
-        if self._pointer_order is None:
-            if self.value & TypeModification.POINTER.value:
-                self._pointer_order = 1
-        return self._pointer_order
-
-    @pointer_order.setter
-    def pointer_order(self, value):
-        self._pointer_order = value
+    def value(self) -> ModificationKind:
+        return self._value
 
     def __and__(self, other):
-        result = super().__and__(other)
-        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+        if isinstance(other, type(self)):
+            result = TypeModification(self.value & other.value)
+            if result.is_pointer:
+                if other.pointer_order is not None:
+                    if self.pointer_order is None:
+                        result.pointer_order = other.pointer_order
+                    else:
+                        if self.pointer_order != other.pointer_order:
+                            result.pointer_order = None
+                else:
+                    result.pointer_order = self.pointer_order
             return result
-        if self.pointer_order is not None and other.pointer_order is not None:
-            if self.pointer_order != other.pointer_order:
-                result.value = 0
-        return result
+        elif isinstance(other, TypeModification.ModificationKind):
+            result = TypeModification(self.value & other)
+            if result.is_pointer:
+                if self.is_pointer and other == TypeModification.ModificationKind.POINTER and self.pointer_order > 1:
+                    result.pointer_order = None
+            return result
+        raise NotImplementedError()
 
     def __or__(self, other):
-        result = super().__or__(other)
-        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+        if isinstance(other, type(self)):
+            result = TypeModification(self.value | other.value)
+            if result.is_pointer:
+                if other.pointer_order is not None:
+                    if self.pointer_order is None:
+                        result.pointer_order = other.pointer_order
+                    else:
+                        result.pointer_order = max(self.pointer_order, other.pointer_order)
+                else:
+                    result.pointer_order = self.pointer_order
             return result
-        if self.pointer_order is not None and other.pointer_order is not None:
-            if self.pointer_order != other.pointer_order:
-                result.value = 0
-        if self.pointer_order is not None:
-            result.pointer_order = self.pointer_order
-        elif other.pointer_order is not None:
-            result.pointer_order = other.pointer_order
-        return result
+        elif isinstance(other, TypeModification.ModificationKind):
+            result = TypeModification(self.value | other)
+            if self.is_pointer:
+                result.pointer_order = self.pointer_order
+            return result
+        raise NotImplementedError()
 
     def __xor__(self, other):
-        result = super().__xor__(other)
-        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
+        if isinstance(other, type(self)):
+            result = TypeModification(self.value.__or__(self.value, other.value))
+            if result.is_pointer:
+                if self.is_pointer:
+                    result.pointer_order = self.pointer_order
+                else:
+                    result.pointer_order = other.pointer_order
             return result
-        if self.pointer_order is not None and other.pointer_order is not None:
-            if self.pointer_order != other.pointer_order:
-                result.value = 0
-        if self.pointer_order is not None:
-            result.pointer_order = self.pointer_order
-        elif other.pointer_order is not None:
-            result.pointer_order = other.pointer_order
+        elif isinstance(other, TypeModification.ModificationKind):
+            result = TypeModification(self.value.__or__(self.value, other))
+            if result.is_pointer:
+                if self.is_pointer:
+                    result.pointer_order = self.pointer_order
+            return result
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        if isinstance(other, TypeModification):
+            return self.value == other.value and self.pointer_order == other.pointer_order
+        elif isinstance(other, TypeModification.ModificationKind):
+            if self.pointer_order is not None:
+                if self.pointer_order > 1:
+                    return False
+            return self.value == other.value
+        return False
+
+    def __invert__(self):
+        result = TypeModification(~self.value)
         return result
 
     __ror__ = __or__
     __rand__ = __and__
     __rxor__ = __xor__
 
-    def __eq__(self, other):
-        result = super().__eq__(other)
-        if not hasattr(self, "pointer_order") or not hasattr(other, "pointer_order"):
-            return result
-        if self.pointer_order is not None and other.pointer_order is not None:
-            if self.pointer_order != other.pointer_order:
-                return False
+    def __str__(self):
+        result = f"{str(self.value)}"
+        if self.value & TypeModification.ModificationKind.POINTER:
+            result += f" (Pointer order: {self.pointer_order})"
         return result
 
     @property
+    def pointer_order(self) -> Optional[int]:
+        return self._pointer_order
+
+    @pointer_order.setter
+    def pointer_order(self, value):
+        if not self.value & TypeModification.ModificationKind.POINTER:
+            if value is not None:
+                if value <= 0:
+                    raise ValueError("Pointer order must be greater than zero.")
+                self.value |= TypeModification.ModificationKind.POINTER
+        if value is None:
+            self.value &= ~TypeModification.ModificationKind.POINTER
+        self._pointer_order = value
+
+    @property
     def is_reference(self) -> bool:
-        return self.value & TypeModification.REFERENCE
+        return bool(self.value & TypeModification.ModificationKind.REFERENCE)
 
     @property
     def is_pointer(self) -> bool:
-        return self.value & TypeModification.POINTER
+        return bool(self.value & TypeModification.ModificationKind.POINTER)
 
     @property
     def is_const(self) -> bool:
-        return self.value & TypeModification.CONST
+        return bool(self.value & TypeModification.ModificationKind.CONST)
 
     @property
     def is_template(self) -> bool:
-        return self.value & TypeModification.TEMPLATE
+        return bool(self.value & TypeModification.ModificationKind.TEMPLATE)
 
     @property
     def is_static(self) -> bool:
-        return self.value & TypeModification.STATIC
+        return bool(self.value & TypeModification.ModificationKind.STATIC)
 
     @property
     def is_array(self) -> bool:
-        return self.value & TypeModification.ARRAY
+        return bool(self.value & TypeModification.ModificationKind.ARRAY)
 
     @property
     def is_rvalue_ref(self) -> bool:
-        return self.value & TypeModification.RVALUE_REF
+        return bool(self.value & TypeModification.ModificationKind.RVALUE_REF)
 
     @property
     def is_volatile(self) -> bool:
-        return self.value & TypeModification.VOLATILE
+        return bool(self.value & TypeModification.ModificationKind.VOLATILE)
 
     @property
     def is_restrict(self) -> bool:
-        return self.value & TypeModification.RESTRICT
+        return bool(self.value & TypeModification.ModificationKind.RESTRICT)
 
     @property
     def is_constexpr(self) -> bool:
-        return self.value & TypeModification.CONSTEXPR
+        return bool(self.value & TypeModification.ModificationKind.CONSTEXPR)
 
     @property
     def is_no_modification(self) -> bool:
-        return self.value == TypeModification.NONE
+        return self.value == TypeModification.ModificationKind.NONE
 
 
 class TypeExpression:
