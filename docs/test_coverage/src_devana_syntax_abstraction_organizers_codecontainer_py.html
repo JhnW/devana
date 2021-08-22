@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for src/devana/syntax_abstraction/organizers/codecontainer.py: 61%</title>
+    <title>Coverage for src/devana/syntax_abstraction/organizers/codecontainer.py: 67%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>src/devana/syntax_abstraction/organizers/codecontainer.py</b> :
-            <span class="pc_cov">61%</span>
+            <span class="pc_cov">67%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             70 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">43 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">27 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">47 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">23 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -65,9 +65,9 @@
     <p id="t11" class="run"><span class="n"><a href="#t11">11</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_cursor</span> <span class="op">=</span> <span class="nam">cursor</span>&nbsp;</span><span class="r"></span></p>
     <p id="t12" class="run"><span class="n"><a href="#t12">12</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_parent</span> <span class="op">=</span> <span class="nam">parent</span>&nbsp;</span><span class="r"></span></p>
     <p id="t13" class="run"><span class="n"><a href="#t13">13</a></span><span class="t">        <span class="key">if</span> <span class="nam">cursor</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t14" class="mis show_mis"><span class="n"><a href="#t14">14</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_namespace</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t15" class="mis show_mis"><span class="n"><a href="#t15">15</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_content</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t16" class="mis show_mis"><span class="n"><a href="#t16">16</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_text_source</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="run"><span class="n"><a href="#t14">14</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_namespace</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t15" class="run"><span class="n"><a href="#t15">15</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_content</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t16" class="run"><span class="n"><a href="#t16">16</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_text_source</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
     <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t18" class="run"><span class="n"><a href="#t18">18</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_namespace</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
     <p id="t19" class="run"><span class="n"><a href="#t19">19</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_content</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
@@ -82,7 +82,7 @@
     <p id="t28" class="pln"><span class="n"><a href="#t28">28</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">    <span class="op">@</span><span class="nam">content</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">    <span class="key">def</span> <span class="nam">content</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t31" class="mis show_mis"><span class="n"><a href="#t31">31</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_content</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_content</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t33" class="run"><span class="n"><a href="#t33">33</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t34" class="run"><span class="n"><a href="#t34">34</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -148,7 +148,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-08-22 00:50 +0000
+            created at 2021-08-22 18:32 +0000
         </p>
     </div>
 </div>

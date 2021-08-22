@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for src/devana/syntax_abstraction/typeexpression.py: 83%</title>
+    <title>Coverage for src/devana/syntax_abstraction/typeexpression.py: 85%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>src/devana/syntax_abstraction/typeexpression.py</b> :
-            <span class="pc_cov">83%</span>
+            <span class="pc_cov">85%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             437 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">362 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">75 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">373 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">64 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -314,7 +314,7 @@
     <p id="t260" class="pln"><span class="n"><a href="#t260">260</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t261" class="run"><span class="n"><a href="#t261">261</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t262" class="run"><span class="n"><a href="#t262">262</a></span><span class="t">    <span class="key">def</span> <span class="nam">is_template</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">bool</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t263" class="mis show_mis"><span class="n"><a href="#t263">263</a></span><span class="t">        <span class="key">return</span> <span class="nam">bool</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">value</span> <span class="op">&amp;</span> <span class="nam">TypeModification</span><span class="op">.</span><span class="nam">ModificationKind</span><span class="op">.</span><span class="nam">TEMPLATE</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t263" class="run"><span class="n"><a href="#t263">263</a></span><span class="t">        <span class="key">return</span> <span class="nam">bool</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">value</span> <span class="op">&amp;</span> <span class="nam">TypeModification</span><span class="op">.</span><span class="nam">ModificationKind</span><span class="op">.</span><span class="nam">TEMPLATE</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t264" class="pln"><span class="n"><a href="#t264">264</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t265" class="run"><span class="n"><a href="#t265">265</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t266" class="run"><span class="n"><a href="#t266">266</a></span><span class="t">    <span class="key">def</span> <span class="nam">is_static</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">bool</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -354,12 +354,12 @@
     <p id="t300" class="run"><span class="n"><a href="#t300">300</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_parent</span> <span class="op">=</span> <span class="nam">parent</span>&nbsp;</span><span class="r"></span></p>
     <p id="t301" class="run"><span class="n"><a href="#t301">301</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_is_input_type</span> <span class="op">=</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
     <p id="t302" class="run"><span class="n"><a href="#t302">302</a></span><span class="t">        <span class="key">if</span> <span class="nam">cursor</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t303" class="mis show_mis"><span class="n"><a href="#t303">303</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t304" class="mis show_mis"><span class="n"><a href="#t304">304</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_modification</span> <span class="op">=</span> <span class="nam">TypeModification</span><span class="op">.</span><span class="nam">NONE</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t305" class="mis show_mis"><span class="n"><a href="#t305">305</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_details</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t306" class="mis show_mis"><span class="n"><a href="#t306">306</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_text_source</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t307" class="mis show_mis"><span class="n"><a href="#t307">307</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_namespaces</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t308" class="mis show_mis"><span class="n"><a href="#t308">308</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_template_arguments</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t303" class="run"><span class="n"><a href="#t303">303</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t304" class="run"><span class="n"><a href="#t304">304</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_modification</span> <span class="op">=</span> <span class="nam">TypeModification</span><span class="op">.</span><span class="nam">NONE</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t305" class="run"><span class="n"><a href="#t305">305</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_details</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t306" class="run"><span class="n"><a href="#t306">306</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_text_source</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t307" class="run"><span class="n"><a href="#t307">307</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_namespaces</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t308" class="run"><span class="n"><a href="#t308">308</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_template_arguments</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
     <p id="t309" class="pln"><span class="n"><a href="#t309">309</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t310" class="run"><span class="n"><a href="#t310">310</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
     <p id="t311" class="run"><span class="n"><a href="#t311">311</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_modification</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
@@ -474,8 +474,8 @@
     <p id="t420" class="pln"><span class="n"><a href="#t420">420</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t421" class="run"><span class="n"><a href="#t421">421</a></span><span class="t">    <span class="op">@</span><span class="nam">modification</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t422" class="run"><span class="n"><a href="#t422">422</a></span><span class="t">    <span class="key">def</span> <span class="nam">modification</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t423" class="mis show_mis"><span class="n"><a href="#t423">423</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_modification</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t424" class="mis show_mis"><span class="n"><a href="#t424">424</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t423" class="run"><span class="n"><a href="#t423">423</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_modification</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t424" class="run"><span class="n"><a href="#t424">424</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
     <p id="t425" class="pln"><span class="n"><a href="#t425">425</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t426" class="run"><span class="n"><a href="#t426">426</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t427" class="run"><span class="n"><a href="#t427">427</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -564,8 +564,8 @@
     <p id="t510" class="pln"><span class="n"><a href="#t510">510</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t511" class="run"><span class="n"><a href="#t511">511</a></span><span class="t">    <span class="op">@</span><span class="nam">details</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t512" class="run"><span class="n"><a href="#t512">512</a></span><span class="t">    <span class="key">def</span> <span class="nam">details</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t513" class="mis show_mis"><span class="n"><a href="#t513">513</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_details</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t514" class="mis show_mis"><span class="n"><a href="#t514">514</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t513" class="run"><span class="n"><a href="#t513">513</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_details</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t514" class="run"><span class="n"><a href="#t514">514</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">LazyNotInit</span>&nbsp;</span><span class="r"></span></p>
     <p id="t515" class="pln"><span class="n"><a href="#t515">515</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t516" class="run"><span class="n"><a href="#t516">516</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t517" class="run"><span class="n"><a href="#t517">517</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -607,7 +607,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-08-22 00:50 +0000
+            created at 2021-08-22 18:32 +0000
         </p>
     </div>
 </div>
