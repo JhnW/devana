@@ -34,7 +34,10 @@ jobs:
         os-environment: [ubuntu-20.04]
     runs-on: ${{ matrix.os-environment }}
     steps:
-    - uses: actions/checkout@v2
+    - name: Full checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
