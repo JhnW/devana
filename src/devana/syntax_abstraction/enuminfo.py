@@ -75,7 +75,7 @@ class EnumInfo(CodeContainer):
             """Structural parent element like file, namespace or class."""
             return self._parent
 
-    def __init__(self, cursor: Optional[cindex.Cursor], parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
 
         if cursor is None:
