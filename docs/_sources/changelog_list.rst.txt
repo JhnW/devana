@@ -7,24 +7,17 @@ Future release
 
 Changes
 ~~~~~~~
-- Automated doc generated. [JhnW]
-- Automated doc generated. [JhnW]
-- Automated doc generated. [JhnW]
 - Build doc after every test. [JhnW]
-- Automated doc generated. [JhnW]
 
 Fix
 ~~~
+- Change log will not print automated doc gen. [JhnW]
 - Release doc gen reparired. [JhnW]
 - Fix checkout and no-tag doc build. [JhnW]
 
 
 v0.1.5 (2021-08-15)
 -------------------
-
-Changes
-~~~~~~~
-- Automated doc generated. [JhnW]
 
 Fix
 ~~~
@@ -47,10 +40,6 @@ New
 - Pointer order basic API for nested pointers. [JhnW]
 
   Nested pointer parsing only for basic cases, without parsing nested type modification.
-
-Changes
-~~~~~~~
-- Automated doc generated. [JhnW]
 
 Other
 ~~~~~
