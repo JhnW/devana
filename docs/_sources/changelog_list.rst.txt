@@ -8,11 +8,13 @@ Future release
 Changes
 ~~~~~~~
 - Automated doc generated. [JhnW]
+- Automated doc generated. [JhnW]
 - Build doc after every test. [JhnW]
 - Automated doc generated. [JhnW]
 
 Fix
 ~~~
+- Release doc gen reparired. [JhnW]
 - Fix checkout and no-tag doc build. [JhnW]
 
 
