@@ -2,8 +2,11 @@ Changelog
 =========
 
 
-v0.1.5 (2021-08-15)
--------------------
-- Pkg: chg: Version up. [JhnW]
+Future release
+--------------
+
+Changes
+~~~~~~~
+- Build doc after every test. [JhnW]
 
 
