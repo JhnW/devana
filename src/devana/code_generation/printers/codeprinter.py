@@ -6,6 +6,7 @@ from typing import List, Optional, Dict
 
 @dataclass
 class PrinterRecord:
+    """Light abstraction layer for a printer that does not implement the full set of functionalities. """
     printer: ICodePrinter
     context: Optional = None
 
@@ -16,6 +17,7 @@ class PrinterRecord:
 
 
 class PrinterGroup(ICodePrinter):
+    """Collection of low-level printers for one type. Helps you find the right printer for context requirements."""
 
     def __init__(self):
         self._printers: List[PrinterRecord] = []
@@ -46,6 +48,7 @@ class PrinterGroup(ICodePrinter):
 
 
 class CodePrinter(ICodePrinter):
+    """Collection of low-level printers for many types. CodePrinter will match correct printer to source object type."""
 
     def __init__(self, configuration: Optional[PrinterConfiguration] = None, is_fallback_allowed=False):
         self._printers: Dict[any, ICodePrinter] = {}
@@ -54,6 +57,8 @@ class CodePrinter(ICodePrinter):
 
     @property
     def is_fallback_allowed(self) -> bool:
+        """Determines whether in the absence of a printer for a given type,
+        it is possible to use a printer of its base type. """
         return self._is_fallback_allowed
 
     @is_fallback_allowed.setter
@@ -69,12 +74,14 @@ class CodePrinter(ICodePrinter):
         self._configuration = value
 
     def register(self, cls_printer, source_type, context: Optional = None):
+        """Add a new printer to the collection of the given type."""
         if source_type not in self._printers:
             self._printers[source_type] = PrinterGroup()
         record = PrinterRecord(cls_printer(self), context)
         self._printers[source_type].append(record)
 
     def print(self, source, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
+        """Prints code from a given source dynamically looking for suitable printers."""
         cfg = config if config is not None else self.configuration
         if type(source) in self._printers:
             return self._printers[type(source)].print(source, cfg, context)

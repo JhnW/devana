@@ -20,7 +20,7 @@ Devann's internal code.\
 Please note that Devana focuses on the header-level code e.g. class and functions definitions, templates resolving, 
 typedefs and includes. Control statements, arithmetics operations etc. (pure body of functions) are supported as access
 to raw string field "body". It is planned to introduce more control over this type of code in future versions.   
-**Important:** Devana is still under development. At the moment, only parsing is available 
+**Important:** Devana is still under development. At the moment, parsing and basic code generation is available 
 (almost full coverage of development plans). Please check [roadmap](http://jhnw.github.io/devana/roadmap.html).
 
 ## Installation

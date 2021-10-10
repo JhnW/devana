@@ -3,10 +3,13 @@ from devana.code_generation.printers.default.functionprinter import FunctionPrin
 from devana.code_generation.printers.default.variableprinter import VariablePrinter
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
+from devana.code_generation.printers.default.templateparameterprinter import TemplateParameterPrinter
+from devana.code_generation.printers.default.typeexpressionprinter import GenericTypeParameterPrinter
 from devana.code_generation.printers.codeprinter import CodePrinter
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.typeexpression import TypeModification, TypeExpression, BasicType
 from devana.syntax_abstraction.variable import Variable
+from devana.syntax_abstraction.templateinfo import TemplateInfo, GenericTypeParameter
 
 
 class TestFunctionCore(unittest.TestCase):
@@ -123,3 +126,107 @@ class TestFunctionCore(unittest.TestCase):
         source.body = "float c = a * *b;\nif(c > 10.0f)\n    c *=0.5f;\nreturn c;"
         result = self.printer.print(source)
         self.assertEqual(result, """long foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
+
+    def test_function_namespace(self):
+        source = FunctionInfo()
+        source.namespaces = ["Test1", "Test2"]
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        result = self.printer.print(source)
+        self.assertEqual(result, "float Test1::Test2::foo();\n")
+
+
+class TestFunctionTemplate(unittest.TestCase):
+
+    def setUp(self):
+        printer = CodePrinter()
+        printer.register(FunctionPrinter, FunctionInfo)
+        printer.register(VariablePrinter, Variable)
+        printer.register(BasicTypePrinter, BasicType)
+        printer.register(TypeExpressionPrinter, TypeExpression)
+        printer.register(VariablePrinter, FunctionInfo.Argument)
+        printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
+        printer.register(GenericTypeParameterPrinter, GenericTypeParameter)
+        self.printer: CodePrinter = printer
+
+    def test_function_simple_template(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        source.template = TemplateInfo()
+        template_param = TemplateInfo.TemplateParameter()
+        template_param.name = "T"
+        source.template.parameters = [template_param]
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<typename T>\nfloat foo();\n")
+
+    def test_function_empty_template(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        source.template = TemplateInfo()
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<>\nfloat foo();\n")
+
+    def test_function_template_argument(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        source.template = TemplateInfo()
+        template_param = TemplateInfo.TemplateParameter()
+        template_param.name = "T"
+        source.template.parameters = [template_param]
+        argument = FunctionInfo.Argument()
+        argument.type = TypeExpression()
+        argument.type.details = GenericTypeParameter("T")
+        argument.type.modification = TypeModification.CONST
+        argument.name = "a"
+        source.arguments = [argument]
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<typename T>\nfloat foo(const T a);\n")
+
+    def test_function_template_return_value(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.template = TemplateInfo()
+        template_param = TemplateInfo.TemplateParameter()
+        template_param.name = "T"
+        source.template.parameters = [template_param]
+        source.return_type = TypeExpression()
+        source.return_type.details = GenericTypeParameter("T")
+        source.return_type.modification = TypeModification.POINTER
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<typename T>\nT* foo();\n")
+
+    def test_function_template_default_value(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        source.template = TemplateInfo()
+        template_param = TemplateInfo.TemplateParameter()
+        template_param.name = "T"
+        template_param.default_value = "int"
+        source.template.parameters = [template_param]
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<typename T = int>\nfloat foo();\n")
+
+    def test_function_template_standard(self):
+        source = FunctionInfo()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.FLOAT
+        source.template = TemplateInfo()
+        spec_1 = TypeExpression()
+        spec_1.details = BasicType.INT
+        spec_1.modification = TypeModification.REFERENCE
+        spec_2 = TypeExpression()
+        spec_2.details = BasicType.LONG
+        spec_2.modification = TypeModification.CONST
+        source.template.specialisation_values = [spec_1, spec_2]
+        result = self.printer.print(source)
+        self.assertEqual(result, "template<>\nfloat foo<int&,const long>();\n")

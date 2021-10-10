@@ -12,7 +12,7 @@ import re
 class IncludeInfo:
     """Include present in file."""
 
-    def __init__(self, cursor: Optional[cindex.FileInclusion], parent: Optional[any] = None):
+    def __init__(self, cursor: Optional[cindex.FileInclusion] = None, parent: Optional[any] = None):
         self._parent = parent
         self._cursor = cursor
         if cursor is None:
@@ -57,7 +57,7 @@ class IncludeInfo:
 
     @is_standard.setter
     def is_standard(self, value):
-        self._value = value
+        self._is_standard = value
 
     @property
     def path(self) -> str:
@@ -121,7 +121,7 @@ class SourceFileType(Enum):
 class SourceFile(CodeContainer):
     """Information about specific source code file."""
 
-    def __init__(self, source: Optional[Union[cindex.Cursor, str]], parent: Optional[any] = None):
+    def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[any] = None):
         cursor = None
         if source is not None:
             if not isinstance(source, str):

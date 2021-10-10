@@ -127,3 +127,7 @@ class TestDeclarationDefinition(unittest.TestCase):
             definition: MethodInfo = self.file.content[18]
             self.assertEqual(declaration.definition, definition)
             self.assertEqual(definition.definition, definition)
+
+    def test_class_declaration_namespace_str(self):
+        declaration = self.file.content[19].content[0]
+        self.assertEqual(declaration.namespaces, [])

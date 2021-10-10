@@ -1,5 +1,6 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.typeexpression import TypeExpression
+from devana.syntax_abstraction.templateinfo import GenericTypeParameter
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from typing import Optional
@@ -34,6 +35,22 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
         elif source.modification.is_rvalue_ref:
             suffix = r"&&"
 
-        return prefix + self._printer_dispatcher.print(source.details, config, source) + suffix
+        namespace = "::".join(source.namespaces)
+        if namespace:
+            namespace += "::"
+
+        template = ""
+        if source.template_arguments:
+            template_str_list = []
+            for t in source.template_arguments:
+                template_str_list.append(self._printer_dispatcher.print(t, config, source))
+            template = ",".join(template_str_list)
+            template = f"<{template}>"
+
+        return prefix + namespace + self._printer_dispatcher.print(source.details, config, source) + template + suffix
 
 
+class GenericTypeParameterPrinter(ICodePrinter, DispatcherInjectable):
+
+    def print(self, source: GenericTypeParameter, _1=None, _2=None) -> str:
+        return source.name

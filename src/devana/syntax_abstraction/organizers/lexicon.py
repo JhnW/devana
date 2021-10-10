@@ -36,6 +36,10 @@ class Lexicon:
                 assert len(match) == 1
                 instance: Lexicon = match[0]
 
+                # if hasattr(source, "is_definition") and hasattr(source, "namespaces")
+                #     if source.is_definition:
+                #         match.append([x for x in source.namespaces])
+
                 # do not add multiple definitions of the same type to Lexington and replace definition by
                 # declaration if possible
 
@@ -83,6 +87,7 @@ class Lexicon:
             else:
                 self._parent = source.parent.lexicon
                 self._parent.nodes.append(self)
+            # special case for class definition like class A::B {};
 
     @property
     def parent(self) -> Optional:

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, auto
 from sys import platform
 
@@ -98,8 +98,7 @@ class PrinterConfiguration:
     """Data structure that stores standard code printing settings e.g. newline format."""
 
     line_ending: LineEndings = LineEndings.default()
-    indent: Indent = Indent()
+    indent: Indent = field(default_factory=lambda: Indent())
 
     def format_line(self, text: str) -> str:
         return f"{self.indent.print()}{text}{self.line_ending.print()}"
-

@@ -326,12 +326,22 @@ class ConstructorInfo(MethodInfo):
 class DestructorInfo(MethodInfo):
     """Destructor information."""
 
-    def __init__(self, cursor: cindex.Cursor, parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
+        if cursor is None:
+            self._name = ""
+        else:
+            self._name = LazyNotInit
 
     @property
+    @lazy_invoke
     def name(self) -> str:
-        return re.sub(r"(.*)(<.+>)", r"\g<1>", super().name)
+        self._name = re.sub(r"(.*)(<.+>)", r"\g<1>", super().name)
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
 
     @property
     def return_type(self) -> None:
@@ -353,11 +363,12 @@ class DestructorInfo(MethodInfo):
 class FieldInfo(Variable, ClassMember):
     """Field of class/struct."""
 
-    def __init__(self, cursor: cindex.Cursor, parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         Variable.__init__(self, cursor, parent)
         ClassMember.__init__(self, cursor)
-        if cursor.kind != cindex.CursorKind.FIELD_DECL and cursor.kind != cindex.CursorKind.VAR_DECL:
-            raise ParserError("Bad cursor kind.")
+        if cursor is not None:
+            if cursor.kind != cindex.CursorKind.FIELD_DECL and cursor.kind != cindex.CursorKind.VAR_DECL:
+                raise ParserError("Bad cursor kind.")
 
 
 class SectionInfo:
@@ -454,7 +465,7 @@ class InheritanceInfo:
     class InheritanceValue:
         """One of parent (in C++ mean) information."""
 
-        def __init__(self, cursor: Optional[cindex.Cursor], parent: CodeContainer):
+        def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
             self._cursor = cursor
             self._parent = parent
             if cursor is None:
@@ -529,7 +540,7 @@ class InheritanceInfo:
         def template_arguments(self, value):
             self._template_arguments = value
 
-    def __init__(self, cursor: Optional[cindex.Cursor], parent: Optional = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
         self._cursor = cursor
         self._parent = parent
         self._lexicon = Lexicon.create(self)
@@ -569,7 +580,7 @@ class InheritanceInfo:
 class ClassInfo(CodeContainer):
     """Data of class type."""
 
-    def __init__(self, cursor: Optional[cindex.Cursor], parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         if cursor is None:
             self._name = ""
@@ -579,6 +590,7 @@ class ClassInfo(CodeContainer):
             self._is_class = False
             self._inheritance = None
             self._is_declaration = False
+            self._namespaces = []
         else:
             self._name = LazyNotInit
             self._text_source = LazyNotInit
@@ -587,21 +599,44 @@ class ClassInfo(CodeContainer):
             self._is_class = False
             self._inheritance = LazyNotInit
             self._is_declaration = LazyNotInit
-
-        if cursor.kind == cindex.CursorKind.STRUCT_DECL:
-            self._is_class = False
-        elif cursor.kind == cindex.CursorKind.CLASS_DECL:
-            self._is_class = True
-        elif cursor.kind == cindex.CursorKind.CLASS_TEMPLATE \
-                or cursor.kind == cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
-            if re.search(rf"class\s+{self.name}", self.text_source.text):
-                self._is_class = True
-            elif re.search(rf"struct\s+{self.name}", self.text_source.text):
+            self._namespaces = LazyNotInit
+            if cursor.kind == cindex.CursorKind.STRUCT_DECL:
                 self._is_class = False
+            elif cursor.kind == cindex.CursorKind.CLASS_DECL:
+                self._is_class = True
+            elif cursor.kind == cindex.CursorKind.CLASS_TEMPLATE \
+                    or cursor.kind == cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+                if re.search(rf"class\s+{self.name}", self.text_source.text):
+                    self._is_class = True
+                elif re.search(rf"struct\s+{self.name}", self.text_source.text):
+                    self._is_class = False
+                else:
+                    raise ParserError("It is not a valid type cursor.")
             else:
                 raise ParserError("It is not a valid type cursor.")
-        else:
-            raise ParserError("It is not a valid type cursor.")
+
+            if self.is_definition:  # prevent for class definition like class A::B::C {}
+                #  its overcomplicated because semantic parent contains standard namespaces, not only A::B
+                # and children will contain namespace reference if template parameter is write with namespace
+                # so we need to make intersection both list
+                semantic_parents = []
+                parent = self._cursor.semantic_parent
+                while True:
+                    if parent is None:
+                        break
+                    if len(semantic_parents) >= 1:
+                        if semantic_parents[-1] == parent:
+                            break
+                    semantic_parents.append(parent)
+                    parent = parent.semantic_parent
+                semantic_parents = semantic_parents[:-1]  # remove last element - file path
+                semantic_parents = [p.spelling for p in semantic_parents]
+                namespaces_parents = [n.spelling for n in self._cursor.get_children()
+                                      if n.kind == cindex.CursorKind.NAMESPACE_REF]
+                namespaces = list(set(semantic_parents) & set(namespaces_parents))
+
+                if namespaces:
+                    raise NotImplementedError("Class definition with namespaces is not allowed.")
 
         self._lexicon = Lexicon.create(self)
 
@@ -770,6 +805,21 @@ class ClassInfo(CodeContainer):
         if self._cursor is None:
             return self._lexicon.find_type(self.name)
         return self._lexicon.find_type(self._cursor)
+
+    @property
+    @lazy_invoke
+    def namespaces(self) -> List[str]:
+        """Explicitly declared namespaces.
+        For example: class namespace1::namespace2::ClassName; or class namespace1::ClassName {};"""
+        if self.is_definition:
+            return []
+        self._namespaces = [n.spelling for n in self._cursor.get_children()
+                            if n.kind == cindex.CursorKind.NAMESPACE_REF]
+        return self._namespaces
+
+    @namespaces.setter
+    def namespaces(self, value):
+        self._namespaces = value
 
     @property
     def lexicon(self) -> any:

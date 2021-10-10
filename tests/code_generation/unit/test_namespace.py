@@ -6,7 +6,7 @@ from devana.code_generation.printers.default.typeexpressionprinter import TypeEx
 from devana.code_generation.printers.default.enumprinter import EnumPrinter
 from devana.code_generation.printers.default.namespaceprinter import NamespacePrinter
 from devana.code_generation.printers.codeprinter import CodePrinter
-from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
+from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.typeexpression import TypeModification, TypeExpression, BasicType
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo

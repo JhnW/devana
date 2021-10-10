@@ -21,9 +21,9 @@ class CodeContainer:
 
     @property
     @lazy_invoke
-    def content(self) -> Tuple[any]:
+    def content(self) -> List[any]:
         """List of source code objects."""
-        self._content = tuple(self._create_content())
+        self._content = list(self._create_content())
         return self._content
 
     @content.setter

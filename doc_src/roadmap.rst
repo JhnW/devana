@@ -2,7 +2,8 @@ Roadmap
 ==================================
 
 Devana is still under development. Two main functional modules are planned: a parser and a code generator.
-For now, only parser is mostly done. Many additional functionalities, not assigned to these modules, are also missing.
+For now, parser is mostly done and basic functionality of the code generator is working.
+Many additional functionalities, not assigned to these modules, are also missing.
 
 Parser
 -------
@@ -19,7 +20,6 @@ language features to ensure that valid exceptions are thrown.
 * **Parsing types and types traits**
     * Functions pointers: *medium priority*
     * Array: *medium priority*
-    * Nested pointers: *medium priority*
 
 * **Other code**
     * Using directive: *medium priority*
@@ -39,22 +39,24 @@ language features to ensure that valid exceptions are thrown.
     * Prevent re-parsing unchanged files: *low priority*
     * Better exceptions: *medium priority*
     * Reducing memory usage: *medium priority*
+    * Split syntax abstraction element representation from parsing: *low priority*
 
 Code generator
 --------------
-Currently, this part of the project is not yet operational in any aspect. The main goal is to be able to edit and
-represent C ++ headers using Python code representations and to make it easy to generate implementations
-(as text based). Code generation is now the main focus of the project.
+Currently, core code generation functionality is working. Current work is focused on improving the convenience of
+using code generation. The main goal is to be able to edit and represent C ++ headers using Python code representations
+and to make it easy to generate implementations (as text based). Code generation is now the main focus of the project.
 
 Each element present in the parser module should be available for editing and creation for generation purposes.
 
 * **Code generator**
-    * Allow fully modifiable and create Devana code representation: *high priority*
-    * Printing code representation to C++ sources files: *high priority*
     * High level code generation rules as framework: *low priority*
     * Low level code generation rules as  in code directives: *medium priority*
     * Context aware preprocessor: *high priority*
-
+    * Better way to create and modify source code (builder pattern etc.): *low priority*
+    * Possibility to verify the correctness of manually created code: *medium priority*
+    * New example/tutorial: *high priority*
+    * Lexicon automatic update for code generation: *medium priority*
 
 Utility
 --------

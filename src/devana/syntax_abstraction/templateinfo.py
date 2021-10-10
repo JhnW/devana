@@ -55,7 +55,7 @@ class TemplateInfo:
             self._cursor = cursor
             self._parent = parent
             if cursor is None:
-                self._specifier = ""
+                self._specifier = "typename"
                 self._name = ""
                 self._default_value = None
                 self._is_variadic = False

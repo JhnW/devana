@@ -71,3 +71,8 @@ char TestNamespace::TestClass::TestMethod()
 {
     return 120;
 }
+
+namespace TestNamespace2
+{
+    class TestClass2;
+}

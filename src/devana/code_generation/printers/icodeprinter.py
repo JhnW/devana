@@ -4,6 +4,7 @@ from devana.code_generation.printers.configuration import PrinterConfiguration
 
 
 class ICodePrinter(ABC):
+    """Common interface for all printers."""
 
     @abstractmethod
     def print(self, source, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:

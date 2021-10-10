@@ -1,6 +1,7 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.enuminfo import EnumInfo
 from devana.syntax_abstraction.typeexpression import BasicType
+from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
@@ -9,10 +10,12 @@ from typing import Optional
 
 class EnumPrinter(ICodePrinter, DispatcherInjectable):
 
-    def print(self, source: EnumInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
+    def print(self, source: EnumInfo, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        if type(context) is TypeExpression:
+            return source.name
         formatter.line = "enum"
         if source.is_scoped:
             formatter.line += f" {source.prefix}"
@@ -41,7 +44,5 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
 
 class EnumAsTypePrinter(ICodePrinter, DispatcherInjectable):
 
-    def print(self, source: EnumInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
-        if config is None:
-            config = PrinterConfiguration()
+    def print(self, source: EnumInfo, _1=None, _2=None) -> str:
         return source.name

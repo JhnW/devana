@@ -17,7 +17,7 @@ class NamespacePrinter(ICodePrinter, DispatcherInjectable):
         formatter.indent.count += 1
         for c in source.content:
             formatter.line += self.printer_dispatcher.print(c, config, source)
-        formatter.indent.count -= 1
         formatter.accumulate_line()
+        formatter.indent.count -= 1
         formatter.print_line("}")
         return formatter.text

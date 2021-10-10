@@ -18,8 +18,8 @@ class UnionInfo(CodeContainer):
         else:
             self._name = LazyNotInit
             self._is_declaration = LazyNotInit
-        if cursor.kind != cindex.CursorKind.UNION_DECL:
-            raise ParserError("It is not a valid type cursor.")
+            if cursor.kind != cindex.CursorKind.UNION_DECL:
+                raise ParserError("It is not a valid type cursor.")
         self._lexicon = Lexicon.create(self)
 
     @property
