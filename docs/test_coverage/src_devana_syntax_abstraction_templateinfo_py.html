@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for src/devana/syntax_abstraction/templateinfo.py: 84%</title>
+    <title>Coverage for src/devana/syntax_abstraction/templateinfo.py: 86%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>src/devana/syntax_abstraction/templateinfo.py</b> :
-            <span class="pc_cov">84%</span>
+            <span class="pc_cov">86%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             288 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">241 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">47 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">249 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">39 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -109,10 +109,10 @@
     <p id="t55" class="run"><span class="n"><a href="#t55">55</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_cursor</span> <span class="op">=</span> <span class="nam">cursor</span>&nbsp;</span><span class="r"></span></p>
     <p id="t56" class="run"><span class="n"><a href="#t56">56</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_parent</span> <span class="op">=</span> <span class="nam">parent</span>&nbsp;</span><span class="r"></span></p>
     <p id="t57" class="run"><span class="n"><a href="#t57">57</a></span><span class="t">            <span class="key">if</span> <span class="nam">cursor</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t58" class="mis show_mis"><span class="n"><a href="#t58">58</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_specifier</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t59" class="mis show_mis"><span class="n"><a href="#t59">59</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t60" class="mis show_mis"><span class="n"><a href="#t60">60</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_default_value</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t61" class="mis show_mis"><span class="n"><a href="#t61">61</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_is_variadic</span> <span class="op">=</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t58" class="run"><span class="n"><a href="#t58">58</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_specifier</span> <span class="op">=</span> <span class="str">"typename"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t59" class="run"><span class="n"><a href="#t59">59</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t60" class="run"><span class="n"><a href="#t60">60</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_default_value</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t61" class="run"><span class="n"><a href="#t61">61</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_is_variadic</span> <span class="op">=</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
     <p id="t62" class="pln"><span class="n"><a href="#t62">62</a></span><span class="t">            <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t63" class="run"><span class="n"><a href="#t63">63</a></span><span class="t">                <span class="key">if</span> <span class="nam">cursor</span><span class="op">.</span><span class="nam">kind</span> <span class="op">!=</span> <span class="nam">cindex</span><span class="op">.</span><span class="nam">CursorKind</span><span class="op">.</span><span class="nam">TEMPLATE_TYPE_PARAMETER</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t64" class="run"><span class="n"><a href="#t64">64</a></span><span class="t">                    <span class="key">raise</span> <span class="nam">ParserError</span><span class="op">(</span><span class="str">"Template parameter expect TEMPLATE_TYPE_PARAMETER cursor kind."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -144,7 +144,7 @@
     <p id="t90" class="pln"><span class="n"><a href="#t90">90</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t91" class="run"><span class="n"><a href="#t91">91</a></span><span class="t">        <span class="op">@</span><span class="nam">name</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t92" class="run"><span class="n"><a href="#t92">92</a></span><span class="t">        <span class="key">def</span> <span class="nam">name</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t93" class="mis show_mis"><span class="n"><a href="#t93">93</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t93" class="run"><span class="n"><a href="#t93">93</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_name</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t94" class="pln"><span class="n"><a href="#t94">94</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t95" class="run"><span class="n"><a href="#t95">95</a></span><span class="t">        <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t96" class="run"><span class="n"><a href="#t96">96</a></span><span class="t">        <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -161,7 +161,7 @@
     <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t108" class="run"><span class="n"><a href="#t108">108</a></span><span class="t">        <span class="op">@</span><span class="nam">default_value</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t109" class="run"><span class="n"><a href="#t109">109</a></span><span class="t">        <span class="key">def</span> <span class="nam">default_value</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t110" class="mis show_mis"><span class="n"><a href="#t110">110</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_default_value</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t110" class="run"><span class="n"><a href="#t110">110</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_default_value</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t111" class="pln"><span class="n"><a href="#t111">111</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t112" class="run"><span class="n"><a href="#t112">112</a></span><span class="t">        <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t113" class="run"><span class="n"><a href="#t113">113</a></span><span class="t">        <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -300,7 +300,7 @@
     <p id="t246" class="pln"><span class="n"><a href="#t246">246</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t247" class="run"><span class="n"><a href="#t247">247</a></span><span class="t">    <span class="op">@</span><span class="nam">specialisation_values</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t248" class="run"><span class="n"><a href="#t248">248</a></span><span class="t">    <span class="key">def</span> <span class="nam">specialisation_values</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t249" class="mis show_mis"><span class="n"><a href="#t249">249</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_specialisation_values</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t249" class="run"><span class="n"><a href="#t249">249</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_specialisation_values</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t250" class="pln"><span class="n"><a href="#t250">250</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t251" class="run"><span class="n"><a href="#t251">251</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t252" class="run"><span class="n"><a href="#t252">252</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -394,7 +394,7 @@
     <p id="t340" class="pln"><span class="n"><a href="#t340">340</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t341" class="run"><span class="n"><a href="#t341">341</a></span><span class="t">    <span class="op">@</span><span class="nam">parameters</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t342" class="run"><span class="n"><a href="#t342">342</a></span><span class="t">    <span class="key">def</span> <span class="nam">parameters</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t343" class="mis show_mis"><span class="n"><a href="#t343">343</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_parameters</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t343" class="run"><span class="n"><a href="#t343">343</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_parameters</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t344" class="pln"><span class="n"><a href="#t344">344</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t345" class="run"><span class="n"><a href="#t345">345</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t346" class="run"><span class="n"><a href="#t346">346</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -423,7 +423,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-08-22 18:40 +0000
+            created at 2021-10-10 11:11 +0000
         </p>
     </div>
 </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.organizers.lexicon &mdash; devana 0.1.5 documentation</title>
+  <title>devana.syntax_abstraction.organizers.lexicon &mdash; devana 0.2.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.1
+                0.2
               </div>
             
           
@@ -202,6 +202,10 @@
                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
                 <span class="n">instance</span><span class="p">:</span> <span class="n">Lexicon</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+                <span class="c1"># if hasattr(source, &quot;is_definition&quot;) and hasattr(source, &quot;namespaces&quot;)</span>
+                <span class="c1">#     if source.is_definition:</span>
+                <span class="c1">#         match.append([x for x in source.namespaces])</span>
+
                 <span class="c1"># do not add multiple definitions of the same type to Lexington and replace definition by</span>
                 <span class="c1"># declaration if possible</span>
 
@@ -249,6 +253,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># special case for class definition like class A::B {};</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>

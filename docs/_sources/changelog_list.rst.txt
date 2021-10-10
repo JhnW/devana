@@ -2,11 +2,23 @@ Changelog
 =========
 
 
-Future release
---------------
+v0.2.0 (2021-10-10)
+-------------------
+
+New
+~~~
+- Core of code generation functionality. [JhnW]
+
+  A lot of minor changes, fixes in parsing module, possibility of multiple pointers type modification (finally!) and writing code generator.
+  Delivered framework for printing syntax abstraction elements along with the default implementation of printing all items.
+  The Python code representation has been improved to allow manual code changes (setters are fixed) and always correctly create new class instances without source files.
+  Lexicon still need to be updated manually in no-parsing code case.
 
 Changes
 ~~~~~~~
+- Disable automatic doc generation for every commit. [JhnW]
+
+  It was messy idea.
 - Build doc after every test. [JhnW]
 
 Fix

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.organizers &mdash; devana 0.1.5 documentation</title>
+  <title>devana.syntax_abstraction.organizers &mdash; devana 0.2.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1
+                0.2
               </div>
             
           
@@ -205,11 +205,11 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.codecontainer.CodeContainer.content">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="pre">:</span> <span class="pre">Tuple[any]</span></em><a class="headerlink" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer.content" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[any]</span></em><a class="headerlink" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer.content" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of source code objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">any</span></code>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">any</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -423,7 +423,7 @@ Lexicon data are stacked in tree-like structures by data namespaces.</p>
 <span id="devana-syntax-abstraction-organizers-sourcefile"></span><h2>devana.syntax_abstraction.organizers.sourcefile<a class="headerlink" href="#module-devana.syntax_abstraction.organizers.sourcefile" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.IncludeInfo">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">IncludeInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#IncludeInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">IncludeInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#IncludeInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Include present in file.</p>
 <dl class="py method">
@@ -511,7 +511,7 @@ Lexicon data are stacked in tree-like structures by data namespaces.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.SourceFile">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">SourceFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#SourceFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.SourceFile" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">SourceFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#SourceFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.SourceFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.organizers.codecontainer.CodeContainer</span></code></a></p>
 <p>Information about specific source code file.</p>
 <dl class="py property">

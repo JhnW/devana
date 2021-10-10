@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Roadmap &mdash; devana 0.1.5 documentation</title>
+  <title>Roadmap &mdash; devana 0.2.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.1
+                0.2
               </div>
             
           
@@ -173,7 +173,8 @@
   <div class="section" id="roadmap">
 <h1>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h1>
 <p>Devana is still under development. Two main functional modules are planned: a parser and a code generator.
-For now, only parser is mostly done. Many additional functionalities, not assigned to these modules, are also missing.</p>
+For now, parser is mostly done and basic functionality of the code generator is working.
+Many additional functionalities, not assigned to these modules, are also missing.</p>
 <div class="section" id="parser">
 <h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
 <p>The main purpose of this part is to ensure correct translation of the C++17 headers code to python objects
@@ -188,7 +189,6 @@ language features to ensure that valid exceptions are thrown.</p>
 <dt><strong>Parsing types and types traits</strong></dt><dd><ul>
 <li><p>Functions pointers: <em>medium priority</em></p></li>
 <li><p>Array: <em>medium priority</em></p></li>
-<li><p>Nested pointers: <em>medium priority</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -216,6 +216,7 @@ language features to ensure that valid exceptions are thrown.</p>
 <li><p>Prevent re-parsing unchanged files: <em>low priority</em></p></li>
 <li><p>Better exceptions: <em>medium priority</em></p></li>
 <li><p>Reducing memory usage: <em>medium priority</em></p></li>
+<li><p>Split syntax abstraction element representation from parsing: <em>low priority</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -224,18 +225,20 @@ language features to ensure that valid exceptions are thrown.</p>
 </div>
 <div class="section" id="code-generator">
 <h2>Code generator<a class="headerlink" href="#code-generator" title="Permalink to this headline">¶</a></h2>
-<p>Currently, this part of the project is not yet operational in any aspect. The main goal is to be able to edit and
-represent C ++ headers using Python code representations and to make it easy to generate implementations
-(as text based). Code generation is now the main focus of the project.</p>
+<p>Currently, core code generation functionality is working. Current work is focused on improving the convenience of
+using code generation. The main goal is to be able to edit and represent C ++ headers using Python code representations
+and to make it easy to generate implementations (as text based). Code generation is now the main focus of the project.</p>
 <p>Each element present in the parser module should be available for editing and creation for generation purposes.</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Code generator</strong></dt><dd><ul>
-<li><p>Allow fully modifiable and create Devana code representation: <em>high priority</em></p></li>
-<li><p>Printing code representation to C++ sources files: <em>high priority</em></p></li>
 <li><p>High level code generation rules as framework: <em>low priority</em></p></li>
 <li><p>Low level code generation rules as  in code directives: <em>medium priority</em></p></li>
 <li><p>Context aware preprocessor: <em>high priority</em></p></li>
+<li><p>Better way to create and modify source code (builder pattern etc.): <em>low priority</em></p></li>
+<li><p>Possibility to verify the correctness of manually created code: <em>medium priority</em></p></li>
+<li><p>New example/tutorial: <em>high priority</em></p></li>
+<li><p>Lexicon automatic update for code generation: <em>medium priority</em></p></li>
 </ul>
 </dd>
 </dl>

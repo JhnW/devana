@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for src/devana/syntax_abstraction/functioninfo.py: 96%</title>
+    <title>Coverage for src/devana/syntax_abstraction/functioninfo.py: 97%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>src/devana/syntax_abstraction/functioninfo.py</b> :
-            <span class="pc_cov">96%</span>
+            <span class="pc_cov">97%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             294 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">282 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">12 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">284 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">10 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -380,7 +380,7 @@
     <p id="t326" class="pln"><span class="n"><a href="#t326">326</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t327" class="run"><span class="n"><a href="#t327">327</a></span><span class="t">    <span class="op">@</span><span class="nam">namespaces</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t328" class="run"><span class="n"><a href="#t328">328</a></span><span class="t">    <span class="key">def</span> <span class="nam">namespaces</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t329" class="mis show_mis"><span class="n"><a href="#t329">329</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_namespaces</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t329" class="run"><span class="n"><a href="#t329">329</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_namespaces</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t330" class="pln"><span class="n"><a href="#t330">330</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t331" class="run"><span class="n"><a href="#t331">331</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t332" class="run"><span class="n"><a href="#t332">332</a></span><span class="t">    <span class="op">@</span><span class="nam">lazy_invoke</span>&nbsp;</span><span class="r"></span></p>
@@ -418,7 +418,7 @@
     <p id="t364" class="pln"><span class="n"><a href="#t364">364</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t365" class="run"><span class="n"><a href="#t365">365</a></span><span class="t">    <span class="op">@</span><span class="nam">template</span><span class="op">.</span><span class="nam">setter</span>&nbsp;</span><span class="r"></span></p>
     <p id="t366" class="run"><span class="n"><a href="#t366">366</a></span><span class="t">    <span class="key">def</span> <span class="nam">template</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">value</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t367" class="mis show_mis"><span class="n"><a href="#t367">367</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_template</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t367" class="run"><span class="n"><a href="#t367">367</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_template</span> <span class="op">=</span> <span class="nam">value</span>&nbsp;</span><span class="r"></span></p>
     <p id="t368" class="pln"><span class="n"><a href="#t368">368</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t369" class="run"><span class="n"><a href="#t369">369</a></span><span class="t">    <span class="key">def</span> <span class="nam">_check_kind</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">kind</span><span class="op">:</span> <span class="nam">cindex</span><span class="op">.</span><span class="nam">Cursor</span><span class="op">.</span><span class="nam">kind</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t370" class="run"><span class="n"><a href="#t370">370</a></span><span class="t">        <span class="key">if</span> <span class="nam">kind</span> <span class="op">!=</span> <span class="nam">cindex</span><span class="op">.</span><span class="nam">CursorKind</span><span class="op">.</span><span class="nam">FUNCTION_DECL</span> <span class="key">and</span> <span class="nam">kind</span> <span class="op">!=</span> <span class="nam">cindex</span><span class="op">.</span><span class="nam">CursorKind</span><span class="op">.</span><span class="nam">FUNCTION_TEMPLATE</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -428,7 +428,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-08-22 18:40 +0000
+            created at 2021-10-10 11:11 +0000
         </p>
     </div>
 </div>
