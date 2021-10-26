@@ -14,11 +14,14 @@ class TestSourceFile(unittest.TestCase):
 
         with self.subTest("Create from cursor"):
             index = clang.cindex.Index.create()
-            cursor: cindex.Cursor = index.parse(os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp").cursor
+            cursor: cindex.Cursor = index.parse(os.path.dirname(__file__)
+                                                + r"/source_files/multiple_files/file_1.hpp").cursor
             file = SourceFile(cursor)
             self.assertEqual(file.name, "file_1.hpp")
             self.assertEqual(file.parent, None)
-            self.assertEqual(str(file.path.as_posix()), str(Path(os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp").as_posix()))
+            self.assertEqual(str(file.path.as_posix()),
+                             str(Path(os.path.dirname(__file__)
+                                      + r"/source_files/multiple_files/file_1.hpp").as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
             self.assertEqual(file.text_source.text.replace("\r\n", "\n"), """class A
@@ -34,7 +37,8 @@ class TestSourceFile(unittest.TestCase):
             self.assertEqual(file.name, "file_1.hpp")
             self.assertEqual(file.parent, None)
             self.assertEqual(str(file.path.as_posix()),
-                             str(Path(os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp").as_posix()))
+                             str(Path(os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp").
+                                 as_posix()))
             self.assertEqual(file.namespace, None)
             self.assertEqual(file.type, SourceFileType.HEADER)
             self.assertEqual(file.text_source.text.replace("\r\n", "\n"), """class A
@@ -94,3 +98,16 @@ class TestSourceFile(unittest.TestCase):
     int *data;
 };""")
 
+    def test_header_guard_present(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/header_guard.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        x = file.header_guard
+        print(x)
+        self.assertEqual(file.header_guard, "HEADER_GUARD_H")
+
+    def test_header_guard_missing(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/no_header_guard.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        self.assertEqual(file.header_guard, None)

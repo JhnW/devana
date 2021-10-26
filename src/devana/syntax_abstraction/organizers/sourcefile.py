@@ -138,6 +138,7 @@ class SourceFile(CodeContainer):
             self._text_source = ""
             self._type = SourceFileType.HEADER
             self._includes = []
+            self._header_guard = None
         else:
             if cursor is None:
                 self._cursor = cursor
@@ -152,6 +153,7 @@ class SourceFile(CodeContainer):
                 self._text_source = LazyNotInit
                 self._includes = LazyNotInit
                 self._type = LazyNotInit
+                self._header_guard = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @property
@@ -215,6 +217,42 @@ class SourceFile(CodeContainer):
     @includes.setter
     def includes(self, value):
         self._includes = value
+
+    @property
+    @lazy_invoke
+    def header_guard(self) -> Optional[str]:
+        self._header_guard = None
+        if not self.text_source:
+            return self._header_guard
+
+        text = self.text_source.text.split("\n")
+        if len(text) < 3:
+            return self._header_guard
+
+        match = re.match(r"^#ifndef\s(\S+)", text[0])
+        if not match:
+            return self._header_guard
+        if len(match.group()) < 1:
+            return self._header_guard
+        def_name = match.group(1)
+
+        match = re.match(r"^#define\s(\S+)", text[1])
+        if not match:
+            return self._header_guard
+        if len(match.group()) < 1:
+            return self._header_guard
+        if match.group(1) != def_name:
+            return self._header_guard
+
+        if text[-1] != "#endif":
+            return self._header_guard
+
+        self._header_guard = def_name
+        return self._header_guard
+
+    @header_guard.setter
+    def header_guard(self, value):
+        self._header_guard = value
 
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
