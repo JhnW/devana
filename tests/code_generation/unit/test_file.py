@@ -100,3 +100,33 @@ class TestFile(unittest.TestCase):
         source.includes.append(include)
         result = self.printer.print(source)
         self.assertEqual(result, '#inlude "foo.hpp"\n#inlude "bar.h"\n\nfloat foo();\ndouble bar();\n\n')
+
+    def test_header_guard(self):
+        source = SourceFile()
+        source.content = []
+        source.includes = []
+        element = FunctionInfo()
+        element.name = "foo"
+        element.return_type = TypeExpression()
+        element.return_type.details = BasicType.FLOAT
+        source.content.append(element)
+        element = FunctionInfo()
+        element.name = "bar"
+        element.return_type = TypeExpression()
+        element.return_type.details = BasicType.DOUBLE
+        source.content.append(element)
+        include = IncludeInfo()
+        include.value = "foo.hpp"
+        include.is_standard = False
+        source.includes.append(include)
+        include = IncludeInfo()
+        include.value = "bar.h"
+        include.is_standard = False
+        source.includes.append(include)
+        source.header_guard = "TEST_H"
+        result = self.printer.print(source)
+        expected = "#ifndef TEST_H\n"
+        expected += "#define TEST_H\n"
+        expected += '\n#inlude "foo.hpp"\n#inlude "bar.h"\n\nfloat foo();\ndouble bar();\n\n'
+        expected += "#endif //TEST_H\n"
+        self.assertEqual(result, expected)

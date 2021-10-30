@@ -12,13 +12,24 @@ class FilePrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+
+        if source.header_guard:
+            formatter.print_line(f"#ifndef {source.header_guard}")
+            formatter.print_line(f"#define {source.header_guard}")
+            formatter.next_line()
+
         for include in source.includes:
             formatter.line += self.printer_dispatcher.print(include, config, source)
         if source.includes and source.content:
             formatter.next_line()
+
         for element in source.content:
             formatter.line += self.printer_dispatcher.print(element, config, source)
         formatter.next_line()
+
+        if source.header_guard:
+            formatter.print_line(f"#endif //{source.header_guard}")
+
         return formatter.text
 
 
