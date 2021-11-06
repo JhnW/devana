@@ -102,8 +102,6 @@ class TestSourceFile(unittest.TestCase):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/header_guard.hpp")
         self.assertEqual(len(file.includes), 0)
         self.assertEqual(len(file.content), 3)
-        x = file.header_guard
-        print(x)
         self.assertEqual(file.header_guard, "HEADER_GUARD_H")
 
     def test_header_guard_missing(self):
