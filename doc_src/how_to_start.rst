@@ -58,3 +58,4 @@ Examples
    :maxdepth: 1
 
    demos/demo_include_map
+   demos/demo_meta_info_enum
