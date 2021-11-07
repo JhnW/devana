@@ -40,7 +40,7 @@ class IncludePrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
-        formatter.line = f"#inlude "
+        formatter.line = f"#include "
         if source.is_standard:
             value_begin = "<"
             value_end = ">"

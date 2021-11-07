@@ -28,7 +28,7 @@ from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.code_generation.stubtype import StubType
 
 
-def create_default_printer():
+def create_default_printer() -> CodePrinter:
     printer = CodePrinter()
     printer.register(BasicTypePrinter, BasicType)
     printer.register(AccessSpecifierPrinter, AccessSpecifier)

@@ -32,14 +32,14 @@ class TestFile(unittest.TestCase):
         source.value = "vector"
         source.is_standard = True
         result = self.printer.print(source)
-        self.assertEqual(result, '#inlude <vector>\n')
+        self.assertEqual(result, '#include <vector>\n')
 
     def test_common_include(self):
         source = IncludeInfo()
         source.value = "foo.hpp"
         source.is_standard = False
         result = self.printer.print(source)
-        self.assertEqual(result, '#inlude "foo.hpp"\n')
+        self.assertEqual(result, '#include "foo.hpp"\n')
 
     def test_empty_file(self):
         source = SourceFile()
@@ -58,7 +58,7 @@ class TestFile(unittest.TestCase):
         include.is_standard = False
         source.includes.append(include)
         result = self.printer.print(source)
-        self.assertEqual(result, '#inlude "foo.hpp"\n#inlude "bar.h"\n\n')
+        self.assertEqual(result, '#include "foo.hpp"\n#include "bar.h"\n\n')
 
     def test_content_in_file(self):
         source = SourceFile()
@@ -99,7 +99,7 @@ class TestFile(unittest.TestCase):
         include.is_standard = False
         source.includes.append(include)
         result = self.printer.print(source)
-        self.assertEqual(result, '#inlude "foo.hpp"\n#inlude "bar.h"\n\nfloat foo();\ndouble bar();\n\n')
+        self.assertEqual(result, '#include "foo.hpp"\n#include "bar.h"\n\nfloat foo();\ndouble bar();\n\n')
 
     def test_header_guard(self):
         source = SourceFile()
@@ -127,6 +127,6 @@ class TestFile(unittest.TestCase):
         result = self.printer.print(source)
         expected = "#ifndef TEST_H\n"
         expected += "#define TEST_H\n"
-        expected += '\n#inlude "foo.hpp"\n#inlude "bar.h"\n\nfloat foo();\ndouble bar();\n\n'
+        expected += '\n#include "foo.hpp"\n#include "bar.h"\n\nfloat foo();\ndouble bar();\n\n'
         expected += "#endif //TEST_H\n"
         self.assertEqual(result, expected)
