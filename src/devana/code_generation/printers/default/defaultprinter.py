@@ -42,6 +42,7 @@ def create_default_printer():
     printer.register(FilePrinter, SourceFile)
     printer.register(IncludePrinter, IncludeInfo)
     printer.register(FunctionPrinter, FunctionInfo)
+    printer.register(VariablePrinter, FunctionInfo.Argument)
     printer.register(NamespacePrinter, NamespaceInfo)
     printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
     printer.register(TypedefPrinter, TypedefInfo)
@@ -51,6 +52,6 @@ def create_default_printer():
     printer.register(UsingNamespacePrinter, UsingNamespace)
     printer.register(VariablePrinter, Variable)
     printer.register(GlobalVariablePrinter, GlobalVariable)
-    printer.register(StubType, StubType)
+    printer.register(StubTypePrinter, StubType)
 
     return printer
