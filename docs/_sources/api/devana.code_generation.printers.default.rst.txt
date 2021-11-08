@@ -59,6 +59,14 @@ devana.code\_generation.printers.default.namespaceprinter
    :undoc-members:
    :show-inheritance:
 
+devana.code\_generation.printers.default.stubtypeprinter
+--------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.stubtypeprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.code\_generation.printers.default.templateparameterprinter
 -----------------------------------------------------------------
 

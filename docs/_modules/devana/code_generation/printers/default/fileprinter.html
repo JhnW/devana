@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.code_generation.printers.default.fileprinter &mdash; devana 0.2.0 documentation</title>
+  <title>devana.code_generation.printers.default.fileprinter &mdash; devana 0.2.1 documentation</title>
   
 
   
@@ -178,13 +178,24 @@
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
         <span class="n">formatter</span> <span class="o">=</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">header_guard</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#ifndef </span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">header_guard</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#define </span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">header_guard</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">next_line</span><span class="p">()</span>
+
         <span class="k">for</span> <span class="n">include</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">includes</span><span class="p">:</span>
             <span class="n">formatter</span><span class="o">.</span><span class="n">line</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">includes</span> <span class="ow">and</span> <span class="n">source</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
             <span class="n">formatter</span><span class="o">.</span><span class="n">next_line</span><span class="p">()</span>
+
         <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
             <span class="n">formatter</span><span class="o">.</span><span class="n">line</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
         <span class="n">formatter</span><span class="o">.</span><span class="n">next_line</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">header_guard</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#endif //</span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">header_guard</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">text</span></div></div>
 
 
@@ -195,7 +206,7 @@
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
         <span class="n">formatter</span> <span class="o">=</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="n">formatter</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;#inlude &quot;</span>
+        <span class="n">formatter</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;#include &quot;</span>
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">is_standard</span><span class="p">:</span>
             <span class="n">value_begin</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
             <span class="n">value_end</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>

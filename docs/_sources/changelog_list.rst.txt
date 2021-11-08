@@ -2,6 +2,29 @@ Changelog
 =========
 
 
+v0.2.1 (2021-11-07)
+-------------------
+
+New
+~~~
+- StubType create. [JhnW]
+
+  Stub Type will make easy and fast creating string-stub outside types like std::string for code generation, without import and parsing a lot of headers.
+- Header guard now is generated in SourceFile. [JhnW]
+- Header guard idiom parsing. [JhnW]
+
+Fix
+~~~
+- Include printers change inlude to right include. [JhnW]
+- Default printers list fix. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Doc: Example for code generation - meta enum. [JhnW]
+- Doc: New example: create meta information for enums. [JhnW]
+
+
 v0.2.0 (2021-10-10)
 -------------------
 

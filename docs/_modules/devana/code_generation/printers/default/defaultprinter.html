@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.code_generation.printers.default.defaultprinter &mdash; devana 0.2.0 documentation</title>
+  <title>devana.code_generation.printers.default.defaultprinter &mdash; devana 0.2.1 documentation</title>
   
 
   
@@ -175,6 +175,7 @@
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.typedefprinter</span> <span class="kn">import</span> <span class="n">TypedefPrinter</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.enumprinter</span> <span class="kn">import</span> <span class="n">EnumPrinter</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.classprinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.stubtypeprinter</span> <span class="kn">import</span> <span class="n">StubTypePrinter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.classinfo</span> <span class="kn">import</span> <span class="n">ClassInfo</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">GenericTypeParameter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typedefinfo</span> <span class="kn">import</span> <span class="n">TypedefInfo</span>
@@ -190,9 +191,10 @@
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.variableprinter</span> <span class="kn">import</span> <span class="n">VariablePrinter</span><span class="p">,</span> <span class="n">GlobalVariablePrinter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typeexpression</span> <span class="kn">import</span> <span class="n">BasicType</span><span class="p">,</span> <span class="n">TypeExpression</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.variable</span> <span class="kn">import</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">GlobalVariable</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.stubtype</span> <span class="kn">import</span> <span class="n">StubType</span>
 
 
-<div class="viewcode-block" id="create_default_printer"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.defaultprinter.create_default_printer">[docs]</a><span class="k">def</span> <span class="nf">create_default_printer</span><span class="p">():</span>
+<div class="viewcode-block" id="create_default_printer"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.defaultprinter.create_default_printer">[docs]</a><span class="k">def</span> <span class="nf">create_default_printer</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CodePrinter</span><span class="p">:</span>
     <span class="n">printer</span> <span class="o">=</span> <span class="n">CodePrinter</span><span class="p">()</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">BasicTypePrinter</span><span class="p">,</span> <span class="n">BasicType</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">AccessSpecifierPrinter</span><span class="p">,</span> <span class="n">AccessSpecifier</span><span class="p">)</span>
@@ -206,6 +208,7 @@
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">FilePrinter</span><span class="p">,</span> <span class="n">SourceFile</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">IncludePrinter</span><span class="p">,</span> <span class="n">IncludeInfo</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">FunctionPrinter</span><span class="p">,</span> <span class="n">FunctionInfo</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">VariablePrinter</span><span class="p">,</span> <span class="n">FunctionInfo</span><span class="o">.</span><span class="n">Argument</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">NamespacePrinter</span><span class="p">,</span> <span class="n">NamespaceInfo</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">TemplateParameterPrinter</span><span class="p">,</span> <span class="n">TemplateInfo</span><span class="o">.</span><span class="n">TemplateParameter</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">TypedefPrinter</span><span class="p">,</span> <span class="n">TypedefInfo</span><span class="p">)</span>
@@ -215,6 +218,7 @@
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">UsingNamespacePrinter</span><span class="p">,</span> <span class="n">UsingNamespace</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">VariablePrinter</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">GlobalVariablePrinter</span><span class="p">,</span> <span class="n">GlobalVariable</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">StubTypePrinter</span><span class="p">,</span> <span class="n">StubType</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">printer</span></div>
 </pre></div>

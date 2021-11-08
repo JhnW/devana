@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Graph of internal dependencies &mdash; devana 0.2.1 documentation</title>
+  <title>Generate meta information for enums &mdash; devana 0.2.1 documentation</title>
   
 
   
@@ -23,7 +23,7 @@
   
 
   
-    <link rel="canonical" href="https://jhnw.github.io/devana/demos/demo_include_map.html" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/demos/demo_meta_info_enum.html" />
 
   
   <!--[if lt IE 9]>
@@ -43,8 +43,8 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Generate meta information for enums" href="demo_meta_info_enum.html" />
-    <link rel="prev" title="How to start" href="../how_to_start.html" /> 
+    <link rel="next" title="API reference" href="../api/modules.html" />
+    <link rel="prev" title="Graph of internal dependencies" href="demo_include_map.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,8 +99,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../how_to_start.html#the-main-principle">The main principle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_start.html#core-concepts">Core concepts</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../how_to_start.html#examples">Examples</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Graph of internal dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="demo_meta_info_enum.html">Generate meta information for enums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="demo_include_map.html">Graph of internal dependencies</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Generate meta information for enums</a></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +159,7 @@
         
           <li><a href="../how_to_start.html">How to start</a> &raquo;</li>
         
-      <li>Graph of internal dependencies</li>
+      <li>Generate meta information for enums</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -176,13 +176,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="graph-of-internal-dependencies">
-<h1>Graph of internal dependencies<a class="headerlink" href="#graph-of-internal-dependencies" title="Permalink to this headline">¶</a></h1>
-<p>Please find demo code in our <a class="reference external" href="https://github.com/JhnW/devana/tree/main/examples/includes_graph">GitHub</a>.</p>
-<p>This demo program will download and unpack <a class="reference external" href="http://dlib.net/">dlib</a>. This step is optional and can be controlled
-by programs argument. Then, the header files are parsed. On this basis, a dependency graph is generated.</p>
-<p>If you don’t have at least 16 GB of RAM, you should set the module path to the project subfolder in order to save memory
-usage. You can also use this argument to try a different set of source files from a different project.</p>
+  <div class="section" id="generate-meta-information-for-enums">
+<h1>Generate meta information for enums<a class="headerlink" href="#generate-meta-information-for-enums" title="Permalink to this headline">¶</a></h1>
+<p>Please find demo code in our <a class="reference external" href="https://github.com/JhnW/devana/tree/main/examples/meta_enum">GitHub</a>.</p>
+<p>This demo program will read input header file located in input directory and product set headers and source files in
+output directory. Basing on defined enums in input/enums.h it will produce implementation of classes and template
+functions for each enum who provide meta information abut enum: name, count of fields, names and values of fields.</p>
+<p>This example is shoe you a bit real application of Devana. Enum meta information wil be useful for automatic generate
+combo box list in GUI etc.</p>
 </div>
 
 
@@ -191,8 +192,8 @@ usage. You can also use this argument to try a different set of source files fro
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="demo_meta_info_enum.html" class="btn btn-neutral float-right" title="Generate meta information for enums" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../how_to_start.html" class="btn btn-neutral float-left" title="How to start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api/modules.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="demo_include_map.html" class="btn btn-neutral float-left" title="Graph of internal dependencies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

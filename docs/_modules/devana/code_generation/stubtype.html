@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.utility.lazy &mdash; devana 0.2.1 documentation</title>
+  <title>devana.code_generation.stubtype &mdash; devana 0.2.1 documentation</title>
   
 
   
@@ -23,7 +23,7 @@
   
 
   
-    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/utility/lazy.html" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/stubtype.html" />
 
   
   <!--[if lt IE 9]>
@@ -148,7 +148,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>devana.utility.lazy</li>
+      <li>devana.code_generation.stubtype</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -163,29 +163,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for devana.utility.lazy</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">functools</span>
+  <h1>Source code for devana.code_generation.stubtype</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="StubType"><a class="viewcode-back" href="../../../api/devana.code_generation.html#devana.code_generation.stubtype.StubType">[docs]</a><span></span><span class="k">class</span> <span class="nc">StubType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class serves to create outside type representation without sourcing this to lexicon as right type or</span>
+<span class="sd">    parse source file. StubType is just free string.</span>
 
+<span class="sd">    Good example are std types ile std::string or size_t. Parsing stdlib is definitely what you don&#39;t want to do, so you</span>
+<span class="sd">    are able write this type as raw string for code generation. StubType is fast and easy way to stub type. For more</span>
+<span class="sd">    complex features ypu should think about create yur own ClassInfo etc.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LazyNotInit"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.lazy.LazyNotInit">[docs]</a><span class="k">class</span> <span class="nc">LazyNotInit</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Value used by lazy_invoke to determine property are initialized or not. Set this type to value of property</span>
-<span class="sd">    in init function to inform that value must be initialized. For example: self._name = LazyNotInit&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span></div>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 
-
-<div class="viewcode-block" id="lazy_invoke"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.lazy.lazy_invoke">[docs]</a><span class="k">def</span> <span class="nf">lazy_invoke</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
-
-    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-            <span class="n">atr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">atr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">LazyNotInit</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">atr</span>
-        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">wrapper</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 </pre></div>
 
            </div>
