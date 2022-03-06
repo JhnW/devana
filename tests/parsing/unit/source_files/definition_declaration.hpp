@@ -56,7 +56,7 @@ namespace TestNamespace
     }
 
    double TestFunction(double a);
-};
+}
 
 class TestNamespace::TestClass;
 
