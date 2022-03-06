@@ -13,3 +13,4 @@ from .functioninfo import FunctionInfo, FunctionModification
 from .enuminfo import EnumInfo
 from .codepiece import CodePiece
 from .classinfo import ClassMember, ConstructorInfo, DestructorInfo, FieldInfo, MethodInfo, SectionInfo, ClassInfo
+from .externc import ExternC

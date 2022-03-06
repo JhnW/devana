@@ -263,8 +263,9 @@ class SourceFile(CodeContainer):
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
         from devana.syntax_abstraction.enuminfo import EnumInfo
         from devana.syntax_abstraction.variable import GlobalVariable
+        from devana.syntax_abstraction.externc import ExternC
         types = [ClassInfo, UnionInfo, FunctionInfo, EnumInfo, TypedefInfo, NamespaceInfo, UsingNamespace, MethodInfo,
-                 GlobalVariable]
+                 GlobalVariable, ExternC]
         content = []
         for children in self._cursor.get_children():
             if Path(children.location.file.name) != self.path:

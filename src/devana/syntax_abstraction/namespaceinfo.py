@@ -55,8 +55,9 @@ class NamespaceInfo(CodeContainer):
         from devana.syntax_abstraction.typedefinfo import TypedefInfo
         from devana.syntax_abstraction.variable import GlobalVariable
         from devana.syntax_abstraction.unioninfo import UnionInfo
+        from devana.syntax_abstraction.externc import ExternC
         types = [FunctionInfo, NamespaceInfo, UsingNamespace, ClassInfo, EnumInfo, TypedefInfo, MethodInfo, UnionInfo,
-                 GlobalVariable]
+                 GlobalVariable, ExternC]
         content = []
         for children in self._cursor.get_children():
             for t in types:
