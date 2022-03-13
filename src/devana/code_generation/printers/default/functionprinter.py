@@ -1,6 +1,7 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.classinfo import ClassInfo
+from devana.syntax_abstraction.externc import ExternC
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
@@ -19,7 +20,8 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
                 return True
         return False
 
-    def print(self, source: FunctionInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
+    def print(self, source: FunctionInfo, config: Optional[PrinterConfiguration] = None,
+              context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
@@ -93,14 +95,21 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
 
         if source.is_declaration:
             result += ";"
-            formatter.print_line(result)
+            if type(context) is ExternC and len(context.content) == 1:
+                return result  # extern c element will format new line and indent
+            else:
+                formatter.print_line(result)
         else:
-            formatter.line = result
+            if type(context) is not ExternC or (type(context) is ExternC and len(context.content) != 1):
+                formatter.line = result
             formatter.next_line()
             formatter.print_line("{")
             formatter.indent.count += 1
             for line in source.body.splitlines(False):
                 formatter.print_line(line)
             formatter.indent.count -= 1
-            formatter.print_line("}")
+            if type(context) is ExternC and len(context.content) == 1:
+                return result + formatter.text + "}"
+            else:
+                formatter.print_line("}")
         return formatter.text
