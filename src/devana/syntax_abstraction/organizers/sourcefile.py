@@ -1,12 +1,16 @@
-from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
+# SPDX-FileCopyrightText: Copyright (C) <2022> Critical TechWorks, SA
+#
+# SPDX-License-Identifier: LGPLv2.1
+
+import re
 from clang import cindex
-from typing import Optional, Union, Literal, List, NoReturn
-from enum import Enum, auto
-from devana.utility.errors import ParserError
 from pathlib import Path
+from enum import Enum, auto
+from typing import Optional, Union, Literal, List, NoReturn
+from devana.utility.errors import ParserError
+from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-import re
 
 
 class IncludeInfo:
@@ -229,26 +233,33 @@ class SourceFile(CodeContainer):
         if len(text) < 3:
             return self._header_guard
 
-        match = re.match(r"^#ifndef\s(\S+)", text[0])
-        if not match:
-            return self._header_guard
-        if len(match.group()) < 1:
-            return self._header_guard
-        def_name = match.group(1)
+        for index, line in enumerate(text):
+            match = re.match(r"^#ifndef\s(\S+)", line )
+            if not match:
+                continue
+            if len(match.group()) < 1:
+                continue
+            def_name = match.group(1)
+            match = None
+            if index <= len(text) - 2 :
+                match = re.match(r"^#define\s(\S+)", text[index+1])
+            if not match:
+                continue
+            if len(match.group()) < 1:
+                continue
+            if match.group(1) != def_name:
+                continue
 
-        match = re.match(r"^#define\s(\S+)", text[1])
-        if not match:
+            regex1 = r"#endif([\s]+)?//(.*)"
+            regex2 = r"#endif([\s]+)?/\*(.*)\*/([\s]+)?$"
+            regex3 = r"#endif([\s]+)?$"
+            index = 1
+            if not re.search( r"\S$", text[-index]):
+                index = index + 1
+            if not re.match( regex1 +"|"+ regex2 + "|" + regex3 , text[-index]):
+                continue
+            self._header_guard = def_name
             return self._header_guard
-        if len(match.group()) < 1:
-            return self._header_guard
-        if match.group(1) != def_name:
-            return self._header_guard
-
-        if text[-1] != "#endif":
-            return self._header_guard
-
-        self._header_guard = def_name
-        return self._header_guard
 
     @header_guard.setter
     def header_guard(self, value):
