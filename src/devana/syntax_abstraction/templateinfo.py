@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (C) <2022> Critical TechWorks, SA
+#
+# SPDX-License-Identifier: LGPL-2.1-only
+
 from typing import Optional, List, Union, Tuple
 from clang import cindex
 from devana.utility.lazy import LazyNotInit, lazy_invoke
@@ -114,7 +118,7 @@ class TemplateInfo:
         def is_variadic(self) -> bool:
             self._is_variadic = False
             text = CodePiece(self._cursor).text
-            if re.search(r"\.\.\." + self.name, text):
+            if re.search(r"\.\.\.([\s]+)?" + self.name, text):
                 self._is_variadic = True
             return self._is_variadic
 
@@ -149,7 +153,7 @@ class TemplateInfo:
             if not (not (cursor.kind != cindex.CursorKind.FUNCTION_TEMPLATE) or not (
                     cursor.kind != cindex.CursorKind.CLASS_TEMPLATE) or not (
                     cursor.kind != cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION) or not (
-                    "template<>" not in CodePiece(cursor).text)):
+                    not re.search(r"template([\s]+)?<>", CodePiece(cursor).text ))):
                 raise ParserError("Template parameter expect FUNCTION_TEMPLATE cursor kind.")
             self._specialisations_value = LazyNotInit
             self._specialisations = LazyNotInit
