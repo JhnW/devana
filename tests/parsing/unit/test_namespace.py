@@ -184,5 +184,24 @@ class TestNamespacesLexicon(unittest.TestCase):
         lexicon = result.lexicon
         self.assertEqual(lexicon.namespaces_chain, ["foo1", "bar1"])
 
+    def test_namespace_type_deduction_same_name_function_argument(self):
+        expected: ClassInfo = self.file.content[4]
+        expected_from_namespace: ClassInfo = self.file.content[5].content[0]
+        expected_from_namespace_deeper: ClassInfo = self.file.content[5].content[1].content[0]
+        function: FunctionInfo = self.file.content[6]
+        self.assertEqual(function.arguments[0].type.details, expected)
+        function: FunctionInfo = self.file.content[7]
+        self.assertEqual(function.arguments[0].type.details, expected_from_namespace)
+        function: FunctionInfo = self.file.content[8]
+        self.assertEqual(function.arguments[0].type.details, expected_from_namespace_deeper)
 
-
+    def test_namespace_type_deduction_class_inheritance(self):
+        expected: ClassInfo = self.file.content[4]
+        expected_from_namespace: ClassInfo = self.file.content[5].content[0]
+        expected_from_namespace_deeper: ClassInfo = self.file.content[5].content[1].content[0]
+        class_info: ClassInfo = self.file.content[9]
+        self.assertEqual(class_info.inheritance.type_parents[0].type, expected)
+        class_info: ClassInfo = self.file.content[10]
+        self.assertEqual(class_info.inheritance.type_parents[0].type, expected_from_namespace)
+        class_info: ClassInfo = self.file.content[11]
+        self.assertEqual(class_info.inheritance.type_parents[0].type, expected_from_namespace_deeper)

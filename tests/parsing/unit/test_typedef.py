@@ -66,6 +66,8 @@ class TestTypedefSimple(unittest.TestCase):
             self.assertEqual(result.type_info.details.type_info.details, BasicType.CHAR)
 
     def test_namespaces_typedef(self):
+        file = SourceFile(self.cursor)
+
         with self.subTest("typereal"):
             node = find_by_name(self.cursor, "typereal")
             result = TypedefInfo(node)
@@ -87,18 +89,14 @@ class TestTypedefSimple(unittest.TestCase):
             self.assertEqual(len(result.type_info.namespaces), 0)
 
         with self.subTest("depend_typereal"):
-            node = find_by_name(self.cursor, "depend_typereal")
-            result = TypedefInfo(node)
-            stub_lexicon(result)
+            result: TypedefInfo = file.content[6]
             self.assertEqual(result.name, "depend_typereal")
             self.assertEqual(result.type_info.name, "typereal")
             self.assertTrue(result.type_info.modification.is_no_modification)
-            self.assertEqual(result.type_info.namespaces, ["test_namespace",])
+            self.assertEqual(result.type_info.namespaces, ["test_namespace", ])
 
         with self.subTest("depend_depend_typeint16"):
-            node = find_by_name(self.cursor, "depend_depend_typeint16")
-            result = TypedefInfo(node)
-            stub_lexicon(result)
+            result: TypedefInfo = file.content[7]
             self.assertEqual(result.name, "depend_depend_typeint16")
             self.assertEqual(result.type_info.name, "typeint16")
             self.assertTrue(result.type_info.modification.is_no_modification)

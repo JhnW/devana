@@ -498,7 +498,7 @@ class TypeExpression:
             # check internal types
             if self.parent is not None:
                 if self.parent.lexicon is not None:  # check current lexicon scope
-                    self._details = self.parent.lexicon.find_type(type_c.spelling)
+                    self._details = self.parent.lexicon.find_type(type_c.spelling, self.namespaces)
                 if self._details is None:
                     self._details = self.parent.lexicon.find_type(type_c)
             # check external types

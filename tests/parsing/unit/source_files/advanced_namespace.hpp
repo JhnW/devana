@@ -125,3 +125,40 @@ namespace foo1
 {
     double splitFunction(int a, int b);
 }
+
+struct TheSameName
+{
+    int a;
+};
+
+namespace TheSameNameNamespace
+{
+    struct TheSameName
+    {
+        double x;
+    };
+
+    namespace TheSameNameNamespace2
+    {
+        struct TheSameName
+        {
+            double x;
+        };
+    }
+}
+
+void testTheSameNameFunc(const TheSameName& arg);
+void testTheSameNameNamespaceFunc(const TheSameNameNamespace::TheSameName& arg);
+void testTheSameNameTwoNamespaceFunc(const TheSameNameNamespace::TheSameNameNamespace2::TheSameName& arg);
+
+class ClassTestNamespaceDeductionTheSameName1: public TheSameName
+{
+};
+
+class ClassTestNamespaceDeductionTheSameName2: public TheSameNameNamespace::TheSameName
+{
+};
+
+class ClassTestNamespaceDeductionTheSameName3: public TheSameNameNamespace::TheSameNameNamespace2::TheSameName
+{
+};

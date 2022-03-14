@@ -172,10 +172,10 @@ class Lexicon:
             return None
         return self.parent.find_content(name)
 
-    def _find_type_from_name(self, name: str) -> Optional:
+    def _find_type_from_name(self, name: str, namespace_scope: Optional[List[str]] = None) -> Optional:
         from devana.syntax_abstraction.typedefinfo import TypedefInfo
         from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
-        content = self.find_content(name)
+        content = self.find_content(name, namespace_scope)
         if content is None:
             return None
         content = list(
@@ -248,9 +248,9 @@ class Lexicon:
 
         return result
 
-    def find_type(self, element: Union[str, cindex.Cursor]) -> Optional:
+    def find_type(self, element: Union[str, cindex.Cursor], namespace_scope: Optional[List[str]] = None) -> Optional:
         if type(element) is str:
-            return self._find_type_from_name(element)
+            return self._find_type_from_name(element, namespace_scope)
         else:
             return self._find_type_from_cursor(element)
 
