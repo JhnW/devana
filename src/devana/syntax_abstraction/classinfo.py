@@ -166,8 +166,10 @@ class MethodInfo(FunctionInfo, ClassMember):
         ClassMember.__init__(self, cursor)
         if cursor is None:
             self._type = MethodType.STANDARD
+            self._documentation = None
         else:
             self._type = LazyNotInit
+            self._documentation = LazyNotInit
 
     @property
     @lazy_invoke
@@ -209,6 +211,15 @@ class MethodInfo(FunctionInfo, ClassMember):
     def template(self, value):
         self._template = value
 
+    @property
+    @lazy_invoke
+    def documentation(self):
+        """Documentation of the Method"""
+        return self._cursor.brief_comment
+        
+    @documentation.setter
+    def documentation(self, value):
+        self._documentation = value
 
 class ConstructorInfo(MethodInfo):
     """Constructor method information."""
@@ -616,6 +627,7 @@ class ClassInfo(CodeContainer):
             self._inheritance = None
             self._is_declaration = False
             self._namespaces = []
+            self._documentation = None
         else:
             self._name = LazyNotInit
             self._text_source = LazyNotInit
@@ -625,6 +637,7 @@ class ClassInfo(CodeContainer):
             self._inheritance = LazyNotInit
             self._is_declaration = LazyNotInit
             self._namespaces = LazyNotInit
+            self._documentation = LazyNotInit
             if cursor.kind == cindex.CursorKind.STRUCT_DECL:
                 self._is_class = False
             elif cursor.kind == cindex.CursorKind.CLASS_DECL:
@@ -876,6 +889,15 @@ class ClassInfo(CodeContainer):
     @template.setter
     def template(self, value):
         self._template = value
+
+    @property
+    @lazy_invoke
+    def documentation(self) -> Optional[str]:
+        return self._cursor.brief_comment
+
+    @documentation.setter
+    def documentation(self, value) -> Optional[str]:
+        return self._documentation
 
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.unioninfo import UnionInfo

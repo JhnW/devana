@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: Copyright (C) <2022> Critical TechWorks, SA
 #
-# SPDX-License-Identifier: LGPLv2.1
+# SPDX-License-Identifier: LGPL-2.1-only
 
 import re
 from clang import cindex
