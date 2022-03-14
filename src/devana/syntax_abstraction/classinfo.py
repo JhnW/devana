@@ -1,6 +1,11 @@
+# SPDX-FileCopyrightText: Copyright (C) <2022> Critical TechWorks, SA
+#
+# SPDX-License-Identifier: LGPL-2.1-only
+
+import re
+from clang import cindex
 from typing import Optional, List, Tuple
 from enum import Enum, auto
-from clang import cindex
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -8,9 +13,9 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-import re
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
+from devana.syntax_abstraction.organizers.sourcemodule import SourceModule
 
 
 class AccessSpecifier(Enum):
@@ -507,7 +512,27 @@ class InheritanceInfo:
                 return None
             if self.parent.lexicon is None:
                 return None
-            return self.parent.lexicon.find_type(self._cursor.get_definition())
+            normal_inheritance_type_parent = self.parent.lexicon.find_type(self._cursor.get_definition())
+            if normal_inheritance_type_parent:
+                self._type = normal_inheritance_type_parent
+                return self._type
+
+            src_module = self.parent
+            while type(src_module) != SourceModule:
+                src_module = src_module.parent
+                if src_module == None:
+                    return src_module
+            name = ''
+            if rf'class' in self._cursor.spelling :
+                name = self._cursor.spelling[len(rf'class '):]
+            if rf'struct' in self._cursor.spelling :
+                name = self._cursor.spelling[len(rf'struct '):] 
+            if re.search(rf'\:\:',self._cursor.spelling):
+                name_and_namespaces = re.split(rf'\:\:',self._cursor.spelling)
+                name = name_and_namespaces[-1]
+
+            self._type = src_module.search_for_class(name)
+            return self._type
 
         @type.setter
         def type(self, value):
