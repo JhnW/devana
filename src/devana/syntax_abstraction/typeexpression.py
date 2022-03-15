@@ -429,6 +429,9 @@ class TypeExpression:
         """List of namespaces used in name."""
         self._namespaces = []
         if not hasattr(self._cursor, "get_children"):
+            # for function return types we need complete this list by regular expression
+            # it would be nice to find another way to do it by clang tools
+            self._namespaces = self._cursor.spelling.split("::")[:-1]
             return self._namespaces
         for children in self._cursor.get_children():
             if children.kind == cindex.CursorKind.NAMESPACE_REF:
@@ -498,9 +501,9 @@ class TypeExpression:
             # check internal types
             if self.parent is not None:
                 if self.parent.lexicon is not None:  # check current lexicon scope
-                    self._details = self.parent.lexicon.find_type(type_c.spelling, self.namespaces)
-                if self._details is None:
                     self._details = self.parent.lexicon.find_type(type_c)
+                if self._details is None:
+                    self._details = self.parent.lexicon.find_type(type_c.spelling, self.namespaces)
             # check external types
             if self._details is None:
                 from devana.syntax_abstraction.typedefinfo import TypedefInfo

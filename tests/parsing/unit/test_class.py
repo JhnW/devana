@@ -272,7 +272,7 @@ class TestClassBasic(unittest.TestCase):
         index = clang.cindex.Index.create()
         cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp").cursor
         file = SourceFile(cursor)
-        result: ClassInfo = file.content[13]
+        result: ClassInfo = file.content[14]
         self.assertEqual(result.name, "MethodMods")
 
         method: MethodInfo = result.content[1]
@@ -417,6 +417,16 @@ class TestInheritance(unittest.TestCase):
         self.assertEqual(result.inheritance.type_parents[0].type.name, "Parent1")
         self.assertEqual(result.inheritance.type_parents[0].access_specifier, AccessSpecifier.PRIVATE)
         self.assertFalse(result.inheritance.type_parents[0].is_virtual)
+
+    def test_no_spec_virtual_child(self):
+        result: ClassInfo = self.file.content[13]
+        self.assertEqual(result.name, "NoSpecVirtualChild")
+        self.assertTrue(result.is_class)
+        self.assertEqual(len(result.inheritance.type_parents), 1)
+        self.assertEqual(result.inheritance.type_parents[0].type, self.file.content[7])
+        self.assertEqual(result.inheritance.type_parents[0].type.name, "Parent2")
+        self.assertEqual(result.inheritance.type_parents[0].access_specifier, AccessSpecifier.PRIVATE)
+        self.assertTrue(result.inheritance.type_parents[0].is_virtual)
 
 
 class TestClassTemplate(unittest.TestCase):

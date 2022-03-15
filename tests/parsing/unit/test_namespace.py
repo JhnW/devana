@@ -188,6 +188,7 @@ class TestNamespacesLexicon(unittest.TestCase):
         expected: ClassInfo = self.file.content[4]
         expected_from_namespace: ClassInfo = self.file.content[5].content[0]
         expected_from_namespace_deeper: ClassInfo = self.file.content[5].content[1].content[0]
+
         function: FunctionInfo = self.file.content[6]
         self.assertEqual(function.arguments[0].type.details, expected)
         function: FunctionInfo = self.file.content[7]
@@ -195,13 +196,20 @@ class TestNamespacesLexicon(unittest.TestCase):
         function: FunctionInfo = self.file.content[8]
         self.assertEqual(function.arguments[0].type.details, expected_from_namespace_deeper)
 
+        function: FunctionInfo = self.file.content[9]
+        self.assertEqual(function.return_type.details, expected)
+        function: FunctionInfo = self.file.content[10]
+        self.assertEqual(function.return_type.details, expected_from_namespace)
+        function: FunctionInfo = self.file.content[11]
+        self.assertEqual(function.return_type.details, expected_from_namespace_deeper)
+
     def test_namespace_type_deduction_class_inheritance(self):
         expected: ClassInfo = self.file.content[4]
         expected_from_namespace: ClassInfo = self.file.content[5].content[0]
         expected_from_namespace_deeper: ClassInfo = self.file.content[5].content[1].content[0]
-        class_info: ClassInfo = self.file.content[9]
+        class_info: ClassInfo = self.file.content[12]
         self.assertEqual(class_info.inheritance.type_parents[0].type, expected)
-        class_info: ClassInfo = self.file.content[10]
+        class_info: ClassInfo = self.file.content[13]
         self.assertEqual(class_info.inheritance.type_parents[0].type, expected_from_namespace)
-        class_info: ClassInfo = self.file.content[11]
+        class_info: ClassInfo = self.file.content[14]
         self.assertEqual(class_info.inheritance.type_parents[0].type, expected_from_namespace_deeper)

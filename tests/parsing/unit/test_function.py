@@ -151,9 +151,8 @@ class TestFunctionsSimple(unittest.TestCase):
             self.assertTrue(result.modification.is_inline)
 
     def test_function_namespace_return(self):
-        node = find_by_name(self.cursor, "namespace_return_func")
-        result = FunctionInfo(node)
-        stub_lexicon(result)
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp")
+        result: FunctionInfo = file.content[8]
         self.assertEqual(result.name, "namespace_return_func")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
         self.assertEqual(len(result.arguments), 1)
@@ -165,7 +164,7 @@ class TestFunctionsSimple(unittest.TestCase):
         self.assertTrue(result.is_declaration)
         self.assertEqual(result.modification, FunctionModification.NONE)
         self.assertEqual(result.return_type.name, "typereal")
-        self.assertEqual(result.return_type.namespaces, ("test_namespace",))
+        self.assertEqual(result.return_type.namespaces, ["test_namespace",])
 
     def test_function_modification(self):
         node = find_by_name(self.cursor, "attribute_func_1")

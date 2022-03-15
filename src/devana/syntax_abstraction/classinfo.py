@@ -507,7 +507,18 @@ class InheritanceInfo:
                 return None
             if self.parent.lexicon is None:
                 return None
-            return self.parent.lexicon.find_type(self._cursor.get_definition())
+            result = self.parent.lexicon.find_type(self._cursor.get_definition())
+            if result is None:
+                name: str = self._cursor.spelling
+                if name.startswith("class "):
+                    name = name[len("class "):]
+                elif name.startswith("struct "):
+                    name = name[len("struct "):]
+                namespaces_and_type = name.split("::")
+                name = namespaces_and_type[-1]
+                namespaces = namespaces_and_type[:-1]
+                result = self.parent.lexicon.find_type(name, namespaces)
+            return result
 
         @type.setter
         def type(self, value):
@@ -518,7 +529,8 @@ class InheritanceInfo:
         def is_virtual(self) -> bool:
             """Defines is virtual inheritance"""
             self._is_virtual = False
-            if " virtual " in CodePiece(self._cursor).text:
+            text = CodePiece(self._cursor).text
+            if " virtual " in text or "virtual " in text:
                 self._is_virtual = True
             return self._is_virtual
 

@@ -170,6 +170,11 @@ class VirtualChild: public virtual Parent2
 
 };
 
+class NoSpecVirtualChild: virtual Parent2
+{
+    NoSpecVirtualChild();
+};
+
 class MethodMods
 {
 public:

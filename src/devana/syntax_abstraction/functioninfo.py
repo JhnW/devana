@@ -169,12 +169,6 @@ class FunctionInfo:
     def return_type(self) -> TypeExpression:
         """Function return type. None for class functions like constructor."""
         self._return_type = TypeExpression(self._cursor.result_type, self)
-        if len(self._return_type.namespaces) == 0:  # check for type only
-            type_name = self._return_type.name
-            pattern = r"(\w+)::"
-            text = self.text_source.text
-            namespaces = re.findall(pattern, text.partition(type_name)[0])
-            self._return_type._namespaces = tuple(namespaces)
         return self._return_type
 
     @return_type.setter

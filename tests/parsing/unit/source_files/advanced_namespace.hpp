@@ -151,6 +151,10 @@ void testTheSameNameFunc(const TheSameName& arg);
 void testTheSameNameNamespaceFunc(const TheSameNameNamespace::TheSameName& arg);
 void testTheSameNameTwoNamespaceFunc(const TheSameNameNamespace::TheSameNameNamespace2::TheSameName& arg);
 
+TheSameName testTheSameNameFuncReturn();
+TheSameNameNamespace::TheSameName testTheSameNameNamespaceFuncReturn();
+TheSameNameNamespace::TheSameNameNamespace2::TheSameName ttestTheSameNameTwoNamespaceFuncReturn();
+
 class ClassTestNamespaceDeductionTheSameName1: public TheSameName
 {
 };
