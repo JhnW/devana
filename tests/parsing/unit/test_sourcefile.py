@@ -104,8 +104,32 @@ class TestSourceFile(unittest.TestCase):
         self.assertEqual(len(file.content), 3)
         self.assertEqual(file.header_guard, "HEADER_GUARD_H")
 
+    def test_header_guard_present_text_before(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/header_guard_text_before.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        self.assertEqual(file.header_guard, "HEADER_GUARD_H")
+
+    def test_header_guard_present_text_after(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/header_guard_text_after.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        self.assertEqual(file.header_guard, "HEADER_GUARD_H")
+
+    def test_header_guard_present_comment(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/header_guard_comment.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        self.assertEqual(file.header_guard, "HEADER_GUARD_H")
+
     def test_header_guard_missing(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/no_header_guard.hpp")
+        self.assertEqual(len(file.includes), 0)
+        self.assertEqual(len(file.content), 3)
+        self.assertEqual(file.header_guard, None)
+
+    def test_header_guard_missing_internal_define(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/header_guard/no_header_guard_internal_ifdef.hpp")
         self.assertEqual(len(file.includes), 0)
         self.assertEqual(len(file.content), 3)
         self.assertEqual(file.header_guard, None)

@@ -1,4 +1,5 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
+from devana.syntax_abstraction.codepiece import CodePiece
 from clang import cindex
 from typing import Optional, Union, Literal, List, NoReturn
 from enum import Enum, auto
@@ -222,32 +223,43 @@ class SourceFile(CodeContainer):
     @lazy_invoke
     def header_guard(self) -> Optional[str]:
         self._header_guard = None
+        def_name = None
         if not self.text_source:
             return self._header_guard
 
-        text = self.text_source.text.split("\n")
-        if len(text) < 3:
-            return self._header_guard
+        line_fist_content = -1
+        line_last_content = -1
+        if len(self.content) > 0:
+            line_fist_content = self.content[0].text_source.begin.row
+            line_last_content = self.content[-1].text_source.end.row
 
-        match = re.match(r"^#ifndef\s(\S+)", text[0])
-        if not match:
-            return self._header_guard
-        if len(match.group()) < 1:
-            return self._header_guard
-        def_name = match.group(1)
+        lines = self.text_source.text.split("\n")
 
-        match = re.match(r"^#define\s(\S+)", text[1])
-        if not match:
-            return self._header_guard
-        if len(match.group()) < 1:
-            return self._header_guard
-        if match.group(1) != def_name:
-            return self._header_guard
+        for i, line in enumerate(lines[:line_fist_content]):
+            match = re.match(r"^#ifndef\s(\S+)", line)
+            if not match:
+                continue
+            if len(match.group()) < 1:
+                continue
+            def_name = match.group(1)
+            if line_fist_content > i:
+                match = re.match(r"^#define\s(\S+)", lines[i+1])
+                if not match:
+                    return self._header_guard
+                if len(match.group()) < 1:
+                    return self._header_guard
+                if match.group(1) != def_name:
+                    return self._header_guard
+                break
+            else:
+                return self._header_guard
 
-        if text[-1] != "#endif":
-            return self._header_guard
+        for line in reversed(lines[line_last_content:]):
+            match = re.match(r"^#endif", line)
+            if match:
+                self._header_guard = def_name
+                break
 
-        self._header_guard = def_name
         return self._header_guard
 
     @header_guard.setter
