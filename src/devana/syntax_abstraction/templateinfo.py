@@ -148,8 +148,8 @@ class TemplateInfo:
         else:
             if not (not (cursor.kind != cindex.CursorKind.FUNCTION_TEMPLATE) or not (
                     cursor.kind != cindex.CursorKind.CLASS_TEMPLATE) or not (
-                    cursor.kind != cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION) or not (
-                    "template<>" not in CodePiece(cursor).text)):
+                    cursor.kind != cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION) or
+                    re.search(r"template\s*<>", CodePiece(cursor).text)):
                 raise ParserError("Template parameter expect FUNCTION_TEMPLATE cursor kind.")
             self._specialisations_value = LazyNotInit
             self._specialisations = LazyNotInit
