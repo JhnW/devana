@@ -4,6 +4,7 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 
 
@@ -92,3 +93,23 @@ class GlobalVariable(Variable):
         if cursor is not None:
             if cursor.kind != cindex.CursorKind.VAR_DECL:
                 raise ParserError("Invalid cursor kind of global variable.")
+        if cursor is None:
+            self._associated_comment = None
+        else:
+            self._associated_comment = LazyNotInit
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value

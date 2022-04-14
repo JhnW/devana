@@ -4,9 +4,7 @@ import clang
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
-from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.classinfo import *
-from devana.syntax_abstraction.functioninfo import FunctionModification
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
 
 
@@ -352,5 +350,3 @@ class TestTemplateAdvanced(unittest.TestCase):
         self.assertEqual(result.template.specialisation_values[0].details, self.file.content[23])
         self.assertEqual(len(result.template.specialisation_values[0].template_arguments), 1)
         self.assertEqual(result.template.specialisation_values[0].template_arguments[0].details, BasicType.CHAR)
-
-

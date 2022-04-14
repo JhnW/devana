@@ -1,15 +1,16 @@
-from clang import cindex
-from typing import Optional, Tuple, List
-from enum import auto, IntFlag
 from devana.syntax_abstraction.variable import Variable
 from devana.utility.errors import ParserError, CodeError
 from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
-import re
+from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.utility.lazy import LazyNotInit, lazy_invoke
+from clang import cindex
+from typing import Optional, Tuple, List
+from enum import auto, IntFlag
+import re
 
 
 class FunctionModification(IntFlag):
@@ -109,6 +110,7 @@ class FunctionInfo:
             self._text_source = None
             self._template = None
             self._namespaces = None
+            self._associated_comment = None
         else:
             self._check_kind(cursor.kind)
             self._arguments = LazyNotInit
@@ -126,6 +128,7 @@ class FunctionInfo:
             self._text_source = LazyNotInit
             self._template = LazyNotInit
             self._namespaces = LazyNotInit
+            self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @property
@@ -359,6 +362,22 @@ class FunctionInfo:
     @template.setter
     def template(self, value):
         self._template = value
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value
 
     def _check_kind(self, kind: cindex.Cursor.kind):
         if kind != cindex.CursorKind.FUNCTION_DECL and kind != cindex.CursorKind.FUNCTION_TEMPLATE:

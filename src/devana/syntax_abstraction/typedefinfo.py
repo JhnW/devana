@@ -3,6 +3,7 @@ from typing import Optional, Union
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
+from devana.syntax_abstraction.comment import Comment
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -18,12 +19,14 @@ class TypedefInfo:
             self._type_info = None
             self._text_source = None
             self._name = ""
+            self._associated_comment = None
         else:
             if self._cursor.kind != cindex.CursorKind.TYPEDEF_DECL:
                 raise ParserError("Element is not typedef.")
             self._type_info = LazyNotInit
             self._text_source = LazyNotInit
             self._name = LazyNotInit
+            self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @property
@@ -68,3 +71,19 @@ class TypedefInfo:
     @lexicon.setter
     def lexicon(self, value):
         self._lexicon = value
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value

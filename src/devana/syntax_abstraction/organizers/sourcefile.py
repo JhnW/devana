@@ -1,13 +1,14 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
-from devana.syntax_abstraction.codepiece import CodePiece
+from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
+from devana.utility.errors import ParserError
+from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.configuration import Configuration
+import re
+from pathlib import Path
 from clang import cindex
 from typing import Optional, Union, Literal, List, NoReturn
 from enum import Enum, auto
-from devana.utility.errors import ParserError
-from pathlib import Path
-from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
-import re
 
 
 class IncludeInfo:
@@ -17,7 +18,6 @@ class IncludeInfo:
         self._parent = parent
         self._cursor = cursor
         if cursor is None:
-            pass
             self._value = ""
             self._text = None
             self._is_standard = False
@@ -122,7 +122,8 @@ class SourceFileType(Enum):
 class SourceFile(CodeContainer):
     """Information about specific source code file."""
 
-    def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[any] = None):
+    def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[any] = None,
+                 configuration: Optional[Configuration] = None):
         cursor = None
         if source is not None:
             if not isinstance(source, str):
@@ -140,6 +141,8 @@ class SourceFile(CodeContainer):
             self._type = SourceFileType.HEADER
             self._includes = []
             self._header_guard = None
+            self._preamble = None
+            self._comments_factory = None
         else:
             if cursor is None:
                 self._cursor = cursor
@@ -147,6 +150,8 @@ class SourceFile(CodeContainer):
                 self._text_source = LazyNotInit
                 self._includes = LazyNotInit
                 self._type = LazyNotInit
+                self._preamble = LazyNotInit
+                self._comments_factory = None
             else:
                 if cursor.kind != cindex.CursorKind.TRANSLATION_UNIT:
                     raise ParserError("It is not valid cursor kind.")
@@ -155,6 +160,10 @@ class SourceFile(CodeContainer):
                 self._includes = LazyNotInit
                 self._type = LazyNotInit
                 self._header_guard = LazyNotInit
+                self._comments_factory = CommentsFactory(self)
+        self._configuration: Configuration = Configuration() if configuration is None else configuration
+        self._configuration.validate()
+
         self._lexicon = Lexicon.create(self)
 
     @property
@@ -221,6 +230,21 @@ class SourceFile(CodeContainer):
 
     @property
     @lazy_invoke
+    def preamble(self) -> Optional[Comment]:
+        """First comment in file - Must start with the first line. Standard comment grouping policies apply. """
+        self._preamble = None
+        if self._comments_factory.comments:
+            preamble = self._comments_factory.comments[0]
+            if preamble.marker == CommentMarker.MULTI_LINE and preamble.begin.row == 1 and preamble.begin.col == 1:
+                self._preamble = preamble
+        return self._preamble
+
+    @preamble.setter
+    def preamble(self, value: Optional[Comment]):
+        self._preamble = value
+
+    @property
+    @lazy_invoke
     def header_guard(self) -> Optional[str]:
         self._header_guard = None
         def_name = None
@@ -265,6 +289,23 @@ class SourceFile(CodeContainer):
     @header_guard.setter
     def header_guard(self, value):
         self._header_guard = value
+
+    @property
+    def configuration(self) -> Configuration:
+        return self._configuration
+
+    @configuration.setter
+    def configuration(self, value: Configuration):
+        self._configuration = value
+
+    def bind_comment(self, element) -> Optional[Comment]:
+        """Function take code element present in this source file and return associated comment
+        depending on the configuration. A common use case is when specific instances of code elements use this."""
+        if not hasattr(element, "text_source"):
+            return None
+        if self._comments_factory is None:
+            return None
+        return self._comments_factory.get_upper_comment(element.text_source)
 
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo

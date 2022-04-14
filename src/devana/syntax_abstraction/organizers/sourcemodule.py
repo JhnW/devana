@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.configuration import Configuration
 import os
 import clang
 import re
@@ -19,13 +20,15 @@ class SourceModule:
     """Logic unit of code as named collection of source files."""
 
     def __init__(self, name: str, root_path: str, module_filter: Optional[ModuleFilter] = None,
-                 parent: Optional[any] = None):
+                 parent: Optional[any] = None, configuration: Optional[Configuration] = None):
         self._path = root_path
         self._module_filter = module_filter
         self._parent = parent
         self._files = LazyNotInit
         self._name = name
         self._lexicon = Lexicon()
+        self._configuration: Configuration = Configuration() if configuration is None else configuration
+        self._configuration.validate()
 
     @property
     def module_filter(self):
@@ -88,3 +91,7 @@ class SourceModule:
     @property
     def parent(self):
         return self._parent
+
+    @property
+    def configuration(self):
+        return self._configuration

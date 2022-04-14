@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class DispatcherInjectable:
-    """Mixin class for provide injectable ICodePrinter as internal printer for al types."""
+    """Mixin class for provide injectable ICodePrinter as internal printer for all types."""
 
     def __init__(self, printer_dispatcher: Optional = None):
         self._printer_dispatcher = printer_dispatcher

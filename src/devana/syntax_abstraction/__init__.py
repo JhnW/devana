@@ -12,5 +12,7 @@ from .namespaceinfo import NamespaceInfo
 from .functioninfo import FunctionInfo, FunctionModification
 from .enuminfo import EnumInfo
 from .codepiece import CodePiece
+from .codelocation import CodeLocation
+from .comment import Comment, CommentMarker
 from .classinfo import ClassMember, ConstructorInfo, DestructorInfo, FieldInfo, MethodInfo, SectionInfo, ClassInfo
 from .externc import ExternC

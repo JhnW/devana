@@ -1,12 +1,13 @@
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from typing import Optional, List, Literal
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
+from devana.syntax_abstraction.comment import Comment
 from devana.utility.errors import ParserError
-from clang import cindex
 from devana.syntax_abstraction.typeexpression import BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 import re
+from clang import cindex
+from typing import Optional, List, Literal
 
 
 class EnumInfo(CodeContainer):
@@ -22,10 +23,12 @@ class EnumInfo(CodeContainer):
                 self._name = ""
                 self._value = 0
                 self._is_default = False
+                self._associated_comment = False
             else:
                 self._text_source = LazyNotInit
                 self._name = LazyNotInit
                 self._value = LazyNotInit
+                self._associated_comment = LazyNotInit
                 if cursor.kind != cindex.CursorKind.ENUM_CONSTANT_DECL:
                     raise ParserError("It is not a valid type cursor.")
                 self._is_default = True
@@ -71,6 +74,21 @@ class EnumInfo(CodeContainer):
             return self._text_source
 
         @property
+        @lazy_invoke
+        def associated_comment(self) -> Optional[Comment]:
+            parent = self.parent
+            while parent is not None:
+                if hasattr(parent, "bind_comment"):
+                    self._associated_comment = parent.bind_comment(self)
+                    return self._associated_comment
+                parent = parent.parent
+            return None
+
+        @associated_comment.setter
+        def associated_comment(self, value):
+            self._associated_comment = value
+
+        @property
         def parent(self) -> CodeContainer:
             """Structural parent element like file, namespace or class."""
             return self._parent
@@ -86,6 +104,7 @@ class EnumInfo(CodeContainer):
             self._numeric_type = BasicType.INT
             self._text_source = None
             self._is_declaration = False
+            self._associated_comment = None
         else:
             if cursor.kind != cindex.CursorKind.ENUM_DECL:
                 raise ParserError("It is not a valid type cursor.")
@@ -96,6 +115,7 @@ class EnumInfo(CodeContainer):
             self._numeric_type = LazyNotInit
             self._text_source = LazyNotInit
             self._is_declaration = LazyNotInit
+            self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @property
@@ -115,7 +135,7 @@ class EnumInfo(CodeContainer):
         """List of possible values of enum."""
         self._values = []
         for children in self._cursor.get_children():
-            self._values.append(self.EnumValue(children))
+            self._values.append(self.EnumValue(children, self))
         return self._values
 
     @values.setter
@@ -218,6 +238,21 @@ class EnumInfo(CodeContainer):
     @lexicon.setter
     def lexicon(self, value):
         self._lexicon = value
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value
 
     def _create_content(self) -> List[any]:
         types = [self.EnumValue]

@@ -2,8 +2,6 @@
 import subprocess
 from subprocess import PIPE
 import argparse
-import time
-import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--no_test_coverage', action='store_true', required=False)

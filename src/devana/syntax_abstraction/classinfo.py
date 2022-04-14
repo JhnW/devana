@@ -1,6 +1,3 @@
-from typing import Optional, List, Tuple
-from enum import Enum, auto
-from clang import cindex
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -8,9 +5,13 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-import re
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
+from devana.syntax_abstraction.comment import Comment
+from typing import Optional, List, Tuple
+from enum import Enum, auto
+from clang import cindex
+import re
 
 
 class AccessSpecifier(Enum):
@@ -369,6 +370,26 @@ class FieldInfo(Variable, ClassMember):
         if cursor is not None:
             if cursor.kind != cindex.CursorKind.FIELD_DECL and cursor.kind != cindex.CursorKind.VAR_DECL:
                 raise ParserError("Bad cursor kind.")
+        if cursor is None:
+            self._associated_comment = None
+        else:
+            self._associated_comment = LazyNotInit
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value
 
 
 class SectionInfo:
@@ -603,6 +624,7 @@ class ClassInfo(CodeContainer):
             self._inheritance = None
             self._is_declaration = False
             self._namespaces = []
+            self._associated_comment = None
         else:
             self._name = LazyNotInit
             self._text_source = LazyNotInit
@@ -612,6 +634,7 @@ class ClassInfo(CodeContainer):
             self._inheritance = LazyNotInit
             self._is_declaration = LazyNotInit
             self._namespaces = LazyNotInit
+            self._associated_comment = LazyNotInit
             if cursor.kind == cindex.CursorKind.STRUCT_DECL:
                 self._is_class = False
             elif cursor.kind == cindex.CursorKind.CLASS_DECL:
@@ -863,6 +886,22 @@ class ClassInfo(CodeContainer):
     @template.setter
     def template(self, value):
         self._template = value
+
+    @property
+    @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value):
+        self._associated_comment = value
 
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.unioninfo import UnionInfo
