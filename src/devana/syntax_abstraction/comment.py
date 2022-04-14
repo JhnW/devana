@@ -156,6 +156,7 @@ class Comment:
             return []
         with open(self._parent.path, "r") as file:
             lines = file.read().split('\n')
+            lines = list(map(lambda e: e.rstrip('\r'), lines))
             if self._marker == CommentMarker.MULTI_LINE and self._begin.row == self._end.row:
                 return [lines[self._begin.row - 1][self._begin.col + 1:self._end.col - 2]]
             lines = lines[self._begin.row - 1:self._end.row]
