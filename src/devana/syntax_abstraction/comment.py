@@ -246,6 +246,7 @@ class CommentsFactory:
             return []
         text = self._source.text_source.text
         lines = text.split('\n')
+        lines = list(map(lambda e: e.rstrip('\r'), lines)) # windows \r\n compatybility
         results = []
         is_multi_line_mode = False
         multi_line_begin = None
