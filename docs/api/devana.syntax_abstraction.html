@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -231,6 +231,16 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ClassInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#ClassInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.organizers.codecontainer.CodeContainer</span></code></a></p>
 <p>Data of class type.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.ClassInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.ClassInfo.constructors">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">constructors</span></span><em class="property"><span class="pre">:</span> <span class="pre">Tuple[devana.syntax_abstraction.classinfo.ConstructorInfo]</span></em><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassInfo.constructors" title="Permalink to this definition">¶</a></dt>
@@ -604,6 +614,16 @@ For example: class namespace1::namespace2::ClassName; or class namespace1::Class
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FieldInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#FieldInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.FieldInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.syntax_abstraction.variable.Variable" title="devana.syntax_abstraction.variable.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.variable.Variable</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.classinfo.ClassMember" title="devana.syntax_abstraction.classinfo.ClassMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.classinfo.ClassMember</span></code></a></p>
 <p>Field of class/struct.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.FieldInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.classinfo.FieldInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -933,61 +953,64 @@ For example: class namespace1::namespace2::ClassName; or class namespace1::Class
 </dd></dl>
 
 </div>
+<div class="section" id="module-devana.syntax_abstraction.codelocation">
+<span id="devana-syntax-abstraction-codelocation"></span><h2>devana.syntax_abstraction.codelocation<a class="headerlink" href="#module-devana.syntax_abstraction.codelocation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.codelocation.CodeLocation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CodeLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/codelocation.html#CodeLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.codelocation.CodeLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class hold information about code coordinates in file.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.codelocation.CodeLocation.col">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#devana.syntax_abstraction.codelocation.CodeLocation.col" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.codelocation.CodeLocation.row">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#devana.syntax_abstraction.codelocation.CodeLocation.row" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-devana.syntax_abstraction.codepiece">
 <span id="devana-syntax-abstraction-codepiece"></span><h2>devana.syntax_abstraction.codepiece<a class="headerlink" href="#module-devana.syntax_abstraction.codepiece" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CodePiece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/codepiece.html#CodePiece"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CodePiece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/codepiece.html#CodePiece"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class represented code as raw characters sequence seen as sees it programmer with comments
 and not replaced preprocessor stuff. Only white character correction is allowed.</p>
 <p>Code can be bind to existing file if it source is file or CodePiece is used as representative of
 code generation result.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.CodeLocation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CodeLocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/codepiece.html#CodePiece.CodeLocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.CodeLocation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class hold information about code coordinates in file.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.CodeLocation.col">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">col</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.CodeLocation.col" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.CodeLocation.row">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">row</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.CodeLocation.row" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.begin">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">begin</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.codepiece.CodePiece.CodeLocation</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.begin" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">begin</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.codelocation.CodeLocation</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start of code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.codepiece.CodePiece.CodeLocation" title="devana.syntax_abstraction.codepiece.CodePiece.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.codelocation.CodeLocation" title="devana.syntax_abstraction.codelocation.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.end">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.codepiece.CodePiece.CodeLocation</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.end" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.codelocation.CodeLocation</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.end" title="Permalink to this definition">¶</a></dt>
 <dd><p>End of code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.codepiece.CodePiece.CodeLocation" title="devana.syntax_abstraction.codepiece.CodePiece.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.codelocation.CodeLocation" title="devana.syntax_abstraction.codelocation.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1003,6 +1026,11 @@ code generation result.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.from_location">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">begin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/codepiece.html#CodePiece.from_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.from_location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.codepiece.CodePiece.text">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#devana.syntax_abstraction.codepiece.CodePiece.text" title="Permalink to this definition">¶</a></dt>
@@ -1010,6 +1038,162 @@ code generation result.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-devana.syntax_abstraction.comment">
+<span id="devana-syntax-abstraction-comment"></span><h2>devana.syntax_abstraction.comment<a class="headerlink" href="#module-devana.syntax_abstraction.comment" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">marker=&lt;CommentMarker.ONE_LINE:</span> <span class="pre">1&gt;</span></em>, <em class="sig-param"><span class="pre">begin=None</span></em>, <em class="sig-param"><span class="pre">end=None</span></em>, <em class="sig-param"><span class="pre">parent=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#Comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The representing class exists in the comments code. Not all existing code comments need to be instantiated.
+In particular, comments inside implementation bodies are not instantiated
+and other, depending on parsing settings.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.begin">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">begin</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.codelocation.CodeLocation]</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.begin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.codelocation.CodeLocation" title="devana.syntax_abstraction.codelocation.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.end">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.codelocation.CodeLocation]</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.end" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.codelocation.CodeLocation" title="devana.syntax_abstraction.codelocation.CodeLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeLocation</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.from_code_piece">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_code_piece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">marker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_piece</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#Comment.from_code_piece"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.from_code_piece" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.homogeneous_text">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">homogeneous_text</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.homogeneous_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text as a single text string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.marker">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">marker</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.comment.CommentMarker</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines whether a comment uses multi-line content markers or just a single-line comment style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.comment.CommentMarker" title="devana.syntax_abstraction.comment.CommentMarker"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommentMarker</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.parent">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.parent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.Comment.text">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[str]</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.Comment.text" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentMarker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CommentMarker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#CommentMarker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentMarker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>One-line comment marker ‘//’ or multiple lines.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentMarker.MULTI_LINE">
+<span class="sig-name descname"><span class="pre">MULTI_LINE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentMarker.MULTI_LINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentMarker.ONE_LINE">
+<span class="sig-name descname"><span class="pre">ONE_LINE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentMarker.ONE_LINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentMarker.begin_marker">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">begin_marker</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentMarker.begin_marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of start comment marker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentMarker.end_marker">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">end_marker</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[str]</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentMarker.end_marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of start comment marker. May be None for one line comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentsFactory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CommentsFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#CommentsFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentsFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Internal the class that collects all detected comments in the file.
+Its purpose is to help you find comments requested by specific code elements.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentsFactory.comments">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">comments</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentsFactory.comments" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentsFactory.get_upper_comment">
+<span class="sig-name descname"><span class="pre">get_upper_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#CommentsFactory.get_upper_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentsFactory.get_upper_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.comment.CommentsFactory.preamble">
+<span class="sig-name descname"><span class="pre">preamble</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/comment.html#CommentsFactory.preamble"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.comment.CommentsFactory.preamble" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1029,6 +1213,16 @@ code generation result.</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EnumValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/enuminfo.html#EnumInfo.EnumValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Enum value stored in EnumInfo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.is_default">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_default</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.is_default" title="Permalink to this definition">¶</a></dt>
@@ -1084,6 +1278,16 @@ code generation result.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -1200,6 +1404,37 @@ code generation result.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-devana.syntax_abstraction.externc">
+<span id="devana-syntax-abstraction-externc"></span><h2>devana.syntax_abstraction.externc<a class="headerlink" href="#module-devana.syntax_abstraction.externc" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.externc.ExternC">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ExternC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/externc.html#ExternC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.externc.ExternC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.organizers.codecontainer.CodeContainer</span></code></a></p>
+<p>“Object representation of current usage of extern C set of functions. It may contain one or more functions.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.externc.ExternC.lexicon">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">lexicon</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.organizers.lexicon.Lexicon</span></em><a class="headerlink" href="#devana.syntax_abstraction.externc.ExternC.lexicon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current lexicon storage of object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.lexicon.Lexicon" title="devana.syntax_abstraction.organizers.lexicon.Lexicon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.externc.ExternC.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#devana.syntax_abstraction.externc.ExternC.name" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-devana.syntax_abstraction.functioninfo">
 <span id="devana-syntax-abstraction-functioninfo"></span><h2>devana.syntax_abstraction.functioninfo<a class="headerlink" href="#module-devana.syntax_abstraction.functioninfo" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -1221,6 +1456,16 @@ code generation result.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.Argument" title="devana.syntax_abstraction.functioninfo.FunctionInfo.Argument"><code class="xref py py-class docutils literal notranslate"><span class="pre">Argument</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1590,6 +1835,16 @@ For example: double namespace1::namespace2::functionName().</p>
 <p>“Object representation of current scope namespace, for example usage in file or global namespace with all
 namespaces component placed in many files.</p>
 <dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.namespaceinfo.NamespaceInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.namespaceinfo.NamespaceInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.namespaceinfo.NamespaceInfo.lexicon">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">lexicon</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.organizers.lexicon.Lexicon</span></em><a class="headerlink" href="#devana.syntax_abstraction.namespaceinfo.NamespaceInfo.lexicon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Current lexicon storage of object.</p>
@@ -1792,6 +2047,16 @@ namespaces component placed in many files.</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">TypedefInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typedefinfo.html#TypedefInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class represented typedef declaration.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typedefinfo.TypedefInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typedefinfo.TypedefInfo.lexicon">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">lexicon</span></span><em class="property"><span class="pre">:</span> <span class="pre">devana.syntax_abstraction.organizers.codecontainer.CodeContainer</span></em><a class="headerlink" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo.lexicon" title="Permalink to this definition">¶</a></dt>
@@ -2094,6 +2359,11 @@ template arguments and use or not type aliases.</p>
 <span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;devana.syntax_abstraction.typeexpression.TypeModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.CONSTEXPR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.MUTABLE">
+<span class="sig-name descname"><span class="pre">MUTABLE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;devana.syntax_abstraction.typeexpression.TypeModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.MUTABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ModificationKind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typeexpression.html#TypeModification.ModificationKind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind" title="Permalink to this definition">¶</a></dt>
@@ -2112,6 +2382,11 @@ template arguments and use or not type aliases.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.CONSTEXPR">
 <span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1024</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.CONSTEXPR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.MUTABLE">
+<span class="sig-name descname"><span class="pre">MUTABLE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.MUTABLE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2233,6 +2508,16 @@ template arguments and use or not type aliases.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.is_mutable">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_mutable</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.is_mutable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.is_no_modification">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_no_modification</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.is_no_modification" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -2342,6 +2627,16 @@ template arguments and use or not type aliases.</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">UnionInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/unioninfo.html#UnionInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.unioninfo.UnionInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.organizers.codecontainer.CodeContainer</span></code></a></p>
 <p>Named or anonymous union.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.unioninfo.UnionInfo.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.unioninfo.UnionInfo.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.unioninfo.UnionInfo.definition">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">definition</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[any]</span></em><a class="headerlink" href="#devana.syntax_abstraction.unioninfo.UnionInfo.definition" title="Permalink to this definition">¶</a></dt>
@@ -2459,6 +2754,16 @@ template arguments and use or not type aliases.</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">GlobalVariable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/variable.html#GlobalVariable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.variable.GlobalVariable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.syntax_abstraction.variable.Variable" title="devana.syntax_abstraction.variable.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.syntax_abstraction.variable.Variable</span></code></a></p>
 <p>Data about global, independent variable used in code (out of class scope)</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.variable.GlobalVariable.associated_comment">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">associated_comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional[devana.syntax_abstraction.comment.Comment]</span></em><a class="headerlink" href="#devana.syntax_abstraction.variable.GlobalVariable.associated_comment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">

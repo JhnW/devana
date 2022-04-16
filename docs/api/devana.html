@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana &mdash; devana 0.2.1 documentation</title>
+  <title>devana &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -192,8 +192,10 @@
 <li class="toctree-l5"><a class="reference internal" href="devana.code_generation.printers.default.html">devana.code_generation.printers.default</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.basictypeprinter">devana.code_generation.printers.default.basictypeprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.classprinter">devana.code_generation.printers.default.classprinter</a></li>
+<li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.commentprinter">devana.code_generation.printers.default.commentprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.defaultprinter">devana.code_generation.printers.default.defaultprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.enumprinter">devana.code_generation.printers.default.enumprinter</a></li>
+<li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.externcprinter">devana.code_generation.printers.default.externcprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.fileprinter">devana.code_generation.printers.default.fileprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.functionprinter">devana.code_generation.printers.default.functionprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.namespaceprinter">devana.code_generation.printers.default.namespaceprinter</a></li>
@@ -233,8 +235,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.classinfo">devana.syntax_abstraction.classinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.codelocation">devana.syntax_abstraction.codelocation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.codepiece">devana.syntax_abstraction.codepiece</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.comment">devana.syntax_abstraction.comment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.enuminfo">devana.syntax_abstraction.enuminfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.externc">devana.syntax_abstraction.externc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.functioninfo">devana.syntax_abstraction.functioninfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.namespaceinfo">devana.syntax_abstraction.namespaceinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.templateinfo">devana.syntax_abstraction.templateinfo</a></li>
@@ -257,18 +262,86 @@
 <div class="section" id="module-devana.configuration">
 <span id="devana-configuration"></span><h2>devana.configuration<a class="headerlink" href="#module-devana.configuration" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CommentsParsing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accumulate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unpinned_comments_allowed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deep_parsing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_blank_lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_asterisks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#CommentsParsing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.CommentsParsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.configuration.IValidateConfig</span></code></a></p>
+<p>The class defines how and how extensively the parsing of comments in the code is performed.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.accumulate">
+<span class="sig-name descname"><span class="pre">accumulate</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setting that defines whether consecutive C ++ style one-line comments starting 
+with ‘//’ will be combined into a single collective instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.deep_parsing">
+<span class="sig-name descname"><span class="pre">deep_parsing</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.deep_parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines parsing of additional content, e.g. comments to function arguments.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.remove_asterisks">
+<span class="sig-name descname"><span class="pre">remove_asterisks</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.remove_asterisks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removal of leading ‘*’ characters from text parsing and subsequent whitespace.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.remove_blank_lines">
+<span class="sig-name descname"><span class="pre">remove_blank_lines</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">True</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.remove_blank_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the first and last lines are empty (after initial processing by other rules) they will be deleted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.unpinned_comments_allowed">
+<span class="sig-name descname"><span class="pre">unpinned_comments_allowed</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.unpinned_comments_allowed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether to parse or omit comments that are not attached to the code 
+(they do not precede classes, functions, type definitions, class fields, methods, etc.). 
+This does not affect the parsing of the file preamble.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.CommentsParsing.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#CommentsParsing.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.CommentsParsing.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="devana.configuration.Configuration">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">conservative_level=&lt;ConservativeLevel.MEDIUM:</span> <span class="pre">1&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">parsing=&lt;factory&gt;</span></em>, <em class="sig-param"><span class="pre">conservative_level=&lt;ConservativeLevel.MEDIUM:</span> <span class="pre">2&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.configuration.IValidateConfig</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.conservative_level">
-<span class="sig-name descname"><span class="pre">conservative_level</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#devana.configuration.ConservativeLevel" title="devana.configuration.ConservativeLevel"><span class="pre">devana.configuration.ConservativeLevel</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#devana.configuration.Configuration.conservative_level" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">conservative_level</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#devana.configuration.ConservativeLevel" title="devana.configuration.ConservativeLevel"><span class="pre">devana.configuration.ConservativeLevel</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#devana.configuration.Configuration.conservative_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently not used. May be removed / moved elsewhere in future revisions without warning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.Configuration.get_configuration">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">this</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration.get_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration.get_configuration" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.logger">
 <span class="sig-name descname"><span class="pre">logger</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;module</span> <span class="pre">'logging'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/logging/__init__.py'&gt;</span></em><a class="headerlink" href="#devana.configuration.Configuration.logger" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Currently not used. May be removed / moved elsewhere in future revisions without warning.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.Configuration.parsing">
+<span class="sig-name descname"><span class="pre">parsing</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#devana.configuration.ParsingConfiguration" title="devana.configuration.ParsingConfiguration"><span class="pre">devana.configuration.ParsingConfiguration</span></a></em><a class="headerlink" href="#devana.configuration.Configuration.parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuring the parsing of C ++ files, this is how the C ++ code will be transformed 
+into the appropriate python classes instances.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.Configuration.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -279,18 +352,51 @@
 <p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.ConservativeLevel.HIGH">
-<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(&lt;enum.auto</span> <span class="pre">object&gt;,)</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.HIGH" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">HIGH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.HIGH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.ConservativeLevel.LOW">
-<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.LOW" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">LOW</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.LOW" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.ConservativeLevel.MEDIUM">
-<span class="sig-name descname"><span class="pre">MEDIUM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.MEDIUM" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MEDIUM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#devana.configuration.ConservativeLevel.MEDIUM" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.IValidateConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">IValidateConfig</span></span><a class="reference internal" href="../_modules/devana/configuration.html#IValidateConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IValidateConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Every sub-config should implement this interface to provide cohesion and implementation check.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.IValidateConfig.validate">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IValidateConfig.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IValidateConfig.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ParsingConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">comments=&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">devana.configuration.IValidateConfig</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.comments">
+<span class="sig-name descname"><span class="pre">comments</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#devana.configuration.CommentsParsing" title="devana.configuration.CommentsParsing"><span class="pre">devana.configuration.CommentsParsing</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comments parsing settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
 
 </dd></dl>
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.variable &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.variable &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -170,6 +170,7 @@
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typeexpression</span> <span class="kn">import</span> <span class="n">TypeExpression</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">Comment</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
 
 
@@ -257,7 +258,27 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">VAR_DECL</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Invalid cursor kind of global variable.&quot;</span><span class="p">)</span></div>
+                <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Invalid cursor kind of global variable.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@lazy_invoke</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bind_comment&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">bind_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@associated_comment</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">value</span></div>
 </pre></div>
 
            </div>

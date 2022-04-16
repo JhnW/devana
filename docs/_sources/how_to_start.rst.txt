@@ -51,6 +51,32 @@ You should never want to manually edit the content of a lexicons. The lexicon is
 container hierarchy. The only case of manual modification of a lexicon is when you intend to emulate the existence of
 types not covered in the current module.
 
+Possible problems
+-----------------------
+
+Memory usage
+++++++++++++++++++++++++++
+Devana uses the clanglib backend.In order to ensure that the physical source files are properly related to the result
+of parsing C ++ code, each individual file is a separate translation unit in the sense of clang. This can result
+in a fairly high demand for RAM. For most small to medium sized projects, this shouldn't be a problem.
+
+If this is a real problem in your use case, consider breaking down the parsing into several stages using
+multiple :class:`~devana.syntax_abstraction.organizers.sourcemodule.SourceModule` instances built sequentially.
+In the future, sub-modules will be implemented to facilitate this procedure.
+
+External types
+++++++++++++++++++++++++++
+For a large number of use cases, it is necessary to have information about all types within the files listed
+in :class:`~devana.syntax_abstraction.organizers.sourcemodule.SourceModule`. Nobody should want to include
+files with complex libraries, not necessarily Devan parsable, such as standard library or boost library.
+
+So the question is what to do with such types? The simplest and recommended answer - avoid them. The second solution
+is to wait for the upcoming corrections in the library to provide support for external types. We already
+support external typedefs.
+If you really have a problem with that, I recommend that you create a fake instance of the type
+(along with its namespaces, etc.) and inject it into :class:`~devana.syntax_abstraction.organizers.lexicon.Lexicon`.
+
+
 Examples
 --------------
 

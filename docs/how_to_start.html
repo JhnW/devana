@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>How to start &mdash; devana 0.2.1 documentation</title>
+  <title>How to start &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -100,6 +100,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#core-concepts">Core concepts</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#module">Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lexicon-and-containers">Lexicon and containers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#possible-problems">Possible problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-usage">Memory usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-types">External types</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
@@ -223,6 +228,29 @@ forward declarations, and providing a link between declarations and element defi
 <p>You should never want to manually edit the content of a lexicons. The lexicon is automatically updated based on the
 container hierarchy. The only case of manual modification of a lexicon is when you intend to emulate the existence of
 types not covered in the current module.</p>
+</div>
+</div>
+<div class="section" id="possible-problems">
+<h2>Possible problems<a class="headerlink" href="#possible-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="memory-usage">
+<h3>Memory usage<a class="headerlink" href="#memory-usage" title="Permalink to this headline">¶</a></h3>
+<p>Devana uses the clanglib backend.In order to ensure that the physical source files are properly related to the result
+of parsing C ++ code, each individual file is a separate translation unit in the sense of clang. This can result
+in a fairly high demand for RAM. For most small to medium sized projects, this shouldn’t be a problem.</p>
+<p>If this is a real problem in your use case, consider breaking down the parsing into several stages using
+multiple <a class="reference internal" href="api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcemodule.SourceModule" title="devana.syntax_abstraction.organizers.sourcemodule.SourceModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceModule</span></code></a> instances built sequentially.
+In the future, sub-modules will be implemented to facilitate this procedure.</p>
+</div>
+<div class="section" id="external-types">
+<h3>External types<a class="headerlink" href="#external-types" title="Permalink to this headline">¶</a></h3>
+<p>For a large number of use cases, it is necessary to have information about all types within the files listed
+in <a class="reference internal" href="api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcemodule.SourceModule" title="devana.syntax_abstraction.organizers.sourcemodule.SourceModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceModule</span></code></a>. Nobody should want to include
+files with complex libraries, not necessarily Devan parsable, such as standard library or boost library.</p>
+<p>So the question is what to do with such types? The simplest and recommended answer - avoid them. The second solution
+is to wait for the upcoming corrections in the library to provide support for external types. We already
+support external typedefs.
+If you really have a problem with that, I recommend that you create a fake instance of the type
+(along with its namespaces, etc.) and inject it into <a class="reference internal" href="api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.lexicon.Lexicon" title="devana.syntax_abstraction.organizers.lexicon.Lexicon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></a>.</p>
 </div>
 </div>
 <div class="section" id="examples">

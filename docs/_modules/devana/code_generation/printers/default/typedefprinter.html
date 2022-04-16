@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.code_generation.printers.default.typedefprinter &mdash; devana 0.2.1 documentation</title>
+  <title>devana.code_generation.printers.default.typedefprinter &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -183,6 +183,9 @@
         <span class="n">formatter</span> <span class="o">=</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="ow">is</span> <span class="n">TypeExpression</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="ow">is</span> <span class="n">InheritanceInfo</span><span class="o">.</span><span class="n">InheritanceValue</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">associated_comment</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">associated_comment</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">))</span>
         <span class="n">formatter</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;typedef </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">type_info</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">;&quot;</span>
         <span class="n">formatter</span><span class="o">.</span><span class="n">next_line</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">text</span></div></div>

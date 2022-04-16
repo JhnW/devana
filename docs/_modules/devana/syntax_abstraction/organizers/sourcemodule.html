@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.organizers.sourcemodule &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.organizers.sourcemodule &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -169,6 +169,7 @@
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.sourcefile</span> <span class="kn">import</span> <span class="n">SourceFile</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
+<span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">clang</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -185,13 +186,15 @@
     <span class="sd">&quot;&quot;&quot;Logic unit of code as named collection of source files.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_filter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModuleFilter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+                 <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">root_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_module_filter</span> <span class="o">=</span> <span class="n">module_filter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_files</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span><span class="p">:</span> <span class="n">Configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span> <span class="k">if</span> <span class="n">configuration</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">module_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -253,7 +256,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span></div>
 </pre></div>
 
            </div>

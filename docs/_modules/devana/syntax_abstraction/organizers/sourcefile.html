@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.organizers.sourcefile &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.organizers.sourcefile &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -165,14 +165,16 @@
             
   <h1>Source code for devana.syntax_abstraction.organizers.sourcefile</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.codecontainer</span> <span class="kn">import</span> <span class="n">CodeContainer</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">CommentMarker</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">CommentsFactory</span>
+<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
+<span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NoReturn</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
-<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
-<span class="kn">import</span> <span class="nn">re</span>
 
 
 <div class="viewcode-block" id="IncludeInfo"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo">[docs]</a><span class="k">class</span> <span class="nc">IncludeInfo</span><span class="p">:</span>
@@ -182,7 +184,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="n">cursor</span>
         <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">pass</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_standard</span> <span class="o">=</span> <span class="kc">False</span>
@@ -287,7 +288,8 @@
 <div class="viewcode-block" id="SourceFile"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.SourceFile">[docs]</a><span class="k">class</span> <span class="nc">SourceFile</span><span class="p">(</span><span class="n">CodeContainer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Information about specific source code file.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">cursor</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -305,6 +307,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">SourceFileType</span><span class="o">.</span><span class="n">HEADER</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_includes</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="n">cursor</span>
@@ -312,6 +316,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_includes</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">TRANSLATION_UNIT</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;It is not valid cursor kind.&quot;</span><span class="p">)</span>
@@ -320,6 +326,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_includes</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span> <span class="o">=</span> <span class="n">CommentsFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span><span class="p">:</span> <span class="n">Configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span> <span class="k">if</span> <span class="n">configuration</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -386,39 +396,82 @@
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
+    <span class="k">def</span> <span class="nf">preamble</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;First comment in file - Must start with the first line. Standard comment grouping policies apply. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span><span class="o">.</span><span class="n">comments</span><span class="p">:</span>
+            <span class="n">preamble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">preamble</span><span class="o">.</span><span class="n">marker</span> <span class="o">==</span> <span class="n">CommentMarker</span><span class="o">.</span><span class="n">MULTI_LINE</span> <span class="ow">and</span> <span class="n">preamble</span><span class="o">.</span><span class="n">begin</span><span class="o">.</span><span class="n">row</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">preamble</span><span class="o">.</span><span class="n">begin</span><span class="o">.</span><span class="n">col</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span> <span class="o">=</span> <span class="n">preamble</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span>
+
+    <span class="nd">@preamble</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">preamble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_preamble</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">header_guard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">def_name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_source</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
 
-        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_source</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+        <span class="n">line_fist_content</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">line_last_content</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">line_fist_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text_source</span><span class="o">.</span><span class="n">begin</span><span class="o">.</span><span class="n">row</span>
+            <span class="n">line_last_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text_source</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">row</span>
 
-        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#ifndef\s(\S+)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
-        <span class="n">def_name</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_source</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#define\s(\S+)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
-        <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">def_name</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">[:</span><span class="n">line_fist_content</span><span class="p">]):</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#ifndef\s(\S+)&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">def_name</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line_fist_content</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#define\s(\S+)&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+                <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">def_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
 
-        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#endif&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">line_last_content</span><span class="p">:]):</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#endif&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="n">def_name</span>
+                <span class="k">break</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="n">def_name</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span>
 
     <span class="nd">@header_guard</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">header_guard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_header_guard</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Configuration</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span>
+
+    <span class="nd">@configuration</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Configuration</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="SourceFile.bind_comment"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.SourceFile.bind_comment">[docs]</a>    <span class="k">def</span> <span class="nf">bind_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Function take code element present in this source file and return associated comment</span>
+<span class="sd">        depending on the configuration. A common use case is when specific instances of code elements use this.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s2">&quot;text_source&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments_factory</span><span class="o">.</span><span class="n">get_upper_comment</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">text_source</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.classinfo</span> <span class="kn">import</span> <span class="n">ClassInfo</span><span class="p">,</span> <span class="n">MethodInfo</span>
@@ -429,8 +482,9 @@
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.usingnamespace</span> <span class="kn">import</span> <span class="n">UsingNamespace</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.enuminfo</span> <span class="kn">import</span> <span class="n">EnumInfo</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.variable</span> <span class="kn">import</span> <span class="n">GlobalVariable</span>
+        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.externc</span> <span class="kn">import</span> <span class="n">ExternC</span>
         <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassInfo</span><span class="p">,</span> <span class="n">UnionInfo</span><span class="p">,</span> <span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">EnumInfo</span><span class="p">,</span> <span class="n">TypedefInfo</span><span class="p">,</span> <span class="n">NamespaceInfo</span><span class="p">,</span> <span class="n">UsingNamespace</span><span class="p">,</span> <span class="n">MethodInfo</span><span class="p">,</span>
-                 <span class="n">GlobalVariable</span><span class="p">]</span>
+                 <span class="n">GlobalVariable</span><span class="p">,</span> <span class="n">ExternC</span><span class="p">]</span>
         <span class="n">content</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">children</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">children</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>

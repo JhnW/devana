@@ -2,7 +2,44 @@ Changelog
 =========
 
 
-v0.2.1 (2021-11-07)
+v0.3.0 (2022-04-16)
+-------------------
+
+New
+~~~
+- Parsing and code generation for mutable fields. [JhnW]
+- Roadmap update and description of common user problems. [JhnW]
+- Code generators support for printing associated comments. [JhnW]
+- Parsing comments in code. [JhnW]
+
+  It is possible to extract comments relating to the declarations of types, functions and class components. Additionality, it is possibile to obtain the file preambule (if present), i.e. the first comment not related to the code elements.
+- Extern C syntax code generator. [JhnW]
+- Extern C syntax parsing. [JhnW]
+
+  Only a set of declarations / definitions of functions specified as extern "C" is supported.
+
+Fix
+~~~
+- One additional comment pairings improvement for windows platform.
+  [JhnW]
+- Windows newline format (CRLF) fixed for comments parsing. [JhnW]
+- Improved header guard detection. [JhnW]
+
+  From now on, the header guard syntax idiom allows any text to appear before and after it (it doesn't have to be at the beginning and end of the file). To avoid confusing this idiom with normal preprocessor macros, there must be no valid C ++ code outside of the header guard.
+- Improved lookup of types in the lexicon. [JhnW]
+
+  In some cases, it was possible to find a type incorrectly in the lexicon if it was in a different source file than the syntax element that uses it. Additionally, a minor bug in ClassInfo has been fixed.
+- Improved detection of types. [JhnW]
+
+  Improved detection of types with the same names in different namespaces.
+- Text: Fix Fixed a hidden syntax error in one of the C ++ files. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+
+
+v0.2.1 (2021-11-08)
 -------------------
 
 New

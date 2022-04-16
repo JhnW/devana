@@ -19,6 +19,14 @@ devana.code\_generation.printers.default.classprinter
    :undoc-members:
    :show-inheritance:
 
+devana.code\_generation.printers.default.commentprinter
+-------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.commentprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.code\_generation.printers.default.defaultprinter
 -------------------------------------------------------
 
@@ -31,6 +39,14 @@ devana.code\_generation.printers.default.enumprinter
 ----------------------------------------------------
 
 .. automodule:: devana.code_generation.printers.default.enumprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.code\_generation.printers.default.externcprinter
+-------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.externcprinter
    :members:
    :undoc-members:
    :show-inheritance:

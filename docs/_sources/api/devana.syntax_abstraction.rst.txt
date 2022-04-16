@@ -18,6 +18,14 @@ devana.syntax\_abstraction.classinfo
    :undoc-members:
    :show-inheritance:
 
+devana.syntax\_abstraction.codelocation
+---------------------------------------
+
+.. automodule:: devana.syntax_abstraction.codelocation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.codepiece
 ------------------------------------
 
@@ -26,10 +34,26 @@ devana.syntax\_abstraction.codepiece
    :undoc-members:
    :show-inheritance:
 
+devana.syntax\_abstraction.comment
+----------------------------------
+
+.. automodule:: devana.syntax_abstraction.comment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.enuminfo
 -----------------------------------
 
 .. automodule:: devana.syntax_abstraction.enuminfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.syntax\_abstraction.externc
+----------------------------------
+
+.. automodule:: devana.syntax_abstraction.externc
    :members:
    :undoc-members:
    :show-inheritance:

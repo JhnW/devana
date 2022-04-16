@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.organizers.lexicon &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.organizers.lexicon &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -338,10 +338,10 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_content</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_find_type_from_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_find_type_from_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">namespace_scope</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typedefinfo</span> <span class="kn">import</span> <span class="n">TypedefInfo</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.namespaceinfo</span> <span class="kn">import</span> <span class="n">NamespaceInfo</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_content</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_content</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">namespace_scope</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
@@ -414,9 +414,9 @@
 
         <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="Lexicon.find_type"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.lexicon.Lexicon.find_type">[docs]</a>    <span class="k">def</span> <span class="nf">find_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+<div class="viewcode-block" id="Lexicon.find_type"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.lexicon.Lexicon.find_type">[docs]</a>    <span class="k">def</span> <span class="nf">find_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">],</span> <span class="n">namespace_scope</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_type_from_name</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_type_from_name</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">namespace_scope</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_type_from_cursor</span><span class="p">(</span><span class="n">element</span><span class="p">)</span></div>
 

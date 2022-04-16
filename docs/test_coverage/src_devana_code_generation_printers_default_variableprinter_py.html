@@ -22,8 +22,8 @@
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
-            24 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">23 run</button>
+            26 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">25 run</button>
             <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">1 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
@@ -80,14 +80,16 @@
     <p id="t26" class="run"><span class="n"><a href="#t26">26</a></span><span class="t">        <span class="key">if</span> <span class="nam">source</span><span class="op">.</span><span class="nam">default_value</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t27" class="mis show_mis"><span class="n"><a href="#t27">27</a></span><span class="t">            <span class="nam">result</span> <span class="op">+=</span> <span class="str">f" = {source.default_value}"</span>&nbsp;</span><span class="r"></span></p>
     <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t">        <span class="nam">formatter</span> <span class="op">=</span> <span class="nam">Formatter</span><span class="op">(</span><span class="nam">config</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">        <span class="nam">formatter</span><span class="op">.</span><span class="nam">print_line</span><span class="op">(</span><span class="nam">result</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">        <span class="key">return</span> <span class="nam">formatter</span><span class="op">.</span><span class="nam">text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">        <span class="key">if</span> <span class="nam">source</span><span class="op">.</span><span class="nam">associated_comment</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">            <span class="nam">formatter</span><span class="op">.</span><span class="nam">print_line</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">printer_dispatcher</span><span class="op">.</span><span class="nam">print</span><span class="op">(</span><span class="nam">source</span><span class="op">.</span><span class="nam">associated_comment</span><span class="op">,</span> <span class="nam">config</span><span class="op">,</span> <span class="nam">source</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t">        <span class="nam">formatter</span><span class="op">.</span><span class="nam">print_line</span><span class="op">(</span><span class="nam">result</span><span class="op">+</span><span class="str">";"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="run"><span class="n"><a href="#t32">32</a></span><span class="t">        <span class="key">return</span> <span class="nam">formatter</span><span class="op">.</span><span class="nam">text</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-11-08 00:06 +0000
+            created at 2022-04-16 20:49 +0000
         </p>
     </div>
 </div>

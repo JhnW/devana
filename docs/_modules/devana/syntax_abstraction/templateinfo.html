@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.templateinfo &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.templateinfo &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -314,8 +314,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">FUNCTION_TEMPLATE</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span>
                     <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">CLASS_TEMPLATE</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span>
-                    <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">CLASS_TEMPLATE_PARTIAL_SPECIALIZATION</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span>
-                    <span class="s2">&quot;template&lt;&gt;&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">CodePiece</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)):</span>
+                    <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">CLASS_TEMPLATE_PARTIAL_SPECIALIZATION</span><span class="p">)</span> <span class="ow">or</span>
+                    <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;template\s*&lt;&gt;&quot;</span><span class="p">,</span> <span class="n">CodePiece</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)):</span>
                 <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Template parameter expect FUNCTION_TEMPLATE cursor kind.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_specialisations_value</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_specialisations</span> <span class="o">=</span> <span class="n">LazyNotInit</span>

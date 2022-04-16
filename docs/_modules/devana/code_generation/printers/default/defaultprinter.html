@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.code_generation.printers.default.defaultprinter &mdash; devana 0.2.1 documentation</title>
+  <title>devana.code_generation.printers.default.defaultprinter &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -175,6 +175,8 @@
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.typedefprinter</span> <span class="kn">import</span> <span class="n">TypedefPrinter</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.enumprinter</span> <span class="kn">import</span> <span class="n">EnumPrinter</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.classprinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.externcprinter</span> <span class="kn">import</span> <span class="n">ExternCPrinter</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.commentprinter</span> <span class="kn">import</span> <span class="n">CommentPrinter</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.stubtypeprinter</span> <span class="kn">import</span> <span class="n">StubTypePrinter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.classinfo</span> <span class="kn">import</span> <span class="n">ClassInfo</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">GenericTypeParameter</span>
@@ -191,6 +193,8 @@
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.variableprinter</span> <span class="kn">import</span> <span class="n">VariablePrinter</span><span class="p">,</span> <span class="n">GlobalVariablePrinter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typeexpression</span> <span class="kn">import</span> <span class="n">BasicType</span><span class="p">,</span> <span class="n">TypeExpression</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.variable</span> <span class="kn">import</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">GlobalVariable</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.externc</span> <span class="kn">import</span> <span class="n">ExternC</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">Comment</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.stubtype</span> <span class="kn">import</span> <span class="n">StubType</span>
 
 
@@ -218,6 +222,8 @@
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">UsingNamespacePrinter</span><span class="p">,</span> <span class="n">UsingNamespace</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">VariablePrinter</span><span class="p">,</span> <span class="n">Variable</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">GlobalVariablePrinter</span><span class="p">,</span> <span class="n">GlobalVariable</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ExternCPrinter</span><span class="p">,</span> <span class="n">ExternC</span><span class="p">)</span>
+    <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">CommentPrinter</span><span class="p">,</span> <span class="n">Comment</span><span class="p">)</span>
     <span class="n">printer</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">StubTypePrinter</span><span class="p">,</span> <span class="n">StubType</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">printer</span></div>

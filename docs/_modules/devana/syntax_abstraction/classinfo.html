@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>devana.syntax_abstraction.classinfo &mdash; devana 0.2.1 documentation</title>
+  <title>devana.syntax_abstraction.classinfo &mdash; devana 0.3.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.3
               </div>
             
           
@@ -164,19 +164,20 @@
            <div itemprop="articleBody">
             
   <h1>Source code for devana.syntax_abstraction.classinfo</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
-<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
-<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span></span><span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functioninfo</span> <span class="kn">import</span> <span class="n">FunctionInfo</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.codecontainer</span> <span class="kn">import</span> <span class="n">CodeContainer</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.variable</span> <span class="kn">import</span> <span class="n">Variable</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
-<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">TemplateInfo</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typeexpression</span> <span class="kn">import</span> <span class="n">TypeExpression</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">Comment</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
 
 <div class="viewcode-block" id="AccessSpecifier"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.classinfo.AccessSpecifier">[docs]</a><span class="k">class</span> <span class="nc">AccessSpecifier</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -534,7 +535,27 @@
         <span class="n">ClassMember</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">FIELD_DECL</span> <span class="ow">and</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">VAR_DECL</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Bad cursor kind.&quot;</span><span class="p">)</span></div>
+                <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Bad cursor kind.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@lazy_invoke</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bind_comment&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">bind_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@associated_comment</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
 <div class="viewcode-block" id="SectionInfo"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.classinfo.SectionInfo">[docs]</a><span class="k">class</span> <span class="nc">SectionInfo</span><span class="p">:</span>
@@ -673,7 +694,18 @@
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">find_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_definition</span><span class="p">())</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">find_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_definition</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span>
+                <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;class &quot;</span><span class="p">):</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;class &quot;</span><span class="p">):]</span>
+                <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;struct &quot;</span><span class="p">):</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;struct &quot;</span><span class="p">):]</span>
+                <span class="n">namespaces_and_type</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">namespaces_and_type</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">namespaces</span> <span class="o">=</span> <span class="n">namespaces_and_type</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">find_type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">namespaces</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
 
         <span class="nd">@type</span><span class="o">.</span><span class="n">setter</span>
         <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -684,7 +716,8 @@
         <span class="k">def</span> <span class="nf">is_virtual</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="sd">&quot;&quot;&quot;Defines is virtual inheritance&quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_virtual</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="s2">&quot; virtual &quot;</span> <span class="ow">in</span> <span class="n">CodePiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">CodePiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">if</span> <span class="s2">&quot; virtual &quot;</span> <span class="ow">in</span> <span class="n">text</span> <span class="ow">or</span> <span class="s2">&quot;virtual &quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_is_virtual</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_virtual</span>
 
@@ -757,6 +790,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_inheritance</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_declaration</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
@@ -766,6 +800,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_inheritance</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_is_declaration</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">LazyNotInit</span>
             <span class="k">if</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">STRUCT_DECL</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_is_class</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">elif</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">CLASS_DECL</span><span class="p">:</span>
@@ -1017,6 +1052,22 @@
     <span class="nd">@template</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@lazy_invoke</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bind_comment&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">bind_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@associated_comment</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">_create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.unioninfo</span> <span class="kn">import</span> <span class="n">UnionInfo</span>
