@@ -110,6 +110,7 @@ class TypeModification(metaclass=FakeEnum):
         RVALUE_REF = auto()
         RESTRICT = auto()
         CONSTEXPR = auto()
+        MUTABLE = auto()
 
     enum_source = ModificationKind
 
@@ -130,6 +131,7 @@ class TypeModification(metaclass=FakeEnum):
     RVALUE_REF = ModificationKind.RVALUE_REF
     RESTRICT = ModificationKind.RESTRICT
     CONSTEXPR = ModificationKind.CONSTEXPR
+    MUTABLE = ModificationKind.MUTABLE
 
     def __init__(self, value: Optional[int] = None, pointer_order: Optional[int] = None):
         self._pointer_order = None
@@ -287,6 +289,10 @@ class TypeModification(metaclass=FakeEnum):
         return bool(self.value & TypeModification.ModificationKind.CONSTEXPR)
 
     @property
+    def is_mutable(self) -> bool:
+        return bool(self.value & TypeModification.ModificationKind.MUTABLE)
+
+    @property
     def is_no_modification(self) -> bool:
         return self.value == TypeModification.ModificationKind.NONE
 
@@ -348,6 +354,8 @@ class TypeExpression:
             name += "restrict "
         elif self.modification.is_constexpr:
             name += "constexpr "
+        elif self.modification.is_mutable:
+            name += "mutable "
 
         name += self.details.name
         if self.template_arguments:
@@ -375,6 +383,11 @@ class TypeExpression:
     def modification(self) -> TypeModification:
         """Usages modifications."""
         self._modification = TypeModification.NONE
+
+        if hasattr(self._cursor, "is_mutable_field"):
+            if self._cursor.is_mutable_field():
+                self._modification |= TypeModification.MUTABLE
+
         if self._cursor.kind == cindex.CursorKind.VAR_DECL:
             self._modification |= TypeModification.STATIC
             if self.text_source is not None and self.text_source.text.find("static ") == -1:

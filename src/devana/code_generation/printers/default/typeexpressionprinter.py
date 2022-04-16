@@ -26,6 +26,8 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
             prefix += "restrict "
         if source.modification.is_template:
             prefix += "template "
+        if source.modification.is_mutable:
+            prefix += "mutable "
 
         if source.modification.is_pointer:
             for _ in range(source.modification.pointer_order):

@@ -26,6 +26,7 @@ class TestClassElementsAlone(unittest.TestCase):
         printer.register(VariablePrinter, FunctionInfo.Argument)
         printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         printer.register(GenericTypeParameterPrinter, GenericTypeParameter)
+        printer.register(FieldPrinter, FieldInfo)
         self.printer: CodePrinter = printer
 
     def test_print_simple_method_dec(self):
@@ -201,6 +202,15 @@ class TestClassElementsAlone(unittest.TestCase):
         source.name = "Foo"
         result = self.printer.print(source)
         self.assertEqual(result, "Foo():\n    a(6.7f),\n    b(nullptr)\n{\n}\n")
+
+    def test_print_mutable_field(self):
+        source = FieldInfo()
+        source.name = "a"
+        source.type = TypeExpression()
+        source.type.details = BasicType.FLOAT
+        source.type.modification = TypeModification.MUTABLE
+        result = self.printer.print(source)
+        self.assertEqual(result, "mutable float a;\n")
 
 
 class TestClassComplex(unittest.TestCase):

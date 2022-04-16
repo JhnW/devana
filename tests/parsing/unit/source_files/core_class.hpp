@@ -14,6 +14,7 @@ class SimpleClassTest
     void *c;
     static bool d;
     float foo(double a);
+    mutable float e;
 };
 
 class ClassSections
