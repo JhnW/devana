@@ -31,8 +31,8 @@ language features to ensure that valid exceptions are thrown.
     * C++ standard attributes: *medium priority*
     * GCC attributes: *medium priority*
     * Except destructor: *extreme low priority*
-    * Comment in code: *low priority*
-    * Headers guard: *medium priority*
+    * C++20 modules: *extreme low priority*
+    * Access from the parser level to types not present in the current devan module but resulting from the attached headers (e.g. standard library): *medium priority*
 
 * **Other**
     * Includes list as an alternative to relative paths: *low priority*
@@ -40,6 +40,7 @@ language features to ensure that valid exceptions are thrown.
     * Better exceptions: *medium priority*
     * Reducing memory usage: *medium priority*
     * Split syntax abstraction element representation from parsing: *low priority*
+    * Create consistent abstract classes interface to syntax abstraction: *medium priority*
 
 Code generator
 --------------

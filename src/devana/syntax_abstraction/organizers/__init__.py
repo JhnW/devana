@@ -1,4 +1,4 @@
-""""
+"""
 Organizers provides pythons classes, including base classes, that can store other code elements, creating a structured
 hierarchy.
 """

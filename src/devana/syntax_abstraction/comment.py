@@ -8,7 +8,7 @@ import re
 
 
 class CommentMarker(Enum):
-    """One-line comment marker '//' or multiple lines '/*'"""
+    """One-line comment marker '//' or multiple lines."""
     ONE_LINE = auto()
     MULTI_LINE = auto()
 
