@@ -26,5 +26,7 @@ class GlobalVariablePrinter(ICodePrinter, DispatcherInjectable):
         if source.default_value is not None:
             result += f" = {source.default_value}"
         formatter = Formatter(config)
-        formatter.print_line(result)
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+        formatter.print_line(result+";")
         return formatter.text

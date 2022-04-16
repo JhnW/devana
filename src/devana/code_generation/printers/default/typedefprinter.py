@@ -17,6 +17,9 @@ class TypedefPrinter(ICodePrinter, DispatcherInjectable):
         formatter = Formatter(config)
         if type(context) is TypeExpression or type(context) is InheritanceInfo.InheritanceValue:
             return source.name
+
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
         formatter.line = f"typedef {self.printer_dispatcher.print(source.type_info, config, source)} {source.name};"
         formatter.next_line()
         return formatter.text

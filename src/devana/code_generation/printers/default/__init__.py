@@ -18,4 +18,5 @@ from .classprinter import FieldPrinter
 from .basictypeprinter import BasicTypePrinter
 from .typeexpressionprinter import TypeExpressionPrinter
 from .variableprinter import VariablePrinter, GlobalVariablePrinter
-from.externcprinter import ExternCPrinter
+from .externcprinter import ExternCPrinter
+from .commentprinter import CommentPrinter

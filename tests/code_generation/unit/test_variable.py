@@ -26,7 +26,7 @@ class TestVariableCore(unittest.TestCase):
         source.type.details = BasicType.U_SHORT
         printer = GlobalVariablePrinter(TypeExpressionPrinter(BasicTypePrinter()))
         result = printer.print(source)
-        self.assertEqual(result, "const unsigned short test_var\n")
+        self.assertEqual(result, "const unsigned short test_var;\n")
 
     def test_print_variable_with_default_value(self):
         source = Variable()

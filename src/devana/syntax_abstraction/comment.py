@@ -7,63 +7,6 @@ from typing import List, Optional
 import re
 
 
-class Comment1:
-    class CommentMarker(Enum):
-        ONE_LINE = auto()
-        MULTI_LINE = auto()
-
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def create_comments(source) -> List[CodePiece]:
-        if source.path is None:
-            raise ValueError("Source file need have path for parsing comments")
-        text = source.text_source.text
-        lines = text.split('\n')
-        results = []
-        is_multi_line_mode = False
-        multi_line_begin = None
-
-        for index, line in enumerate(lines):
-            if is_multi_line_mode:
-                # match  comment */ (multi line begin)
-                match = re.search(r"(.*)\*/", line)
-                if match:
-                    multi_line_end = CodeLocation(index + 1, match.regs[0][1])
-                    results.append(CodePiece.from_location(multi_line_begin, multi_line_end, source.path))
-                    is_multi_line_mode = False
-                    multi_line_begin = None
-                    continue
-            else:
-
-                # match /* comment */
-                matches = list(re.finditer(r"/\*(.+?)\*/", line))
-                if matches:
-                    for match in matches:
-                        begin = CodeLocation(index + 1, match.regs[0][0] + 1)
-                        end = CodeLocation(index + 1, match.regs[0][1] + 1)
-                        results.append(CodePiece.from_location(begin, end, source.path))
-                    continue
-
-                # match /* comment (multi line begin)
-                match = re.search(r"/\*(.*)", line)
-                if match:
-                    is_multi_line_mode = True
-                    multi_line_begin = CodeLocation(index + 1, match.regs[0][0] + 1)
-                    continue
-
-                # match // comment
-                match = re.search(r"//(.*)", line)
-                if match:
-                    begin = CodeLocation(index + 1, match.regs[0][0] + 1)
-                    end = CodeLocation(index + 1, len(line) - 1)
-                    results.append(CodePiece.from_location(begin, end, source.path))
-                    continue
-
-        return results
-
-
 class CommentMarker(Enum):
     """One-line comment marker '//' or multiple lines '/*'"""
     ONE_LINE = auto()
@@ -91,14 +34,17 @@ class Comment:
     In particular, comments inside implementation bodies are not instantiated
     and other, depending on parsing settings."""
 
-    def __init__(self, marker: CommentMarker, begin: Optional[CodeLocation] = None, end: Optional[CodeLocation] = None,
-                 parent: Optional = None):
+    def __init__(self, marker: CommentMarker = CommentMarker.ONE_LINE, begin: Optional[CodeLocation] = None,
+                 end: Optional[CodeLocation] = None, parent: Optional = None):
         self._marker = marker
         if (begin is None and end is not None) or (end is None and begin is not None):
             raise ValueError("Both begin and end must have value or be None")
         self._begin = begin
         self._end = end
-        self._text = LazyNotInit
+        if begin is None and end is None:
+            self._text = []
+        else:
+            self._text = LazyNotInit
         from devana.syntax_abstraction.organizers.sourcefile import SourceFile
         self._parent: SourceFile = parent
 

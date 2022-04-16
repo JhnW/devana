@@ -13,6 +13,10 @@ class FilePrinter(ICodePrinter, DispatcherInjectable):
             config = PrinterConfiguration()
         formatter = Formatter(config)
 
+        if source.preamble:
+            formatter.print_line(self.printer_dispatcher.print(source.preamble, config, source))
+            formatter.next_line()
+
         if source.header_guard:
             formatter.print_line(f"#ifndef {source.header_guard}")
             formatter.print_line(f"#define {source.header_guard}")

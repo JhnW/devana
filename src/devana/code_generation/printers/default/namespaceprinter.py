@@ -12,6 +12,8 @@ class NamespacePrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
         formatter.print_line(f"namespace {source.name}")
         formatter.print_line("{")
         formatter.indent.count += 1

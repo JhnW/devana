@@ -16,6 +16,10 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
         formatter = Formatter(config)
         if type(context) is TypeExpression:
             return source.name
+
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+
         formatter.line = "enum"
         if source.is_scoped:
             formatter.line += f" {source.prefix}"
@@ -32,6 +36,8 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
         formatter.next_line()
         formatter.indent.count += 1
         for v in source.values:
+            if v.associated_comment:
+                formatter.print_line(self.printer_dispatcher.print(v.associated_comment, config, source))
             formatter.line = v.name + ("" if v.is_default else f" = {v.value}")
             if v != source.values[-1]:
                 formatter.line += ","

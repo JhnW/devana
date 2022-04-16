@@ -26,6 +26,9 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             config = PrinterConfiguration()
         formatter = Formatter(config)
 
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+
         template_prefix = ""
         template_suffix = ""
         if source.template:

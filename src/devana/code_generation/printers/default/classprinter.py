@@ -30,6 +30,8 @@ class ConstructorPrinter(FunctionPrinter):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
         name = source.name
         args = []
         for arg in source.arguments:
@@ -130,6 +132,8 @@ class FieldPrinter(VariablePrinter):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        if source.associated_comment:
+            formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
         formatter.print_line(super().print(source, config, context) + ";")
         return formatter.text
 
@@ -143,6 +147,9 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
         if type(context) is TypeExpression or type(context) is InheritanceInfo.InheritanceValue:
             return source.name
         else:
+
+            if source.associated_comment:
+                formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
 
             template_prefix = ""
             template_suffix = ""

@@ -16,6 +16,10 @@ class UnionPrinter(ICodePrinter, DispatcherInjectable):
         if type(context) is TypeExpression:
             return source.name
         else:
+
+            if source.associated_comment:
+                formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+
             formatter.line = "union "
             formatter.line += f"{source.name}"
             if source.is_declaration:
