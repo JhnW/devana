@@ -73,6 +73,14 @@ class TestTypeExpression(unittest.TestCase):
         result = printer.print(source)
         self.assertEqual(result, "float***")
 
+    def test_print_type_expression_basic_array(self):
+        source = TypeExpression()
+        source.details = BasicType.FLOAT
+        source.modification |= TypeModification.ARRAY(["4", "8"])
+        printer = TypeExpressionPrinter(BasicTypePrinter())
+        result = printer.print(source)
+        self.assertEqual(result, "float")
+
 
 class TestTypeExpressionAdvanced(unittest.TestCase):
 

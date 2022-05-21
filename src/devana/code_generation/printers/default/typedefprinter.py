@@ -20,6 +20,13 @@ class TypedefPrinter(ICodePrinter, DispatcherInjectable):
 
         if source.associated_comment:
             formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
-        formatter.line = f"typedef {self.printer_dispatcher.print(source.type_info, config, source)} {source.name};"
+        suffix = ""
+        if source.type_info.modification.is_array:
+            if source.type_info.modification.array_order is None:
+                suffix = "[]"
+            else:
+                suffix = "[" + "][".join(source.type_info.modification.array_order) + "]"
+        formatter.line = f"typedef {self.printer_dispatcher.print(source.type_info, config, source)} " \
+                         f"{source.name}{suffix};"
         formatter.next_line()
         return formatter.text

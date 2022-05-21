@@ -38,3 +38,14 @@ class TestVariableCore(unittest.TestCase):
         printer = VariablePrinter(TypeExpressionPrinter(BasicTypePrinter()))
         result = printer.print(source)
         self.assertEqual(result, "const unsigned short test_var = (unsigned short)56.7f")
+
+    def test_print_variable_array(self):
+        source = Variable()
+        source.name = "test_var"
+        source.type = TypeExpression()
+        source.type.modification |= TypeModification.ARRAY
+        source.type.details = BasicType.U_SHORT
+        source.default_value = "{5}"
+        printer = VariablePrinter(TypeExpressionPrinter(BasicTypePrinter()))
+        result = printer.print(source)
+        self.assertEqual(result, "unsigned short test_var[] = {5}")

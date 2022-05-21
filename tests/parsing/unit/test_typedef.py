@@ -101,3 +101,16 @@ class TestTypedefSimple(unittest.TestCase):
             self.assertEqual(result.type_info.name, "typeint16")
             self.assertTrue(result.type_info.modification.is_no_modification)
             self.assertEqual(result.type_info.namespaces, ["test_namespace", "test_namespace_v2"])
+
+    def test_array_typedef(self):
+        node = find_by_name(self.cursor, "array_1")
+        result = TypedefInfo(node)
+        stub_lexicon(result)
+        self.assertTrue(result.type_info.modification.is_array)
+        self.assertEqual(result.type_info.modification.array_order, [""])
+
+        node = find_by_name(self.cursor, "array_2")
+        result = TypedefInfo(node)
+        stub_lexicon(result)
+        self.assertTrue(result.type_info.modification.is_array)
+        self.assertEqual(result.type_info.modification.array_order, ["5", "12"])

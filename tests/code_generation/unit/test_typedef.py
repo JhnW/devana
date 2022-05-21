@@ -24,3 +24,12 @@ class TestTypedef(unittest.TestCase):
         source.type_info.modification |= TypeModification.POINTER | TypeModification.CONST
         result = self.printer.print(source)
         self.assertEqual(result, "typedef const char* const_ptr_t;\n")
+
+    def test_array(self):
+        source = TypedefInfo()
+        source.name = "array_typedef"
+        source.type_info = TypeExpression()
+        source.type_info.details = BasicType.FLOAT
+        source.type_info.modification |= TypeModification.ARRAY(["16", "32"])
+        result = self.printer.print(source)
+        self.assertEqual(result, "typedef float array_typedef[16][32];\n")

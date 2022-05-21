@@ -12,6 +12,11 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
+        if source.type.modification.is_array:
+            if source.type.modification.array_order is None:
+                result += "[]"
+            else:
+                result += "["+"][".join(source.type.modification.array_order) + "]"
         if source.default_value is not None:
             result += f" = {source.default_value}"
         return result

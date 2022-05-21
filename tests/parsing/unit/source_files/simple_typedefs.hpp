@@ -14,3 +14,6 @@ namespace test_namespace
 }
 typedef test_namespace::typereal depend_typereal;
 typedef test_namespace::test_namespace_v2::typeint16 depend_depend_typeint16;
+
+typedef float array_1[];
+typedef float array_2[5][12];
