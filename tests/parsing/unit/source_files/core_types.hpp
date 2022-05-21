@@ -4,6 +4,8 @@
 #include <tr1/cstdint>
 #endif
 
+#define MAX_ARRAY_SIZE 512
+
 typedef char typechar;
 typedef char* typemodchar;
 typedef uint32_t typeuint32;
@@ -138,8 +140,12 @@ static test_namespace::test_namespace_v2::typeint16 typedef_namespace_static_nes
 depend_typereal* typedef_namespace_depend_typereal_ptr;
 
 
+
 float array[20];
 float arrayofarray[4][60];
+float** ptrarray[2][3][4];
+float strorderarray[2][MAX_ARRAY_SIZE];
+float dynarray[] = {0.5f, 6.7f};
 void (*callback)(char);
 
 };

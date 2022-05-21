@@ -478,21 +478,6 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertEqual(result.modification.pointer_order, 3)
             self.assertEqual(result.details, BasicType.FLOAT)
 
-    def test_not_allowed_mod_array(self):
-        node = find_by_name(self.cursor, "array")
-        result: TypeExpression = TypeExpression(node)
-        with self.assertRaises(NotImplementedError):
-            print(result.modification)
-        node = find_by_name(self.cursor, "arrayofarray")
-        result: TypeExpression = TypeExpression(node)
-        with self.assertRaises(NotImplementedError):
-            print(result.modification)
-        node = find_by_name(self.cursor, "arrayGetFunction")
-        result: FunctionInfo = FunctionInfo(node)
-        stub_lexicon(result)
-        with self.assertRaises(NotImplementedError):
-            print(result.arguments[0].type.modification)
-
     def test_not_allowed_function_pointer(self):
         node = find_by_name(self.cursor, "callback")
         result: TypeExpression = TypeExpression(node)
@@ -504,3 +489,42 @@ class TestTypeExpressionBasic(unittest.TestCase):
         result: TypeExpression = TypeExpression(node)
         with self.assertRaises(NotImplementedError):
             print(result.modification)
+
+    def test_simple_array(self):
+        node = find_by_name(self.cursor, "array")
+        result: TypeExpression = TypeExpression(node)
+        self.assertTrue(result.modification.is_array)
+        self.assertEqual(result.modification.array_order, ["20"])
+        self.assertEqual(result.modification.pointer_order, None)
+
+        node = find_by_name(self.cursor, "arrayofarray")
+        result: TypeExpression = TypeExpression(node)
+        self.assertTrue(result.modification.is_array)
+        self.assertEqual(result.modification.array_order, ["4", "60"])
+        self.assertEqual(result.modification.pointer_order, None)
+
+        node = find_by_name(self.cursor, "ptrarray")
+        result: TypeExpression = TypeExpression(node)
+        self.assertTrue(result.modification.is_array)
+        self.assertEqual(result.modification.array_order, ["2", "3", "4"])
+        self.assertTrue(result.modification.is_pointer)
+        self.assertEqual(result.modification.pointer_order, 2)
+
+        node = find_by_name(self.cursor, "strorderarray")
+        result: TypeExpression = TypeExpression(node)
+        self.assertTrue(result.modification.is_array)
+        self.assertEqual(result.modification.array_order, ["2", "MAX_ARRAY_SIZE"])
+        self.assertEqual(result.modification.pointer_order, None)
+
+        node = find_by_name(self.cursor, "dynarray")
+        result: TypeExpression = TypeExpression(node)
+        self.assertTrue(result.modification.is_array)
+        self.assertEqual(result.modification.array_order, [""])
+        self.assertEqual(result.modification.pointer_order, None)
+
+        node = find_by_name(self.cursor, "arrayGetFunction")
+        result: FunctionInfo = FunctionInfo(node)
+        stub_lexicon(result)
+        self.assertTrue(result.arguments[0].type.modification.is_array)
+        self.assertEqual(result.arguments[0].type.modification.array_order, [""])
+        self.assertEqual(result.arguments[0].type.modification.pointer_order, None)

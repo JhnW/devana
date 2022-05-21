@@ -195,13 +195,6 @@ class FinalClass final
     double b;
 };
 
-struct ClassNotAllowedElements
-{
-    double a[23];
-    double *b[4];
-    double c[];
-};
-
 class DefaultFieldsValue
 {
     const double default_value = (1.0+0.7)/4.25;

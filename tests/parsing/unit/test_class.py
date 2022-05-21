@@ -86,34 +86,34 @@ class TestClassBasic(unittest.TestCase):
         self.assertEqual(len(result.protected), 0)
         self.assertEqual(result.template, None)
 
-        # element: FieldInfo = result.content[0]
-        # self.assertEqual(element.name, "a")
-        # self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
-        # self.assertEqual(element.type.details, BasicType.DOUBLE)
-        # self.assertEqual(element.type.modification, TypeModification.NONE)
-        # element: FieldInfo = result.content[1]
-        # self.assertEqual(element.name, "b")
-        # self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
-        # self.assertEqual(element.type.details, BasicType.INT)
-        # self.assertTrue(element.type.modification.is_const)
-        # element: FieldInfo = result.content[2]
-        # self.assertEqual(element.name, "c")
-        # self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
-        # self.assertEqual(element.type.details, BasicType.VOID)
-        # self.assertTrue(element.type.modification.is_pointer)
-        # element: FieldInfo = result.content[3]
-        # self.assertEqual(element.name, "d")
-        # self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
-        # self.assertEqual(element.type.details, BasicType.BOOL)
-        # self.assertTrue(element.type.modification.is_static)
-        # element: MethodInfo = result.content[4]
-        # self.assertEqual(element.name, "foo")
-        # self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
-        # self.assertEqual(len(element.arguments), 1)
-        # self.assertEqual(element.arguments[0].name, "a")
-        # self.assertEqual(element.return_type.modification, TypeModification.NONE)
-        # self.assertEqual(element.return_type.details, BasicType.FLOAT)
-        # self.assertTrue(element.modification, FunctionModification.NONE)
+        element: FieldInfo = result.content[0]
+        self.assertEqual(element.name, "a")
+        self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
+        self.assertEqual(element.type.details, BasicType.DOUBLE)
+        self.assertEqual(element.type.modification, TypeModification.NONE)
+        element: FieldInfo = result.content[1]
+        self.assertEqual(element.name, "b")
+        self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
+        self.assertEqual(element.type.details, BasicType.INT)
+        self.assertTrue(element.type.modification.is_const)
+        element: FieldInfo = result.content[2]
+        self.assertEqual(element.name, "c")
+        self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
+        self.assertEqual(element.type.details, BasicType.VOID)
+        self.assertTrue(element.type.modification.is_pointer)
+        element: FieldInfo = result.content[3]
+        self.assertEqual(element.name, "d")
+        self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
+        self.assertEqual(element.type.details, BasicType.BOOL)
+        self.assertTrue(element.type.modification.is_static)
+        element: MethodInfo = result.content[4]
+        self.assertEqual(element.name, "foo")
+        self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
+        self.assertEqual(len(element.arguments), 1)
+        self.assertEqual(element.arguments[0].name, "a")
+        self.assertEqual(element.return_type.modification, TypeModification.NONE)
+        self.assertEqual(element.return_type.details, BasicType.FLOAT)
+        self.assertTrue(element.modification, FunctionModification.NONE)
         element: FieldInfo = result.content[5]
         self.assertEqual(element.name, "e")
         self.assertEqual(element.access_specifier, AccessSpecifier.PRIVATE)
@@ -299,22 +299,6 @@ class TestClassBasic(unittest.TestCase):
         self.assertEqual(method.modification, FunctionModification.NONE | FunctionModification.VOLATILE)
         method: MethodInfo = result.content[9]
         self.assertEqual(method.modification, FunctionModification.NONE | FunctionModification.CONST)
-
-    def test_now_implement_fields(self):
-        node = find_by_name(self.cursor, "ClassNotAllowedElements")
-        result = ClassInfo(node)
-        field: FieldInfo = result.content[0]
-        self.assertEqual(field.name, "a")
-        with self.assertRaises(NotImplementedError):
-            print(field.type.details)
-        field: FieldInfo = result.content[1]
-        self.assertEqual(field.name, "b")
-        with self.assertRaises(NotImplementedError):
-            print(field.type.details)
-        field: FieldInfo = result.content[2]
-        self.assertEqual(field.name, "c")
-        with self.assertRaises(NotImplementedError):
-            print(field.type.details)
 
     def test_default_field_value(self):
         node = find_by_name(self.cursor, "DefaultFieldsValue")

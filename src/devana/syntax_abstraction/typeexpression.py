@@ -1,6 +1,7 @@
 from clang import cindex
 from typing import List, Optional, Union
 from enum import Enum, auto, IntFlag
+import re
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -114,9 +115,11 @@ class TypeModification(metaclass=FakeEnum):
 
     enum_source = ModificationKind
 
-    def __call__(self, pointer_order):
+    def __call__(self, order):
         if self.value is TypeModification.ModificationKind.POINTER:
-            return TypeModification(self.value, pointer_order)
+            return TypeModification(self.value, order)
+        elif self.value is TypeModification.ModificationKind.ARRAY:
+            return TypeModification(self.value, order)
         else:
             raise NotImplementedError()
 
@@ -133,15 +136,21 @@ class TypeModification(metaclass=FakeEnum):
     CONSTEXPR = ModificationKind.CONSTEXPR
     MUTABLE = ModificationKind.MUTABLE
 
-    def __init__(self, value: Optional[int] = None, pointer_order: Optional[int] = None):
+    def __init__(self, value: Optional[int] = None, order: Optional[List[str]] = None):
         self._pointer_order = None
+        self._array_order = None
         if value is not None:
             self._value = TypeModification.ModificationKind(value)
             if value & TypeModification.ModificationKind.POINTER:
-                if pointer_order is None:
+                if order is None:
                     self._pointer_order = 1
                 else:
-                    self._pointer_order = pointer_order
+                    self._pointer_order = order
+            elif value & TypeModification.ModificationKind.ARRAY:
+                if order is None:
+                    self._array_order = [""]
+                else:
+                    self._array_order = order
         else:
             self._value = TypeModification.ModificationKind.NONE
 
@@ -161,13 +170,25 @@ class TypeModification(metaclass=FakeEnum):
                             result.pointer_order = None
                 else:
                     result.pointer_order = self.pointer_order
+            if result.is_array:
+                if other.array_order is not None:
+                    if self.array_order is None:
+                        result.array_order = other.array_order
+                    else:
+                        if self.array_order != other.array_order:
+                            result.array_order = None
+                else:
+                    result.array_order = self.array_order
             return result
         elif isinstance(other, TypeModification.ModificationKind):
             result = TypeModification(self.value & other)
             if result.is_pointer:
                 if self.is_pointer and other == TypeModification.ModificationKind.POINTER and self.pointer_order > 1:
                     result.pointer_order = None
-            return result
+            if result.is_array:
+                if self.is_array and other == TypeModification.ModificationKind.ARRAY and self.array_order != []:
+                    result.array_order = None
+                return result
         raise NotImplementedError()
 
     def __or__(self, other):
@@ -181,11 +202,22 @@ class TypeModification(metaclass=FakeEnum):
                         result.pointer_order = max(self.pointer_order, other.pointer_order)
                 else:
                     result.pointer_order = self.pointer_order
+            if result.is_array:
+                if other.array_order is not None:
+                    if self.array_order is None:
+                        result.array_order = other.array_order
+                    else:
+                        result.array_order = other.array_order if len(self.array_order) <= len(
+                            other.array_order) else self.array_order
+                else:
+                    result.array_order = self.array_order
             return result
         elif isinstance(other, TypeModification.ModificationKind):
             result = TypeModification(self.value | other)
             if self.is_pointer:
                 result.pointer_order = self.pointer_order
+            if self.array_order:
+                result.array_order = self.array_order
             return result
         raise NotImplementedError()
 
@@ -197,21 +229,33 @@ class TypeModification(metaclass=FakeEnum):
                     result.pointer_order = self.pointer_order
                 else:
                     result.pointer_order = other.pointer_order
+            if result.is_array:
+                if self.is_array:
+                    result.array_order = self.array_order
+                else:
+                    result.array_order = other.array_order
             return result
         elif isinstance(other, TypeModification.ModificationKind):
             result = TypeModification(self.value.__or__(self.value, other))
             if result.is_pointer:
                 if self.is_pointer:
                     result.pointer_order = self.pointer_order
+            if result.is_array:
+                if self.is_array:
+                    result.array_order = self.array_order
             return result
         raise NotImplementedError()
 
     def __eq__(self, other):
         if isinstance(other, TypeModification):
-            return self.value == other.value and self.pointer_order == other.pointer_order
+            return self.value == other.value and self.pointer_order == other.pointer_order \
+                   and self.array_order == other.array_order
         elif isinstance(other, TypeModification.ModificationKind):
             if self.pointer_order is not None:
                 if self.pointer_order > 1:
+                    return False
+            if self.array_order is not None:
+                if len(self.array_order) > 0:
                     return False
             return self.value == other.value
         return False
@@ -231,6 +275,8 @@ class TypeModification(metaclass=FakeEnum):
         result = f"{str(self.value)}"
         if self.value & TypeModification.ModificationKind.POINTER:
             result += f" (Pointer order: {self.pointer_order})"
+        if self.value & TypeModification.ModificationKind.ARRAY:
+            result += f" (Array order: {self._array_order})"
         return result
 
     @property
@@ -247,6 +293,19 @@ class TypeModification(metaclass=FakeEnum):
         if value is None:
             self.value &= ~TypeModification.ModificationKind.POINTER
         self._pointer_order = value
+
+    @property
+    def array_order(self) -> Optional[List[str]]:
+        return self._array_order
+
+    @array_order.setter
+    def array_order(self, value):
+        if not self.value & TypeModification.ModificationKind.ARRAY:
+            if value is not None:
+                self.value |= TypeModification.ModificationKind.ARRAY
+        if value is None:
+            self.value &= ~TypeModification.ModificationKind.ARRAY
+        self._array_order = value
 
     @property
     def is_reference(self) -> bool:
@@ -372,7 +431,10 @@ class TypeExpression:
         elif self.modification.is_reference:
             name += r"&"
         elif self.modification.is_array:
-            name += r"[]"
+            if self.modification.array_order is None:
+                name += r"[]"
+            else:
+                name += "["+"][".join(self.modification.array_order)+"]"
         elif self.modification.is_rvalue_ref:
             name += r"&&"
         self._name = name
@@ -396,7 +458,15 @@ class TypeExpression:
         type_c = self._base_type_c
 
         if type_c.kind == cindex.TypeKind.CONSTANTARRAY or type_c.kind == cindex.TypeKind.INCOMPLETEARRAY:
-            raise NotImplementedError("Static arrays are not allowed.")
+            if type_c.kind == cindex.TypeKind.INCOMPLETEARRAY:
+                self._modification |= TypeModification.ARRAY
+            else:
+                order = re.findall(r"\[(.*?)\]", CodePiece(self._cursor).text)
+                self._modification |= TypeModification.ARRAY(order)
+            while True:
+                type_c = type_c.get_array_element_type()
+                if type_c.kind != cindex.TypeKind.CONSTANTARRAY and type_c.kind != cindex.TypeKind.INCOMPLETEARRAY:
+                    break
 
         if type_c.kind == cindex.TypeKind.LVALUEREFERENCE:
             tmp_modification |= TypeModification.REFERENCE
