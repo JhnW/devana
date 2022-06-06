@@ -478,12 +478,6 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertEqual(result.modification.pointer_order, 3)
             self.assertEqual(result.details, BasicType.FLOAT)
 
-    def test_not_allowed_function_pointer(self):
-        node = find_by_name(self.cursor, "callback")
-        result: TypeExpression = TypeExpression(node)
-        with self.assertRaises(NotImplementedError):
-            print(result.details)
-
     def test_not_allowed_pointer_subtype(self):
         node = find_by_name(self.cursor, "ptr_ptr_const_ptr_value")
         result: TypeExpression = TypeExpression(node)

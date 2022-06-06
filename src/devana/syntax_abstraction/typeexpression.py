@@ -98,7 +98,6 @@ class BasicType(Enum):
 
 
 class TypeModification(metaclass=FakeEnum):
-
     class ModificationKind(IntFlag):
         NONE = auto()
         REFERENCE = auto()
@@ -401,42 +400,74 @@ class TypeExpression:
 
         Name of type is exactly the same name as used in expression, with all type modifications, namespace,
         template arguments and use or not type aliases."""
-
         name = ""
-        if self.modification.is_static:
-            name += "static "
-        if self.modification.is_const:
-            name += "const "
-        elif self.modification.is_volatile:
-            name += "volatile "
-        elif self.modification.is_restrict:
-            name += "restrict "
-        elif self.modification.is_constexpr:
-            name += "constexpr "
-        elif self.modification.is_mutable:
-            name += "mutable "
+        from devana.syntax_abstraction.functiontype import FunctionType
+        if type(self.details) is not FunctionType:
+            if self.modification.is_static:
+                name += "static "
+            if self.modification.is_const:
+                name += "const "
+            elif self.modification.is_volatile:
+                name += "volatile "
+            elif self.modification.is_restrict:
+                name += "restrict "
+            elif self.modification.is_constexpr:
+                name += "constexpr "
+            elif self.modification.is_mutable:
+                name += "mutable "
 
-        name += self.details.name
-        if self.template_arguments:
-            name += "<"
-            for i in range(len(self.template_arguments)):
-                name += self.template_arguments[i].name
-                if i != len(self.template_arguments) - 1:
-                    name += ","
-            name += ">"
+            name += self.details.name
+            if self.template_arguments:
+                name += "<"
+                for i in range(len(self.template_arguments)):
+                    name += self.template_arguments[i].name
+                    if i != len(self.template_arguments) - 1:
+                        name += ","
+                name += ">"
 
-        if self.modification.is_pointer:
-            for i in range(self.modification.pointer_order):
-                name += r"*"
-        elif self.modification.is_reference:
-            name += r"&"
-        elif self.modification.is_array:
-            if self.modification.array_order is None:
-                name += r"[]"
-            else:
-                name += "["+"][".join(self.modification.array_order)+"]"
-        elif self.modification.is_rvalue_ref:
-            name += r"&&"
+            if self.modification.is_pointer:
+                for i in range(self.modification.pointer_order):
+                    name += r"*"
+            elif self.modification.is_reference:
+                name += r"&"
+            elif self.modification.is_array:
+                if self.modification.array_order is None:
+                    name += r"[]"
+                else:
+                    name += "[" + "][".join(self.modification.array_order) + "]"
+            elif self.modification.is_rvalue_ref:
+                name += r"&&"
+        else:  # for function pointers
+            fnc: FunctionType = self.details
+            return_name = fnc.return_type.name
+            args_names = ", ".join([arg.name for arg in fnc.arguments])
+            prefix = "static " if self.modification.is_static else ""
+
+            mods = ""
+            if self.modification.is_const:
+                mods += "const "
+            elif self.modification.is_volatile:
+                mods += "volatile "
+            elif self.modification.is_restrict:
+                mods += "restrict "
+            elif self.modification.is_constexpr:
+                mods += "constexpr "
+            elif self.modification.is_mutable:
+                mods += "mutable "
+
+            if self.modification.is_pointer:
+                for i in range(self.modification.pointer_order):
+                    mods = r"*" + mods
+            elif self.modification.is_reference:
+                mods = r"&" + mods
+            elif self.modification.is_array:
+                if self.modification.array_order is None:
+                    mods += r"[]"
+                else:
+                    mods += "[" + "][".join(self.modification.array_order) + "]"
+            elif self.modification.is_rvalue_ref:
+                mods = r"&&" + mods
+            name = f"{prefix}{return_name} ({mods})({args_names})"
         self._name = name
         return self._name
 
@@ -570,7 +601,9 @@ class TypeExpression:
                 type_c = type_c.get_pointee()
 
         if type_c.kind == cindex.TypeKind.FUNCTIONPROTO:
-            raise NotImplementedError("Function pointers are not supported yet.")
+            from devana.syntax_abstraction.functiontype import FunctionType
+            self._details = FunctionType(type_c, self.parent)
+            return self._details
 
         self._details = BasicType.from_cursor(type_c)
 
