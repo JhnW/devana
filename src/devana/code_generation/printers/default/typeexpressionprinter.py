@@ -1,6 +1,7 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.templateinfo import GenericTypeParameter
+from devana.syntax_abstraction.functiontype import FunctionType
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from typing import Optional
@@ -11,6 +12,12 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
     def print(self, source: TypeExpression, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
+        if type(source.details) is FunctionType:
+            return self._print_with_function_pointer(source, config)
+        else:
+            return self._print_with_standard_type(source, config)
+
+    def _print_with_standard_type(self, source: TypeExpression, config: PrinterConfiguration) -> str:
         prefix = ""
         suffix = ""
 
@@ -50,6 +57,38 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
             template = f"<{template}>"
 
         return prefix + namespace + self._printer_dispatcher.print(source.details, config, source) + template + suffix
+
+    def _print_with_function_pointer(self, source: TypeExpression, config: PrinterConfiguration) -> str:
+        fnc: FunctionType = source.details
+        return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
+        args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
+        prefix = "static " if source.modification.is_static else ""
+        mods = ""
+        if source.modification.is_const:
+            mods += "const "
+        elif source.modification.is_volatile:
+            mods += "volatile "
+        elif source.modification.is_restrict:
+            mods += "restrict "
+        elif source.modification.is_constexpr:
+            mods += "constexpr "
+        elif source.modification.is_mutable:
+            mods += "mutable "
+
+        if source.modification.is_pointer:
+            for i in range(source.modification.pointer_order):
+                mods = r"*" + mods
+        elif source.modification.is_reference:
+            mods = r"&" + mods
+        elif source.modification.is_array:
+            if source.modification.array_order is None:
+                mods += r"[]"
+            else:
+                mods += "[" + "][".join(source.modification.array_order) + "]"
+        elif source.modification.is_rvalue_ref:
+            mods = r"&&" + mods
+        name = f"{prefix}{return_name} ({mods})({args_names})"
+        return name
 
 
 class GenericTypeParameterPrinter(ICodePrinter, DispatcherInjectable):

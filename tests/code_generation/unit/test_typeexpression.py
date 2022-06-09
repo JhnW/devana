@@ -6,6 +6,7 @@ from devana.code_generation.printers.default.unionprinter import UnionPrinter
 from devana.code_generation.printers.default.typedefprinter import TypedefPrinter
 from devana.code_generation.printers.default.enumprinter import EnumPrinter
 from devana.code_generation.printers.default.classprinter import *
+from devana.code_generation.printers.default.functiontypeprinter import FunctionTypePrinter
 from devana.code_generation.printers.codeprinter import CodePrinter
 from devana.syntax_abstraction.typeexpression import BasicType, TypeExpression, TypeModification
 from devana.syntax_abstraction.classinfo import ClassInfo
@@ -13,6 +14,7 @@ from devana.syntax_abstraction.templateinfo import GenericTypeParameter
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
+from devana.syntax_abstraction.functiontype import FunctionType
 
 
 class TestTypeExpression(unittest.TestCase):
@@ -93,6 +95,7 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         printer.register(TypedefPrinter, TypedefInfo)
         printer.register(UnionPrinter, UnionInfo)
         printer.register(EnumPrinter, EnumInfo)
+        printer.register(FunctionTypePrinter, FunctionType)
         self.printer: CodePrinter = printer
 
     def test_type_expression_class_details(self):
@@ -197,3 +200,17 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         source.modification |= TypeModification.POINTER
         result = self.printer.print(source)
         self.assertEqual(result, "TestEnum*")
+
+    def test_type_expression_function_pointer_details(self):
+        details_type = FunctionType()
+        details_type.return_type = TypeExpression()
+        details_type.return_type.details = BasicType.FLOAT
+        details_type.arguments = [TypeExpression(), TypeExpression()]
+        details_type.arguments[0].details = BasicType.DOUBLE
+        details_type.arguments[0].modification |= TypeModification.POINTER
+        details_type.arguments[1].details = BasicType.CHAR
+        source = TypeExpression()
+        source.details = details_type
+        source.modification |= TypeModification.POINTER
+        result = self.printer.print(source)
+        self.assertEqual(result, "float (*)(double*, char)")

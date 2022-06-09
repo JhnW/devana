@@ -11,6 +11,7 @@ from devana.code_generation.printers.default.enumprinter import EnumPrinter
 from devana.code_generation.printers.default.classprinter import *
 from devana.code_generation.printers.default.externcprinter import ExternCPrinter
 from devana.code_generation.printers.default.commentprinter import CommentPrinter
+from devana.code_generation.printers.default.functiontypeprinter import FunctionTypePrinter
 from devana.code_generation.printers.default.stubtypeprinter import StubTypePrinter
 from devana.syntax_abstraction.classinfo import ClassInfo
 from devana.syntax_abstraction.templateinfo import GenericTypeParameter
@@ -26,6 +27,7 @@ from devana.code_generation.printers.default.basictypeprinter import BasicTypePr
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.variableprinter import VariablePrinter, GlobalVariablePrinter
 from devana.syntax_abstraction.typeexpression import BasicType, TypeExpression
+from devana.syntax_abstraction.functiontype import FunctionType
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.syntax_abstraction.externc import ExternC
 from devana.syntax_abstraction.comment import Comment
@@ -46,6 +48,7 @@ def create_default_printer() -> CodePrinter:
     printer.register(FilePrinter, SourceFile)
     printer.register(IncludePrinter, IncludeInfo)
     printer.register(FunctionPrinter, FunctionInfo)
+    printer.register(FunctionTypePrinter, FunctionType)
     printer.register(VariablePrinter, FunctionInfo.Argument)
     printer.register(NamespacePrinter, NamespaceInfo)
     printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)

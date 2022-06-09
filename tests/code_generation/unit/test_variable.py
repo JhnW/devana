@@ -2,8 +2,11 @@ import unittest
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.variableprinter import VariablePrinter, GlobalVariablePrinter
-from devana.syntax_abstraction.typeexpression import BasicType, TypeExpression, TypeModification
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
+from devana.code_generation.printers.codeprinter import CodePrinter
+from devana.syntax_abstraction.typeexpression import TypeModification, TypeExpression, BasicType
+from devana.syntax_abstraction.functiontype import FunctionType
+from devana.code_generation.printers.default.functiontypeprinter import FunctionTypePrinter
 
 
 class TestVariableCore(unittest.TestCase):
@@ -49,3 +52,39 @@ class TestVariableCore(unittest.TestCase):
         printer = VariablePrinter(TypeExpressionPrinter(BasicTypePrinter()))
         result = printer.print(source)
         self.assertEqual(result, "unsigned short test_var[] = {5}")
+
+    def test_print_variable_function_pointer(self):
+        printer = CodePrinter()
+        printer.register(FunctionTypePrinter, FunctionType)
+        printer.register(VariablePrinter, Variable)
+        printer.register(BasicTypePrinter, BasicType)
+        printer.register(TypeExpressionPrinter, TypeExpression)
+        printer.register(GlobalVariablePrinter, GlobalVariable)
+
+        details_type = FunctionType()
+        details_type.return_type = TypeExpression()
+        details_type.return_type.details = BasicType.FLOAT
+        details_type.arguments = [TypeExpression(), TypeExpression()]
+        details_type.arguments[0].details = BasicType.DOUBLE
+        details_type.arguments[0].modification |= TypeModification.POINTER
+        details_type.arguments[1].details = BasicType.CHAR
+
+        with self.subTest("Variable"):
+            source = Variable()
+            source.name = "test_var"
+            source.type = TypeExpression()
+            source.type.modification \
+                |= TypeModification.ARRAY(["20"]) | TypeModification.POINTER | TypeModification.CONST
+            source.type.details = details_type
+            result = printer.print(source)
+            self.assertEqual(result, "float (const *test_var[20])(double*, char)")
+
+        with self.subTest("Global variable"):
+            source = GlobalVariable()
+            source.name = "test_var"
+            source.type = TypeExpression()
+            source.type.modification \
+                |= TypeModification.ARRAY(["20"]) | TypeModification.POINTER | TypeModification.CONST
+            source.type.details = details_type
+            result = printer.print(source)
+            self.assertEqual(result, "float (const *test_var[20])(double*, char);\n")

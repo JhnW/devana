@@ -18,8 +18,8 @@ In addition to the properties listed below, the most important thing at the mome
 language features to ensure that valid exceptions are thrown.
 
 * **Parsing types and types traits**
-    * Functions pointers: *medium priority*
-    * Array: *medium priority*
+    * External types parsing: *medium priority*
+    * Better pointers parsing: *low priority*
 
 * **Other code**
     * Using directive: *medium priority*

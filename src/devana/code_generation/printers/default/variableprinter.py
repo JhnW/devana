@@ -1,5 +1,6 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
+from devana.syntax_abstraction.functiontype import FunctionType
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
@@ -11,12 +12,43 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
     def print(self, source: Variable, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
-        result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
-        if source.type.modification.is_array:
-            if source.type.modification.array_order is None:
-                result += "[]"
-            else:
-                result += "["+"][".join(source.type.modification.array_order) + "]"
+        if type(source.type.details) is FunctionType:
+            fnc: FunctionType = source.type.details
+            return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
+            args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
+            prefix = "static " if source.type.modification.is_static else ""
+            mods = ""
+            if source.type.modification.is_const:
+                mods += "const "
+            elif source.type.modification.is_volatile:
+                mods += "volatile "
+            elif source.type.modification.is_restrict:
+                mods += "restrict "
+            elif source.type.modification.is_constexpr:
+                mods += "constexpr "
+            elif source.type.modification.is_mutable:
+                mods += "mutable "
+
+            if source.type.modification.is_pointer:
+                for i in range(source.type.modification.pointer_order):
+                    mods = mods + r"*"
+            elif source.type.modification.is_reference:
+                mods = mods + r"&"
+
+            name = mods + source.name
+            if source.type.modification.is_array:
+                if source.type.modification.array_order is None:
+                    name += r"[]"
+                else:
+                    name += "[" + "][".join(source.type.modification.array_order) + "]"
+            result = f"{prefix}{return_name} ({name})({args_names})"
+        else:
+            result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
+            if source.type.modification.is_array:
+                if source.type.modification.array_order is None:
+                    result += "[]"
+                else:
+                    result += "["+"][".join(source.type.modification.array_order) + "]"
         if source.default_value is not None:
             result += f" = {source.default_value}"
         return result
@@ -27,7 +59,43 @@ class GlobalVariablePrinter(ICodePrinter, DispatcherInjectable):
     def print(self, source: GlobalVariable, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
-        result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
+        if type(source.type.details) is FunctionType:
+            fnc: FunctionType = source.type.details
+            return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
+            args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
+            prefix = "static " if source.type.modification.is_static else ""
+            mods = ""
+            if source.type.modification.is_const:
+                mods += "const "
+            elif source.type.modification.is_volatile:
+                mods += "volatile "
+            elif source.type.modification.is_restrict:
+                mods += "restrict "
+            elif source.type.modification.is_constexpr:
+                mods += "constexpr "
+            elif source.type.modification.is_mutable:
+                mods += "mutable "
+
+            if source.type.modification.is_pointer:
+                for i in range(source.type.modification.pointer_order):
+                    mods = mods + r"*"
+            elif source.type.modification.is_reference:
+                mods = mods + r"&"
+
+            name = mods + source.name
+            if source.type.modification.is_array:
+                if source.type.modification.array_order is None:
+                    name += r"[]"
+                else:
+                    name += "[" + "][".join(source.type.modification.array_order) + "]"
+            result = f"{prefix}{return_name} ({name})({args_names})"
+        else:
+            result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
+            if source.type.modification.is_array:
+                if source.type.modification.array_order is None:
+                    result += "[]"
+                else:
+                    result += "["+"][".join(source.type.modification.array_order) + "]"
         if source.default_value is not None:
             result += f" = {source.default_value}"
         formatter = Formatter(config)

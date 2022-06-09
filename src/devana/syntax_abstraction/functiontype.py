@@ -13,8 +13,6 @@ class FunctionType:
     appear as a variable or in a typedef etc."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
-        if cursor.kind is not cindex.TypeKind.FUNCTIONPROTO:
-            raise ParserError(f"It is not a valid type cursor: {cursor.kind}.")
         self._cursor = cursor
         self._parent = parent
         if cursor is None:
@@ -22,6 +20,8 @@ class FunctionType:
             self._return_type = TypeExpression()
             self._text_source = None
         else:
+            if cursor.kind is not cindex.TypeKind.FUNCTIONPROTO:
+                raise ParserError(f"It is not a valid type cursor: {cursor.kind}.")
             self._arguments = LazyNotInit
             self._return_type = LazyNotInit
             self._text_source = LazyNotInit

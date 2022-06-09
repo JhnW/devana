@@ -20,3 +20,5 @@ from .typeexpressionprinter import TypeExpressionPrinter
 from .variableprinter import VariablePrinter, GlobalVariablePrinter
 from .externcprinter import ExternCPrinter
 from .commentprinter import CommentPrinter
+from .functionprinter import FunctionPrinter
+from .functiontypeprinter import FunctionTypePrinter
