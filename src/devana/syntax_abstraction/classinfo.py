@@ -906,7 +906,9 @@ class ClassInfo(CodeContainer):
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.enuminfo import EnumInfo
-        types = [SectionInfo, ClassInfo, FieldInfo, ConstructorInfo, DestructorInfo, MethodInfo, EnumInfo, UnionInfo]
+        from devana.syntax_abstraction.using import Using
+        types = [SectionInfo, ClassInfo, FieldInfo, ConstructorInfo, DestructorInfo, MethodInfo, EnumInfo, UnionInfo,
+                 Using]
         content = []
         for children in self._cursor.get_children():
             if children.kind == cindex.CursorKind.CXX_FINAL_ATTR:

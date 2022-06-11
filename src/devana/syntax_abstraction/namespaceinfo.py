@@ -69,6 +69,7 @@ class NamespaceInfo(CodeContainer):
 
     def _create_content(self) -> List[any]:
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
+        from devana.syntax_abstraction.using import Using
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
         from devana.syntax_abstraction.enuminfo import EnumInfo
         from devana.syntax_abstraction.typedefinfo import TypedefInfo
@@ -76,7 +77,7 @@ class NamespaceInfo(CodeContainer):
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.externc import ExternC
         types = [FunctionInfo, NamespaceInfo, UsingNamespace, ClassInfo, EnumInfo, TypedefInfo, MethodInfo, UnionInfo,
-                 GlobalVariable, ExternC]
+                 GlobalVariable, ExternC, Using]
         content = []
         for children in self._cursor.get_children():
             for t in types:

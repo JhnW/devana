@@ -391,6 +391,8 @@ class TypeExpression:
                             self._base_type_c = children.underlying_typedef_type
                     else:
                         self._base_type_c = self._cursor.underlying_typedef_type
+                elif self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
+                    self._base_type_c = self._cursor.type.get_canonical()
         self._lexicon = Lexicon.create(self)
 
     @property

@@ -17,3 +17,4 @@ from .comment import Comment, CommentMarker
 from .classinfo import ClassMember, ConstructorInfo, DestructorInfo, FieldInfo, MethodInfo, SectionInfo, ClassInfo
 from .externc import ExternC
 from .functiontype import FunctionType
+from .using import Using

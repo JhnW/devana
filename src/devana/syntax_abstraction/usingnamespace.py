@@ -19,7 +19,7 @@ class UsingNamespace:
             self._text_source = None
         else:
             if cursor.kind != cindex.CursorKind.USING_DIRECTIVE:
-                raise ParserError("Template parameter expect USING_DIRECTIVE cursor kind.")
+                raise ParserError("Expect USING_DIRECTIVE cursor kind.")
             self._namespace = LazyNotInit
             self._namespaces = LazyNotInit
             self._text_source = LazyNotInit

@@ -22,3 +22,4 @@ from .externcprinter import ExternCPrinter
 from .commentprinter import CommentPrinter
 from .functionprinter import FunctionPrinter
 from .functiontypeprinter import FunctionTypePrinter
+from .unionprinter import UnionPrinter

@@ -4,6 +4,7 @@ from devana.code_generation.printers.default.fileprinter import FilePrinter, Inc
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, IncludeInfo
 from devana.code_generation.printers.default.templateparameterprinter import TemplateParameterPrinter
 from devana.code_generation.printers.default.namespaceprinter import NamespacePrinter
+from devana.code_generation.printers.default.usingprinter import UsingPrinter
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 from devana.code_generation.printers.default.typeexpressionprinter import GenericTypeParameterPrinter
 from devana.code_generation.printers.default.typedefprinter import TypedefPrinter
@@ -23,6 +24,7 @@ from devana.code_generation.printers.default.usingnamespaceprinter import UsingN
 from devana.code_generation.printers.default.classprinter import FieldPrinter
 from devana.syntax_abstraction.classinfo import FieldInfo
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
+from devana.syntax_abstraction.using import Using
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.variableprinter import VariablePrinter, GlobalVariablePrinter
@@ -57,6 +59,7 @@ def create_default_printer() -> CodePrinter:
     printer.register(GenericTypeParameterPrinter, GenericTypeParameter)
     printer.register(UnionPrinter, UnionInfo)
     printer.register(UsingNamespacePrinter, UsingNamespace)
+    printer.register(UsingPrinter, Using)
     printer.register(VariablePrinter, Variable)
     printer.register(GlobalVariablePrinter, GlobalVariable)
     printer.register(ExternCPrinter, ExternC)
