@@ -26,19 +26,19 @@ class TestContextBasic(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_context_basic(self):
-        enum_type = EnumInfo()
+        enum_type = EnumInfo.create_default()
         enum_type.name = "TextEnum"
         source = FunctionInfo()
         source.name = "foo"
-        source.return_type = TypeExpression()
+        source.return_type = TypeExpression.create_default()
         source.return_type.details = BasicType.LONG
         arg1 = FunctionInfo.Argument()
-        arg1.type = TypeExpression()
+        arg1.type = TypeExpression.create_default()
         arg1.type.details = enum_type
         arg1.name = "a"
         arg1.type.modification = TypeModification.POINTER | TypeModification.CONST
         arg2 = FunctionInfo.Argument()
-        arg2.type = TypeExpression()
+        arg2.type = TypeExpression.create_default()
         arg2.type.details = BasicType.INT
         arg2.type.modification = TypeModification.POINTER
         arg2.default_value = "nullptr"

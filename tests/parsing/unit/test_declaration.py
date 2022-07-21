@@ -14,7 +14,7 @@ class TestDeclarationDefinition(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
         self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/definition_declaration.hpp").cursor
-        self.file = SourceFile(self.cursor)
+        self.file = SourceFile.from_cursor(self.cursor)
 
     def test_declaration_only(self):
         with self.subTest("Enum declaration"):

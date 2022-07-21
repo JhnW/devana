@@ -60,7 +60,7 @@ class TestTypeExpression(unittest.TestCase):
 
         for m in mods:
             with self.subTest(m[0]):
-                source = TypeExpression()
+                source = TypeExpression.create_default()
                 source.details = BasicType.DOUBLE
                 source.modification |= m[0]
                 printer = TypeExpressionPrinter(BasicTypePrinter())
@@ -68,7 +68,7 @@ class TestTypeExpression(unittest.TestCase):
                 self.assertEqual(result, m[1])
 
     def test_print_type_expression_basic_mods_ptr_order(self):
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = BasicType.FLOAT
         source.modification |= TypeModification.POINTER(3)
         printer = TypeExpressionPrinter(BasicTypePrinter())
@@ -76,7 +76,7 @@ class TestTypeExpression(unittest.TestCase):
         self.assertEqual(result, "float***")
 
     def test_print_type_expression_basic_array(self):
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = BasicType.FLOAT
         source.modification |= TypeModification.ARRAY(["4", "8"])
         printer = TypeExpressionPrinter(BasicTypePrinter())
@@ -99,18 +99,18 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_type_expression_class_details(self):
-        class_type = ClassInfo()
+        class_type = ClassInfo.create_default()
         class_type.name = "TestClass"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = class_type
         source.modification |= TypeModification.POINTER(2)
         result = self.printer.print(source)
         self.assertEqual(result, "TestClass**")
 
     def test_type_expression_namespaces_class_details(self):
-        class_type = ClassInfo()
+        class_type = ClassInfo.create_default()
         class_type.name = "TestClass"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = class_type
         source.namespaces = ["Namespace1", "Namespace2"]
         result = self.printer.print(source)
@@ -118,24 +118,24 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
 
     def test_type_expression_generic_type(self):
         generic_type = GenericTypeParameter("T")
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = generic_type
         source.modification |= TypeModification.CONST | TypeModification.POINTER
         result = self.printer.print(source)
         self.assertEqual(result, "const T*")
 
     def test_type_expression_template_basic_params(self):
-        class_type = ClassInfo()
+        class_type = ClassInfo.create_default()
         class_type.name = "TestClass"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = class_type
 
-        param_1 = TypeExpression()
+        param_1 = TypeExpression.create_default()
         param_1.modification |= TypeModification.POINTER
         param_1.details = BasicType.DOUBLE
-        param_2 = TypeExpression()
+        param_2 = TypeExpression.create_default()
         param_2.details = BasicType.U_CHAR
-        param_3 = TypeExpression()
+        param_3 = TypeExpression.create_default()
         param_3.modification = TypeModification.POINTER
         param_3.details = GenericTypeParameter("T")
         source.template_arguments = [param_1, param_2, param_3]
@@ -143,12 +143,12 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         self.assertEqual(result, "TestClass<double*,unsigned char,T*>")
 
     def test_type_expression_template_class_param(self):
-        class_type = ClassInfo()
+        class_type = ClassInfo.create_default()
         class_type.name = "TestClass"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = class_type
 
-        param_1 = TypeExpression()
+        param_1 = TypeExpression.create_default()
         param_1.modification |= TypeModification.POINTER
         param_1.details = class_type
         source.template_arguments = [param_1]
@@ -156,15 +156,15 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         self.assertEqual(result, "TestClass<TestClass*>")
 
     def test_type_expression_template_template_param(self):
-        class_type = ClassInfo()
+        class_type = ClassInfo.create_default()
         class_type.name = "TestClass"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = class_type
 
-        param_1 = TypeExpression()
+        param_1 = TypeExpression.create_default()
         param_1.modification |= TypeModification.POINTER
         param_1.details = class_type
-        param_2 = TypeExpression()
+        param_2 = TypeExpression.create_default()
         param_2.details = BasicType.INT
         param_1.template_arguments = [param_2]
         source.template_arguments = [param_1]
@@ -173,43 +173,43 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         self.assertEqual(result, "TestClass<TestClass<int>*>")
 
     def test_type_expression_typedef_details(self):
-        details_type = TypedefInfo()
+        details_type = TypedefInfo.create_default()
         details_type.name = "TypedefTest"
-        details_type.type_info = TypeExpression()
+        details_type.type_info = TypeExpression.create_default()
         details_type.type_info.details = BasicType.FLOAT
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = details_type
         source.modification |= TypeModification.POINTER
         result = self.printer.print(source)
         self.assertEqual(result, "TypedefTest*")
 
     def test_type_expression_union_details(self):
-        details_type = UnionInfo()
+        details_type = UnionInfo.create_default()
         details_type.name = "TestUnion"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = details_type
         source.modification |= TypeModification.POINTER
         result = self.printer.print(source)
         self.assertEqual(result, "TestUnion*")
 
     def test_type_expression_enum_details(self):
-        details_type = EnumInfo()
+        details_type = EnumInfo.create_default()
         details_type.name = "TestEnum"
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = details_type
         source.modification |= TypeModification.POINTER
         result = self.printer.print(source)
         self.assertEqual(result, "TestEnum*")
 
     def test_type_expression_function_pointer_details(self):
-        details_type = FunctionType()
-        details_type.return_type = TypeExpression()
+        details_type = FunctionType.create_default()
+        details_type.return_type = TypeExpression.create_default()
         details_type.return_type.details = BasicType.FLOAT
-        details_type.arguments = [TypeExpression(), TypeExpression()]
+        details_type.arguments = [TypeExpression.create_default(), TypeExpression.create_default()]
         details_type.arguments[0].details = BasicType.DOUBLE
         details_type.arguments[0].modification |= TypeModification.POINTER
         details_type.arguments[1].details = BasicType.CHAR
-        source = TypeExpression()
+        source = TypeExpression.create_default()
         source.details = details_type
         source.modification |= TypeModification.POINTER
         result = self.printer.print(source)

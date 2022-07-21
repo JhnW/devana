@@ -68,7 +68,7 @@ class TestSourceModuleSearchingTypes(unittest.TestCase):
         class_info: ClassInfo = self.src_file.content[7]
         self.assertEqual(class_info.inheritance.type_parents[0].type, self.expected_type)
 
-    def test_class_inheritance_type_another_file(self):
+    def test_class_inheritance_type_another_file_complex(self):
         class_info: ClassInfo = self.src_file.content[8]
         self.assertEqual(class_info.inheritance.type_parents[0].type, self.expected_type_namespace)
         self.assertFalse(class_info.inheritance.type_parents[0].is_virtual)

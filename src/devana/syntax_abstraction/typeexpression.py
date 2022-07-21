@@ -6,6 +6,7 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.fakeenum import FakeEnum
+from devana.utility.traits import IBasicCreatable
 
 
 class BasicType(Enum):
@@ -355,7 +356,7 @@ class TypeModification(metaclass=FakeEnum):
         return self.value == TypeModification.ModificationKind.NONE
 
 
-class TypeExpression:
+class TypeExpression(IBasicCreatable):
     """Hold information about C++ type usage in common expression, for example function argument declaration,
     class field, function return value or part of typedef declaration."""
 
@@ -366,7 +367,7 @@ class TypeExpression:
         if cursor is None:
             self._name = ""
             self._modification = TypeModification.NONE
-            self._details = None
+            self._details = BasicType.INT
             self._text_source = None
             self._namespaces = []
             self._template_arguments = None
@@ -394,6 +395,16 @@ class TypeExpression:
                 elif self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
                     self._base_type_c = self._cursor.type.get_canonical()
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        result = cls(None, parent)
+        return result
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        result = cls(cursor, parent)
+        return result
 
     @property
     @lazy_invoke

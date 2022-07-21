@@ -15,7 +15,7 @@ class TestEnum(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_enum_basic(self):
-        source = EnumInfo()
+        source = EnumInfo.create_default()
         source.name = "foo"
         source.values = [EnumInfo.EnumValue(), EnumInfo.EnumValue(), EnumInfo.EnumValue()]
         source.values[0].name = "A"
@@ -29,14 +29,14 @@ class TestEnum(unittest.TestCase):
         self.assertEqual("enum foo\n{\n    A,\n    B = 7,\n    C\n};\n", result)
 
     def test_empty_enum_basic(self):
-        source = EnumInfo()
+        source = EnumInfo.create_default()
         source.name = "foo"
         source.values = []
         result = self.printer.print(source)
         self.assertEqual(result, "enum foo\n{\n};\n")
 
     def test_numeric_type_enum(self):
-        source = EnumInfo()
+        source = EnumInfo.create_default()
         source.name = "foo"
         source.numeric_type = BasicType.CHAR
         source.values = [EnumInfo.EnumValue(), EnumInfo.EnumValue(), EnumInfo.EnumValue()]

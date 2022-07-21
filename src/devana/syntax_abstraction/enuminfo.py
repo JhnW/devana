@@ -8,19 +8,20 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 import re
 from clang import cindex
 from typing import Optional, List, Literal
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
 class EnumInfo(CodeContainer):
     """Enum declaration."""
 
-    class EnumValue:
+    class EnumValue(IBasicCreatable, ICursorValidate):
         """Enum value stored in EnumInfo."""
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
             self._cursor = cursor
             self._parent = parent
             if cursor is None:
                 self._text_source = None
-                self._name = ""
+                self._name = "TestValue"
                 self._value = 0
                 self._is_default = False
                 self._associated_comment = False
@@ -29,11 +30,26 @@ class EnumInfo(CodeContainer):
                 self._name = LazyNotInit
                 self._value = LazyNotInit
                 self._associated_comment = LazyNotInit
-                if cursor.kind != cindex.CursorKind.ENUM_CONSTANT_DECL:
+                if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not a valid type cursor.")
                 self._is_default = True
                 for _ in cursor.get_children():
                     self._is_default = False
+
+        @classmethod
+        def create_default(cls, parent: Optional = None) -> any:
+            result = cls(None, parent)
+            return result
+
+        @classmethod
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+            if not cls.is_cursor_valid(cursor):
+                return None
+            return cls(cursor, parent)
+
+        @staticmethod
+        def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+            return cursor.kind == cindex.CursorKind.ENUM_CONSTANT_DECL
 
         @property
         @lazy_invoke
@@ -97,7 +113,7 @@ class EnumInfo(CodeContainer):
         super().__init__(cursor, parent)
 
         if cursor is None:
-            self._name = ""
+            self._name = "TestEnum"
             self._values = []
             self._is_scoped = False
             self._prefix = None
@@ -106,7 +122,7 @@ class EnumInfo(CodeContainer):
             self._is_declaration = False
             self._associated_comment = None
         else:
-            if cursor.kind != cindex.CursorKind.ENUM_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("It is not a valid type cursor.")
             self._name = LazyNotInit
             self._values = LazyNotInit
@@ -117,6 +133,10 @@ class EnumInfo(CodeContainer):
             self._is_declaration = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.ENUM_DECL
 
     @property
     @lazy_invoke

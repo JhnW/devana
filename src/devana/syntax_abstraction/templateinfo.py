@@ -7,6 +7,7 @@ from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModific
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 import re
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
 class GenericTypeParameter:
@@ -46,27 +47,41 @@ class GenericTypeParameter:
         return self.name == other.name
 
 
-class TemplateInfo:
+class TemplateInfo(IBasicCreatable, ICursorValidate):
     """General template syntax information abut template definition."""
 
-    class TemplateParameter:
+    class TemplateParameter(IBasicCreatable, ICursorValidate):
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             self._cursor = cursor
             self._parent = parent
             if cursor is None:
                 self._specifier = "typename"
-                self._name = ""
+                self._name = "T"
                 self._default_value = None
                 self._is_variadic = False
             else:
-                if cursor.kind != cindex.CursorKind.TEMPLATE_TYPE_PARAMETER:
+                if not self.is_cursor_valid(cursor):
                     raise ParserError("Template parameter expect TEMPLATE_TYPE_PARAMETER cursor kind.")
                 self._specifier = LazyNotInit
                 self._name = LazyNotInit
                 self._default_value = LazyNotInit
                 self._is_variadic = LazyNotInit
             self._lexicon = Lexicon.create(self)
+
+        @classmethod
+        def create_default(cls, parent: Optional = None) -> any:
+            return cls(None, parent)
+
+        @classmethod
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+            if not cls.is_cursor_valid(cursor):
+                return None
+            return cls(cursor, parent)
+
+        @staticmethod
+        def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+            return cursor.kind == cindex.CursorKind.TEMPLATE_TYPE_PARAMETER
 
         @property
         @lazy_invoke
@@ -146,10 +161,7 @@ class TemplateInfo:
             self._is_empty = True
             self._is_variadic = False
         else:
-            if not (not (cursor.kind != cindex.CursorKind.FUNCTION_TEMPLATE) or not (
-                    cursor.kind != cindex.CursorKind.CLASS_TEMPLATE) or not (
-                    cursor.kind != cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION) or
-                    re.search(r"template\s*<>", CodePiece(cursor).text)):
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("Template parameter expect FUNCTION_TEMPLATE cursor kind.")
             self._specialisations_value = LazyNotInit
             self._specialisations = LazyNotInit
@@ -157,6 +169,23 @@ class TemplateInfo:
             self._is_empty = LazyNotInit
             self._is_variadic = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return (not (cursor.kind != cindex.CursorKind.FUNCTION_TEMPLATE) or not (
+                cursor.kind != cindex.CursorKind.CLASS_TEMPLATE) or not (
+                cursor.kind != cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION) or
+                re.search(r"template\s*<>", CodePiece(cursor).text))
 
     @property
     @lazy_invoke

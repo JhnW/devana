@@ -17,7 +17,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_procedure(self):
         node = find_by_name(self.cursor, "procedure_forward")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "procedure_forward")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
@@ -32,7 +32,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_arguments(self):
         node = find_by_name(self.cursor, "num_forward")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "num_forward")
         self.assertTrue(result.return_type.modification.is_pointer)
@@ -55,7 +55,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_default_values(self):
         node = find_by_name(self.cursor, "num_default_forward")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "num_default_forward")
         self.assertTrue(result.return_type.modification.is_reference)
@@ -78,7 +78,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_body(self):
         node = find_by_name(self.cursor, "procedure_def")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "procedure_def")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
@@ -104,7 +104,7 @@ class TestFunctionsSimple(unittest.TestCase):
     def test_function_modification(self):
         with self.subTest("mod_constexpt_func"):
             node = find_by_name(self.cursor, "mod_constexpt_func")
-            result = FunctionInfo(node)
+            result = FunctionInfo.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, "mod_constexpt_func")
             self.assertEqual(result.return_type.modification, TypeModification.NONE)
@@ -120,7 +120,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
         with self.subTest("mod_static_func"):
             node = find_by_name(self.cursor, "mod_static_func")
-            result = FunctionInfo(node)
+            result = FunctionInfo.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, "mod_static_func")
             self.assertEqual(result.return_type.modification, TypeModification.NONE)
@@ -136,7 +136,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
         with self.subTest("mod_inline_func"):
             node = find_by_name(self.cursor, "mod_inline_func")
-            result = FunctionInfo(node)
+            result = FunctionInfo.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, "mod_inline_func")
             self.assertEqual(result.return_type.modification, TypeModification.NONE)
@@ -168,22 +168,22 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_modification(self):
         node = find_by_name(self.cursor, "attribute_func_1")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         self.assertTrue(result.modification.is_static)
         self.assertEqual(result.modification, FunctionModification.NONE | FunctionModification.STATIC)
 
         node = find_by_name(self.cursor, "attribute_func_2")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         self.assertTrue(result.modification.is_inline)
         self.assertEqual(result.modification, FunctionModification.NONE | FunctionModification.INLINE)
 
         node = find_by_name(self.cursor, "attribute_func_3")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         self.assertTrue(result.modification.is_constexpr)
         self.assertEqual(result.modification, FunctionModification.NONE | FunctionModification.CONSTEXPR)
 
         node = find_by_name(self.cursor, "attribute_func_4")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         self.assertTrue(result.modification.is_static)
         self.assertTrue(result.modification.is_inline)
         self.assertEqual(result.modification, FunctionModification.NONE
@@ -199,7 +199,7 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def test_common_function_template(self):
         node = find_by_name(self.cursor, "simple_function_typename")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
         self.assertFalse(result.template.is_empty)
@@ -222,7 +222,7 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[0].default_value, None)
 
         node = find_by_name(self.cursor, "simple_function_class")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
         self.assertFalse(result.template.is_empty)
@@ -246,7 +246,7 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def test_complex_function_template(self):
         node = find_by_name(self.cursor, "complex_function")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
         self.assertFalse(result.template.is_empty)
@@ -286,7 +286,7 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def test_specialisation_function_template(self):
         node = find_by_name(self.cursor, "specialisation_function")
-        result = FunctionInfo(node)
+        result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
         self.assertTrue(result.template.is_empty)

@@ -17,18 +17,18 @@ class TestTypedef(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_definition_basic(self):
-        source = TypedefInfo()
+        source = TypedefInfo.create_default()
         source.name = "const_ptr_t"
-        source.type_info = TypeExpression()
+        source.type_info = TypeExpression.create_default()
         source.type_info.details = BasicType.CHAR
         source.type_info.modification |= TypeModification.POINTER | TypeModification.CONST
         result = self.printer.print(source)
         self.assertEqual(result, "typedef const char* const_ptr_t;\n")
 
     def test_array(self):
-        source = TypedefInfo()
+        source = TypedefInfo.create_default()
         source.name = "array_typedef"
-        source.type_info = TypeExpression()
+        source.type_info = TypeExpression.create_default()
         source.type_info.details = BasicType.FLOAT
         source.type_info.modification |= TypeModification.ARRAY(["16", "32"])
         result = self.printer.print(source)

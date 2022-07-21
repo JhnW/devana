@@ -6,9 +6,10 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from clang import cindex
 from typing import Optional, List
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
-class FunctionType:
+class FunctionType(IBasicCreatable, ICursorValidate):
     """Class representing the type of a function (function pointer) that can
     appear as a variable or in a typedef etc."""
 
@@ -17,16 +18,30 @@ class FunctionType:
         self._parent = parent
         if cursor is None:
             self._arguments = []
-            self._return_type = TypeExpression()
+            self._return_type = TypeExpression().create_default()
             self._text_source = None
         else:
-            if cursor.kind is not cindex.TypeKind.FUNCTIONPROTO:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError(f"It is not a valid type cursor: {cursor.kind}.")
             self._arguments = LazyNotInit
             self._return_type = LazyNotInit
             self._text_source = LazyNotInit
         self._name = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind is cindex.TypeKind.FUNCTIONPROTO
 
     @property
     @lazy_invoke

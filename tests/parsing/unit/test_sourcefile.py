@@ -16,7 +16,7 @@ class TestSourceFile(unittest.TestCase):
             index = clang.cindex.Index.create()
             cursor: cindex.Cursor = index.parse(os.path.dirname(__file__)
                                                 + r"/source_files/multiple_files/file_1.hpp").cursor
-            file = SourceFile(cursor)
+            file = SourceFile.from_cursor(cursor)
             self.assertEqual(file.name, "file_1.hpp")
             self.assertEqual(file.parent, None)
             self.assertEqual(str(file.path.as_posix()),

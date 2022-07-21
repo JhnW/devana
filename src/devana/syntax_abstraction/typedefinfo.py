@@ -7,27 +7,42 @@ from devana.syntax_abstraction.comment import Comment
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
-class TypedefInfo:
+class TypedefInfo(IBasicCreatable, ICursorValidate):
     """Class represented typedef declaration."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         self._cursor = cursor
         self._parent = parent
         if cursor is None:
-            self._type_info = None
+            self._type_info = TypeExpression.create_default(parent)
             self._text_source = None
             self._name = ""
             self._associated_comment = None
         else:
-            if self._cursor.kind != cindex.CursorKind.TYPEDEF_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("Element is not typedef.")
             self._type_info = LazyNotInit
             self._text_source = LazyNotInit
             self._name = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.TYPEDEF_DECL
 
     @property
     @lazy_invoke

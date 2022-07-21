@@ -9,6 +9,7 @@ from pathlib import Path
 from clang import cindex
 from typing import Optional, Union, Literal, List, NoReturn
 from enum import Enum, auto
+from devana.utility.traits import IBasicCreatable
 
 
 class IncludeInfo:
@@ -153,7 +154,7 @@ class SourceFile(CodeContainer):
                 self._preamble = LazyNotInit
                 self._comments_factory = None
             else:
-                if cursor.kind != cindex.CursorKind.TRANSLATION_UNIT:
+                if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not valid cursor kind.")
                 self._path = Path(cursor.spelling)
                 self._text_source = LazyNotInit
@@ -165,6 +166,25 @@ class SourceFile(CodeContainer):
         self._configuration.validate()
 
         self._lexicon = Lexicon.create(self)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.TRANSLATION_UNIT
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None,
+                    configuration: Optional[Configuration] = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent, configuration)
+
+    @classmethod
+    def from_path(cls, source: str, parent: Optional[any] = None, configuration: Optional[Configuration] = None):
+        return cls(source, parent, configuration)
 
     @property
     @lazy_invoke

@@ -49,7 +49,7 @@ class TestEnum(unittest.TestCase):
             ("VALUE_TEST_7", 0xdf + 2, True),
         )
         node = find_by_name(self.cursor, "TestEnumClass")
-        result = EnumInfo(node)
+        result = EnumInfo.from_cursor(node)
         self.assertEqual(result.name, "TestEnumClass")
         self.assertTrue(result.is_scoped)
         self.assertEqual(result.prefix, "class")
@@ -68,7 +68,7 @@ class TestEnum(unittest.TestCase):
             ("NUM_VALUE_TEST_3", 98, True),
         )
         node = find_by_name(self.cursor, "TestEnumNumber")
-        result = EnumInfo(node)
+        result = EnumInfo.from_cursor(node)
         self.assertEqual(result.name, "TestEnumNumber")
         self.assertFalse(result.is_scoped)
         self.assertTrue(result.prefix is None)

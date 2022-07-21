@@ -67,7 +67,7 @@ class TestComment(unittest.TestCase):
     def test_print_associated_comment_function(self):
         comment = Comment()
         comment.text = ["test function"]
-        element: FunctionInfo = FunctionInfo()
+        element: FunctionInfo = FunctionInfo.create_default()
         element.name = "foo"
         element.associated_comment = comment
         result = self.printer.print(element)
@@ -152,7 +152,7 @@ class TestComment(unittest.TestCase):
         include.value = "bar.h"
         include.is_standard = False
         file.includes = [include]
-        element: FunctionInfo = FunctionInfo()
+        element: FunctionInfo = FunctionInfo.create_default()
         element.name = "foo"
         file.content = [element]
         result = self.printer.print(file)

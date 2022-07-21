@@ -42,12 +42,12 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result, '#include "foo.hpp"\n')
 
     def test_empty_file(self):
-        source = SourceFile()
+        source = SourceFile.create_default()
         result = self.printer.print(source)
         self.assertEqual(result, "\n")
 
     def test_includes_in_file(self):
-        source = SourceFile()
+        source = SourceFile.create_default()
         source.includes = []
         include = IncludeInfo()
         include.value = "foo.hpp"
@@ -61,7 +61,7 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result, '#include "foo.hpp"\n#include "bar.h"\n\n')
 
     def test_content_in_file(self):
-        source = SourceFile()
+        source = SourceFile.create_default()
         source.content = []
         element = FunctionInfo()
         element.name = "foo"
@@ -77,7 +77,7 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result, 'float foo();\ndouble bar();\n\n')
 
     def test_content_and_include_in_file(self):
-        source = SourceFile()
+        source = SourceFile.create_default()
         source.content = []
         source.includes = []
         element = FunctionInfo()
@@ -102,17 +102,17 @@ class TestFile(unittest.TestCase):
         self.assertEqual(result, '#include "foo.hpp"\n#include "bar.h"\n\nfloat foo();\ndouble bar();\n\n')
 
     def test_header_guard(self):
-        source = SourceFile()
+        source = SourceFile.create_default()
         source.content = []
         source.includes = []
         element = FunctionInfo()
         element.name = "foo"
-        element.return_type = TypeExpression()
+        element.return_type = TypeExpression.create_default()
         element.return_type.details = BasicType.FLOAT
         source.content.append(element)
         element = FunctionInfo()
         element.name = "bar"
-        element.return_type = TypeExpression()
+        element.return_type = TypeExpression.create_default()
         element.return_type.details = BasicType.DOUBLE
         source.content.append(element)
         include = IncludeInfo()

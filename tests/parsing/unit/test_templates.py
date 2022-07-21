@@ -13,7 +13,7 @@ class TestTemplateAdvanced(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
         self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_template.hpp").cursor
-        self.file = SourceFile(self.cursor)
+        self.file = SourceFile.from_cursor(self.cursor)
         self.assertEqual(len(self.file.content), 32)
 
     def test_functions_arguments(self):

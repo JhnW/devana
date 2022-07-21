@@ -2,9 +2,11 @@ from clang import cindex
 from typing import Optional, List
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
+from devana.utility.traits import IBasicCreatable, ICursorValidate
+from abc import ABC
 
 
-class CodeContainer:
+class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
     """Class representing part of code source who is able to hold other sources in his body."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
@@ -18,6 +20,16 @@ class CodeContainer:
             self._namespace = LazyNotInit
             self._content = LazyNotInit
             self._text_source = LazyNotInit
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
 
     @property
     @lazy_invoke

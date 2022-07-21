@@ -36,13 +36,6 @@ class Lexicon:
                 assert len(match) == 1
                 instance: Lexicon = match[0]
 
-                # if hasattr(source, "is_definition") and hasattr(source, "namespaces")
-                #     if source.is_definition:
-                #         match.append([x for x in source.namespaces])
-
-                # do not add multiple definitions of the same type to Lexington and replace definition by
-                # declaration if possible
-
                 if hasattr(source, "is_declaration") and (hasattr(source, "template") and source.template is None):
                     sources = []
                     for s in instance._sources:

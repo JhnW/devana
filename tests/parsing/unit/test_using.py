@@ -13,7 +13,7 @@ class TestUsing(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
         self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/using.hpp").cursor
-        self.file = SourceFile(self.cursor)
+        self.file = SourceFile.from_cursor(self.cursor)
 
     def test_using_as_simple_alias(self):
         source: Using = self.file.content[1]

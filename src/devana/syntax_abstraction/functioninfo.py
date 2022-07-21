@@ -11,6 +11,7 @@ from clang import cindex
 from typing import Optional, Tuple, List
 from enum import auto, IntFlag
 import re
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
 class FunctionModification(IntFlag):
@@ -77,17 +78,21 @@ class FunctionModification(IntFlag):
         return self.value & self.VOLATILE
 
 
-class FunctionInfo:
+class FunctionInfo(IBasicCreatable):
     """Representative of function definition or declaration."""
 
-    class Argument(Variable):
+    class Argument(Variable, ICursorValidate):
         """Data of function or method argument."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             super().__init__(cursor, parent)
             if cursor is not None:
-                if cursor.kind != cindex.CursorKind.PARM_DECL:
+                if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not a valid type cursor.")
+
+        @staticmethod
+        def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+            return cursor.kind  == cindex.CursorKind.PARM_DECL
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         self._cursor = cursor
@@ -95,17 +100,11 @@ class FunctionInfo:
 
         if cursor is None:
             self._arguments = []
-            self._name = ""
-            self._return_type = TypeExpression()
+            self._name = "foo"
+            self._return_type = TypeExpression.create_default(parent)
             self._return_type.details = BasicType.VOID
-            self._overloading = None
-            self._overloading_family = None
             self._modification = FunctionModification.NONE
             self._body = None
-            self._is_declaration = True
-            self._is_definition = False
-            self._definition = None
-            self._declaration = None
             self._template = None
             self._text_source = None
             self._template = None
@@ -116,20 +115,23 @@ class FunctionInfo:
             self._arguments = LazyNotInit
             self._name = LazyNotInit
             self._return_type = LazyNotInit
-            self._overloading = LazyNotInit
-            self._overloading_family = LazyNotInit
             self._modification = LazyNotInit
             self._body = LazyNotInit
-            self._is_declaration = LazyNotInit
-            self._is_definition = LazyNotInit
-            self._definition = LazyNotInit
-            self._declaration = LazyNotInit
             self._template = LazyNotInit
             self._text_source = LazyNotInit
             self._template = LazyNotInit
             self._namespaces = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        result = cls(None, parent)
+        return result
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        return cls(cursor, parent)
 
     @property
     @lazy_invoke

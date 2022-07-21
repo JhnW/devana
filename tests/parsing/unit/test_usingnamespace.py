@@ -15,12 +15,12 @@ class TestUsingNamespace(unittest.TestCase):
 
     def test_simple_using(self):
         nodes = list(self.cursor.get_children())
-        result = UsingNamespace(nodes[1])
+        result = UsingNamespace.from_cursor(nodes[1])
         self.assertTrue(result.namespaces, ["foo"])
         self.assertTrue(result.namespace, "foo")
 
         nodes = list(self.cursor.get_children())
-        result = UsingNamespace(nodes[2])
+        result = UsingNamespace.from_cursor(nodes[2])
         self.assertTrue(result.namespaces, ["foo", "bar"])
         self.assertTrue(result.namespace, "bar")
 

@@ -27,12 +27,12 @@ class TestStubType(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_function_stub_argument(self):
-        source = FunctionInfo()
+        source = FunctionInfo.create_default()
         source.name = "foo"
         argument = FunctionInfo.Argument()
         argument.name = "a"
         argument.default_value = 0
-        argument.type = TypeExpression()
+        argument.type = TypeExpression.create_default()
         argument.type.modification = TypeModification.CONST
         argument.type.details = StubType("size_t")
         source.arguments = [argument]

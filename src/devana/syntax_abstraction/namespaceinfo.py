@@ -17,15 +17,19 @@ class NamespaceInfo(CodeContainer):
         super().__init__(cursor, parent)
         if cursor is None:
             self._text_source = None
-            self._name = ""
+            self._name = "TestNamespace"
             self._associated_comment = None
         else:
-            if self._cursor.kind != cindex.CursorKind.NAMESPACE:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("It is not a valid type cursor.")
             self._text_source = LazyNotInit
             self._name = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.NAMESPACE
 
     @property
     @lazy_invoke

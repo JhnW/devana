@@ -6,17 +6,18 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
-class Variable:
+class Variable(IBasicCreatable):
     """Data about variable used in code"""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
         self._cursor = cursor
         self._parent = parent
         if cursor is None:
-            self._name = ""
-            self._type = None
+            self._name = "myVariable"
+            self._type = TypeExpression.create_default(parent)
             self._text_source = None
             self._default_value = None
         else:
@@ -25,6 +26,16 @@ class Variable:
             self._text_source = LazyNotInit
             self._default_value = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        result = cls(None, parent)
+        return result
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        result = cls(cursor, parent)
+        return result
 
     @property
     @lazy_invoke
@@ -85,18 +96,29 @@ class Variable:
         self._lexicon = value
 
 
-class GlobalVariable(Variable):
+class GlobalVariable(Variable, ICursorValidate):
     """Data about global, independent variable used in code (out of class scope)"""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
         super().__init__(cursor, parent)
         if cursor is not None:
-            if cursor.kind != cindex.CursorKind.VAR_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("Invalid cursor kind of global variable.")
         if cursor is None:
             self._associated_comment = None
         else:
             self._associated_comment = LazyNotInit
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.VAR_DECL
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        result = cls(cursor, parent)
+        return result
 
     @property
     @lazy_invoke

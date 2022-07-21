@@ -27,21 +27,21 @@ class TestNamespaceContent(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_namespace_definition_basic(self):
-        namespace = NamespaceInfo()
+        namespace = NamespaceInfo.create_default()
         namespace.name = "TestNamespace"
         namespace.content = []
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "foo"
-        function.return_type = TypeExpression()
+        function.return_type = TypeExpression.create_default()
         function.return_type.details = BasicType.FLOAT
         namespace.content.append(function)
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "bar"
-        function.return_type = TypeExpression()
+        function.return_type = TypeExpression.create_default()
         function.return_type.details = BasicType.DOUBLE
         function.arguments = [FunctionInfo.Argument()]
         function.arguments[0].name = "a"
-        function.arguments[0].type = TypeExpression()
+        function.arguments[0].type = TypeExpression.create_default()
         function.arguments[0].type.details = BasicType.CHAR
         function.arguments[0].type.modification |= TypeModification.CONST
         namespace.content.append(function)
@@ -49,32 +49,32 @@ class TestNamespaceContent(unittest.TestCase):
         self.assertEqual("namespace TestNamespace\n{\n    float foo();\n    double bar(const char a);\n}\n", result)
 
     def test_namespace_nested(self):
-        namespace = NamespaceInfo()
+        namespace = NamespaceInfo.create_default()
         namespace.name = "TestNamespace"
         namespace.content = []
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "foo"
-        function.return_type = TypeExpression()
+        function.return_type = TypeExpression.create_default()
         function.return_type.details = BasicType.FLOAT
         namespace.content.append(function)
 
-        nested_namespace = NamespaceInfo()
+        nested_namespace = NamespaceInfo.create_default()
         nested_namespace.name = "TestNested"
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "foo2"
-        function.return_type = TypeExpression()
+        function.return_type = TypeExpression.create_default()
         function.return_type.details = BasicType.BOOL
         function.body = "return true;"
         nested_namespace.content = [function]
         namespace.content.append(nested_namespace)
 
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "bar"
-        function.return_type = TypeExpression()
+        function.return_type = TypeExpression.create_default()
         function.return_type.details = BasicType.DOUBLE
         function.arguments = [FunctionInfo.Argument()]
         function.arguments[0].name = "a"
-        function.arguments[0].type = TypeExpression()
+        function.arguments[0].type = TypeExpression.create_default()
         function.arguments[0].type.details = BasicType.CHAR
         function.arguments[0].type.modification |= TypeModification.CONST
         namespace.content.append(function)

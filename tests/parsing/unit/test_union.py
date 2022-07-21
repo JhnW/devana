@@ -15,13 +15,13 @@ class TestUnion(unittest.TestCase):
 
     def test_stand_alone_union(self):
         node = find_by_name(self.cursor, "TestUnion")
-        result = UnionInfo(node)
+        result = UnionInfo.from_cursor(node)
         self.assertEqual(result.name, "TestUnion")
         self.assertEqual(len(result.content), 3)
 
     def test_class_union(self):
         node = find_by_name(self.cursor, "SimpleClass")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "SimpleClass")
         self.assertEqual(len(result.content), 1)
         result: UnionInfo = result.content[0]
@@ -30,7 +30,7 @@ class TestUnion(unittest.TestCase):
 
     def test_class_like_union(self):
         node = find_by_name(self.cursor, "ClassLikeUnion")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "ClassLikeUnion")
         self.assertEqual(len(result.content), 1)
         result: UnionInfo = result.content[0]

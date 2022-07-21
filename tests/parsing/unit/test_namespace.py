@@ -19,7 +19,7 @@ class TestNamespaces(unittest.TestCase):
 
     def test_simple_namespace(self):
         node = find_by_name(self.cursor, "SimpleNamespace")
-        result = NamespaceInfo(node)
+        result = NamespaceInfo.from_cursor(node)
         self.assertEqual(result.name, "SimpleNamespace")
         self.assertEqual(len(result.content), 1)
         func: FunctionInfo = result.content[0]
@@ -29,7 +29,7 @@ class TestNamespaces(unittest.TestCase):
 
     def test_nested_namespace(self):
         node = find_by_name(self.cursor, "NestedNamespace")
-        result = NamespaceInfo(node)
+        result = NamespaceInfo.from_cursor(node)
         self.assertEqual(result.name, "NestedNamespace")
         self.assertEqual(len(result.content), 2)
         func: FunctionInfo = result.content[0]

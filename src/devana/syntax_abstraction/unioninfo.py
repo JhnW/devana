@@ -14,16 +14,20 @@ class UnionInfo(CodeContainer):
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         if cursor is None:
-            self._name = None
+            self._name = "TestUnion"
             self._is_declaration = False
             self._associated_comment = None
         else:
             self._name = LazyNotInit
             self._is_declaration = LazyNotInit
-            if cursor.kind != cindex.CursorKind.UNION_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("It is not a valid type cursor.")
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.UNION_DECL
 
     @property
     @lazy_invoke

@@ -24,6 +24,17 @@ class ExternC(CodeContainer):
         self._namespace = None
         self._lexicon = Lexicon.create(self)
 
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        if cursor.kind != cindex.CursorKind.UNEXPOSED_DECL:
+            return False
+        if len(list(cursor.get_children())) <= 0:
+            return False
+        for children in cursor.get_children():
+            if children.kind != cindex.CursorKind.FUNCTION_DECL:
+                return False
+        return True
+
     @property
     @lazy_invoke
     def name(self) -> str:

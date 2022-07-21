@@ -30,7 +30,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_print_simple_method_dec(self):
-        source = MethodInfo()
+        source = MethodInfo.create_default()
         source.name = "foo"
         source.return_type = TypeExpression()
         source.return_type.details = BasicType.LONG
@@ -49,7 +49,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, "long foo(float a, int* b = nullptr);\n")
 
     def test_print_simple_method_def(self):
-        source = MethodInfo()
+        source = MethodInfo.create_default()
         source.name = "foo"
         source.return_type = TypeExpression()
         source.return_type.details = BasicType.LONG
@@ -69,7 +69,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, """long foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
 
     def test_print_simple_constructor_dec(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         arg1 = FunctionInfo.Argument()
         arg1.type = TypeExpression()
@@ -86,7 +86,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, "foo(float a, int* b = nullptr);\n")
 
     def test_print_simple_constructor_def(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         arg1 = FunctionInfo.Argument()
         arg1.type = TypeExpression()
@@ -104,7 +104,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, """foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
 
     def test_print_simple_destructor_dec(self):
-        source = DestructorInfo()
+        source = DestructorInfo.create_default()
         source.name = "~foo"
         arg1 = FunctionInfo.Argument()
         arg1.type = TypeExpression()
@@ -121,7 +121,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, "~foo(float a, int* b = nullptr);\n")
 
     def test_print_simple_destructor_def(self):
-        source = DestructorInfo()
+        source = DestructorInfo.create_default()
         source.name = "~foo"
         arg1 = FunctionInfo.Argument()
         arg1.type = TypeExpression()
@@ -139,44 +139,46 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, """~foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
 
     def test_print_default_method(self):
-        source = MethodInfo()
+        source = MethodInfo.create_default()
         source.modification |= FunctionModification.DEFAULT
         source.type = MethodType.OPERATOR
         source.name = "operator new"
+        source.return_type.details = BasicType.VOID
         result = self.printer.print(source)
         self.assertEqual(result, "void operator new() = default;\n")
 
     def test_print_default_constructor(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.modification |= FunctionModification.DEFAULT
         source.name = "Foo"
         result = self.printer.print(source)
         self.assertEqual(result, "Foo() = default;\n")
 
     def test_print_default_destructor(self):
-        source = DestructorInfo()
+        source = DestructorInfo.create_default()
         source.modification |= FunctionModification.DEFAULT
         source.name = "~Foo"
         result = self.printer.print(source)
         self.assertEqual(result, "~Foo() = default;\n")
 
     def test_print_delete_method(self):
-        source = MethodInfo()
+        source = MethodInfo.create_default()
         source.modification |= FunctionModification.DELETE
         source.type = MethodType.OPERATOR
         source.name = "operator new"
+        source.return_type.details = BasicType.VOID
         result = self.printer.print(source)
         self.assertEqual(result, "void operator new() = delete;\n")
 
     def test_print_delete_constructor(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.modification |= FunctionModification.DELETE
         source.name = "Foo"
         result = self.printer.print(source)
         self.assertEqual(result, "Foo() = delete;\n")
 
     def test_print_delete_destructor(self):
-        source = DestructorInfo()
+        source = DestructorInfo.create_default()
         source.modification |= FunctionModification.DELETE
         source.name = "~Foo"
         result = self.printer.print(source)
@@ -194,7 +196,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, "protected:\n")
 
     def test_print_constructor_init_list(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.initializer_list = []
         source.initializer_list.append(ConstructorInfo.InitializerInfo("a", "6.7f"))
         source.initializer_list.append(ConstructorInfo.InitializerInfo("b", "nullptr"))
@@ -204,7 +206,7 @@ class TestClassElementsAlone(unittest.TestCase):
         self.assertEqual(result, "Foo():\n    a(6.7f),\n    b(nullptr)\n{\n}\n")
 
     def test_print_mutable_field(self):
-        source = FieldInfo()
+        source = FieldInfo.create_default()
         source.name = "a"
         source.type = TypeExpression()
         source.type.details = BasicType.FLOAT
@@ -233,14 +235,14 @@ class TestClassComplex(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_simple_empty_struct(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestStruct"
         source.is_struct = True
         result = self.printer.print(source)
         self.assertEqual(result, "struct TestStruct\n{\n};\n")
 
     def test_decl_class(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestClass"
         source.is_class = True
         source.is_declaration = True
@@ -248,7 +250,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "class TestClass;\n")
 
     def test_simple_inheritance_class(self):
-        parent = ClassInfo()
+        parent = ClassInfo.create_default()
         parent.name = "ParentA"
         parent.is_class = True
         inheritance = InheritanceInfo()
@@ -256,7 +258,7 @@ class TestClassComplex(unittest.TestCase):
         inheritance.type_parents[0].access_specifier = AccessSpecifier.PUBLIC
         inheritance.type_parents[0].is_virtual = False
         inheritance.type_parents[0].type = parent
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.is_class = True
         source.name = "TestClass"
         source.inheritance = inheritance
@@ -264,10 +266,10 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "class TestClass: public ParentA\n{\n};\n")
 
     def test_simple_multiple_inheritance_class(self):
-        parent_1 = ClassInfo()
+        parent_1 = ClassInfo.create_default()
         parent_1.name = "ParentA"
         parent_1.is_class = True
-        parent_2 = ClassInfo()
+        parent_2 = ClassInfo.create_default()
         parent_2.name = "ParentB"
         parent_2.is_class = True
         inheritance = InheritanceInfo()
@@ -287,7 +289,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "class TestClass: public ParentA, private ParentB\n{\n};\n")
 
     def test_simple_virtual_inheritance_class(self):
-        parent_1 = ClassInfo()
+        parent_1 = ClassInfo.create_default()
         parent_1.name = "ParentA"
         parent_1.is_class = True
         parent_2 = ClassInfo()
@@ -310,7 +312,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "class TestClass: public ParentA, private virtual ParentB\n{\n};\n")
 
     def test_simple_struct(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestStruct"
         source.is_class = False
         source.content.append(FieldInfo())
@@ -331,7 +333,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "struct TestStruct\n{\n    float* a;\n    unsigned int b;\n    static bool c;\n};\n")
 
     def test_simple_self_ref_struct(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestStruct"
         source.is_class = False
         source.content.append(FieldInfo())
@@ -343,7 +345,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "struct TestStruct\n{\n    TestStruct* a;\n};\n")
 
     def test_simple_class_access(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestClass"
         source.is_class = True
         source.content.append(FieldInfo())
@@ -377,10 +379,10 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(ref_result, result)
 
     def test_simple_class_method(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestClass"
         source.is_class = True
-        source.content.append(MethodInfo())
+        source.content.append(MethodInfo.create_default())
         source.content[0].name = "foo"
         source.content[0].return_type = TypeExpression()
         source.content[0].return_type.modification = TypeModification.POINTER
@@ -389,14 +391,14 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "class TestClass\n{\n    unsigned char* foo();\n};\n")
 
     def test_nested_class(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestClass"
         source.is_class = True
-        source.content.append(FieldInfo())
+        source.content.append(FieldInfo.create_default())
         source.content[0].name = "a"
         source.content[0].type = TypeExpression()
         source.content[0].type.details = BasicType.FLOAT
-        nested_source = ClassInfo()
+        nested_source = ClassInfo.create_default()
         nested_source.name = "NestedClass"
         nested_source.is_class = True
         nested_source.content.append(FieldInfo())
@@ -421,12 +423,12 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(ref_result, result)
 
     def test_class_simple_template(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "TestClass"
         source.is_class = True
-        source.content.append(MethodInfo())
+        source.content.append(MethodInfo.create_default())
         source.content[0].name = "foo"
-        source.content[0].return_type = TypeExpression()
+        source.content[0].return_type = TypeExpression.create_default()
         source.content[0].return_type.modification = TypeModification.POINTER
         source.content[0].return_type.details = BasicType.U_CHAR
         source.template = TemplateInfo()
@@ -437,14 +439,14 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<typename T>\nclass TestClass\n{\n    unsigned char* foo();\n};\n")
 
     def test_class_empty_template(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         result = self.printer.print(source)
         self.assertEqual(result, "template<>\nstruct foo\n{\n};\n")
 
     def test_class_template_default_value(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         template_param = TemplateInfo.TemplateParameter()
@@ -455,13 +457,13 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<typename T = int>\nstruct foo\n{\n};\n")
 
     def test_class_template_standard(self):
-        source = ClassInfo()
+        source = ClassInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         spec_1 = TypeExpression()
         spec_1.details = BasicType.INT
         spec_1.modification = TypeModification.REFERENCE
-        spec_2 = TypeExpression()
+        spec_2 = TypeExpression.create_default()
         spec_2.details = BasicType.LONG
         spec_2.modification = TypeModification.CONST
         source.template.specialisation_values = [spec_1, spec_2]
@@ -469,7 +471,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<>\nstruct foo<int&,const long>\n{\n};\n")
 
     def test_constructor_simple_template(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         template_param = TemplateInfo.TemplateParameter()
@@ -479,21 +481,21 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<typename T>\nfoo();\n")
 
     def test_constructor_empty_template(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         result = self.printer.print(source)
         self.assertEqual(result, "template<>\nfoo();\n")
 
     def test_constructor_template_argument(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         template_param = TemplateInfo.TemplateParameter()
         template_param.name = "T"
         source.template.parameters = [template_param]
         argument = FunctionInfo.Argument()
-        argument.type = TypeExpression()
+        argument.type = TypeExpression.create_default()
         argument.type.details = GenericTypeParameter("T")
         argument.type.modification = TypeModification.CONST
         argument.name = "a"
@@ -502,7 +504,7 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<typename T>\nfoo(const T a);\n")
 
     def test_constructor_template_default_value(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
         template_param = TemplateInfo.TemplateParameter()
@@ -513,13 +515,13 @@ class TestClassComplex(unittest.TestCase):
         self.assertEqual(result, "template<typename T = int>\nfoo();\n")
 
     def test_constructor_template_standard(self):
-        source = ConstructorInfo()
+        source = ConstructorInfo.create_default()
         source.name = "foo"
         source.template = TemplateInfo()
-        spec_1 = TypeExpression()
+        spec_1 = TypeExpression.create_default()
         spec_1.details = BasicType.INT
         spec_1.modification = TypeModification.REFERENCE
-        spec_2 = TypeExpression()
+        spec_2 = TypeExpression.create_default()
         spec_2.details = BasicType.LONG
         spec_2.modification = TypeModification.CONST
         source.template.specialisation_values = [spec_1, spec_2]

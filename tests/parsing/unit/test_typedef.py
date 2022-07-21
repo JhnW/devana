@@ -16,7 +16,7 @@ class TestTypedefSimple(unittest.TestCase):
 
     def test_pointer_typedef(self):
         node = find_by_name(self.cursor, "def_char_ptr")
-        result = TypedefInfo(node)
+        result = TypedefInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "def_char_ptr")
         self.assertEqual(result.type_info.name, "char*")
@@ -25,7 +25,7 @@ class TestTypedefSimple(unittest.TestCase):
 
     def test_common_typedef(self):
         node = find_by_name(self.cursor, "def_float")
-        result = TypedefInfo(node)
+        result = TypedefInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertEqual(result.name, "def_float")
         self.assertEqual(result.type_info.name, "float")
@@ -70,7 +70,7 @@ class TestTypedefSimple(unittest.TestCase):
 
         with self.subTest("typereal"):
             node = find_by_name(self.cursor, "typereal")
-            result = TypedefInfo(node)
+            result = TypedefInfo.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, "typereal")
             self.assertEqual(result.type_info.name, "double")
@@ -80,7 +80,7 @@ class TestTypedefSimple(unittest.TestCase):
 
         with self.subTest("typeint16"):
             node = find_by_name(self.cursor, "typeint16")
-            result = TypedefInfo(node)
+            result = TypedefInfo.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, "typeint16")
             self.assertEqual(result.type_info.name, "short")
@@ -104,13 +104,13 @@ class TestTypedefSimple(unittest.TestCase):
 
     def test_array_typedef(self):
         node = find_by_name(self.cursor, "array_1")
-        result = TypedefInfo(node)
+        result = TypedefInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertTrue(result.type_info.modification.is_array)
         self.assertEqual(result.type_info.modification.array_order, [""])
 
         node = find_by_name(self.cursor, "array_2")
-        result = TypedefInfo(node)
+        result = TypedefInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertTrue(result.type_info.modification.is_array)
         self.assertEqual(result.type_info.modification.array_order, ["5", "12"])

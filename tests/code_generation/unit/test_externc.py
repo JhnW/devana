@@ -27,13 +27,13 @@ class TestExternC(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_extern_c_empty(self):
-        source = ExternC()
+        source = ExternC.create_default()
         result = self.printer.print(source)
         self.assertEqual(result, 'extern "C"\n{\n}\n')
 
     def test_extern_c_one_line(self):
-        source = ExternC()
-        function = FunctionInfo()
+        source = ExternC.create_default()
+        function = FunctionInfo.create_default()
         function.name = "foo"
         function.return_type = BasicType.FLOAT
         source.content.append(function)
@@ -41,8 +41,8 @@ class TestExternC(unittest.TestCase):
         self.assertEqual(result, 'extern "C" float foo();\n')
 
     def test_extern_c_one_line_function_body(self):
-        source = ExternC()
-        function = FunctionInfo()
+        source = ExternC.create_default()
+        function = FunctionInfo.create_default()
         function.name = "foo"
         function.return_type = BasicType.FLOAT
         function.body = "return 7.6;"
@@ -51,12 +51,12 @@ class TestExternC(unittest.TestCase):
         self.assertEqual(result, 'extern "C" float foo()\n{\n    return 7.6;\n}\n')
 
     def test_extern_c_multiple_lines(self):
-        source = ExternC()
-        function = FunctionInfo()
+        source = ExternC.create_default()
+        function = FunctionInfo.create_default()
         function.name = "foo"
         function.return_type = BasicType.FLOAT
         source.content.append(function)
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "bar"
         function.return_type = BasicType.INT
         function.body = "return 777+foo();"
@@ -66,10 +66,10 @@ class TestExternC(unittest.TestCase):
                                  '  }\n}\n')
 
     def test_extern_c_one_line_namespace_indent(self):
-        namespace = NamespaceInfo()
+        namespace = NamespaceInfo.create_default()
         namespace.name = "Namespace"
         extern = ExternC()
-        function = FunctionInfo()
+        function = FunctionInfo.create_default()
         function.name = "foo"
         function.return_type = BasicType.FLOAT
         extern.content.append(function)

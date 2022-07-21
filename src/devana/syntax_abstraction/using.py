@@ -7,9 +7,10 @@ from devana.syntax_abstraction.comment import Comment
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.traits import IFromCursorCreatable, ICursorValidate
 
 
-class Using:
+class Using(IFromCursorCreatable, ICursorValidate):
     """Class represented typedef declaration e.g. using AliasTypeName = const namespace::namespace::Type.
     Using without "=" as using namespace::Type; is not supported."""
 
@@ -22,13 +23,23 @@ class Using:
             self._name = ""
             self._associated_comment = None
         else:
-            if self._cursor.kind != cindex.CursorKind.TYPE_ALIAS_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("Element is not using type alias.")
             self._type_info = LazyNotInit
             self._text_source = LazyNotInit
             self._name = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL
 
     @property
     @lazy_invoke

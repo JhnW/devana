@@ -36,7 +36,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = c[1]
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -69,7 +69,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = "const " + c[1]
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -102,7 +102,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = c[1] + "&"
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -135,7 +135,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = c[1] + "*"
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -168,7 +168,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = "static " + c[1]
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -201,7 +201,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = "volatile " + c[1]
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -223,7 +223,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         c = cases[0]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             name = "const " + c[1] + "&"
             self.assertEqual(result.name, name)
             self.assertEqual(len(result.namespaces), 0)
@@ -239,7 +239,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         c = cases[1]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             name = "static " + c[1] + "*"
             self.assertEqual(result.name, name)
             self.assertEqual(len(result.namespaces), 0)
@@ -255,7 +255,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         c = cases[2]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             name = c[1] + "*"
             self.assertEqual(result.name, name)
             self.assertEqual(len(result.namespaces), 0)
@@ -283,7 +283,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = TypeExpression(node)
+                result = TypeExpression.from_cursor(node)
                 name = c[1]
                 self.assertEqual(result.name, name)
                 self.assertEqual(len(result.namespaces), 0)
@@ -300,7 +300,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("unknown_const_u_int8"):
             node = find_by_name(self.cursor, "unknown_const_u_int8")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "const uint8_t")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -312,7 +312,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("unknown_const_ref_int8"):
             node = find_by_name(self.cursor, "unknown_const_ref_int8")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "const int8_t&")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -326,7 +326,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("unknown_ptr_int16"):
             node = find_by_name(self.cursor, "unknown_ptr_int16")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "int16_t*")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -339,7 +339,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("unknown_static_int16"):
             node = find_by_name(self.cursor, "unknown_static_int16")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "static int16_t")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -354,7 +354,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("typedef_typechar"):
             node = find_by_name(self.cursor, "typedef_typechar")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "typechar")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -366,7 +366,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("typedef_const_typechar"):
             node = find_by_name(self.cursor, "typedef_const_typechar")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "const typechar")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -378,7 +378,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("typedef_static_typechar"):
             node = find_by_name(self.cursor, "typedef_static_typechar")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "static typechar")
             self.assertEqual(len(result.namespaces), 0)
             self.assertEqual(result.template_arguments, None)
@@ -392,7 +392,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("typedef_namespace_typereal"):
             node = find_by_name(self.cursor, "typedef_namespace_typereal")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "const typereal")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -404,7 +404,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
         with self.subTest("typedef_namespace_static_nested"):
             node = find_by_name(self.cursor, "typedef_namespace_static_nested")
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "static typeint16")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -431,7 +431,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         name = "ptr_ptr_value"
         with self.subTest():
             node = find_by_name(self.cursor, name)
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "double**")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -443,7 +443,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         name = "ptr_ptr_ptr_value"
         with self.subTest():
             node = find_by_name(self.cursor, name)
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "char***")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -455,7 +455,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         name = "ptr_ptr_const_value"
         with self.subTest():
             node = find_by_name(self.cursor, name)
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "const int**")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -468,7 +468,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
         name = "ptr_ptr_ptr_static_value"
         with self.subTest():
             node = find_by_name(self.cursor, name)
-            result = TypeExpression(node)
+            result = TypeExpression.from_cursor(node)
             self.assertEqual(result.name, "static float***")
             self.assertEqual(result.template_arguments, None)
             self.assertFalse(result.is_generic)
@@ -480,44 +480,44 @@ class TestTypeExpressionBasic(unittest.TestCase):
 
     def test_not_allowed_pointer_subtype(self):
         node = find_by_name(self.cursor, "ptr_ptr_const_ptr_value")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         with self.assertRaises(NotImplementedError):
             print(result.modification)
 
     def test_simple_array(self):
         node = find_by_name(self.cursor, "array")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["20"])
         self.assertEqual(result.modification.pointer_order, None)
 
         node = find_by_name(self.cursor, "arrayofarray")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["4", "60"])
         self.assertEqual(result.modification.pointer_order, None)
 
         node = find_by_name(self.cursor, "ptrarray")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["2", "3", "4"])
         self.assertTrue(result.modification.is_pointer)
         self.assertEqual(result.modification.pointer_order, 2)
 
         node = find_by_name(self.cursor, "strorderarray")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["2", "MAX_ARRAY_SIZE"])
         self.assertEqual(result.modification.pointer_order, None)
 
         node = find_by_name(self.cursor, "dynarray")
-        result: TypeExpression = TypeExpression(node)
+        result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, [""])
         self.assertEqual(result.modification.pointer_order, None)
 
         node = find_by_name(self.cursor, "arrayGetFunction")
-        result: FunctionInfo = FunctionInfo(node)
+        result: FunctionInfo = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertTrue(result.arguments[0].type.modification.is_array)
         self.assertEqual(result.arguments[0].type.modification.array_order, [""])

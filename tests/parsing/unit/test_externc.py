@@ -20,7 +20,7 @@ class TestFunctionsExternSimple(unittest.TestCase):
 
     def test_function_declaration_extern_c_one_line(self):
         c = self.externs[0]
-        extern = ExternC(c)
+        extern = ExternC.from_cursor(c)
         self.assertEqual(extern.name, 'extern "C"')
         self.assertEqual(extern.namespace, None)
         self.assertEqual(extern.allowed_namespaces, [])
@@ -34,7 +34,7 @@ class TestFunctionsExternSimple(unittest.TestCase):
 
     def test_function_definition_extern_c_one_line(self):
         c = self.externs[1]
-        extern = ExternC(c)
+        extern = ExternC.from_cursor(c)
         self.assertEqual(extern.name, 'extern "C"')
         self.assertEqual(extern.namespace, None)
         self.assertEqual(extern.allowed_namespaces, [])
@@ -47,7 +47,7 @@ class TestFunctionsExternSimple(unittest.TestCase):
 
     def test_function_definition_declaration_extern_c_multiple_lines(self):
         c = self.externs[2]
-        extern = ExternC(c)
+        extern = ExternC.from_cursor(c)
         self.assertEqual(extern.name, 'extern "C"')
         self.assertEqual(extern.namespace, None)
         self.assertEqual(extern.allowed_namespaces, [])
@@ -64,7 +64,7 @@ class TestFunctionsExternSimple(unittest.TestCase):
 
     def test_function_definition_declaration_extern_c_multiple_lines(self):
         c = self.externs[2]
-        extern = ExternC(c)
+        extern = ExternC.from_cursor(c)
         self.assertEqual(extern.name, 'extern "C"')
         self.assertEqual(extern.namespace, None)
         self.assertEqual(extern.allowed_namespaces, [])

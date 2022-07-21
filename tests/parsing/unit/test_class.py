@@ -17,7 +17,7 @@ class TestClassBasic(unittest.TestCase):
 
     def test_struct_simple_def(self):
         node = find_by_name(self.cursor, "SimpleStructTest")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "SimpleStructTest")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.is_class)
@@ -67,7 +67,7 @@ class TestClassBasic(unittest.TestCase):
 
     def test_class_simple_def(self):
         node = find_by_name(self.cursor, "SimpleClassTest")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "SimpleClassTest")
         self.assertFalse(result.is_struct)
         self.assertTrue(result.is_class)
@@ -122,12 +122,12 @@ class TestClassBasic(unittest.TestCase):
 
     def test_final_class(self):
         node = find_by_name(self.cursor, "FinalClass")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertTrue(result.is_final)
 
     def test_class_sections(self):
         node = find_by_name(self.cursor, "ClassSections")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(len(result.sections), 5)
 
         section = result.sections[0]
@@ -182,14 +182,14 @@ class TestClassBasic(unittest.TestCase):
 
     def test_class_operators(self):
         node = find_by_name(self.cursor, "ClassOperators")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(len(result.content), 45)
         for op in result.content:
             self.assertTrue(op.type.is_operator, f"{op}")
 
     def test_class_constructors(self):
         node = find_by_name(self.cursor, "ClassContructors")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(len(result.content), 11)
 
         c: ConstructorInfo = result.content[0]
@@ -302,7 +302,7 @@ class TestClassBasic(unittest.TestCase):
 
     def test_default_field_value(self):
         node = find_by_name(self.cursor, "DefaultFieldsValue")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         field: FieldInfo = result.content[0]
         with self.subTest(field.name):
             self.assertEqual(field.name, "default_value")
@@ -426,7 +426,7 @@ class TestClassTemplate(unittest.TestCase):
 
     def test_simple_template_class(self):
         node = find_by_name(self.cursor, "simple_template_struct_1")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "simple_template_struct_1")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -442,7 +442,7 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(result.content[0].type.is_generic)
 
         node = find_by_name(self.cursor, "simple_template_struct_2")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "simple_template_struct_2")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -458,7 +458,7 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(result.content[0].type.is_generic)
 
         node = find_by_name(self.cursor, "simple_template_class_1")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "simple_template_class_1")
         self.assertTrue(result.is_class)
         self.assertFalse(result.template is None)
@@ -474,7 +474,7 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(result.content[0].type.is_generic)
 
         node = find_by_name(self.cursor, "simple_template_class_2")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "simple_template_class_2")
         self.assertTrue(result.is_class)
         self.assertFalse(result.template is None)
@@ -491,7 +491,7 @@ class TestClassTemplate(unittest.TestCase):
 
     def test_complex_template_class(self):
         node = find_by_name(self.cursor, "template_class_complex")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
 
         self.assertTrue(result.is_class)
         self.assertFalse(result.template is None)
@@ -651,7 +651,7 @@ class TestClassTemplate(unittest.TestCase):
 
     def test_struct_varidaic_template(self):
         node = find_by_name(self.cursor, "struct_varidaic_template")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
         self.assertEqual(result.name, "struct_varidaic_template")
@@ -671,7 +671,7 @@ class TestClassTemplate(unittest.TestCase):
 
     def test_multiple_pointer_type_template(self):
         node = find_by_name(self.cursor, "multiple_pointer_struct")
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
         self.assertEqual(result.name, "multiple_pointer_struct")
@@ -683,7 +683,6 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(content.type.modification.is_pointer)
         self.assertTrue(content.type.is_generic)
         self.assertEqual(content.type.modification.pointer_order, 2)
-        x = content.type.details.name
         self.assertEqual(content.type.details.name, "T")
 
 
@@ -699,7 +698,7 @@ class TestClassTemplatePartial(unittest.TestCase):
 
     def test_base_template(self):
         node = self.nodes[0]
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "template_struct")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -723,7 +722,7 @@ class TestClassTemplatePartial(unittest.TestCase):
 
     def test_simple_partial_template(self):
         node = self.nodes[1]
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "template_struct")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -754,7 +753,7 @@ class TestClassTemplatePartial(unittest.TestCase):
 
     def test_generic_type_modification_template(self):
         node = self.nodes[2]
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "template_struct")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -782,7 +781,7 @@ class TestClassTemplatePartial(unittest.TestCase):
 
     def test_generic_type_empty_template(self):
         node = self.nodes[3]
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "template_struct")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -807,7 +806,7 @@ class TestClassTemplatePartial(unittest.TestCase):
 
     def test_multiple_types_sec_template(self):
         node = self.nodes[5]
-        result = ClassInfo(node)
+        result = ClassInfo.from_cursor(node)
         self.assertEqual(result.name, "multiple_types")
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
@@ -830,7 +829,7 @@ class TestClassLexicon(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
         self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_class.hpp").cursor
-        self.file = SourceFile(self.cursor)
+        self.file = SourceFile.from_cursor(self.cursor)
         self.assertEqual(len(self.file.content), 4)
 
     def test_class_function(self):

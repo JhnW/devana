@@ -5,9 +5,10 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from typing import Optional, List, Union
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.traits import IFromCursorCreatable, ICursorValidate
 
 
-class UsingNamespace:
+class UsingNamespace(IFromCursorCreatable, ICursorValidate):
     """Using namespace in scope."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -24,6 +25,22 @@ class UsingNamespace:
             self._namespaces = LazyNotInit
             self._text_source = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @classmethod
+    def from_namespace(cls, namespace: str, parent: Optional = None):
+        result = cls(None, parent)
+        result._namespace = namespace
+        return result
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.USING_DIRECTIVE
 
     @property
     @lazy_invoke

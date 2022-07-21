@@ -34,7 +34,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -69,7 +69,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -104,7 +104,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -139,7 +139,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -174,7 +174,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -209,7 +209,7 @@ class TestVariableBasic(unittest.TestCase):
         for c in cases:
             with self.subTest(c[0]):
                 node = find_by_name(self.cursor, c[0])
-                result = Variable(node)
+                result = Variable.from_cursor(node)
                 stub_lexicon(result)
                 self.assertEqual(result.name, c[0])
                 result = result.type
@@ -233,7 +233,7 @@ class TestVariableBasic(unittest.TestCase):
         c = cases[0]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = Variable(node)
+            result = Variable.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, c[0])
             result = result.type
@@ -251,7 +251,7 @@ class TestVariableBasic(unittest.TestCase):
         c = cases[1]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = Variable(node)
+            result = Variable.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, c[0])
             result = result.type
@@ -269,7 +269,7 @@ class TestVariableBasic(unittest.TestCase):
         c = cases[2]
         with self.subTest(c[0]):
             node = find_by_name(self.cursor, c[0])
-            result = Variable(node)
+            result = Variable.from_cursor(node)
             stub_lexicon(result)
             self.assertEqual(result.name, c[0])
             result = result.type
@@ -285,7 +285,7 @@ class TestVariableBasic(unittest.TestCase):
 
     def test_global_variable(self):
         node = find_by_name(self.cursor, "global_var")
-        result = GlobalVariable(node)
+        result = GlobalVariable.from_cursor(node)
         stub_lexicon(result)
         with self.subTest(result.name):
             self.assertEqual(result.name, "global_var")
@@ -294,7 +294,7 @@ class TestVariableBasic(unittest.TestCase):
             self.assertFalse(result.type.modification.is_static)
             self.assertEqual(result.default_value, None)
         node = find_by_name(self.cursor, "constexpr_global_var")
-        result = GlobalVariable(node)
+        result = GlobalVariable.from_cursor(node)
         stub_lexicon(result)
         with self.subTest(result.name):
             self.assertEqual(result.name, "constexpr_global_var")

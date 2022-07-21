@@ -12,6 +12,7 @@ from typing import Optional, List, Tuple
 from enum import Enum, auto
 from clang import cindex
 import re
+from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
 
 
 class AccessSpecifier(Enum):
@@ -31,7 +32,7 @@ class AccessSpecifier(Enum):
             raise ParserError("Cursor is not class/struct component.")
 
 
-class ClassMember:
+class ClassMember(IBasicCreatable):
     """Base class for all class members."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None):
@@ -39,6 +40,16 @@ class ClassMember:
             self._access_specifier = AccessSpecifier.PUBLIC
         else:
             self._access_specifier = AccessSpecifier.from_cursor(cursor)
+
+    @classmethod
+    def create_default(cls, _: Optional = None) -> any:
+        result = cls(None)
+        return result
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, _: Optional = None) -> Optional:
+        result = cls(cursor)
+        return result
 
     @property
     def access_specifier(self) -> AccessSpecifier:
@@ -361,19 +372,23 @@ class DestructorInfo(MethodInfo):
             raise ParserError(f"It is not a valid type cursor: {kind}.")
 
 
-class FieldInfo(Variable, ClassMember):
+class FieldInfo(Variable, ClassMember, ICursorValidate):
     """Field of class/struct."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         Variable.__init__(self, cursor, parent)
         ClassMember.__init__(self, cursor)
         if cursor is not None:
-            if cursor.kind != cindex.CursorKind.FIELD_DECL and cursor.kind != cindex.CursorKind.VAR_DECL:
+            if not self.is_cursor_valid(cursor):
                 raise ParserError("Bad cursor kind.")
         if cursor is None:
             self._associated_comment = None
         else:
             self._associated_comment = LazyNotInit
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.FIELD_DECL or cursor.kind == cindex.CursorKind.VAR_DECL
 
     @property
     @lazy_invoke
@@ -392,7 +407,7 @@ class FieldInfo(Variable, ClassMember):
         self._associated_comment = value
 
 
-class SectionInfo:
+class SectionInfo(IBasicCreatable, ICursorValidate):
     """Representation of class sections like private, public and protected."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -412,8 +427,22 @@ class SectionInfo:
             self._text_source = LazyNotInit
             self._is_unnamed = LazyNotInit
             if self._cursor is not None:
-                if self._cursor.kind != cindex.CursorKind.CXX_ACCESS_SPEC_DECL:
+                if not self.is_cursor_valid(cursor):
                     raise ParserError("Expected CursorKind.CXX_ACCESS_SPEC_DECL.")
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.CXX_ACCESS_SPEC_DECL
 
     @property
     @lazy_invoke
@@ -480,10 +509,10 @@ class SectionInfo:
         self._content = value
 
 
-class InheritanceInfo:
+class InheritanceInfo(IFromCursorCreatable):
     """Information about class/structure inheritance."""
 
-    class InheritanceValue:
+    class InheritanceValue(IBasicCreatable):
         """One of parent (in C++ mean) information."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -499,6 +528,14 @@ class InheritanceInfo:
                 self._is_virtual = LazyNotInit
                 self._type = LazyNotInit
                 self._template_arguments = LazyNotInit
+
+        @classmethod
+        def create_default(cls, parent: Optional = None) -> any:
+            return cls(None, parent)
+
+        @classmethod
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+            return cls(cursor, parent)
 
         @property
         def parent(self) -> CodeContainer:
@@ -582,6 +619,10 @@ class InheritanceInfo:
         else:
             self._type_parents = LazyNotInit
 
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        return cls(cursor, parent)
+
     @property
     @lazy_invoke
     def type_parents(self) -> List[InheritanceValue]:
@@ -616,7 +657,7 @@ class ClassInfo(CodeContainer):
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         if cursor is None:
-            self._name = ""
+            self._name = "TestClass"
             self._text_source = None
             self._is_final = False
             self._template = None
@@ -674,6 +715,28 @@ class ClassInfo(CodeContainer):
                     raise NotImplementedError("Class definition with namespaces is not allowed.")
 
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if not cls.is_cursor_valid(cursor):
+            return None
+        return cls(cursor, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        if cursor.kind == cindex.CursorKind.STRUCT_DECL:
+            return True
+        elif cursor.kind == cindex.CursorKind.CLASS_DECL:
+            return True
+        elif cursor.kind == cindex.CursorKind.CLASS_TEMPLATE \
+                or cursor.kind == cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+            return True
+        else:
+            return False
 
     @property
     def constructors(self) -> Tuple[ConstructorInfo]:

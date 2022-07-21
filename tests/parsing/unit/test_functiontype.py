@@ -20,7 +20,7 @@ class TestFunctionPointerBasic(unittest.TestCase):
     def test_function_pointer_empty(self):
         node = find_by_name(self.cursor, "empty_func")
         fnc_node = node.type.get_pointee()
-        result = FunctionType(fnc_node)
+        result = FunctionType.from_cursor(fnc_node)
         stub_lexicon(result)
         self.assertEqual(len(result.arguments), 0)
         self.assertEqual(result.return_type.details, BasicType.VOID)
@@ -28,7 +28,7 @@ class TestFunctionPointerBasic(unittest.TestCase):
     def test_core_function_pointer_standard(self):
         node = find_by_name(self.cursor, "standard_func")
         fnc_node = node.type.get_pointee()
-        result = FunctionType(fnc_node)
+        result = FunctionType.from_cursor(fnc_node)
         stub_lexicon(result)
         self.assertEqual(len(result.arguments), 2)
         self.assertEqual(result.arguments[0].details, BasicType.DOUBLE)
@@ -38,7 +38,7 @@ class TestFunctionPointerBasic(unittest.TestCase):
     def test_core_function_pointer_return_attributes(self):
         node = find_by_name(self.cursor, "return_attributes_func")
         fnc_node = node.type.get_pointee()
-        result = FunctionType(fnc_node)
+        result = FunctionType.from_cursor(fnc_node)
         stub_lexicon(result)
         self.assertEqual(len(result.arguments), 0)
         self.assertEqual(result.return_type.details, BasicType.FLOAT)
@@ -48,7 +48,7 @@ class TestFunctionPointerBasic(unittest.TestCase):
     def test_core_function_pointer_arguments_attributes(self):
         node = find_by_name(self.cursor, "arguments_attributes_func")
         fnc_node = node.type.get_pointee()
-        result = FunctionType(fnc_node)
+        result = FunctionType.from_cursor(fnc_node)
         stub_lexicon(result)
         self.assertEqual(len(result.arguments), 2)
         self.assertEqual(result.arguments[0].details, BasicType.FLOAT)

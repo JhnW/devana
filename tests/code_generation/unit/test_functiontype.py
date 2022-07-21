@@ -13,7 +13,7 @@ class TestFunctionTypeCore(unittest.TestCase):
         self.printer: CodePrinter = printer
 
     def test_print_function_type(self):
-        source = FunctionType()
+        source = FunctionType.create_default()
         source.arguments = [TypeExpression()]
         source.arguments[0].modification |= TypeModification.CONST
         source.arguments[0].details = BasicType.CHAR
