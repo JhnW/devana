@@ -1,9 +1,9 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
-from devana.syntax_abstraction.variable import Variable, GlobalVariable
-from devana.syntax_abstraction.functiontype import FunctionType
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
+from devana.syntax_abstraction.variable import Variable, GlobalVariable
+from devana.syntax_abstraction.functiontype import FunctionType
 from typing import Optional
 
 

@@ -1,12 +1,12 @@
+from devana.syntax_abstraction.codepiece import CodePiece
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.lazy import lazy_invoke, LazyNotInit
+from devana.utility.fakeenum import FakeEnum
+from devana.utility.traits import IBasicCreatable
 from clang import cindex
 from typing import List, Optional, Union
 from enum import Enum, auto, IntFlag
 import re
-from devana.syntax_abstraction.codepiece import CodePiece
-from devana.utility.lazy import lazy_invoke, LazyNotInit
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
-from devana.utility.fakeenum import FakeEnum
-from devana.utility.traits import IBasicCreatable
 
 
 class BasicType(Enum):

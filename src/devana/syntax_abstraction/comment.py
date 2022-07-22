@@ -1,6 +1,6 @@
-from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.codelocation import CodeLocation
+from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration
 from enum import Enum, auto
 from typing import List, Optional

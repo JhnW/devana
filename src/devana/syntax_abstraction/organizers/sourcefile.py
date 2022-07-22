@@ -1,15 +1,14 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.configuration import Configuration
-import re
 from pathlib import Path
 from clang import cindex
 from typing import Optional, Union, Literal, List, NoReturn
 from enum import Enum, auto
-from devana.utility.traits import IBasicCreatable
+import re
 
 
 class IncludeInfo:

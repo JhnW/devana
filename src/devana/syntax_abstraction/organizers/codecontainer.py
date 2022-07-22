@@ -1,9 +1,9 @@
-from clang import cindex
-from typing import Optional, List
-from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
+from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from abc import ABC
+from clang import cindex
+from typing import Optional, List
 
 
 class CodeContainer(IBasicCreatable, ICursorValidate, ABC):

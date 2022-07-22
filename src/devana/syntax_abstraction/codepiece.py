@@ -1,7 +1,7 @@
+from devana.syntax_abstraction.codelocation import CodeLocation
+from devana.utility.lazy import LazyNotInit, lazy_invoke
 from clang import cindex
 from typing import Optional
-from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.syntax_abstraction.codelocation import CodeLocation
 
 
 class CodePiece:

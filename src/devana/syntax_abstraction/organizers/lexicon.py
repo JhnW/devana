@@ -1,7 +1,7 @@
-from typing import Optional, List, NoReturn, Union
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.utility.errors import ParserError, CodeError
 from clang import cindex
+from typing import Optional, List, NoReturn, Union
 
 
 class Lexicon:

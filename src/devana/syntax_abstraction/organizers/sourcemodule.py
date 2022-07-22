@@ -1,12 +1,12 @@
-from typing import Optional, List
-from dataclasses import dataclass
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
-from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration
 import os
 import clang
 import re
+from typing import Optional, List
+from dataclasses import dataclass
 
 
 @dataclass

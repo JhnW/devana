@@ -1,5 +1,4 @@
 from devana.syntax_abstraction.variable import Variable
-from devana.utility.errors import ParserError, CodeError
 from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -7,11 +6,12 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.errors import ParserError, CodeError
 from clang import cindex
 from typing import Optional, Tuple, List
 from enum import auto, IntFlag
 import re
-from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
 class FunctionModification(IntFlag):

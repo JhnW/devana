@@ -1,6 +1,7 @@
+from devana.code_generation.printers.configuration import PrinterConfiguration
 from abc import ABC, abstractmethod
 from typing import Optional
-from devana.code_generation.printers.configuration import PrinterConfiguration
+
 
 
 class ICodePrinter(ABC):

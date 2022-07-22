@@ -1,12 +1,12 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
-from typing import Optional, List
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.codepiece import CodePiece
-from clang import cindex
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.comment import Comment
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from clang import cindex
+from typing import Optional, List
 
 
 class NamespaceInfo(CodeContainer):
