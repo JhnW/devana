@@ -87,13 +87,13 @@ void  templateFunctionSpec_1<FieldHolderTemplate<char>*>(double b, FieldHolderTe
 struct TemplateFunctionSpecHolder
 {
     template<typename T>
-    void templateMethodSpec_1(double b, T a) { return 7;}
+    void templateMethodSpec_1(double b, T a) { return; }
 };
 
 template<>
 void TemplateFunctionSpecHolder::templateMethodSpec_1<FieldHolderTemplate<char>*>(double b, FieldHolderTemplate<char>* a)
 {
-    return 112;
+    return;
 }
 
 template<typename T>

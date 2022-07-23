@@ -243,7 +243,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             from devana.syntax_abstraction.functioninfo import FunctionInfo
             from devana.syntax_abstraction.organizers.sourcefile import SourceFile
             idx = cindex.Index.create()
-            tu = idx.parse('tmp.h', args=['-std=c++17'],
+            tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
                            unsaved_files=[('tmp.h', text)], options=0)
             file = SourceFile(tu.cursor)
 
