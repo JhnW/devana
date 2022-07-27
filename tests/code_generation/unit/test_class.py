@@ -232,6 +232,7 @@ class TestClassComplex(unittest.TestCase):
         printer.register(FieldPrinter, FieldInfo)
         printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         printer.register(GenericTypeParameterPrinter, GenericTypeParameter)
+        printer.register(SectionPrinter, SectionInfo)
         self.printer: CodePrinter = printer
 
     def test_simple_empty_struct(self):
@@ -527,3 +528,11 @@ class TestClassComplex(unittest.TestCase):
         source.template.specialisation_values = [spec_1, spec_2]
         result = self.printer.print(source)
         self.assertEqual(result, "template<>\nfoo<int&,const long>();\n")
+
+    def test_sections(self):
+        source = ClassInfo.create_default()
+        source.name = "Class"
+        source.is_class = True
+        source.content = [SectionInfo.create_default(source), FieldInfo.create_default(source)]
+        result = self.printer.print(source)
+        self.assertEqual(result, "class Class\n{\n    public:\n    int myVariable;\n};\n")

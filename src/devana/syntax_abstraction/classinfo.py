@@ -432,7 +432,9 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> any:
-        return cls(None, parent)
+        result = cls(None, parent)
+        result.is_unnamed = False
+        return result
 
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:

@@ -202,3 +202,17 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
                 formatter.indent.count -= 1
                 formatter.print_line("};")
             return formatter.text
+
+
+class SectionPrinter(ICodePrinter, DispatcherInjectable):
+
+    def print(self, source: SectionInfo, config: Optional[PrinterConfiguration] = None,
+              context: Optional = None) -> str:
+        if config is None:
+            config = PrinterConfiguration()
+        formatter = Formatter(config)
+        if source.is_unnamed:
+            return ""
+
+        formatter.print_line(f"{source.type.value}:")
+        return formatter.text
