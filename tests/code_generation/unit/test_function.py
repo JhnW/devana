@@ -136,6 +136,14 @@ class TestFunctionCore(unittest.TestCase):
         result = self.printer.print(source)
         self.assertEqual(result, "float Test1::Test2::foo();\n")
 
+    def test_function_body_with_brace(self):
+        source = FunctionInfo.create_default()
+        source.name = "foo"
+        source.return_type.details = BasicType.FLOAT
+        source.body = "{\nreturn 6.7;\n}"
+        result = self.printer.print(source)
+        self.assertEqual(result, "float foo()\n{\n    return 6.7;\n}\n")
+
 
 class TestFunctionTemplate(unittest.TestCase):
 

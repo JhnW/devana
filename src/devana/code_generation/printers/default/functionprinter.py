@@ -108,7 +108,16 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             formatter.next_line()
             formatter.print_line("{")
             formatter.indent.count += 1
-            for line in source.body.splitlines(False):
+            body = source.body.splitlines(False)
+            # remove brackets
+            if body[0][0] == "{" and body[-1][-1] == "}":
+                body[0] = body[0][1:]
+                body[-1] = body[-1][:-1]
+                if body[0] == "":
+                    body = body[1:]
+                if body[-1] == "":
+                    body = body[:-1]
+            for line in body:
                 formatter.print_line(line)
             formatter.indent.count -= 1
             if type(context) is ExternC and len(context.content) == 1:
