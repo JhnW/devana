@@ -23,6 +23,7 @@ from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.code_generation.printers.default.usingnamespaceprinter import UsingNamespacePrinter
 from devana.code_generation.printers.default.classprinter import FieldPrinter
 from devana.syntax_abstraction.classinfo import FieldInfo
+from devana.syntax_abstraction.classinfo import SectionInfo
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
 from devana.syntax_abstraction.using import Using
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
@@ -40,6 +41,7 @@ def create_default_printer() -> CodePrinter:
     printer = CodePrinter()
     printer.register(BasicTypePrinter, BasicType)
     printer.register(AccessSpecifierPrinter, AccessSpecifier)
+    printer.register(SectionPrinter, SectionInfo)
     printer.register(MethodPrinter, MethodInfo)
     printer.register(ConstructorPrinter, ConstructorInfo)
     printer.register(DestructorPrinter, DestructorInfo)
