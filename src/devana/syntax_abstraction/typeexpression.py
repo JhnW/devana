@@ -680,3 +680,6 @@ class TypeExpression(IBasicCreatable):
             if result.kind != cindex.TypeKind.POINTER:
                 return result
             result = result.get_pointee()
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

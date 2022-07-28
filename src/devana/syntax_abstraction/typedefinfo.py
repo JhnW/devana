@@ -102,3 +102,6 @@ class TypedefInfo(IBasicCreatable, ICursorValidate):
     @associated_comment.setter
     def associated_comment(self, value):
         self._associated_comment = value
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

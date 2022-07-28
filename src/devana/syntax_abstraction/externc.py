@@ -6,6 +6,7 @@ from devana.utility.lazy import lazy_invoke
 from typing import Optional, List
 from clang import cindex
 
+
 class ExternC(CodeContainer):
     """"Object representation of current usage of extern C set of functions. It may contain one or more functions."""
 

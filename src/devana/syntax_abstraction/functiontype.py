@@ -93,3 +93,6 @@ class FunctionType(IBasicCreatable, ICursorValidate):
     @lexicon.setter
     def lexicon(self, value):
         self._lexicon = value
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

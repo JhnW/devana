@@ -95,6 +95,9 @@ class Variable(IBasicCreatable):
     def lexicon(self, value):
         self._lexicon = value
 
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
+
 
 class GlobalVariable(Variable, ICursorValidate):
     """Data about global, independent variable used in code (out of class scope)"""

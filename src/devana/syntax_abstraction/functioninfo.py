@@ -92,7 +92,7 @@ class FunctionInfo(IBasicCreatable):
 
         @staticmethod
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-            return cursor.kind  == cindex.CursorKind.PARM_DECL
+            return cursor.kind == cindex.CursorKind.PARM_DECL
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         self._cursor = cursor
@@ -384,3 +384,6 @@ class FunctionInfo(IBasicCreatable):
     def _check_kind(self, kind: cindex.Cursor.kind):
         if kind != cindex.CursorKind.FUNCTION_DECL and kind != cindex.CursorKind.FUNCTION_TEMPLATE:
             raise ParserError(f"It is not a valid type cursor: {kind}.")
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

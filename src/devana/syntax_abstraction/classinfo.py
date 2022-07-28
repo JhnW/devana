@@ -510,6 +510,9 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
     def content(self, value):
         self._content = value
 
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.type} ({super().__repr__()})"
+
 
 class InheritanceInfo(IFromCursorCreatable):
     """Information about class/structure inheritance."""
@@ -986,3 +989,6 @@ class ClassInfo(CodeContainer):
                 content.append(el)
                 break
         return content
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

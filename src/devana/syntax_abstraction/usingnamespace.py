@@ -94,3 +94,7 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate):
     @lexicon.setter
     def lexicon(self, value):
         self._lexicon = value
+
+    def __repr__(self):
+        namespace = "NONE" if self.namespace is None else self.namespace
+        return f"{type(self).__name__}:{namespace} ({super().__repr__()})"

@@ -109,6 +109,9 @@ class EnumInfo(CodeContainer):
             """Structural parent element like file, namespace or class."""
             return self._parent
 
+        def __repr__(self):
+            return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
+
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
 
@@ -286,3 +289,6 @@ class EnumInfo(CodeContainer):
                 content.append(el)
                 break
         return content
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

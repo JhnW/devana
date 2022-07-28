@@ -10,7 +10,6 @@ from typing import Optional, List, Union, Tuple
 from clang import cindex
 
 
-
 class GenericTypeParameter:
 
     def __init__(self, name: str, parent: Optional = None):
@@ -46,6 +45,9 @@ class GenericTypeParameter:
         if not isinstance(other, type(self)):
             return False
         return self.name == other.name
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
 
 
 class TemplateInfo(IBasicCreatable, ICursorValidate):
