@@ -125,13 +125,18 @@ class SourceFile(CodeContainer):
     def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[any] = None,
                  configuration: Optional[Configuration] = None):
         cursor = None
+        if configuration is None:
+            self._configuration = Configuration.get_configuration(self)
+        else:
+            self._configuration = configuration
+        self._configuration.validate()
         if source is not None:
             if not isinstance(source, str):
                 cursor = source
             else:
                 import clang
                 index = clang.cindex.Index.create()
-                cursor = index.parse(source, args=["-xc++", "-std=c++17"]).cursor
+                cursor = index.parse(source, args=self.configuration.parsing.language_version.value.options).cursor
         super().__init__(cursor, parent)
         self._source = source
         self._cursor = cursor
@@ -161,9 +166,6 @@ class SourceFile(CodeContainer):
                 self._type = LazyNotInit
                 self._header_guard = LazyNotInit
                 self._comments_factory = CommentsFactory(self)
-        self._configuration: Configuration = Configuration() if configuration is None else configuration
-        self._configuration.validate()
-
         self._lexicon = Lexicon.create(self)
 
     @staticmethod
@@ -189,7 +191,7 @@ class SourceFile(CodeContainer):
     @lazy_invoke
     def type(self) -> SourceFileType:
         """Information abut file type."""
-        if self.extension in ["c", "cxx", "cpp", "cxx", "cc"]:
+        if self.extension in ["c", "cxx", "cpp", "cc"]:
             self._type = SourceFileType.IMPLEMENTATION
         else:
             self._type = SourceFileType.HEADER

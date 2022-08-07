@@ -2,12 +2,7 @@ from enum import Enum, auto
 from dataclasses import dataclass, field
 import logging
 from abc import ABC, abstractmethod
-
-
-class ConservativeLevel(Enum):
-    HIGH = auto()
-    MEDIUM = auto()
-    LOW = auto()
+from typing import List
 
 
 class IValidateConfig(ABC):
@@ -45,10 +40,59 @@ class CommentsParsing(IValidateConfig):
             raise NotImplementedError("Unpinned comments is not implemented for now.")
 
 
+class LanguageStandard(Enum):
+    """Defines according to the rules which language version the parsing of files will take place."""
+
+    class LanguageStandardData:
+        def __init__(self, options: List[str], value):
+            self._value = value
+            self._options = options
+
+        @property
+        def _compiler_option(self) -> List[str]:
+            """Compiler option, for internal usage"""
+            return self._options
+
+        @property
+        def options(self) -> List[str]:
+            return self._options
+
+    C_89 = LanguageStandardData(["-std=c89"], auto())
+    C_99 = LanguageStandardData(["-std=c99"], auto())
+    C_11 = LanguageStandardData(["-std=c11"], auto())
+    C_17 = LanguageStandardData(["-std=c17"], auto())
+    CPP_98 = LanguageStandardData(["-xc++", "-std=c++98"], auto())
+    CPP_03 = LanguageStandardData(["-xc++", "-std=c++98"], auto())
+    CPP_11 = LanguageStandardData(["-xc++", "-std=c++11"], auto())
+    CPP_17 = LanguageStandardData(["-xc++", "-std=c++17"], auto())
+    CPP_20 = LanguageStandardData(["-xc++", "-std=c++20"], auto())
+
+    @classmethod
+    def create_default(cls):
+        return cls.CPP_17
+
+
+class ParsingErrorPolicy(Enum):
+    IGNORE = auto()
+    """Ignore all errors."""
+    LOG = auto()
+    """Only log error."""
+    ABORT = auto()
+    """Throw exception."""
+
+    @classmethod
+    def create_default(cls):
+        return cls.IGNORE
+
+
 @dataclass
 class ParsingConfiguration(IValidateConfig):
     comments: CommentsParsing = field(default_factory=lambda: CommentsParsing())
     """Comments parsing settings."""
+    language_version: LanguageStandard = field(default_factory=lambda: LanguageStandard.create_default())
+    """C or C++ standard version."""
+    error_strategy: ParsingErrorPolicy = field(default_factory=lambda: ParsingErrorPolicy.create_default())
+    """Behavior when non-parsable elements are detected."""
 
     def validate(self):
         self.comments.validate()
@@ -59,8 +103,6 @@ class Configuration(IValidateConfig):
     parsing: ParsingConfiguration = field(default_factory=lambda: ParsingConfiguration())
     """Configuring the parsing of C ++ files, this is how the C ++ code will be transformed 
     into the appropriate python classes instances."""
-    conservative_level: ConservativeLevel = ConservativeLevel.MEDIUM
-    """Currently not used. May be removed / moved elsewhere in future revisions without warning."""
     logger = logging
     """Currently not used. May be removed / moved elsewhere in future revisions without warning."""
 
