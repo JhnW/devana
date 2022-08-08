@@ -2,10 +2,7 @@ import unittest
 import clang.cindex
 import clang
 import os
-from tests.helpers import find_by_name, stub_lexicon
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
-from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
-from devana.utility.errors import CodeError
+from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.externc import ExternC
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
@@ -43,23 +40,6 @@ class TestFunctionsExternSimple(unittest.TestCase):
         self.assertEqual(type(extern.content[0]), FunctionInfo)
         function: FunctionInfo = extern.content[0]
         self.assertEqual(function.name, "foo2")
-        self.assertNotEqual(function.body, None)
-
-    def test_function_definition_declaration_extern_c_multiple_lines(self):
-        c = self.externs[2]
-        extern = ExternC.from_cursor(c)
-        self.assertEqual(extern.name, 'extern "C"')
-        self.assertEqual(extern.namespace, None)
-        self.assertEqual(extern.allowed_namespaces, [])
-
-        self.assertEqual(len(extern.content), 2)
-        self.assertEqual(type(extern.content[0]), FunctionInfo)
-        self.assertEqual(type(extern.content[1]), FunctionInfo)
-        function: FunctionInfo = extern.content[0]
-        self.assertEqual(function.name, "foo3")
-        self.assertEqual(function.body, None)
-        function: FunctionInfo = extern.content[1]
-        self.assertEqual(function.name, "foo4")
         self.assertNotEqual(function.body, None)
 
     def test_function_definition_declaration_extern_c_multiple_lines(self):

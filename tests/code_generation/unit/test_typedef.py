@@ -30,6 +30,6 @@ class TestTypedef(unittest.TestCase):
         source.name = "array_typedef"
         source.type_info = TypeExpression.create_default()
         source.type_info.details = BasicType.FLOAT
-        source.type_info.modification |= TypeModification.ARRAY(["16", "32"])
+        source.type_info.modification |= TypeModification.create_array(["16", "32"])
         result = self.printer.print(source)
         self.assertEqual(result, "typedef float array_typedef[16][32];\n")

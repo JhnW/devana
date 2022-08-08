@@ -20,7 +20,6 @@ class TestUsing(unittest.TestCase):
         self.assertEqual(source.name, "B")
         self.assertTrue(source.type_info.modification.is_const)
         self.assertTrue(source.type_info.modification.is_pointer)
-        x = source.type_info.details
         self.assertEqual(source.type_info.details, self.file.content[0].content[0])
         fnc: FunctionInfo = self.file.content[2]
         self.assertEqual(fnc.arguments[0].type.details, source)

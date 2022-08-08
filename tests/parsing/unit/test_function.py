@@ -92,7 +92,7 @@ class TestFunctionsSimple(unittest.TestCase):
         self.assertFalse(result.is_declaration)
         # to compare platform independent
         self.assertEqual(result.body.replace("\r\n", "\n"),
-"""{
+                         """{
     int a = 6*8;
     int b = 2*a;
     for(int i = 0; i < 5; i++)
@@ -164,9 +164,9 @@ class TestFunctionsSimple(unittest.TestCase):
         self.assertTrue(result.is_declaration)
         self.assertEqual(result.modification, FunctionModification.NONE)
         self.assertEqual(result.return_type.name, "typereal")
-        self.assertEqual(result.return_type.namespaces, ["test_namespace",])
+        self.assertEqual(result.return_type.namespaces, ["test_namespace"])
 
-    def test_function_modification(self):
+    def test_function_modification_attribute(self):
         node = find_by_name(self.cursor, "attribute_func_1")
         result = FunctionInfo.from_cursor(node)
         self.assertTrue(result.modification.is_static)
@@ -340,10 +340,10 @@ class TestFunctionsOverload(unittest.TestCase):
     def test_bad_overload(self):
         base: FunctionInfo = self.file.content[5]
         with self.assertRaises(CodeError):
-            base.overloading_family
+            base.overloading_family # noqa
         base: FunctionInfo = self.file.content[7]
         with self.assertRaises(CodeError):
-            base.overloading_family
+            base.overloading_family # noqa
 
     def test_template_overload_and_spec(self):
         base: FunctionInfo = self.file.content[10]

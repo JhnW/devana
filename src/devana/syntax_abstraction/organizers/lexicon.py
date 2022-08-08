@@ -42,17 +42,17 @@ class Lexicon:
                         if not hasattr(s, "is_declaration"):
                             sources.append(s)
                             continue
-                        if hasattr(s, "template") and s.template is not None:
+                        if hasattr(s, "template") and s.template is not None: # noqa
                             sources.append(s)
                             continue
-                        if s.name == source.name:
+                        if s.name == source.name: # noqa
                             if source.is_declaration:
-                                if s.is_declaration:
+                                if s.is_declaration: # noqa
                                     sources.append(s)
                                 else:
                                     sources.append(source)
                             else:  # source is definition
-                                if s.is_definition:
+                                if s.is_definition: # noqa
                                     raise ParserError("Multiple definitions.")
                                 sources.append(source)
                     instance._sources = sources
@@ -251,7 +251,7 @@ class Lexicon:
 
         def finder(lexicon, searched_cursor):
             for c in lexicon.content:
-                if c._cursor == searched_cursor:
+                if c._cursor == searched_cursor: # noqa
                     return c
             for node in lexicon.nodes:
                 result = finder(node, searched_cursor)
@@ -269,7 +269,7 @@ class Lexicon:
         for c in self.content:
             if isinstance(c, UsingNamespace):
                 if c.namespace is not None:
-                    allowed += c.namespace.allowed_namespaces
+                    allowed += c.namespace.allowed_namespaces # noqa
         if self.namespace is not None:
             allowed.append(self)
         return allowed

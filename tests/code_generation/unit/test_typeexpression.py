@@ -70,7 +70,7 @@ class TestTypeExpression(unittest.TestCase):
     def test_print_type_expression_basic_mods_ptr_order(self):
         source = TypeExpression.create_default()
         source.details = BasicType.FLOAT
-        source.modification |= TypeModification.POINTER(3)
+        source.modification |= TypeModification.create_pointer(3)
         printer = TypeExpressionPrinter(BasicTypePrinter())
         result = printer.print(source)
         self.assertEqual(result, "float***")
@@ -78,7 +78,7 @@ class TestTypeExpression(unittest.TestCase):
     def test_print_type_expression_basic_array(self):
         source = TypeExpression.create_default()
         source.details = BasicType.FLOAT
-        source.modification |= TypeModification.ARRAY(["4", "8"])
+        source.modification |= TypeModification.create_array(["4", "8"])
         printer = TypeExpressionPrinter(BasicTypePrinter())
         result = printer.print(source)
         self.assertEqual(result, "float")
@@ -103,7 +103,7 @@ class TestTypeExpressionAdvanced(unittest.TestCase):
         class_type.name = "TestClass"
         source = TypeExpression.create_default()
         source.details = class_type
-        source.modification |= TypeModification.POINTER(2)
+        source.modification |= TypeModification.create_pointer(2)
         result = self.printer.print(source)
         self.assertEqual(result, "TestClass**")
 

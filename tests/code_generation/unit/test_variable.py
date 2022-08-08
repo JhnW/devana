@@ -74,7 +74,7 @@ class TestVariableCore(unittest.TestCase):
             source.name = "test_var"
             source.type = TypeExpression.create_default()
             source.type.modification \
-                |= TypeModification.ARRAY(["20"]) | TypeModification.POINTER | TypeModification.CONST
+                |= TypeModification.create_array(["20"]) | TypeModification.POINTER | TypeModification.CONST
             source.type.details = details_type
             result = printer.print(source)
             self.assertEqual(result, "float (const *test_var[20])(double*, char)")
@@ -84,7 +84,7 @@ class TestVariableCore(unittest.TestCase):
             source.name = "test_var"
             source.type = TypeExpression.create_default()
             source.type.modification \
-                |= TypeModification.ARRAY(["20"]) | TypeModification.POINTER | TypeModification.CONST
+                |= TypeModification.create_array(["20"]) | TypeModification.POINTER | TypeModification.CONST
             source.type.details = details_type
             result = printer.print(source)
             self.assertEqual(result, "float (const *test_var[20])(double*, char);\n")

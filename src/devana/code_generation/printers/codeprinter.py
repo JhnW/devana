@@ -78,7 +78,7 @@ class CodePrinter(ICodePrinter):
         if source_type not in self._printers:
             self._printers[source_type] = PrinterGroup()
         record = PrinterRecord(cls_printer(self), context)
-        self._printers[source_type].append(record)
+        self._printers[source_type].append(record) # noqa
 
     def print(self, source, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         """Prints code from a given source dynamically looking for suitable printers."""

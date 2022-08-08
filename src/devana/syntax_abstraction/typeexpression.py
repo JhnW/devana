@@ -154,6 +154,14 @@ class TypeModification(metaclass=FakeEnum):
         else:
             self._value = TypeModification.ModificationKind.NONE
 
+    @classmethod
+    def create_array(cls, order):
+        return TypeModification.ARRAY(order) # noqa
+
+    @classmethod
+    def create_pointer(cls, order):
+        return TypeModification.POINTER(order) # noqa
+
     @property
     def value(self) -> ModificationKind:
         return self._value
@@ -223,7 +231,7 @@ class TypeModification(metaclass=FakeEnum):
 
     def __xor__(self, other):
         if isinstance(other, type(self)):
-            result = TypeModification(self.value.__or__(self.value, other.value))
+            result = TypeModification(self.value.__or__(self.value, other.value)) # noqa
             if result.is_pointer:
                 if self.is_pointer:
                     result.pointer_order = self.pointer_order
@@ -236,7 +244,7 @@ class TypeModification(metaclass=FakeEnum):
                     result.array_order = other.array_order
             return result
         elif isinstance(other, TypeModification.ModificationKind):
-            result = TypeModification(self.value.__or__(self.value, other))
+            result = TypeModification(self.value.__or__(self.value, other)) # noqa
             if result.is_pointer:
                 if self.is_pointer:
                     result.pointer_order = self.pointer_order
@@ -281,7 +289,7 @@ class TypeModification(metaclass=FakeEnum):
 
     @property
     def pointer_order(self) -> Optional[int]:
-        return self._pointer_order
+        return self._pointer_order # noqa
 
     @pointer_order.setter
     def pointer_order(self, value):
@@ -289,9 +297,9 @@ class TypeModification(metaclass=FakeEnum):
             if value is not None:
                 if value <= 0:
                     raise ValueError("Pointer order must be greater than zero.")
-                self.value |= TypeModification.ModificationKind.POINTER
+                self.value |= TypeModification.ModificationKind.POINTER # noqa
         if value is None:
-            self.value &= ~TypeModification.ModificationKind.POINTER
+            self.value &= ~TypeModification.ModificationKind.POINTER # noqa
         self._pointer_order = value
 
     @property
@@ -302,9 +310,9 @@ class TypeModification(metaclass=FakeEnum):
     def array_order(self, value):
         if not self.value & TypeModification.ModificationKind.ARRAY:
             if value is not None:
-                self.value |= TypeModification.ModificationKind.ARRAY
+                self.value |= TypeModification.ModificationKind.ARRAY # noqa
         if value is None:
-            self.value &= ~TypeModification.ModificationKind.ARRAY
+            self.value &= ~TypeModification.ModificationKind.ARRAY # noqa
         self._array_order = value
 
     @property
@@ -505,8 +513,8 @@ class TypeExpression(IBasicCreatable):
             if type_c.kind == cindex.TypeKind.INCOMPLETEARRAY:
                 self._modification |= TypeModification.ARRAY
             else:
-                order = re.findall(r"\[(.*?)\]", CodePiece(self._cursor).text)
-                self._modification |= TypeModification.ARRAY(order)
+                order = re.findall(r"\[(.*?)\]", CodePiece(self._cursor).text) # noqa
+                self._modification |= TypeModification.ARRAY(order) # noqa
             while True:
                 type_c = type_c.get_array_element_type()
                 if type_c.kind != cindex.TypeKind.CONSTANTARRAY and type_c.kind != cindex.TypeKind.INCOMPLETEARRAY:
@@ -525,7 +533,7 @@ class TypeExpression(IBasicCreatable):
                                               "const int *ptr is valid.")
                 tmp_type = tmp_type.get_pointee()
                 order += 1
-            tmp_modification |= TypeModification.POINTER(order)
+            tmp_modification |= TypeModification.POINTER(order) # noqa
         if type_c.kind == cindex.TypeKind.RVALUEREFERENCE:
             tmp_modification |= TypeModification.RVALUE_REF
         type_source = type_c
@@ -543,7 +551,7 @@ class TypeExpression(IBasicCreatable):
             tmp_modification |= TypeModification.VOLATILE
 
         self._modification |= tmp_modification
-        return self._modification
+        return self._modification # noqa
 
     @modification.setter
     def modification(self, value):

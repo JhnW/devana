@@ -270,14 +270,14 @@ class TestTypeExpressionBasic(unittest.TestCase):
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
     def test_td_type_t_types(self):
         cases = (
-            ("unknown_int64", "int64_t"),
-            ("unknown_u_int64", "uint64_t"),
-            ("unknown_int32", "int32_t"),
-            ("unknown_u_int32", "uint32_t"),
-            ("unknown_int16", "int16_t"),
-            ("unknown_u_int16", "uint16_t"),
-            ("unknown_int8", "int8_t"),
-            ("unknown_u_int8", "uint8_t")
+            ("unknown_int64", "int64_t"), # noqa
+            ("unknown_u_int64", "uint64_t"), # noqa
+            ("unknown_int32", "int32_t"), # noqa
+            ("unknown_u_int32", "uint32_t"), # noqa
+            ("unknown_int16", "int16_t"), # noqa
+            ("unknown_u_int16", "uint16_t"), # noqa
+            ("unknown_int8", "int8_t"), # noqa
+            ("unknown_u_int8", "uint8_t") # noqa
         )
 
         for c in cases:

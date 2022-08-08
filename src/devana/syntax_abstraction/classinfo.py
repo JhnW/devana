@@ -9,7 +9,7 @@ from devana.syntax_abstraction.comment import Comment
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, cast
 from enum import Enum, auto
 from clang import cindex
 import re
@@ -520,7 +520,7 @@ class InheritanceInfo(IFromCursorCreatable):
     class InheritanceValue(IBasicCreatable):
         """One of parent (in C++ mean) information."""
 
-        def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
+        def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             self._cursor = cursor
             self._parent = parent
             if cursor is None:
@@ -746,7 +746,7 @@ class ClassInfo(CodeContainer):
     @property
     def constructors(self) -> Tuple[ConstructorInfo]:
         """Constructors associated with class."""
-        return tuple(filter(lambda e: type(e) is ConstructorInfo, self.content))
+        return cast(Tuple[ConstructorInfo], tuple(filter(lambda e: type(e) is ConstructorInfo, self.content)))
 
     @property
     def destructor(self) -> Optional[DestructorInfo]:
@@ -759,16 +759,16 @@ class ClassInfo(CodeContainer):
     @property
     def operators(self) -> Tuple[MethodInfo]:
         """Operators of class."""
-        return tuple(filter(lambda e: e.type.is_operator, self.methods))
+        return cast(Tuple[MethodInfo], tuple(filter(lambda e: e.type.is_operator, self.methods)))
 
     @property
     def fields(self) -> Tuple[FieldInfo]:
         """Class fields."""
-        return tuple(filter(lambda e: type(e) is FieldInfo, self.content))
+        return cast(Tuple[FieldInfo], tuple(filter(lambda e: type(e) is FieldInfo, self.content)))
 
     @property
     def methods(self) -> Tuple[MethodInfo]:
-        return tuple(filter(lambda e: type(e) is MethodInfo, self.content))
+        return cast(Tuple[MethodInfo], tuple(filter(lambda e: type(e) is MethodInfo, self.content)))
 
     @property
     def private(self) -> Tuple[any]:
@@ -831,7 +831,7 @@ class ClassInfo(CodeContainer):
         """List of sections present in object."""
         sections = []
         if len(self.content) == 0:
-            return ()
+            return cast(Tuple[SectionInfo], ())
 
         section = None
         if not type(self.content[0]) is SectionInfo:
@@ -850,7 +850,7 @@ class ClassInfo(CodeContainer):
             else:
                 if section is not None:
                     section.content.append(content)
-        return tuple(sections)
+        return cast(Tuple[SectionInfo], tuple(sections))
 
     @property
     @lazy_invoke

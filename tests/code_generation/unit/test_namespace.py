@@ -80,4 +80,6 @@ class TestNamespaceContent(unittest.TestCase):
         namespace.content.append(function)
 
         result = self.printer.print(namespace)
-        self.assertEqual("namespace TestNamespace\n{\n    float foo();\n    namespace TestNested\n    {\n        bool foo2()\n        {\n            return true;\n        }\n    }\n    double bar(const char a);\n}\n", result)
+        self.assertEqual("namespace TestNamespace\n{\n    float foo();\n    namespace TestNested\n    {\n        bool "
+                         "foo2()\n        {\n            return true;\n        }\n    }\n    double bar(const char "
+                         "a);\n}\n", result)

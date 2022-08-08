@@ -212,7 +212,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
                 import re
                 m = re.match(r"type-parameter-(\d+)-(\d+)", t.name)
                 i = int(m.group(2))
-                t._name = self._parameters[i].name
+                t._name = self.parameters[i].name
                 t.details._name = t.name
 
         if self._specialisation_values:

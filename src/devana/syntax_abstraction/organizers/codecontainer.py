@@ -71,13 +71,13 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
     def allowed_namespaces(self) -> List:
         """List of all other allowed namespaces in container without Name:: prefix given by using namespace."""
         if self.lexicon is not None:
-            return self.lexicon.allowed_namespaces
+            return self.lexicon.allowed_namespaces # noqa
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
         allowed = []
         for c in self.content:
             if isinstance(c, UsingNamespace):
                 if c.namespace is not None:
-                    allowed += c.namespace.allowed_namespaces
+                    allowed += c.namespace.allowed_namespaces # noqa
         if self.namespace is not None:
             allowed.append(self)
         return allowed
