@@ -183,7 +183,7 @@ class TestClassBasic(unittest.TestCase):
     def test_class_operators(self):
         node = find_by_name(self.cursor, "ClassOperators")
         result = ClassInfo.from_cursor(node)
-        self.assertEqual(len(result.content), 45)
+        self.assertEqual(len(result.content), 46)
         for op in result.content:
             self.assertTrue(op.type.is_operator, f"{op}")
 

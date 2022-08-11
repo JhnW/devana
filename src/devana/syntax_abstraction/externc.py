@@ -53,12 +53,6 @@ class ExternC(CodeContainer):
     def lexicon(self, value):
         self._lexicon = value
 
-    def _create_content(self) -> List[any]:
-        types = [FunctionInfo]
-        content = []
-        for children in self._cursor.get_children():
-            for t in types:
-                el = t(children, self)
-                content.append(el)
-                break
-        return content
+    @property
+    def _content_types(self) -> List:
+        return [FunctionInfo]

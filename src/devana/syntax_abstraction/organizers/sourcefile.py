@@ -1,9 +1,9 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.configuration import Configuration
+from devana.configuration import Configuration, ParsingErrorPolicy
+from devana.utility.errors import ParserError
 from pathlib import Path
 from clang import cindex
 from typing import Optional, Union, Literal, List, NoReturn
@@ -288,7 +288,7 @@ class SourceFile(CodeContainer):
                 continue
             def_name = match.group(1)
             if line_fist_content > i:
-                match = re.match(r"^#define\s(\S+)", lines[i+1])
+                match = re.match(r"^#define\s(\S+)", lines[i + 1])
                 if not match:
                     return self._header_guard
                 if len(match.group()) < 1:
@@ -328,7 +328,8 @@ class SourceFile(CodeContainer):
             return None
         return self._comments_factory.get_upper_comment(element.text_source)
 
-    def _create_content(self) -> List[any]:
+    @property
+    def _content_types(self) -> List:
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.functioninfo import FunctionInfo
@@ -341,17 +342,45 @@ class SourceFile(CodeContainer):
         from devana.syntax_abstraction.using import Using
         types = [ClassInfo, UnionInfo, FunctionInfo, EnumInfo, TypedefInfo, NamespaceInfo, UsingNamespace,
                  MethodInfo, GlobalVariable, ExternC, Using]
+        return types
+
+    def _create_content(self) -> List[any]:
+        """Overwrite this method to filter witch content should be parsed inside class."""
+        types = self._content_types
         content = []
+        config = Configuration.get_configuration(self)
+        is_abort_on_error = config.parsing.error_strategy == ParsingErrorPolicy.ABORT
+        is_ignore_on_error = config.parsing.error_strategy == ParsingErrorPolicy.IGNORE
         for children in self._cursor.get_children():
             if Path(children.location.file.name) != self.path:
                 continue
+            element: Optional = None
             for t in types:
                 try:
-                    el = t(children, self)
+                    element = t.from_cursor(children, self)
+                    if element is None:
+                        continue
+                    else:
+                        break
                 except ParserError:
+                    if is_ignore_on_error:
+                        continue
+                    if is_abort_on_error:
+                        raise
+                    config.logger.warning(f"Parser error during create content of {self} in type {t} "
+                                          f"for cursor {children.spelling}.")
                     continue
-                content.append(el)
-                break
+            if element is None:
+                if children.kind == cindex.CursorKind.CLASS_TEMPLATE \
+                        or children.kind == cindex.CursorKind.CLASS_TEMPLATE.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+                    continue  # ignore templates error for special dragon case
+                if is_ignore_on_error:
+                    continue
+                if is_abort_on_error:
+                    raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                continue
+            content.append(element)
         return content
 
     def __repr__(self):

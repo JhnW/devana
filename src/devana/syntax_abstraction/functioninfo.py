@@ -78,7 +78,7 @@ class FunctionModification(IntFlag):
         return self.value & self.VOLATILE
 
 
-class FunctionInfo(IBasicCreatable):
+class FunctionInfo(IBasicCreatable, ICursorValidate):
     """Representative of function definition or declaration."""
 
     class Argument(Variable, ICursorValidate):
@@ -111,7 +111,9 @@ class FunctionInfo(IBasicCreatable):
             self._namespaces = None
             self._associated_comment = None
         else:
-            self._check_kind(cursor.kind)
+            if not self.is_cursor_valid(cursor):
+                msg = f"It is not a valid type cursor: {cursor.kind}."
+                raise ParserError(msg)
             self._arguments = LazyNotInit
             self._name = LazyNotInit
             self._return_type = LazyNotInit
@@ -129,9 +131,15 @@ class FunctionInfo(IBasicCreatable):
         result = cls(None, parent)
         return result
 
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.FUNCTION_DECL or cursor.kind == cindex.CursorKind.FUNCTION_TEMPLATE
+
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
-        return cls(cursor, parent)
+        if cls.is_cursor_valid(cursor):
+            return cls(cursor, parent)
+        return None
 
     @property
     @lazy_invoke
@@ -380,10 +388,6 @@ class FunctionInfo(IBasicCreatable):
     @associated_comment.setter
     def associated_comment(self, value):
         self._associated_comment = value
-
-    def _check_kind(self, kind: cindex.Cursor.kind):
-        if kind != cindex.CursorKind.FUNCTION_DECL and kind != cindex.CursorKind.FUNCTION_TEMPLATE:
-            raise ParserError(f"It is not a valid type cursor: {kind}.")
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

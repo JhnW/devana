@@ -103,8 +103,8 @@ class Configuration(IValidateConfig):
     parsing: ParsingConfiguration = field(default_factory=lambda: ParsingConfiguration())
     """Configuring the parsing of C ++ files, this is how the C ++ code will be transformed 
     into the appropriate python classes instances."""
-    logger = logging
-    """Currently not used. May be removed / moved elsewhere in future revisions without warning."""
+    logger: logging = field(default_factory=lambda: Configuration._create_default_logger())
+    """Currently used standard logger instance."""
 
     def validate(self):
         self.parsing.validate()
@@ -117,3 +117,10 @@ class Configuration(IValidateConfig):
             if not hasattr(this, "parent"):
                 return Configuration()
             this = this.parent
+
+    @staticmethod
+    def _create_default_logger():
+        logger = logging.getLogger("devana")
+        logger.addHandler(logging.StreamHandler())
+        logger.setLevel(logging.WARNING)
+        return logger

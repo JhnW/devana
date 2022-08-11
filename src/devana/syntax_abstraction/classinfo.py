@@ -7,8 +7,9 @@ from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.comment import Comment
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
+from devana.configuration import Configuration, ParsingErrorPolicy
+from devana.utility.errors import ParserError
 from typing import Optional, List, Tuple, cast
 from enum import Enum, auto
 from clang import cindex
@@ -193,9 +194,11 @@ class MethodInfo(FunctionInfo, ClassMember):
     def type(self, value):
         self._type = value
 
-    def _check_kind(self, kind: cindex.Cursor):
-        if kind != cindex.CursorKind.CXX_METHOD and kind != cindex.CursorKind.FUNCTION_TEMPLATE:
-            raise ParserError(f"It is not a valid type cursor.")
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.CXX_METHOD \
+               or cursor.kind == cindex.CursorKind.FUNCTION_TEMPLATE \
+               or cursor.kind == cindex.CursorKind.CONVERSION_FUNCTION
 
     @property
     @lazy_invoke
@@ -322,9 +325,9 @@ class ConstructorInfo(MethodInfo):
     def name(self, value):
         self._name = value
 
-    def _check_kind(self, kind: cindex.Cursor):
-        if kind != cindex.CursorKind.CONSTRUCTOR:
-            raise ParserError(f"It is not a valid type cursor: {kind}.")
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.CONSTRUCTOR
 
     @property
     def return_type(self) -> None:
@@ -367,9 +370,9 @@ class DestructorInfo(MethodInfo):
     def type(self) -> MethodType:
         return MethodType.DESTRUCTOR
 
-    def _check_kind(self, kind: cindex.Cursor):
-        if kind != cindex.CursorKind.DESTRUCTOR:
-            raise ParserError(f"It is not a valid type cursor: {kind}.")
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.DESTRUCTOR
 
 
 class FieldInfo(Variable, ClassMember, ICursorValidate):
@@ -389,6 +392,16 @@ class FieldInfo(Variable, ClassMember, ICursorValidate):
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
         return cursor.kind == cindex.CursorKind.FIELD_DECL or cursor.kind == cindex.CursorKind.VAR_DECL
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> any:
+        return cls(None, parent)
+
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        if cls.is_cursor_valid(cursor):
+            return cls(cursor, parent)
+        return None
 
     @property
     @lazy_invoke
@@ -729,7 +742,10 @@ class ClassInfo(CodeContainer):
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
         if not cls.is_cursor_valid(cursor):
             return None
-        return cls(cursor, parent)
+        try:
+            return cls(cursor, parent)
+        except ParserError:
+            return None
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
@@ -971,23 +987,52 @@ class ClassInfo(CodeContainer):
     def associated_comment(self, value):
         self._associated_comment = value
 
-    def _create_content(self) -> List[any]:
+    @property
+    def _content_types(self) -> List:
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.enuminfo import EnumInfo
         from devana.syntax_abstraction.using import Using
         types = [SectionInfo, ClassInfo, FieldInfo, ConstructorInfo, DestructorInfo, MethodInfo, EnumInfo, UnionInfo,
                  Using]
+        return types
+
+    def _create_content(self) -> List[any]:
+        types = self._content_types
         content = []
+        config = Configuration.get_configuration(self)
+        is_abort_on_error = config.parsing.error_strategy == ParsingErrorPolicy.ABORT
+        is_ignore_on_error = config.parsing.error_strategy == ParsingErrorPolicy.IGNORE
         for children in self._cursor.get_children():
-            if children.kind == cindex.CursorKind.CXX_FINAL_ATTR:
-                continue
+            if children.kind == cindex.CursorKind.CXX_FINAL_ATTR \
+                    or children.kind == cindex.CursorKind.TEMPLATE_TYPE_PARAMETER \
+                    or children.kind == cindex.CursorKind.CXX_BASE_SPECIFIER \
+                    or children.kind == cindex.CursorKind.NAMESPACE_REF \
+                    or children.kind == cindex.CursorKind.TYPE_REF:
+                continue  # to avoid parsing keywords in class declaration - final and templates params
+            element: Optional = None
             for t in types:
                 try:
-                    el = t(children, self)
+                    element = t.from_cursor(children, self)
+                    if element is None:
+                        continue
+                    else:
+                        break
                 except ParserError:
+                    if is_ignore_on_error:
+                        continue
+                    if is_abort_on_error:
+                        raise
+                    config.logger.warning(f"Parser error during create content of {self} in type {t} "
+                                          f"for cursor {children.spelling}.")
                     continue
-                content.append(el)
-                break
+            if element is None:
+                if is_ignore_on_error:
+                    continue
+                if is_abort_on_error:
+                    raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                continue
+            content.append(element)
         return content
 
     def __repr__(self):

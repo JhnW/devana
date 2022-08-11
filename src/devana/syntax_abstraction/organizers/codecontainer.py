@@ -1,9 +1,11 @@
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-from abc import ABC
+from abc import ABC, abstractmethod
 from clang import cindex
 from typing import Optional, List
+from devana.configuration import Configuration, ParsingErrorPolicy
+from devana.utility.errors import ParserError
 
 
 class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
@@ -88,16 +90,42 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         self._text_source = CodePiece(self._cursor)
         return self._text_source
 
+    @property
+    @abstractmethod
+    def _content_types(self) -> List:
+        """Overwrite this method to feed _create_content with a list of types."""
+        pass
+
     def _create_content(self) -> List[any]:
         """Overwrite this method to filter witch content should be parsed inside class."""
-        types = []
+        types = self._content_types
         content = []
+        config = Configuration.get_configuration(self)
+        is_abort_on_error = config.parsing.error_strategy == ParsingErrorPolicy.ABORT
+        is_ignore_on_error = config.parsing.error_strategy == ParsingErrorPolicy.IGNORE
         for children in self._cursor.get_children():
+            element: Optional = None
             for t in types:
                 try:
-                    el = t(children, self)
-                except ValueError:
+                    element = t.from_cursor(children, self)
+                    if element is None:
+                        continue
+                    else:
+                        break
+                except ParserError:
+                    if is_ignore_on_error:
+                        continue
+                    if is_abort_on_error:
+                        raise
+                    config.logger.warning(f"Parser error during create content of {self} in type {t} "
+                                          f"for cursor {children.spelling}.")
                     continue
-                content.append(el)
-                break
+            if element is None:
+                if is_ignore_on_error:
+                    continue
+                if is_abort_on_error:
+                    raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                continue
+            content.append(element)
         return content

@@ -277,18 +277,9 @@ class EnumInfo(CodeContainer):
     def associated_comment(self, value):
         self._associated_comment = value
 
-    def _create_content(self) -> List[any]:
-        types = [self.EnumValue]
-        content = []
-        for children in self._cursor.get_children():
-            for t in types:
-                try:
-                    el = t(children, self)
-                except ValueError:
-                    continue
-                content.append(el)
-                break
-        return content
+    @property
+    def _content_types(self) -> List:
+        return [self.EnumValue]
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

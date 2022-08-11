@@ -71,7 +71,8 @@ class NamespaceInfo(CodeContainer):
     def associated_comment(self, value):
         self._associated_comment = value
 
-    def _create_content(self) -> List[any]:
+    @property
+    def _content_types(self) -> List:
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
         from devana.syntax_abstraction.using import Using
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
@@ -82,16 +83,7 @@ class NamespaceInfo(CodeContainer):
         from devana.syntax_abstraction.externc import ExternC
         types = [FunctionInfo, NamespaceInfo, UsingNamespace, ClassInfo, EnumInfo, TypedefInfo, MethodInfo, UnionInfo,
                  GlobalVariable, ExternC, Using]
-        content = []
-        for children in self._cursor.get_children():
-            for t in types:
-                try:
-                    el = t(children, self)
-                except ValueError:
-                    continue
-                content.append(el)
-                break
-        return content
+        return types
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
