@@ -19,15 +19,12 @@ language features to ensure that valid exceptions are thrown.
 
 * **Parsing types and types traits**
     * External types parsing: *medium priority*
-    * Better pointers parsing: *low priority*
 
 * **Other code**
-    * Using directive: *medium priority*
     * Auto keyword: *extreme low priority*
     * Decltype: *extreme low priority*
     * Function declaration as trailing-return-type: *extreme low priority*
     * Noexcept and throw function declaration: *medium priority*
-    * Final class attribute: *extreme low priority*
     * C++ standard attributes: *medium priority*
     * GCC attributes: *medium priority*
     * Except destructor: *extreme low priority*
@@ -37,10 +34,7 @@ language features to ensure that valid exceptions are thrown.
 * **Other**
     * Includes list as an alternative to relative paths: *low priority*
     * Prevent re-parsing unchanged files: *low priority*
-    * Better exceptions: *medium priority*
-    * Reducing memory usage: *medium priority*
-    * Split syntax abstraction element representation from parsing: *low priority*
-    * Create consistent abstract classes interface to syntax abstraction: *medium priority*
+    * Reducing memory usage: *high priority*
 
 Code generator
 --------------
@@ -51,12 +45,11 @@ and to make it easy to generate implementations (as text based). Code generation
 Each element present in the parser module should be available for editing and creation for generation purposes.
 
 * **Code generator**
-    * High level code generation rules as framework: *low priority*
+    * High level code generation rules as framework: *medium priority*
     * Low level code generation rules as  in code directives: *medium priority*
     * Context aware preprocessor: *high priority*
-    * Better way to create and modify source code (builder pattern etc.): *low priority*
-    * Possibility to verify the correctness of manually created code: *medium priority*
-    * New example/tutorial: *high priority*
+    * Possibility to verify the correctness of manually created code: *low priority*
+    * New example/tutorial: *medium priority*
     * Lexicon automatic update for code generation: *medium priority*
 
 Utility
