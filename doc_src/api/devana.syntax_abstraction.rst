@@ -66,6 +66,14 @@ devana.syntax\_abstraction.functioninfo
    :undoc-members:
    :show-inheritance:
 
+devana.syntax\_abstraction.functiontype
+---------------------------------------
+
+.. automodule:: devana.syntax_abstraction.functiontype
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.namespaceinfo
 ----------------------------------------
 
@@ -102,6 +110,14 @@ devana.syntax\_abstraction.unioninfo
 ------------------------------------
 
 .. automodule:: devana.syntax_abstraction.unioninfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.syntax\_abstraction.using
+--------------------------------
+
+.. automodule:: devana.syntax_abstraction.using
    :members:
    :undoc-members:
    :show-inheritance:

@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.default.templateparameterprinter &mdash; devana 1.0.0 documentation</title>
+  <title>devana.code_generation.printers.default.functiontypeprinter &mdash; devana 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/templateparameterprinter.html" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/functiontypeprinter.html" />
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -64,7 +64,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../../index.html">Module code</a> &raquo;</li>
-      <li>devana.code_generation.printers.default.templateparameterprinter</li>
+      <li>devana.code_generation.printers.default.functiontypeprinter</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -73,22 +73,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for devana.code_generation.printers.default.templateparameterprinter</h1><div class="highlight"><pre>
+  <h1>Source code for devana.code_generation.printers.default.functiontypeprinter</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">devana.code_generation.printers.icodeprinter</span> <span class="kn">import</span> <span class="n">ICodePrinter</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">TemplateInfo</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.dispatcherinjectable</span> <span class="kn">import</span> <span class="n">DispatcherInjectable</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.printers.configuration</span> <span class="kn">import</span> <span class="n">PrinterConfiguration</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functiontype</span> <span class="kn">import</span> <span class="n">FunctionType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 
-<div class="viewcode-block" id="TemplateParameterPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.templateparameterprinter.TemplateParameterPrinter">[docs]</a><span class="k">class</span> <span class="nc">TemplateParameterPrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
+<div class="viewcode-block" id="FunctionTypePrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functiontypeprinter.FunctionTypePrinter">[docs]</a><span class="k">class</span> <span class="nc">FunctionTypePrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
 
-<div class="viewcode-block" id="TemplateParameterPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.templateparameterprinter.TemplateParameterPrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">TemplateInfo</span><span class="o">.</span><span class="n">TemplateParameter</span><span class="p">,</span> <span class="n">_1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-
-        <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">specifier</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">is_variadic</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">...&quot;</span>
-        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">default_value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">default_value</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">text</span></div></div>
+<div class="viewcode-block" id="FunctionTypePrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functiontypeprinter.FunctionTypePrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">FunctionType</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">_</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">name</span></div></div>
 </pre></div>
 
            </div>

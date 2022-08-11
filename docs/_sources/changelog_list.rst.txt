@@ -2,6 +2,59 @@ Changelog
 =========
 
 
+v1.0.0 (2022-08-11)
+-------------------
+
+New
+~~~
+- Add prefix for functions and class. [JhnW]
+
+  Code generation may use it for print compiler attribiutes
+- Parsing error policy in conent level. [JhnW]
+
+  For now devana can use restricted mode or only log parsing errors.
+- Configurable version of the language standard. [JhnW]
+- Basic __rep__ implementation for syntax types. [JhnW]
+
+  From now on, using Devan in interactive mode should be much more convenient. Quality of life change.
+- New high-level API for creating objects. [JhnW]
+
+  From now on, classes representing code elements implement interfaces that define a unified way of creating their instances. Except in a few cases, you don't need to use constructors directly, instead you can call from_cursor, create_default, and is_cursor_valid.
+- Using syntax - printer and parser support. [JhnW]
+
+  For now only using UsingName = Type is supported as type alias. No using without "=" in all cases.
+- Function pointer - printing support. [JhnW]
+- Function pointer - parsing support. [JhnW]
+- Static Array type - printing support. [JhnW]
+- Static array type-  parsing support. [JhnW]
+
+  From now on, devana understands int a [16] [32].
+
+Changes
+~~~~~~~
+- Update roadmap. [JhnW]
+
+  Removal of ready-made points, adding new ones, changing priorities to reflect my current plans
+
+Fix
+~~~
+- Fix printing fuction body from parsed information. [JhnW]
+
+  Old printing function may print double bracket
+- Add section printer to default printers. [JhnW]
+- Add missing default printer for class sections. [JhnW]
+- Remove redudant module. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Pkg: chg: Upgrade MacOS CI environment. [JhnW]
+- Revert "pkg: chg: Add Python 3.10 tests to build flow" [JhnW]
+
+  This reverts commit de143576b236b4bf63eb2cacdb55f4892448e077.
+- Pkg: chg: Add Python 3.10 tests to build flow. [JhnW]
+
+
 v0.3.0 (2022-04-16)
 -------------------
 

@@ -27,6 +27,14 @@ devana.utility.lazy
    :undoc-members:
    :show-inheritance:
 
+devana.utility.traits
+---------------------
+
+.. automodule:: devana.utility.traits
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 
 

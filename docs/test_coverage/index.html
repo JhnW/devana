@@ -5,445 +5,497 @@
     <title>Coverage report</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.ba-throttle-debounce.min.js"></script>
-    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
-    <script type="text/javascript" src="jquery.hotkeys.js"></script>
-    <script type="text/javascript" src="coverage_html.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(coverage.index_ready);
-    </script>
+    <script type="text/javascript" src="coverage_html.js" defer></script>
 </head>
 <body class="indexfile">
-<div id="header">
+<header>
     <div class="content">
         <h1>Coverage report:
-            <span class="pc_cov">88%</span>
+            <span class="pc_cov">86%</span>
         </h1>
-        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+        <aside id="help_panel_wrapper">
+            <input id="help_panel_state" type="checkbox">
+            <label for="help_panel_state">
+                <img id="keyboard_icon" src="keybd_closed.png" alt="Show/hide keyboard shortcuts" />
+            </label>
+            <div id="help_panel">
+                <p class="legend">Shortcuts on this page</p>
+                <div class="keyhelp">
+                    <p>
+                        <kbd>n</kbd>
+                        <kbd>s</kbd>
+                        <kbd>m</kbd>
+                        <kbd>x</kbd>
+                        <kbd>c</kbd>
+                        &nbsp; change column sorting
+                    </p>
+                    <p>
+                        <kbd>[</kbd>
+                        <kbd>]</kbd>
+                        &nbsp; prev/next file
+                    </p>
+                    <p>
+                        <kbd>?</kbd> &nbsp; show/hide this help
+                    </p>
+                </div>
+            </div>
+        </aside>
         <form id="filter_container">
             <input id="filter" type="text" value="" placeholder="filter..." />
         </form>
+        <p class="text">
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.4.2</a>,
+            created at 2022-08-11 21:19 +0000
+        </p>
     </div>
-</div>
-<div class="help_panel">
-    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
-    <p class="legend">Hot-keys on this page</p>
-    <div>
-    <p class="keyhelp">
-        <span class="key">n</span>
-        <span class="key">s</span>
-        <span class="key">m</span>
-        <span class="key">x</span>
-        <span class="key">c</span> &nbsp; change column sorting
-    </p>
-    </div>
-</div>
-<div id="index">
-    <table class="index">
+</header>
+<main id="index">
+    <table class="index" data-sortable>
         <thead>
             <tr class="tablehead" title="Click to sort">
-                <th class="name left headerSortDown shortkey_n">Module</th>
-                <th class="shortkey_s">statements</th>
-                <th class="shortkey_m">missing</th>
-                <th class="shortkey_x">excluded</th>
-                <th class="right shortkey_c">coverage</th>
+                <th class="name left" aria-sort="none" data-shortcut="n">Module</th>
+                <th aria-sort="none" data-default-sort-order="descending" data-shortcut="s">statements</th>
+                <th aria-sort="none" data-default-sort-order="descending" data-shortcut="m">missing</th>
+                <th aria-sort="none" data-default-sort-order="descending" data-shortcut="x">excluded</th>
+                <th class="right" aria-sort="none" data-shortcut="c">coverage</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr class="total">
-                <td class="name left">Total</td>
-                <td>4230</td>
-                <td>509</td>
-                <td>0</td>
-                <td class="right" data-ratio="3721 4230">88%</td>
-            </tr>
-        </tfoot>
         <tbody>
             <tr class="file">
-                <td class="name left"><a href="src_devana___init___py.html">src/devana/__init__.py</a></td>
+                <td class="name left"><a href="d_2343fbdb94ac7fc7___init___py.html">src/devana/__init__.py</a></td>
                 <td>2</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="2 2">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana__version_py.html">src/devana/_version.py</a></td>
+                <td class="name left"><a href="d_2343fbdb94ac7fc7__version_py.html">src/devana/_version.py</a></td>
                 <td>5</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="5 5">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation___init___py.html">src/devana/code_generation/__init__.py</a></td>
+                <td class="name left"><a href="d_4e21c6759801f078___init___py.html">src/devana/code_generation/__init__.py</a></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="0 0">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers___init___py.html">src/devana/code_generation/printers/__init__.py</a></td>
+                <td class="name left"><a href="d_656bac817cb07300___init___py.html">src/devana/code_generation/printers/__init__.py</a></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="0 0">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_codeprinter_py.html">src/devana/code_generation/printers/codeprinter.py</a></td>
+                <td class="name left"><a href="d_656bac817cb07300_codeprinter_py.html">src/devana/code_generation/printers/codeprinter.py</a></td>
                 <td>68</td>
                 <td>13</td>
                 <td>0</td>
                 <td class="right" data-ratio="55 68">81%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_configuration_py.html">src/devana/code_generation/printers/configuration.py</a></td>
+                <td class="name left"><a href="d_656bac817cb07300_configuration_py.html">src/devana/code_generation/printers/configuration.py</a></td>
                 <td>79</td>
                 <td>28</td>
                 <td>0</td>
                 <td class="right" data-ratio="51 79">65%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default___init___py.html">src/devana/code_generation/printers/default/__init__.py</a></td>
-                <td>16</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d___init___py.html">src/devana/code_generation/printers/default/__init__.py</a></td>
+                <td>19</td>
                 <td>0</td>
                 <td>0</td>
-                <td class="right" data-ratio="16 16">100%</td>
+                <td class="right" data-ratio="19 19">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_basictypeprinter_py.html">src/devana/code_generation/printers/default/basictypeprinter.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_basictypeprinter_py.html">src/devana/code_generation/printers/default/basictypeprinter.py</a></td>
                 <td>6</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="6 6">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_classprinter_py.html">src/devana/code_generation/printers/default/classprinter.py</a></td>
-                <td>164</td>
-                <td>20</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_classprinter_py.html">src/devana/code_generation/printers/default/classprinter.py</a></td>
+                <td>175</td>
+                <td>23</td>
                 <td>0</td>
-                <td class="right" data-ratio="144 164">88%</td>
+                <td class="right" data-ratio="152 175">87%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_commentprinter_py.html">src/devana/code_generation/printers/default/commentprinter.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_commentprinter_py.html">src/devana/code_generation/printers/default/commentprinter.py</a></td>
                 <td>31</td>
                 <td>3</td>
                 <td>0</td>
                 <td class="right" data-ratio="28 31">90%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_defaultprinter_py.html">src/devana/code_generation/printers/default/defaultprinter.py</a></td>
-                <td>60</td>
-                <td>60</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_defaultprinter_py.html">src/devana/code_generation/printers/default/defaultprinter.py</a></td>
+                <td>68</td>
+                <td>68</td>
                 <td>0</td>
-                <td class="right" data-ratio="0 60">0%</td>
+                <td class="right" data-ratio="0 68">0%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_enumprinter_py.html">src/devana/code_generation/printers/default/enumprinter.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_enumprinter_py.html">src/devana/code_generation/printers/default/enumprinter.py</a></td>
                 <td>45</td>
                 <td>5</td>
                 <td>0</td>
                 <td class="right" data-ratio="40 45">89%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_externcprinter_py.html">src/devana/code_generation/printers/default/externcprinter.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_externcprinter_py.html">src/devana/code_generation/printers/default/externcprinter.py</a></td>
                 <td>22</td>
                 <td>1</td>
                 <td>0</td>
                 <td class="right" data-ratio="21 22">95%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_fileprinter_py.html">src/devana/code_generation/printers/default/fileprinter.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_fileprinter_py.html">src/devana/code_generation/printers/default/fileprinter.py</a></td>
                 <td>42</td>
                 <td>2</td>
                 <td>0</td>
                 <td class="right" data-ratio="40 42">95%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_functionprinter_py.html">src/devana/code_generation/printers/default/functionprinter.py</a></td>
-                <td>96</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_functionprinter_py.html">src/devana/code_generation/printers/default/functionprinter.py</a></td>
+                <td>106</td>
                 <td>11</td>
                 <td>0</td>
-                <td class="right" data-ratio="85 96">89%</td>
+                <td class="right" data-ratio="95 106">90%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_namespaceprinter_py.html">src/devana/code_generation/printers/default/namespaceprinter.py</a></td>
-                <td>22</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="21 22">95%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_stubtypeprinter_py.html">src/devana/code_generation/printers/default/stubtypeprinter.py</a></td>
-                <td>6</td>
-                <td>0</td>
-                <td>0</td>
-                <td class="right" data-ratio="6 6">100%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_templateparameterprinter_py.html">src/devana/code_generation/printers/default/templateparameterprinter.py</a></td>
-                <td>11</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="10 11">91%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_typedefprinter_py.html">src/devana/code_generation/printers/default/typedefprinter.py</a></td>
-                <td>20</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="19 20">95%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_typeexpressionprinter_py.html">src/devana/code_generation/printers/default/typeexpressionprinter.py</a></td>
-                <td>47</td>
-                <td>0</td>
-                <td>0</td>
-                <td class="right" data-ratio="47 47">100%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_unionprinter_py.html">src/devana/code_generation/printers/default/unionprinter.py</a></td>
-                <td>30</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="29 30">97%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_usingnamespaceprinter_py.html">src/devana/code_generation/printers/default/usingnamespaceprinter.py</a></td>
-                <td>16</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="15 16">94%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_utilityprinters_py.html">src/devana/code_generation/printers/default/utilityprinters.py</a></td>
-                <td>13</td>
-                <td>4</td>
-                <td>0</td>
-                <td class="right" data-ratio="9 13">69%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_default_variableprinter_py.html">src/devana/code_generation/printers/default/variableprinter.py</a></td>
-                <td>26</td>
-                <td>1</td>
-                <td>0</td>
-                <td class="right" data-ratio="25 26">96%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_dispatcherinjectable_py.html">src/devana/code_generation/printers/dispatcherinjectable.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_functiontypeprinter_py.html">src/devana/code_generation/printers/default/functiontypeprinter.py</a></td>
                 <td>8</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="8 8">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_formatter_py.html">src/devana/code_generation/printers/formatter.py</a></td>
-                <td>29</td>
-                <td>2</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_namespaceprinter_py.html">src/devana/code_generation/printers/default/namespaceprinter.py</a></td>
+                <td>22</td>
+                <td>1</td>
                 <td>0</td>
-                <td class="right" data-ratio="27 29">93%</td>
+                <td class="right" data-ratio="21 22">95%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_printers_icodeprinter_py.html">src/devana/code_generation/printers/icodeprinter.py</a></td>
-                <td>10</td>
-                <td>2</td>
-                <td>0</td>
-                <td class="right" data-ratio="8 10">80%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_code_generation_stubtype_py.html">src/devana/code_generation/stubtype.py</a></td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_stubtypeprinter_py.html">src/devana/code_generation/printers/default/stubtypeprinter.py</a></td>
                 <td>6</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="6 6">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_configuration_py.html">src/devana/configuration.py</a></td>
-                <td>43</td>
+                <td class="name left"><a href="d_b81a7a0837f9126d_templateparameterprinter_py.html">src/devana/code_generation/printers/default/templateparameterprinter.py</a></td>
+                <td>11</td>
+                <td>1</td>
+                <td>0</td>
+                <td class="right" data-ratio="10 11">91%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_typedefprinter_py.html">src/devana/code_generation/printers/default/typedefprinter.py</a></td>
+                <td>25</td>
+                <td>2</td>
+                <td>0</td>
+                <td class="right" data-ratio="23 25">92%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_typeexpressionprinter_py.html">src/devana/code_generation/printers/default/typeexpressionprinter.py</a></td>
+                <td>81</td>
+                <td>13</td>
+                <td>0</td>
+                <td class="right" data-ratio="68 81">84%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_unionprinter_py.html">src/devana/code_generation/printers/default/unionprinter.py</a></td>
+                <td>30</td>
+                <td>1</td>
+                <td>0</td>
+                <td class="right" data-ratio="29 30">97%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_usingnamespaceprinter_py.html">src/devana/code_generation/printers/default/usingnamespaceprinter.py</a></td>
+                <td>16</td>
+                <td>1</td>
+                <td>0</td>
+                <td class="right" data-ratio="15 16">94%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_usingprinter_py.html">src/devana/code_generation/printers/default/usingprinter.py</a></td>
+                <td>20</td>
+                <td>3</td>
+                <td>0</td>
+                <td class="right" data-ratio="17 20">85%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_utilityprinters_py.html">src/devana/code_generation/printers/default/utilityprinters.py</a></td>
+                <td>13</td>
+                <td>4</td>
+                <td>0</td>
+                <td class="right" data-ratio="9 13">69%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_b81a7a0837f9126d_variableprinter_py.html">src/devana/code_generation/printers/default/variableprinter.py</a></td>
+                <td>89</td>
+                <td>27</td>
+                <td>0</td>
+                <td class="right" data-ratio="62 89">70%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_656bac817cb07300_dispatcherinjectable_py.html">src/devana/code_generation/printers/dispatcherinjectable.py</a></td>
                 <td>8</td>
                 <td>0</td>
-                <td class="right" data-ratio="35 43">81%</td>
+                <td>0</td>
+                <td class="right" data-ratio="8 8">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction___init___py.html">src/devana/syntax_abstraction/__init__.py</a></td>
-                <td>14</td>
+                <td class="name left"><a href="d_656bac817cb07300_formatter_py.html">src/devana/code_generation/printers/formatter.py</a></td>
+                <td>29</td>
+                <td>2</td>
                 <td>0</td>
-                <td>0</td>
-                <td class="right" data-ratio="14 14">100%</td>
+                <td class="right" data-ratio="27 29">93%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_classinfo_py.html">src/devana/syntax_abstraction/classinfo.py</a></td>
-                <td>659</td>
-                <td>48</td>
+                <td class="name left"><a href="d_656bac817cb07300_icodeprinter_py.html">src/devana/code_generation/printers/icodeprinter.py</a></td>
+                <td>10</td>
+                <td>2</td>
                 <td>0</td>
-                <td class="right" data-ratio="611 659">93%</td>
+                <td class="right" data-ratio="8 10">80%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_codelocation_py.html">src/devana/syntax_abstraction/codelocation.py</a></td>
+                <td class="name left"><a href="d_4e21c6759801f078_stubtype_py.html">src/devana/code_generation/stubtype.py</a></td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="6 6">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_2343fbdb94ac7fc7_configuration_py.html">src/devana/configuration.py</a></td>
+                <td>77</td>
+                <td>4</td>
+                <td>0</td>
+                <td class="right" data-ratio="73 77">95%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6___init___py.html">src/devana/syntax_abstraction/__init__.py</a></td>
+                <td>16</td>
+                <td>0</td>
+                <td>0</td>
+                <td class="right" data-ratio="16 16">100%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6_classinfo_py.html">src/devana/syntax_abstraction/classinfo.py</a></td>
+                <td>756</td>
+                <td>72</td>
+                <td>0</td>
+                <td class="right" data-ratio="684 756">90%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6_codelocation_py.html">src/devana/syntax_abstraction/codelocation.py</a></td>
                 <td>12</td>
                 <td>1</td>
                 <td>0</td>
                 <td class="right" data-ratio="11 12">92%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_codepiece_py.html">src/devana/syntax_abstraction/codepiece.py</a></td>
+                <td class="name left"><a href="d_a56072abec3909d6_codepiece_py.html">src/devana/syntax_abstraction/codepiece.py</a></td>
                 <td>100</td>
                 <td>25</td>
                 <td>0</td>
                 <td class="right" data-ratio="75 100">75%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_comment_py.html">src/devana/syntax_abstraction/comment.py</a></td>
+                <td class="name left"><a href="d_a56072abec3909d6_comment_py.html">src/devana/syntax_abstraction/comment.py</a></td>
                 <td>177</td>
                 <td>20</td>
                 <td>0</td>
                 <td class="right" data-ratio="157 177">89%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_enuminfo_py.html">src/devana/syntax_abstraction/enuminfo.py</a></td>
-                <td>212</td>
-                <td>21</td>
+                <td class="name left"><a href="d_a56072abec3909d6_enuminfo_py.html">src/devana/syntax_abstraction/enuminfo.py</a></td>
+                <td>223</td>
+                <td>25</td>
                 <td>0</td>
-                <td class="right" data-ratio="191 212">90%</td>
+                <td class="right" data-ratio="198 223">89%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_externc_py.html">src/devana/syntax_abstraction/externc.py</a></td>
-                <td>44</td>
-                <td>6</td>
+                <td class="name left"><a href="d_a56072abec3909d6_externc_py.html">src/devana/syntax_abstraction/externc.py</a></td>
+                <td>48</td>
+                <td>9</td>
                 <td>0</td>
-                <td class="right" data-ratio="38 44">86%</td>
+                <td class="right" data-ratio="39 48">81%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_functioninfo_py.html">src/devana/syntax_abstraction/functioninfo.py</a></td>
-                <td>304</td>
-                <td>11</td>
+                <td class="name left"><a href="d_a56072abec3909d6_functioninfo_py.html">src/devana/syntax_abstraction/functioninfo.py</a></td>
+                <td>316</td>
+                <td>13</td>
                 <td>0</td>
-                <td class="right" data-ratio="293 304">96%</td>
+                <td class="right" data-ratio="303 316">96%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_namespaceinfo_py.html">src/devana/syntax_abstraction/namespaceinfo.py</a></td>
-                <td>72</td>
-                <td>3</td>
+                <td class="name left"><a href="d_a56072abec3909d6_functiontype_py.html">src/devana/syntax_abstraction/functiontype.py</a></td>
+                <td>74</td>
+                <td>5</td>
                 <td>0</td>
-                <td class="right" data-ratio="69 72">96%</td>
+                <td class="right" data-ratio="69 74">93%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_organizers___init___py.html">src/devana/syntax_abstraction/organizers/__init__.py</a></td>
+                <td class="name left"><a href="d_a56072abec3909d6_namespaceinfo_py.html">src/devana/syntax_abstraction/namespaceinfo.py</a></td>
+                <td>70</td>
+                <td>5</td>
+                <td>0</td>
+                <td class="right" data-ratio="65 70">93%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_f686a1d637041bad___init___py.html">src/devana/syntax_abstraction/organizers/__init__.py</a></td>
                 <td>4</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="4 4">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_codecontainer_py.html">src/devana/syntax_abstraction/organizers/codecontainer.py</a></td>
-                <td>70</td>
-                <td>23</td>
+                <td class="name left"><a href="d_f686a1d637041bad_codecontainer_py.html">src/devana/syntax_abstraction/organizers/codecontainer.py</a></td>
+                <td>104</td>
+                <td>26</td>
                 <td>0</td>
-                <td class="right" data-ratio="47 70">67%</td>
+                <td class="right" data-ratio="78 104">75%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_lexicon_py.html">src/devana/syntax_abstraction/organizers/lexicon.py</a></td>
+                <td class="name left"><a href="d_f686a1d637041bad_lexicon_py.html">src/devana/syntax_abstraction/organizers/lexicon.py</a></td>
                 <td>230</td>
-                <td>29</td>
+                <td>28</td>
                 <td>0</td>
-                <td class="right" data-ratio="201 230">87%</td>
+                <td class="right" data-ratio="202 230">88%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_sourcefile_py.html">src/devana/syntax_abstraction/organizers/sourcefile.py</a></td>
-                <td>258</td>
-                <td>29</td>
+                <td class="name left"><a href="d_f686a1d637041bad_sourcefile_py.html">src/devana/syntax_abstraction/organizers/sourcefile.py</a></td>
+                <td>301</td>
+                <td>47</td>
                 <td>0</td>
-                <td class="right" data-ratio="229 258">89%</td>
+                <td class="right" data-ratio="254 301">84%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_organizers_sourcemodule_py.html">src/devana/syntax_abstraction/organizers/sourcemodule.py</a></td>
+                <td class="name left"><a href="d_f686a1d637041bad_sourcemodule_py.html">src/devana/syntax_abstraction/organizers/sourcemodule.py</a></td>
                 <td>75</td>
                 <td>4</td>
                 <td>0</td>
                 <td class="right" data-ratio="71 75">95%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_templateinfo_py.html">src/devana/syntax_abstraction/templateinfo.py</a></td>
-                <td>288</td>
-                <td>39</td>
+                <td class="name left"><a href="d_a56072abec3909d6_templateinfo_py.html">src/devana/syntax_abstraction/templateinfo.py</a></td>
+                <td>313</td>
+                <td>48</td>
                 <td>0</td>
-                <td class="right" data-ratio="249 288">86%</td>
+                <td class="right" data-ratio="265 313">85%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_typedefinfo_py.html">src/devana/syntax_abstraction/typedefinfo.py</a></td>
-                <td>68</td>
-                <td>2</td>
-                <td>0</td>
-                <td class="right" data-ratio="66 68">97%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_typeexpression_py.html">src/devana/syntax_abstraction/typeexpression.py</a></td>
-                <td>448</td>
-                <td>63</td>
-                <td>0</td>
-                <td class="right" data-ratio="385 448">86%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_unioninfo_py.html">src/devana/syntax_abstraction/unioninfo.py</a></td>
-                <td>87</td>
-                <td>11</td>
-                <td>0</td>
-                <td class="right" data-ratio="76 87">87%</td>
-            </tr>
-            <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_usingnamespace_py.html">src/devana/syntax_abstraction/usingnamespace.py</a></td>
-                <td>63</td>
+                <td class="name left"><a href="d_a56072abec3909d6_typedefinfo_py.html">src/devana/syntax_abstraction/typedefinfo.py</a></td>
+                <td>82</td>
                 <td>4</td>
                 <td>0</td>
-                <td class="right" data-ratio="59 63">94%</td>
+                <td class="right" data-ratio="78 82">95%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_syntax_abstraction_variable_py.html">src/devana/syntax_abstraction/variable.py</a></td>
-                <td>87</td>
-                <td>2</td>
+                <td class="name left"><a href="d_a56072abec3909d6_typeexpression_py.html">src/devana/syntax_abstraction/typeexpression.py</a></td>
+                <td>555</td>
+                <td>106</td>
                 <td>0</td>
-                <td class="right" data-ratio="85 87">98%</td>
+                <td class="right" data-ratio="449 555">81%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_utility___init___py.html">src/devana/utility/__init__.py</a></td>
+                <td class="name left"><a href="d_a56072abec3909d6_unioninfo_py.html">src/devana/syntax_abstraction/unioninfo.py</a></td>
+                <td>83</td>
+                <td>11</td>
+                <td>0</td>
+                <td class="right" data-ratio="72 83">87%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6_using_py.html">src/devana/syntax_abstraction/using.py</a></td>
+                <td>79</td>
+                <td>13</td>
+                <td>0</td>
+                <td class="right" data-ratio="66 79">84%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6_usingnamespace_py.html">src/devana/syntax_abstraction/usingnamespace.py</a></td>
+                <td>80</td>
+                <td>10</td>
+                <td>0</td>
+                <td class="right" data-ratio="70 80">88%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_a56072abec3909d6_variable_py.html">src/devana/syntax_abstraction/variable.py</a></td>
+                <td>107</td>
+                <td>4</td>
+                <td>0</td>
+                <td class="right" data-ratio="103 107">96%</td>
+            </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_9fd7d4e3699de93f___init___py.html">src/devana/utility/__init__.py</a></td>
                 <td>3</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="3 3">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_utility_errors_py.html">src/devana/utility/errors.py</a></td>
+                <td class="name left"><a href="d_9fd7d4e3699de93f_errors_py.html">src/devana/utility/errors.py</a></td>
                 <td>4</td>
                 <td>0</td>
                 <td>0</td>
                 <td class="right" data-ratio="4 4">100%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_utility_fakeenum_py.html">src/devana/utility/fakeenum.py</a></td>
+                <td class="name left"><a href="d_9fd7d4e3699de93f_fakeenum_py.html">src/devana/utility/fakeenum.py</a></td>
                 <td>14</td>
                 <td>2</td>
                 <td>0</td>
                 <td class="right" data-ratio="12 14">86%</td>
             </tr>
             <tr class="file">
-                <td class="name left"><a href="src_devana_utility_lazy_py.html">src/devana/utility/lazy.py</a></td>
+                <td class="name left"><a href="d_9fd7d4e3699de93f_lazy_py.html">src/devana/utility/lazy.py</a></td>
                 <td>14</td>
                 <td>1</td>
                 <td>0</td>
                 <td class="right" data-ratio="13 14">93%</td>
             </tr>
+            <tr class="file">
+                <td class="name left"><a href="d_9fd7d4e3699de93f_traits_py.html">src/devana/utility/traits.py</a></td>
+                <td>25</td>
+                <td>4</td>
+                <td>0</td>
+                <td class="right" data-ratio="21 25">84%</td>
+            </tr>
         </tbody>
+        <tfoot>
+            <tr class="total">
+                <td class="name left">Total</td>
+                <td>4984</td>
+                <td>698</td>
+                <td>0</td>
+                <td class="right" data-ratio="4286 4984">86%</td>
+            </tr>
+        </tfoot>
     </table>
     <p id="no_rows">
         No items found using the specified filter.
     </p>
-</div>
-<div id="footer">
+</main>
+<footer>
     <div class="content">
         <p>
-            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2022-04-16 20:49 +0000
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.4.2</a>,
+            created at 2022-08-11 21:19 +0000
         </p>
     </div>
-</div>
+    <aside class="hidden">
+        <a id="prevFileLink" class="nav" href="d_9fd7d4e3699de93f_traits_py.html"/>
+        <a id="nextFileLink" class="nav" href="d_2343fbdb94ac7fc7___init___py.html"/>
+        <button type="button" class="button_prev_file" data-shortcut="["/>
+        <button type="button" class="button_next_file" data-shortcut="]"/>
+        <button type="button" class="button_show_hide_help" data-shortcut="?"/>
+    </aside>
+</footer>
 </body>
 </html>

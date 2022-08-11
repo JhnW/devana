@@ -67,6 +67,14 @@ devana.code\_generation.printers.default.functionprinter
    :undoc-members:
    :show-inheritance:
 
+devana.code\_generation.printers.default.functiontypeprinter
+------------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.functiontypeprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.code\_generation.printers.default.namespaceprinter
 ---------------------------------------------------------
 
@@ -119,6 +127,14 @@ devana.code\_generation.printers.default.usingnamespaceprinter
 --------------------------------------------------------------
 
 .. automodule:: devana.code_generation.printers.default.usingnamespaceprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.code\_generation.printers.default.usingprinter
+-----------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.usingprinter
    :members:
    :undoc-members:
    :show-inheritance:
