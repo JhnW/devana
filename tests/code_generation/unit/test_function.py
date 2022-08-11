@@ -238,3 +238,12 @@ class TestFunctionTemplate(unittest.TestCase):
         source.template.specialisation_values = [spec_1, spec_2]
         result = self.printer.print(source)
         self.assertEqual(result, "template<>\nfloat foo<int&,const long>();\n")
+
+    def test_function_prefix(self):
+        source = FunctionInfo.create_default()
+        source.name = "foo"
+        source.return_type = TypeExpression.create_default()
+        source.return_type.details = BasicType.LONG
+        source.prefix = "__declspec(dllexport)"
+        result = self.printer.print(source)
+        self.assertEqual(result, "__declspec(dllexport) long foo();\n")

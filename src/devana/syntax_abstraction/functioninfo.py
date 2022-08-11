@@ -97,6 +97,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         self._cursor = cursor
         self._parent = parent
+        self._prefix = ""
 
         if cursor is None:
             self._arguments = []
@@ -388,6 +389,16 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
     @associated_comment.setter
     def associated_comment(self, value):
         self._associated_comment = value
+
+    @property
+    def prefix(self) -> str:
+        """The text that precedes the function. Only applicable for code generation, allowing
+        you to inject compiler attributes e.g. dllexport."""
+        return self._prefix
+
+    @prefix.setter
+    def prefix(self, value: str):
+        self._prefix = value
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

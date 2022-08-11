@@ -176,6 +176,10 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
 
             formatter.line = "class" if source.is_class else "struct"
             formatter.line += f" {source.name}" + template_suffix
+
+            if source.prefix:
+                formatter.line = f"{source.prefix} {formatter.line}"
+
             if source.is_declaration:
                 formatter.line += ";"
                 formatter.next_line()

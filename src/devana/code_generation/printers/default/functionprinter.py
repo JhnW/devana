@@ -96,6 +96,9 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             if source.modification.is_override:
                 result += "override"
 
+        if source.prefix:
+            result = f"{source.prefix} {result}"
+
         if source.is_declaration:
             result += ";"
             if type(context) is ExternC and len(context.content) == 1:

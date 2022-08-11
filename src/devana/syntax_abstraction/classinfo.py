@@ -674,6 +674,7 @@ class ClassInfo(CodeContainer):
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
+        self._prefix = ""
         if cursor is None:
             self._name = "TestClass"
             self._text_source = None
@@ -986,6 +987,16 @@ class ClassInfo(CodeContainer):
     @associated_comment.setter
     def associated_comment(self, value):
         self._associated_comment = value
+
+    @property
+    def prefix(self) -> str:
+        """The text that precedes the function. Only applicable for code generation, allowing
+        you to inject compiler attributes e.g. dllexport."""
+        return self._prefix
+
+    @prefix.setter
+    def prefix(self, value: str):
+        self._prefix = value
 
     @property
     def _content_types(self) -> List:
