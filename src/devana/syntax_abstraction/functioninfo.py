@@ -80,7 +80,7 @@ class FunctionModification(IntFlag):
 
     @property
     def is_noexcept(self) -> bool:
-        return self.value * self.NOEXCEPT
+        return self.value & self.NOEXCEPT
 
 
 class FunctionInfo(IBasicCreatable, ICursorValidate):

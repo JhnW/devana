@@ -68,6 +68,15 @@ class TestClassElementsAlone(unittest.TestCase):
         result = self.printer.print(source)
         self.assertEqual(result, """long foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
 
+    def test_print_method_noexcept(self):
+        source = MethodInfo.create_default()
+        source.name = "foo"
+        source.return_type = TypeExpression()
+        source.return_type.details = BasicType.LONG
+        source.modification = FunctionModification.NOEXCEPT
+        result = self.printer.print(source)
+        self.assertEqual(result, "long foo() noexcept;\n")
+
     def test_print_simple_constructor_dec(self):
         source = ConstructorInfo.create_default()
         source.name = "foo"

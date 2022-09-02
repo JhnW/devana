@@ -78,6 +78,8 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             result += " const"
         if source.modification.is_volatile:
             result += " volatile"
+        if source.modification.is_noexcept:
+            result += " noexcept"
 
         if source.modification.is_default:
             result += " = default"
