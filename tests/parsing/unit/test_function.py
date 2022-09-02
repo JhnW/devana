@@ -150,9 +150,25 @@ class TestFunctionsSimple(unittest.TestCase):
             self.assertTrue(result.is_declaration)
             self.assertTrue(result.modification.is_inline)
 
+        with self.subTest("mod_noexcept_func"):
+            node = find_by_name(self.cursor, "mod_noexcept_func")
+            result = FunctionInfo.from_cursor(node)
+            stub_lexicon(result)
+            self.assertEqual(result.name, "mod_noexcept_func")
+            self.assertEqual(result.return_type.modification, TypeModification.NONE)
+            self.assertEqual(result.return_type.details, BasicType.INT)
+            self.assertEqual(len(result.arguments), 1)
+            self.assertEqual(result.arguments[0].name, "a")
+            self.assertEqual(result.arguments[0].type.details, BasicType.INT)
+            self.assertEqual(len(result.overloading), 0)
+            self.assertEqual(result.template, None)
+            self.assertFalse(result.is_definition)
+            self.assertTrue(result.is_declaration)
+            self.assertTrue(result.modification.is_noexcept)
+
     def test_function_namespace_return(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp")
-        result: FunctionInfo = file.content[8]
+        result: FunctionInfo = file.content[9]
         self.assertEqual(result.name, "namespace_return_func")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
         self.assertEqual(len(result.arguments), 1)

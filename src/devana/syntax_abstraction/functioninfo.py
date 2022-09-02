@@ -28,6 +28,7 @@ class FunctionModification(IntFlag):
     DEFAULT = auto()
     CONSTEXPR = auto()
     VOLATILE = auto()
+    NOEXCEPT = auto()
 
     @property
     def is_const(self) -> bool:
@@ -76,6 +77,10 @@ class FunctionModification(IntFlag):
     @property
     def is_volatile(self) -> bool:
         return self.value & self.VOLATILE
+
+    @property
+    def is_noexcept(self) -> bool:
+        return self.value * self.NOEXCEPT
 
 
 class FunctionInfo(IBasicCreatable, ICursorValidate):
@@ -272,6 +277,8 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
                 self._modification |= FunctionModification.OVERRIDE
             elif token.spelling == "volatile":
                 self._modification |= FunctionModification.VOLATILE
+            elif token.spelling == "noexcept":
+                self._modification |= FunctionModification.NOEXCEPT
         if self._cursor.is_static_method():
             self._modification |= FunctionModification.STATIC
         if self._cursor.is_const_method():
