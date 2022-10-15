@@ -6,6 +6,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.comment import Comment
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
 from devana.configuration import Configuration, ParsingErrorPolicy
@@ -375,12 +376,13 @@ class DestructorInfo(MethodInfo):
         return cursor.kind == cindex.CursorKind.DESTRUCTOR
 
 
-class FieldInfo(Variable, ClassMember, ICursorValidate):
+class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes):
     """Field of class/struct."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         Variable.__init__(self, cursor, parent)
         ClassMember.__init__(self, cursor)
+        DescriptiveByAttributes.__init__(self, cursor, parent)
         if cursor is not None:
             if not self.is_cursor_valid(cursor):
                 raise ParserError("Bad cursor kind.")
@@ -669,11 +671,12 @@ class InheritanceInfo(IFromCursorCreatable):
         return self._lexicon
 
 
-class ClassInfo(CodeContainer):
+class ClassInfo(CodeContainer, DescriptiveByAttributes):
     """Data of class type."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
+        DescriptiveByAttributes.__init__(self, cursor, parent)
         self._prefix = ""
         if cursor is None:
             self._name = "TestClass"

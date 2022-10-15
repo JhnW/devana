@@ -188,14 +188,14 @@ class TestClassBasic(unittest.TestCase):
             self.assertTrue(op.type.is_operator, f"{op}")
 
     def test_class_constructors(self):
-        node = find_by_name(self.cursor, "ClassContructors")
+        node = find_by_name(self.cursor, "ClassConstructors")
         result = ClassInfo.from_cursor(node)
         self.assertEqual(len(result.content), 11)
 
         c: ConstructorInfo = result.content[0]
         with self.subTest(c):
             self.assertEqual(c.type, MethodType.CONSTRUCTOR)
-            self.assertEqual(c.name, "ClassContructors")
+            self.assertEqual(c.name, "ClassConstructors")
             self.assertEqual(len(c.arguments), 1)
             self.assertEqual(c.arguments[0].name, "b")
             self.assertEqual(c.arguments[0].type.details, BasicType.FLOAT)
@@ -212,18 +212,18 @@ class TestClassBasic(unittest.TestCase):
 
         c = result.content[1]
         with self.subTest(c):
-            self.assertEqual(c.name, "ClassContructors")
+            self.assertEqual(c.name, "ClassConstructors")
             self.assertEqual(c.type, MethodType.COPY_CONSTRUCTOR)
             self.assertEqual(len(c.initializer_list), 0)
             self.assertEqual(len(c.arguments), 1)
             self.assertEqual(c.arguments[0].name, "src")
             self.assertTrue(c.arguments[0].type.modification.is_const)
             self.assertTrue(c.arguments[0].type.modification.is_reference)
-            self.assertTrue(c.arguments[0].type.name, "ClassContructors")
+            self.assertTrue(c.arguments[0].type.name, "ClassConstructors")
 
         c = result.content[2]
         with self.subTest(c):
-            self.assertEqual(c.name, "ClassContructors")
+            self.assertEqual(c.name, "ClassConstructors")
             self.assertEqual(c.type, MethodType.MOVE_CONSTRUCTOR)
             self.assertEqual(len(c.initializer_list), 0)
             self.assertEqual(len(c.arguments), 1)
@@ -231,11 +231,11 @@ class TestClassBasic(unittest.TestCase):
             self.assertFalse(c.arguments[0].type.modification.is_reference)
             self.assertTrue(c.arguments[0].type.modification.is_rvalue_ref)
             self.assertTrue(c.arguments[0].type.modification.is_const)
-            self.assertTrue(c.arguments[0].type.name, "ClassContructors")
+            self.assertTrue(c.arguments[0].type.name, "ClassConstructors")
 
         c = result.content[3]
         with self.subTest(c):
-            self.assertEqual(c.name, "ClassContructors")
+            self.assertEqual(c.name, "ClassConstructors")
             self.assertEqual(c.type, MethodType.CONSTRUCTOR)
             self.assertEqual(len(c.initializer_list), 0)
             self.assertEqual(len(c.arguments), 1)
@@ -252,8 +252,8 @@ class TestClassBasic(unittest.TestCase):
             self.assertTrue(c.arguments[0].type.modification.is_const)
             self.assertTrue(c.arguments[0].type.modification.is_reference)
             self.assertEqual(c.modification.is_const, False)
-            self.assertTrue(c.arguments[0].type.name, "ClassContructors")
-            self.assertEqual(c.return_type.name, "ClassContructors&")
+            self.assertTrue(c.arguments[0].type.name, "ClassConstructors")
+            self.assertEqual(c.return_type.name, "ClassConstructors&")
 
         c: MethodInfo = result.content[5]
         with self.subTest(c):
@@ -263,12 +263,12 @@ class TestClassBasic(unittest.TestCase):
             self.assertEqual(c.arguments[0].name, "src")
             self.assertTrue(c.arguments[0].type.modification.is_const)
             self.assertTrue(c.arguments[0].type.modification.is_rvalue_ref)
-            self.assertTrue(c.arguments[0].type.name, "ClassContructors")
-            self.assertEqual(c.return_type.name, "ClassContructors&")
+            self.assertTrue(c.arguments[0].type.name, "ClassConstructors")
+            self.assertEqual(c.return_type.name, "ClassConstructors&")
 
         c: DestructorInfo = result.content[6]
         with self.subTest(c):
-            self.assertEqual(c.name, "~ClassContructors")
+            self.assertEqual(c.name, "~ClassConstructors")
             self.assertEqual(c.type, MethodType.DESTRUCTOR)
             self.assertEqual(len(c.arguments), 0)
             self.assertTrue(c.modification.is_virtual)

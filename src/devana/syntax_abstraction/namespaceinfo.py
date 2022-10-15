@@ -3,13 +3,14 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.comment import Comment
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from clang import cindex
 from typing import Optional, List
 
 
-class NamespaceInfo(CodeContainer):
+class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
     """"Object representation of current scope namespace, for example usage in file or global namespace with all
     namespaces component placed in many files."""
 

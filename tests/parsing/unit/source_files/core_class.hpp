@@ -85,21 +85,21 @@ class ClassOperators
     void operator delete[](void* a);
 };
 
-struct ClassContructors
+struct ClassConstructors
 {
-    ClassContructors(float b):
+    ClassConstructors(float b):
         a(0.5+1),
         b(7+b),
         c(":)"),
         d{1,2,3,4,9.5}
         {
         }
-    ClassContructors(const ClassContructors &src);
-    ClassContructors(const ClassContructors &&src);
-    explicit ClassContructors(double a);
-    ClassContructors& operator= ( const ClassContructors& src);
-    ClassContructors& operator= ( const ClassContructors&& src);
-    virtual ~ClassContructors();
+    ClassConstructors(const ClassConstructors &src);
+    ClassConstructors(const ClassConstructors &&src);
+    explicit ClassConstructors(double a);
+    ClassConstructors& operator= ( const ClassConstructors& src);
+    ClassConstructors& operator= ( const ClassConstructors&& src);
+    virtual ~ClassConstructors();
 
     double a;
     float b;

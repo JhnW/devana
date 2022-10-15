@@ -3,6 +3,7 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.typeexpression import BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
@@ -11,7 +12,7 @@ from clang import cindex
 from typing import Optional, List, Literal
 
 
-class EnumInfo(CodeContainer):
+class EnumInfo(CodeContainer, DescriptiveByAttributes):
     """Enum declaration."""
 
     class EnumValue(IBasicCreatable, ICursorValidate):

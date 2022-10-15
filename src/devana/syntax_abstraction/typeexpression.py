@@ -13,6 +13,7 @@ class BasicType(Enum):
     """Provides information about common types like integer of floating point. It should be implemented as Enum
     subclass."""
 
+
     class BasicTypeValue:
 
         def __init__(self, name: str, value, unsigned: bool = False):
@@ -537,7 +538,7 @@ class TypeExpression(IBasicCreatable):
         if type_c.kind == cindex.TypeKind.RVALUEREFERENCE:
             tmp_modification |= TypeModification.RVALUE_REF
         type_source = type_c
-        if tmp_modification.is_pointer or tmp_modification.is_reference or tmp_modification.is_rvalue_ref:
+        if tmp_modification.is_pointer or tmp_modification.is_reference or tmp_modification.is_rvalue_ref: # noqa
             if tmp_modification.is_pointer:
                 type_source = TypeExpression.cursor_parse_from_pointer(type_c)
             else:

@@ -5,6 +5,7 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
@@ -83,14 +84,15 @@ class FunctionModification(IntFlag):
         return self.value & self.NOEXCEPT
 
 
-class FunctionInfo(IBasicCreatable, ICursorValidate):
+class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
     """Representative of function definition or declaration."""
 
-    class Argument(Variable, ICursorValidate):
+    class Argument(Variable, ICursorValidate, DescriptiveByAttributes):
         """Data of function or method argument."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             super().__init__(cursor, parent)
+            DescriptiveByAttributes.__init__(self, cursor, parent)
             if cursor is not None:
                 if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not a valid type cursor.")
@@ -99,7 +101,14 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
             return cursor.kind == cindex.CursorKind.PARM_DECL
 
+        @property
+        def attributes(self) -> List[AttributeDeclaration]:
+            """C++11/C23 attributes associated with the syntax."""
+            self._attributes = AttributeDeclaration.create_from_element(self, self._parent.arguments)
+            return self._attributes
+
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
+        DescriptiveByAttributes.__init__(self, cursor, parent)
         self._cursor = cursor
         self._parent = parent
         self._prefix = ""
@@ -116,6 +125,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
             self._template = None
             self._namespaces = None
             self._associated_comment = None
+            self._attributes = None
         else:
             if not self.is_cursor_valid(cursor):
                 msg = f"It is not a valid type cursor: {cursor.kind}."
@@ -130,6 +140,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate):
             self._template = LazyNotInit
             self._namespaces = LazyNotInit
             self._associated_comment = LazyNotInit
+            self._attributes = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @classmethod
