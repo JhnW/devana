@@ -156,6 +156,7 @@ class AttributeDeclaration:
         if self.using_namespace is not None:
             result = f"using {self.using_namespace}: "
         result = result + ",".join([repr(a) for a in self.attributes])
+        return result
 
 
 class DescriptiveByAttributes:
