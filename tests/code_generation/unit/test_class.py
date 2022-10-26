@@ -3,6 +3,7 @@ from devana.code_generation.printers.default.basictypeprinter import BasicTypePr
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.templateparameterprinter import TemplateParameterPrinter
 from devana.code_generation.printers.default.typeexpressionprinter import GenericTypeParameterPrinter
+from devana.code_generation.printers.default.functionprinter import FunctionPrinter, ArgumentPrinter
 from devana.code_generation.printers.default.classprinter import *
 from devana.code_generation.printers.codeprinter import CodePrinter
 from devana.syntax_abstraction.functioninfo import FunctionModification
@@ -23,7 +24,7 @@ class TestClassElementsAlone(unittest.TestCase):
         printer.register(VariablePrinter, Variable)
         printer.register(BasicTypePrinter, BasicType)
         printer.register(TypeExpressionPrinter, TypeExpression)
-        printer.register(VariablePrinter, FunctionInfo.Argument)
+        printer.register(ArgumentPrinter, FunctionInfo.Argument)
         printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         printer.register(GenericTypeParameterPrinter, GenericTypeParameter)
         printer.register(FieldPrinter, FieldInfo)

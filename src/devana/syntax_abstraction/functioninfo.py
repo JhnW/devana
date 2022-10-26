@@ -94,18 +94,26 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
             super().__init__(cursor, parent)
             DescriptiveByAttributes.__init__(self, cursor, parent)
             if cursor is not None:
+                self._attributes = LazyNotInit
                 if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not a valid type cursor.")
+            else:
+                self._attributes = []
 
         @staticmethod
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
             return cursor.kind == cindex.CursorKind.PARM_DECL
 
         @property
+        @lazy_invoke
         def attributes(self) -> List[AttributeDeclaration]:
             """C++11/C23 attributes associated with the syntax."""
             self._attributes = AttributeDeclaration.create_from_element(self, self._parent.arguments)
             return self._attributes
+
+        @attributes.setter
+        def attributes(self, value: List[AttributeDeclaration]):
+            self._attributes = value
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         DescriptiveByAttributes.__init__(self, cursor, parent)
@@ -125,7 +133,6 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
             self._template = None
             self._namespaces = None
             self._associated_comment = None
-            self._attributes = None
         else:
             if not self.is_cursor_valid(cursor):
                 msg = f"It is not a valid type cursor: {cursor.kind}."
@@ -140,7 +147,6 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
             self._template = LazyNotInit
             self._namespaces = LazyNotInit
             self._associated_comment = LazyNotInit
-            self._attributes = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @classmethod

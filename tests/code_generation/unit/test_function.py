@@ -1,5 +1,5 @@
 import unittest
-from devana.code_generation.printers.default.functionprinter import FunctionPrinter
+from devana.code_generation.printers.default.functionprinter import FunctionPrinter, ArgumentPrinter
 from devana.code_generation.printers.default.variableprinter import VariablePrinter
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
@@ -20,7 +20,7 @@ class TestFunctionCore(unittest.TestCase):
         printer.register(VariablePrinter, Variable)
         printer.register(BasicTypePrinter, BasicType)
         printer.register(TypeExpressionPrinter, TypeExpression)
-        printer.register(VariablePrinter, FunctionInfo.Argument)
+        printer.register(ArgumentPrinter, FunctionInfo.Argument)
         self.printer: CodePrinter = printer
 
     def test_basic_function_declaration_basic(self):

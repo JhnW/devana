@@ -22,6 +22,8 @@ from devana.code_generation.printers.default.unionprinter import UnionPrinter
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.code_generation.printers.default.usingnamespaceprinter import UsingNamespacePrinter
 from devana.code_generation.printers.default.classprinter import FieldPrinter
+from devana.code_generation.printers.default.functionprinter import FunctionPrinter, ArgumentPrinter
+from devana.code_generation.printers.default.attributeprinter import AttributePrinter, AttributeDeclarationPrinter
 from devana.syntax_abstraction.classinfo import FieldInfo
 from devana.syntax_abstraction.classinfo import SectionInfo
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
@@ -34,6 +36,7 @@ from devana.syntax_abstraction.functiontype import FunctionType
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.syntax_abstraction.externc import ExternC
 from devana.syntax_abstraction.comment import Comment
+from devana.syntax_abstraction.attribute import Attribute, AttributeDeclaration
 from devana.code_generation.stubtype import StubType
 
 
@@ -53,7 +56,7 @@ def create_default_printer() -> CodePrinter:
     printer.register(IncludePrinter, IncludeInfo)
     printer.register(FunctionPrinter, FunctionInfo)
     printer.register(FunctionTypePrinter, FunctionType)
-    printer.register(VariablePrinter, FunctionInfo.Argument)
+    printer.register(ArgumentPrinter, FunctionInfo.Argument)
     printer.register(NamespacePrinter, NamespaceInfo)
     printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
     printer.register(TypedefPrinter, TypedefInfo)
@@ -67,5 +70,7 @@ def create_default_printer() -> CodePrinter:
     printer.register(ExternCPrinter, ExternC)
     printer.register(CommentPrinter, Comment)
     printer.register(StubTypePrinter, StubType)
+    printer.register(AttributePrinter, Attribute)
+    printer.register(AttributeDeclarationPrinter, AttributeDeclaration)
 
     return printer

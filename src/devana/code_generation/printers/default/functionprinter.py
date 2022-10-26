@@ -5,6 +5,7 @@ from devana.syntax_abstraction.externc import ExternC
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
+from devana.code_generation.printers.default.variableprinter import VariablePrinter
 from .utilityprinters import namespaces_string
 from typing import Optional
 
@@ -28,6 +29,8 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
 
         if source.associated_comment:
             formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+        for attribute in config.attributes.filter(source.attributes):
+            formatter.print_line(self.printer_dispatcher.print(attribute, config, source))
 
         template_prefix = ""
         template_suffix = ""
@@ -130,3 +133,16 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             else:
                 formatter.print_line("}")
         return formatter.text
+
+
+class ArgumentPrinter(VariablePrinter):
+
+    def print(self, source: FunctionInfo.Argument, config: Optional[PrinterConfiguration] = None, _=None) -> str:
+        result = super().print(source, config)
+        attributes = []
+        for attribute in config.attributes.filter(source.attributes):
+            attributes.append(self.printer_dispatcher.print(attribute, config, source))
+
+        if attributes:
+            result = " ".join(attributes) + " " + result
+        return result

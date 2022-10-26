@@ -19,6 +19,8 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
 
         if source.associated_comment:
             formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
+        for attribute in config.attributes.filter(source.attributes):
+            formatter.print_line(self.printer_dispatcher.print(attribute, config, source))
 
         formatter.line = "enum"
         if source.is_scoped:

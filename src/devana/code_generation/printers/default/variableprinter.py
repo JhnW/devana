@@ -51,6 +51,7 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
                     result += "["+"][".join(source.type.modification.array_order) + "]"
         if source.default_value is not None:
             result += f" = {source.default_value}"
+
         return result
 
 

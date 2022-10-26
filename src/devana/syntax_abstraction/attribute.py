@@ -13,11 +13,12 @@ class Attribute:
     you to enter any compilers (no clear list of attributes, it is impossible to know all compiler-specific attributes).
     Whether the attributes will be printed depends on the currently used configuration.
     Attributes are pre-parsed to extract the namespace and arguments. """
-    def __init__(self, name: str, namespace: Optional = None, arguments: Optional[List[str]] = None):
+    def __init__(self, name: str, namespace: Optional = None, arguments: Optional[List[str]] = None,
+                 parent: Optional = None):
         self._name = name
         self._namespace = namespace
         self._arguments = [arg.strip() for arg in arguments] if arguments is not None else None
-        self._parent = None
+        self._parent = parent
 
     @classmethod
     def from_whole_declaration_text(cls, text: str) -> List:
@@ -89,7 +90,12 @@ class Attribute:
     def __repr__(self):
         namespace = f"{self.namespace}::" if self._namespace else ""
         args = f"({'.'.join(self.arguments)})" if self.arguments is not None else ""
-        return f"{namespace}{self.name}{args}"
+        data = f"{namespace}{self.name}{args}"
+        return f"{type(self).__name__}:{data} ({super().__repr__()})"
+
+    def clone(self):
+        return Attribute(self.name, self.namespace,
+                         self.arguments.copy() if self.arguments is not None else None, self.parent)
 
 
 class AttributeDeclaration:
@@ -156,7 +162,10 @@ class AttributeDeclaration:
         if self.using_namespace is not None:
             result = f"using {self.using_namespace}: "
         result = result + ",".join([repr(a) for a in self.attributes])
-        return result
+        return f"{type(self).__name__}:{result} ({super().__repr__()})"
+
+    def clone(self):
+        return AttributeDeclaration([attr.clone() for attr in self.attributes], self.using_namespace, self.parent)
 
 
 class DescriptiveByAttributes:
@@ -172,7 +181,7 @@ class DescriptiveByAttributes:
     @lazy_invoke
     def attributes(self) -> List[AttributeDeclaration]:
         """C++11/C23 attributes associated with the syntax."""
-        self._attributes = AttributeDeclaration.create_from_element(self, self._parent.content)
+        self._attributes = AttributeDeclaration.create_from_element(self, self._parent.content if self._parent else [])
         return self._attributes
 
     @attributes.setter
