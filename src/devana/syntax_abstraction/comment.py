@@ -22,7 +22,7 @@ class CommentMarker(Enum):
 
     @property
     def end_marker(self) -> Optional[str]:
-        """String representation of start comment marker. May be None for one line comment."""
+        """String representation of start comment marker. It may be None for one line comment."""
         if self.value == self.ONE_LINE:
             return None
         else:

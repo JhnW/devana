@@ -219,7 +219,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             return self._specialisation_values
 
         # here be dragons
-        # for some cases cursor will not return template parameters so we will do very ugly hack with parse fake file
+        # for some cases cursor will not return template parameters, so we will do very ugly hack with parse fake file
         if self.parent is None:
             return self._specialisation_values
 
@@ -283,7 +283,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
     @property
     @lazy_invoke
     def specialisations(self) -> Tuple:
-        """Return all other defined specialisations of template."""
+        """Return all others defined specialisations of template."""
         self._specialisations = []
         if self.lexicon is None:
             return ()
@@ -322,7 +322,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
                         spe_type = s.template.specialisation_values[i]
                         expected_type_mod = self.parent.arguments[i].type.modification
                         spec_type_mod = spe_type.modification
-                        # chek type mod duplicated (we do not support multiple pointer)
+                        # check type mod duplicated (we do not support multiple pointer)
                         if not ~((expected_type_mod & spec_type_mod) & ~TypeModification.NONE):
                             is_valid = False
                             break

@@ -11,7 +11,7 @@ from typing import Optional, List
 
 
 class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
-    """"Object representation of current scope namespace, for example usage in file or global namespace with all
+    """Object representation of current scope namespace, for example usage in file or global namespace with all
     namespaces component placed in many files."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):

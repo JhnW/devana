@@ -55,50 +55,12 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
         return result
 
 
-class GlobalVariablePrinter(ICodePrinter, DispatcherInjectable):
+class GlobalVariablePrinter(VariablePrinter):
 
     def print(self, source: GlobalVariable, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
-        if type(source.type.details) is FunctionType:
-            fnc: FunctionType = source.type.details
-            return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
-            args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
-            prefix = "static " if source.type.modification.is_static else ""
-            mods = ""
-            if source.type.modification.is_const:
-                mods += "const "
-            elif source.type.modification.is_volatile:
-                mods += "volatile "
-            elif source.type.modification.is_restrict:
-                mods += "restrict "
-            elif source.type.modification.is_constexpr:
-                mods += "constexpr "
-            elif source.type.modification.is_mutable:
-                mods += "mutable "
-
-            if source.type.modification.is_pointer:
-                for i in range(source.type.modification.pointer_order):
-                    mods = mods + r"*"
-            elif source.type.modification.is_reference:
-                mods = mods + r"&"
-
-            name = mods + source.name
-            if source.type.modification.is_array:
-                if source.type.modification.array_order is None:
-                    name += r"[]"
-                else:
-                    name += "[" + "][".join(source.type.modification.array_order) + "]"
-            result = f"{prefix}{return_name} ({name})({args_names})"
-        else:
-            result = f"{self.printer_dispatcher.print(source.type, config, source)} {source.name}"
-            if source.type.modification.is_array:
-                if source.type.modification.array_order is None:
-                    result += "[]"
-                else:
-                    result += "["+"][".join(source.type.modification.array_order) + "]"
-        if source.default_value is not None:
-            result += f" = {source.default_value}"
+        result = super().print(source, config)
         formatter = Formatter(config)
         if source.associated_comment:
             formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))

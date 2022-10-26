@@ -8,7 +8,7 @@ from clang import cindex
 
 
 class ExternC(CodeContainer):
-    """"Object representation of current usage of extern C set of functions. It may contain one or more functions."""
+    """Object representation of current usage of extern C set of functions. It may contain one or more functions."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)

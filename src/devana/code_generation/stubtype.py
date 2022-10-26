@@ -3,7 +3,7 @@ class StubType:
     parse source file. StubType is just free string.
 
     Good example are std types ile std::string or size_t. Parsing stdlib is definitely what you don't want to do, so you
-    are able write this type as raw string for code generation. StubType is fast and easy way to stub type. For more
+    are able to write this type as raw string for code generation. StubType is fast and easy way to stub type. For more
     complex features ypu should think about create yur own ClassInfo etc."""
 
     def __init__(self, name: str):

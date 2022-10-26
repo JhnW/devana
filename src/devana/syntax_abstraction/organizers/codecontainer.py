@@ -71,7 +71,7 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
 
     @property
     def allowed_namespaces(self) -> List:
-        """List of all other allowed namespaces in container without Name:: prefix given by using namespace."""
+        """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
         if self.lexicon is not None:
             return self.lexicon.allowed_namespaces # noqa
         from devana.syntax_abstraction.usingnamespace import UsingNamespace

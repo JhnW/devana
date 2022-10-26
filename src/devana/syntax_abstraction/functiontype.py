@@ -10,7 +10,7 @@ from typing import Optional, List
 
 
 class FunctionType(IBasicCreatable, ICursorValidate):
-    """Class representing the type of a function (function pointer) that can
+    """Class representing the type of function (function pointer) that can
     appear as a variable or in a typedef etc."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):

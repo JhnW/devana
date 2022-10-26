@@ -8,7 +8,7 @@ class Lexicon:
     """Class storage all multiple usage code elements in working context.
 
     Lexicon hold reference to all definitions and declarations. It will hold all typedefs, namespaces, classes,
-    functions, methods and templates. Main application of Lexicon is avoid parsing or created source code data types
+    functions, methods and templates. Main application of Lexicon is avoided parsing or created source code data types
     again. Existing data can be taken from lexicon.
     Additional, Lexicon can hold data who are not present in source files e.g. for make consistent devana structures
     and handcrafted code generation.
@@ -263,7 +263,7 @@ class Lexicon:
 
     @property
     def allowed_namespaces(self) -> List:
-        """List of all other allowed namespaces in container without Name:: prefix given by using namespace."""
+        """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
         allowed = []
         for c in self.content:

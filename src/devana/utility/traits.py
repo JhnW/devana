@@ -17,7 +17,7 @@ class IDefaultCreatable(ABC):
     @classmethod
     @abstractmethod
     def create_default(cls, parent: Optional = None) -> any:
-        """Create a default, valid instance. Cls parameter allow to implemented this method once if
+        """Create a default, valid instance. Cls parameter allow to implement this method once if
         init meets requirements in all derivative types."""
         pass
 
@@ -27,8 +27,8 @@ class IFromCursorCreatable(ABC):
     @classmethod
     @abstractmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
-        """"Create a instance from parsed information from clang. Return None if creation is not possible. Cls parameter
-        allow to implemented this method once if init meets requirements in all derivative types."""
+        """Create an instance from parsed information from clang. Return None if creation is not possible. Cls parameter
+        allow to implement this method once if init meets requirements in all derivative types."""
         pass
 
 

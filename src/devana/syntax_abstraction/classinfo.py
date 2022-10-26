@@ -225,7 +225,7 @@ class ConstructorInfo(MethodInfo):
     """Constructor method information."""
 
     class InitializerInfo:
-        """Information about one one of initializer list."""
+        """Information about one of initializer list."""
 
         def __init__(self, name, value):
             self._name: str = name
@@ -715,7 +715,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
 
             if self.is_definition:  # prevent for class definition like class A::B::C {}
                 #  its overcomplicated because semantic parent contains standard namespaces, not only A::B
-                # and children will contain namespace reference if template parameter is write with namespace
+                # and children will contain namespace reference if template parameter is written with namespace,
                 # so we need to make intersection both list
                 semantic_parents = []
                 parent = self._cursor.semantic_parent

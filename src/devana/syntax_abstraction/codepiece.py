@@ -8,7 +8,7 @@ class CodePiece:
     """Class represented code as raw characters sequence seen as sees it programmer with comments
     and not replaced preprocessor stuff. Only white character correction is allowed.
 
-    Code can be bind to existing file if it source is file or CodePiece is used as representative of
+    Code can be bind to existing file if its source is file or CodePiece is used as representative of
     code generation result."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None):

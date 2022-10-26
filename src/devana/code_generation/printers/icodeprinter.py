@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from typing import Optional
 
 
-
 class ICodePrinter(ABC):
     """Common interface for all printers."""
 

@@ -32,7 +32,7 @@ class UnionInfo(CodeContainer):
     @property
     @lazy_invoke
     def name(self) -> Optional[str]:
-        """Name of union or None is is anonymous."""
+        """Name of union or None is anonymous."""
         self._name = self._cursor.displayname
         if not self._name:
             self._name = None

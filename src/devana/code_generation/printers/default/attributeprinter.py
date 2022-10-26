@@ -2,7 +2,6 @@ from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.attribute import AttributeDeclaration, Attribute
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
-from devana.code_generation.printers.formatter import Formatter
 from typing import Optional
 
 
@@ -22,9 +21,6 @@ class AttributeDeclarationPrinter(ICodePrinter, DispatcherInjectable):
 class AttributePrinter(ICodePrinter, DispatcherInjectable):
 
     def print(self, source: Attribute, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
-        if config is None:
-            config = PrinterConfiguration()
-
         args = "" if source.arguments is None else f'({",".join(source.arguments)})'
         namespace = "" if source.namespace is None or (source.namespace == "") else f"{source.namespace}::"
         if isinstance(context, AttributeDeclaration):
