@@ -49,3 +49,6 @@ For information on running tests locally, refer to the contributors guide.
 A detailed list of missing functionalities and planned features can be found in the 
 [documentation](http://jhnw.github.io/devana/roadmap.html).
 
+## Acknowledgments
+![JetBrains Black Box Logo logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_square.svg) 
+For providing a very good development environment within Free License Programs for Open Source.
