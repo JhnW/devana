@@ -71,7 +71,7 @@ class SourceModule:
                     return True
             return False
 
-        compile_args = ["-xc++"]
+        compile_args = self.configuration.parsing.language_version.value.options.copy()
         for d in os.walk(self.path):
             compile_args.append(r"-I"+d[0])
 
@@ -95,3 +95,11 @@ class SourceModule:
     @property
     def configuration(self):
         return self._configuration
+
+    @staticmethod
+    def get_module(element: any) -> Optional:
+        if isinstance(element, SourceModule):
+            return element
+        if not hasattr(element, "parent"):
+            return None
+        return SourceModule.get_module(element.parent)

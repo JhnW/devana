@@ -1,7 +1,7 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.utility.errors import ParserError, CodeError
 from clang import cindex
-from typing import Optional, List, NoReturn, Union
+from typing import Optional, List, Union
 
 
 class Lexicon:
@@ -30,7 +30,16 @@ class Lexicon:
                 return cls(source)
             raise ValueError("CodeContainer source is needed for root lexicon.")
 
+
         if issubclass(type(source), CodeContainer):
+
+            from devana.syntax_abstraction.organizers.sourcefile import SourceFile
+            if issubclass(type(source), SourceFile):
+                instance: Lexicon = source.parent.lexicon
+                if source is not None:
+                    instance._sources.append(source)
+                return instance
+
             match = list(x for x in source.parent.lexicon.nodes if x.namespace == source.namespace)
             if match:
                 assert len(match) == 1
@@ -57,7 +66,8 @@ class Lexicon:
                                 sources.append(source)
                     instance._sources = sources
                 else:
-                    instance._sources.append(source)
+                    if source is not None:
+                        instance._sources.append(source)
 
                 return instance
             return cls(source)
@@ -67,7 +77,8 @@ class Lexicon:
     def __init__(self, source=None):
         assert issubclass(type(source), CodeContainer) or source is None
         self._sources: List[CodeContainer] = []
-        self._sources.append(source)
+        if source is not None:
+            self._sources.append(source)
         self._content_internal = []
         self._nodes = []
         if source is None:
@@ -89,10 +100,6 @@ class Lexicon:
     @property
     def namespace(self) -> Optional[str]:
         return self._namespace
-
-    def merge(self, lexicon) -> NoReturn:
-        """Merge lexicon with another one."""
-        pass
 
     @property
     def nodes(self) -> List:

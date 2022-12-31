@@ -6,6 +6,7 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 import re
+from pathlib import Path
 from typing import Optional, List, Union, Tuple
 from clang import cindex
 
@@ -233,7 +234,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             arguments = match[0].split(",")
             num_args = len(arguments)
             from devana.syntax_abstraction.codepiece import CodePiece
-            text = CodePiece(self._cursor.lexical_parent).text
+            code_piece = CodePiece(self._cursor.lexical_parent)
+            text = code_piece.text
             fnc_text = self.parent.text_source.text
             text = text.split(fnc_text)
             function_placeholder = "void ___devana______fooPlaceholderToGetParm("
@@ -248,6 +250,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
                            unsaved_files=[('tmp.h', text)], options=0)
             file = SourceFile(tu.cursor)
+            file.path = Path('tmp.h') #normally file uses absolute paths, we need to work around
 
             parents = []
             element = self.parent

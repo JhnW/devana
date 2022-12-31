@@ -160,7 +160,7 @@ class SourceFile(CodeContainer):
             else:
                 if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not valid cursor kind.")
-                self._path = Path(cursor.spelling)
+                self._path = Path(cursor.spelling)#.absolute()
                 self._text_source = LazyNotInit
                 self._includes = LazyNotInit
                 self._type = LazyNotInit
@@ -384,4 +384,4 @@ class SourceFile(CodeContainer):
         return content
 
     def __repr__(self):
-        return f"{type(self).__name__}:{self.type} ({super().__repr__()})"
+        return f"{type(self).__name__}:{self.type}:{self.name} ({super().__repr__()})"
