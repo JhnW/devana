@@ -133,3 +133,9 @@ class TestSourceFile(unittest.TestCase):
         self.assertEqual(len(file.includes), 0)
         self.assertEqual(len(file.content), 3)
         self.assertEqual(file.header_guard, None)
+
+    def test_headers_already_included_in_other_header(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/complex_includes/include_3.hpp")
+        self.assertEqual(len(file.includes), 2)
+        self.assertEqual(file.includes[0].value, "include_2.hpp")
+        self.assertEqual(file.includes[1].value, "include_1.hpp")

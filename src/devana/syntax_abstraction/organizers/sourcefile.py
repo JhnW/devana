@@ -1,6 +1,7 @@
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
@@ -33,7 +34,10 @@ class IncludeInfo:
                 for i in range(cursor.location.line - 1):
                     next(f)
                 self._text = f.readline().rstrip()
-            self._value = re.search(pattern, self._text).group(1)
+            value: Optional = re.search(pattern, self._text)
+            if not value:
+                raise ParserError("Wrong include directive (include_next?).")
+            self._value = value.group(1)
             self._path = cursor.include.name
             if "<" in self._text:
                 self._is_standard = True
@@ -100,11 +104,21 @@ class IncludeInfo:
     @staticmethod
     def get_includes(translation_unit: cindex.TranslationUnit):
         includes = []
-        for inc in translation_unit.get_includes():
-            if inc.depth == 1:
-                includes.append(IncludeInfo(inc))
-        return includes
+        pattern = r'#\s*include\s*[<"](.+)[">]'
+        code_piece = CodePiece(translation_unit.cursor)
+        match = re.findall(pattern, code_piece.text)
+        file_root_path: Path = Path(code_piece.file).parent
+        text_includes = [(file_root_path/Path(inc)).absolute() for inc in match]
 
+        for inc in translation_unit.get_includes():
+            path_cursor = Path(inc.include.name).absolute()
+            result = list(filter(lambda p: p == path_cursor or p.name == path_cursor.name, text_includes))
+            if len(result) != 0:
+                includes.append(IncludeInfo(inc))
+                if len(text_includes) > 0 and len(result) > 0:
+                    text_includes.remove(result[0])
+
+        return includes
 
 class SourceFileType(Enum):
     HEADER = auto()
