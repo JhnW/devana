@@ -1,7 +1,8 @@
-from devana.utility.lazy import LazyNotInit, lazy_invoke
 from typing import Optional, List, Any
-from devana.syntax_abstraction.codepiece import CodePiece
 import re
+from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.syntax_abstraction.codepiece import CodePiece
+
 
 
 class Attribute:
@@ -103,7 +104,6 @@ class AttributeDeclaration:
     either the using keyword or a list of multiple attributes."""
 
     def __init__(self, attributes: List[Attribute], using_namespace: Optional[str] = None, parent: Optional = None):
-        pass
         self._attributes = attributes
         self._using_namespace = using_namespace
         self._parent = parent
@@ -169,6 +169,7 @@ class AttributeDeclaration:
 
 
 class DescriptiveByAttributes:
+    """Mixin class for implement C++ standard attributes linked to code element."""
 
     def __init__(self, cursor: Optional, parent: Optional = None):
         if cursor is None:

@@ -1,5 +1,5 @@
-from devana.code_generation.printers.icodeprinter import ICodePrinter
 from typing import Optional
+from devana.code_generation.printers.icodeprinter import ICodePrinter
 
 
 class DispatcherInjectable:

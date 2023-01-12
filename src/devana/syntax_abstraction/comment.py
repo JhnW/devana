@@ -1,10 +1,10 @@
+from enum import Enum, auto
+from typing import List, Optional
+import re
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.codelocation import CodeLocation
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration
-from enum import Enum, auto
-from typing import List, Optional
-import re
 
 
 class CommentMarker(Enum):
@@ -45,7 +45,7 @@ class Comment:
             self._text = []
         else:
             self._text = LazyNotInit
-        from devana.syntax_abstraction.organizers.sourcefile import SourceFile
+        from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
         self._parent: SourceFile = parent
 
     @classmethod
@@ -100,7 +100,7 @@ class Comment:
     def _text_from_location(self) -> List[str]:
         if self._parent.path is None:
             return []
-        with open(self._parent.path, "r") as file:
+        with open(self._parent.path, "r") as file: # pylint: disable=unspecified-encoding
             lines = file.read().split('\n')
             lines = list(map(lambda e: e.rstrip('\r'), lines))
             if self._marker == CommentMarker.MULTI_LINE and self._begin.row == self._end.row:
@@ -114,7 +114,7 @@ class Comment:
             elif self._marker == CommentMarker.MULTI_LINE:
                 lines[0] = lines[0][self._begin.col + 1:]
                 lines[-1] = lines[-1][:self._end.col - 2]
-                for index, line in enumerate(lines):
+                for _index, line in enumerate(lines):
                     result.append(line)
             return result
 

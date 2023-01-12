@@ -11,7 +11,7 @@ class FakeEnum(type):
         available_enums = [e.name for e in list(enum_source)]
         if item in available_enums:
             enum = getattr(enum_source, item)
-            return cls(enum.value)
+            return cls(enum.value)  # pylint: disable=no-value-for-parameter
         return type.__getattribute__(cls, item)
 
     def __iter__(cls):

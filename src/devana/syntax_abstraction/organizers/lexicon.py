@@ -1,7 +1,7 @@
+from typing import Optional, List, Union
+from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.utility.errors import ParserError, CodeError
-from clang import cindex
-from typing import Optional, List, Union
 
 
 class Lexicon:
@@ -33,11 +33,11 @@ class Lexicon:
 
         if issubclass(type(source), CodeContainer):
 
-            from devana.syntax_abstraction.organizers.sourcefile import SourceFile
+            from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
             if issubclass(type(source), SourceFile):
                 instance: Lexicon = source.parent.lexicon
                 if source is not None:
-                    instance._sources.append(source)
+                    instance._sources.append(source) # pylint: disable=protected-access
                 return instance
 
             match = list(x for x in source.parent.lexicon.nodes if x.namespace == source.namespace)
@@ -47,7 +47,7 @@ class Lexicon:
 
                 if hasattr(source, "is_declaration") and (hasattr(source, "template") and source.template is None):
                     sources = []
-                    for s in instance._sources:
+                    for s in instance._sources: # pylint: disable=protected-access
                         if not hasattr(s, "is_declaration"):
                             sources.append(s)
                             continue
@@ -64,10 +64,10 @@ class Lexicon:
                                 if s.is_definition: # noqa
                                     raise ParserError("Multiple definitions.")
                                 sources.append(source)
-                    instance._sources = sources
+                    instance._sources = sources # pylint: disable=protected-access
                 else:
                     if source is not None:
-                        instance._sources.append(source)
+                        instance._sources.append(source) # pylint: disable=protected-access
 
                 return instance
             return cls(source)
@@ -173,6 +173,7 @@ class Lexicon:
         return self.parent.find_content(name)
 
     def _find_type_from_name(self, name: str, namespace_scope: Optional[List[str]] = None) -> Optional:
+        # pylint: disable=import-outside-toplevel
         from devana.syntax_abstraction.typedefinfo import TypedefInfo
         from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
         content = self.find_content(name, namespace_scope)
@@ -209,7 +210,7 @@ class Lexicon:
         lex = self.root
         result = None
         templates_count = 0
-        from devana.syntax_abstraction.classinfo import ClassInfo
+        from devana.syntax_abstraction.classinfo import ClassInfo # pylint: disable=import-outside-toplevel
         for i, n in enumerate(reversed(namespaces)):
             if i == len(namespaces) - 1:
                 result = lex.find_content(n)
@@ -249,7 +250,7 @@ class Lexicon:
         return result
 
     def find_type(self, element: Union[str, cindex.Cursor], namespace_scope: Optional[List[str]] = None) -> Optional:
-        if type(element) is str:
+        if isinstance(element, str):
             return self._find_type_from_name(element, namespace_scope)
         else:
             return self._find_type_from_cursor(element)
@@ -258,7 +259,7 @@ class Lexicon:
 
         def finder(lexicon, searched_cursor):
             for c in lexicon.content:
-                if c._cursor == searched_cursor: # noqa
+                if c._cursor == searched_cursor: # noqa pylint: disable=protected-access
                     return c
             for node in lexicon.nodes:
                 result = finder(node, searched_cursor)
@@ -271,7 +272,7 @@ class Lexicon:
     @property
     def allowed_namespaces(self) -> List:
         """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
-        from devana.syntax_abstraction.usingnamespace import UsingNamespace
+        from devana.syntax_abstraction.usingnamespace import UsingNamespace # pylint: disable=import-outside-toplevel
         allowed = []
         for c in self.content:
             if isinstance(c, UsingNamespace):

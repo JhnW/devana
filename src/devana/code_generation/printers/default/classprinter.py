@@ -1,14 +1,14 @@
+from devana.syntax_abstraction.classinfo import *
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
 from .functionprinter import FunctionPrinter
 from .variableprinter import VariablePrinter
-from devana.syntax_abstraction.classinfo import *
-from typing import Optional
 
 
 class AccessSpecifierPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for class members access specifier."""
 
     def print(self, source: AccessSpecifier, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
@@ -19,12 +19,14 @@ class AccessSpecifierPrinter(ICodePrinter, DispatcherInjectable):
 
 
 class MethodPrinter(FunctionPrinter):
+    """Printer for class method."""
 
     def print(self, source: MethodInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         return super().print(source, config)
 
 
 class ConstructorPrinter(FunctionPrinter):
+    """Printer for class constructor."""
 
     def print(self, source: ConstructorInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
@@ -54,7 +56,7 @@ class ConstructorPrinter(FunctionPrinter):
             specialisation_values = []
 
             for s in source.template.specialisation_values:
-                if type(s) is str:
+                if isinstance(s, str):
                     specialisation_values.append(s)
                 else:
                     specialisation_values.append(self.printer_dispatcher.print(s, config, source))
@@ -127,13 +129,14 @@ class ConstructorPrinter(FunctionPrinter):
 
 
 class DestructorPrinter(FunctionPrinter):
+    """Printer for class destructor."""
 
     def print(self, source: DestructorInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         return super().print(source, config)
 
 
 class FieldPrinter(VariablePrinter):
-
+    """Printer for class field."""
     def print(self, source: FieldInfo, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
@@ -147,12 +150,13 @@ class FieldPrinter(VariablePrinter):
 
 
 class ClassPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for class/struct declaration."""
 
     def print(self, source: ClassInfo, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
-        if type(context) is TypeExpression or type(context) is InheritanceInfo.InheritanceValue:
+        if isinstance(context, (TypeExpression, InheritanceInfo.InheritanceValue)):
             return source.name
         else:
 
@@ -173,7 +177,7 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
                 specialisation_values = []
 
                 for s in source.template.specialisation_values:
-                    if type(s) is str:
+                    if isinstance(s, str):
                         specialisation_values.append(s)
                     else:
                         specialisation_values.append(self.printer_dispatcher.print(s, config, source))
@@ -219,6 +223,7 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
 
 
 class SectionPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for class section."""
 
     def print(self, source: SectionInfo, config: Optional[PrinterConfiguration] = None,
               context: Optional = None) -> str:

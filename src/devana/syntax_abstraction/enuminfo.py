@@ -1,3 +1,6 @@
+import re
+from typing import Optional, List, Literal
+from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
@@ -7,9 +10,6 @@ from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-import re
-from clang import cindex
-from typing import Optional, List, Literal
 
 
 class EnumInfo(CodeContainer, DescriptiveByAttributes):
@@ -196,7 +196,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             raise ValueError("Scoped enum do not allow None prefix.")
         if value is None:
             self._prefix = None
-        if value != "class" and value != "struct":
+        if value in ("class", "struct"):
             raise ValueError("Only None or sting class or struct are allowed.")
         self._prefix = value
 

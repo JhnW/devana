@@ -1,3 +1,4 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.classinfo import ClassInfo
@@ -7,17 +8,18 @@ from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
 from devana.code_generation.printers.default.variableprinter import VariablePrinter
 from .utilityprinters import namespaces_string
-from typing import Optional
+
 
 
 class FunctionPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for function declaration."""
 
     @staticmethod
     def _is_modification_scope(source: FunctionInfo) -> bool:
         """Determine to print modifications only in class scope."""
         mod: FunctionModification = source.modification
         if mod.is_explicit or mod.is_final or mod.is_virtual or mod.is_override:
-            if type(source.parent) is ClassInfo:
+            if isinstance(source.parent, ClassInfo):
                 return True
         return False
 
@@ -44,7 +46,7 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             specialisation_values = []
 
             for s in source.template.specialisation_values:
-                if type(s) is str:
+                if isinstance(s, str):
                     specialisation_values.append(s)
                 else:
                     specialisation_values.append(self.printer_dispatcher.print(s, config, source))
@@ -106,12 +108,12 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
 
         if source.is_declaration:
             result += ";"
-            if type(context) is ExternC and len(context.content) == 1:
+            if isinstance(context, ExternC) and len(context.content) == 1:
                 return result  # extern c element will format new line and indent
             else:
                 formatter.print_line(result)
         else:
-            if type(context) is not ExternC or (type(context) is ExternC and len(context.content) != 1):
+            if not isinstance(context, ExternC) or (isinstance(context, ExternC) and len(context.content) != 1):
                 formatter.line = result
             formatter.next_line()
             formatter.print_line("{")
@@ -128,7 +130,7 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             for line in body:
                 formatter.print_line(line)
             formatter.indent.count -= 1
-            if type(context) is ExternC and len(context.content) == 1:
+            if isinstance(context, ExternC) and len(context.content) == 1:
                 return result + formatter.text + "}"
             else:
                 formatter.print_line("}")
@@ -136,6 +138,7 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
 
 
 class ArgumentPrinter(VariablePrinter):
+    """Printer for arguments used in function declaration."""
 
     def print(self, source: FunctionInfo.Argument, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         result = super().print(source, config)

@@ -1,3 +1,5 @@
+from typing import Optional, List
+from clang import cindex
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -5,8 +7,6 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-from clang import cindex
-from typing import Optional, List
 
 
 class FunctionType(IBasicCreatable, ICursorValidate):

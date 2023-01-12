@@ -1,12 +1,14 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
-from typing import Optional
+
 
 
 class NamespacePrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for namespace."""
 
     def print(self, source: NamespaceInfo, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:

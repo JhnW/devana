@@ -4,6 +4,7 @@ from devana.code_generation.stubtype import StubType
 
 
 class StubTypePrinter(ICodePrinter, DispatcherInjectable):
+    """Stub class to print everything."""
 
     def print(self, source: StubType, _1=None, _2=None) -> str:
         return source.name

@@ -1,6 +1,6 @@
 class CodeError(ValueError):
-    pass
+    """Expressions in the code as C/C++ standard."""
 
 
 class ParserError(CodeError):
-    pass
+    """Parsing error, most commonly due to backend errors or the use of unsupported syntax."""

@@ -1,12 +1,13 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.comment import Comment, CommentMarker
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
-from typing import Optional
 
 
 class CommentPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for comments."""
 
     def print(self, source: Comment, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:

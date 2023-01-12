@@ -1,3 +1,6 @@
+import re
+from typing import Optional
+from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.comment import Comment
@@ -5,8 +8,6 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-from clang import cindex
-from typing import Optional
 
 
 class Variable(IBasicCreatable):
@@ -64,7 +65,6 @@ class Variable(IBasicCreatable):
     def default_value(self) -> Optional[any]:
         """Default value assigned to variable."""
         self._default_value = None
-        import re
         pattern = r".+=\s*(.+)"
         matches = re.search(pattern, self.text_source.text)
         if matches is not None:

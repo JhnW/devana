@@ -1,9 +1,9 @@
+from abc import ABC, abstractmethod
+from typing import Optional, List
+from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-from abc import ABC, abstractmethod
-from clang import cindex
-from typing import Optional, List
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
 
@@ -74,7 +74,7 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
         if self.lexicon is not None:
             return self.lexicon.allowed_namespaces # noqa
-        from devana.syntax_abstraction.usingnamespace import UsingNamespace
+        from devana.syntax_abstraction.usingnamespace import UsingNamespace # pylint: disable=import-outside-toplevel
         allowed = []
         for c in self.content:
             if isinstance(c, UsingNamespace):
@@ -94,7 +94,6 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
     @abstractmethod
     def _content_types(self) -> List:
         """Overwrite this method to feed _create_content with a list of types."""
-        pass
 
     def _create_content(self) -> List[any]:
         """Overwrite this method to filter witch content should be parsed inside class."""
@@ -110,22 +109,22 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
                     element = t.from_cursor(children, self)
                     if element is None:
                         continue
-                    else:
-                        break
+                    break
                 except ParserError:
                     if is_ignore_on_error:
                         continue
                     if is_abort_on_error:
                         raise
-                    config.logger.warning(f"Parser error during create content of {self} in type {t} "
-                                          f"for cursor {children.spelling}.")
+                    config.logger.warning("Parser error during create content of %s in type %s "
+                                          "for cursor %s.", self, t, children.spelling)
                     continue
             if element is None:
                 if is_ignore_on_error:
                     continue
                 if is_abort_on_error:
                     raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
-                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning("Cannot match any type for content of %s n cursor %s.",
+                                      self, children.spelling)
                 continue
             content.append(element)
         return content

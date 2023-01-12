@@ -1,3 +1,7 @@
+from enum import Enum, auto
+import re
+from typing import Optional, List, Tuple, cast
+from clang import cindex
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.codepiece import CodePiece
@@ -11,13 +15,10 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
-from typing import Optional, List, Tuple, cast
-from enum import Enum, auto
-from clang import cindex
-import re
 
 
 class AccessSpecifier(Enum):
+    """C++ class access specifier to members."""
     PUBLIC = "public"
     PRIVATE = "private"
     PROTECTED = "protected"
@@ -197,9 +198,8 @@ class MethodInfo(FunctionInfo, ClassMember):
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        return cursor.kind == cindex.CursorKind.CXX_METHOD \
-               or cursor.kind == cindex.CursorKind.FUNCTION_TEMPLATE \
-               or cursor.kind == cindex.CursorKind.CONVERSION_FUNCTION
+        return cursor.kind in (cindex.CursorKind.CXX_METHOD, cindex.CursorKind.FUNCTION_TEMPLATE,
+                               cindex.CursorKind.CONVERSION_FUNCTION)
 
     @property
     @lazy_invoke
@@ -268,14 +268,14 @@ class ConstructorInfo(MethodInfo):
         if c is not None:
             try:
                 while True:
-                    if c.kind == cindex.CursorKind.MEMBER_REF or c.kind == cindex.CursorKind.TYPE_REF:
+                    if c.kind in (cindex.CursorKind.MEMBER_REF, cindex.CursorKind.TYPE_REF):
                         name = c.spelling
                         name = name.replace("class ", "").replace("struct ", "")
                         c = next(it)
                         if c.kind == cindex.CursorKind.MEMBER_REF:
                             continue
                         text = CodePiece(c).text
-                        if c.kind == cindex.CursorKind.UNEXPOSED_EXPR or c.kind == cindex.CursorKind.CALL_EXPR:
+                        if c.kind in (cindex.CursorKind.UNEXPOSED_EXPR, cindex.CursorKind.CALL_EXPR):
                             if c.kind == cindex.CursorKind.CALL_EXPR:
                                 pattern = re.compile(
                                     name + r"\((.*)\)")  # parse args for function like Base(5)or Base()
@@ -393,7 +393,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        return cursor.kind == cindex.CursorKind.FIELD_DECL or cursor.kind == cindex.CursorKind.VAR_DECL
+        return cursor.kind in (cindex.CursorKind.FIELD_DECL, cindex.CursorKind.VAR_DECL)
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> any:
@@ -513,7 +513,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
         start = False
         for c in self.parent.content:
             if start:
-                if type(c) is SectionInfo:
+                if isinstance(c, SectionInfo):
                     break
                 content.append(c)
             else:
@@ -702,8 +702,8 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
                 self._is_class = False
             elif cursor.kind == cindex.CursorKind.CLASS_DECL:
                 self._is_class = True
-            elif cursor.kind == cindex.CursorKind.CLASS_TEMPLATE \
-                    or cursor.kind == cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+            elif cursor.kind in (cindex.CursorKind.CLASS_TEMPLATE,
+                                 cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
                 if re.search(rf"class\s+{self.name}", self.text_source.text):
                     self._is_class = True
                 elif re.search(rf"struct\s+{self.name}", self.text_source.text):
@@ -757,8 +757,8 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             return True
         elif cursor.kind == cindex.CursorKind.CLASS_DECL:
             return True
-        elif cursor.kind == cindex.CursorKind.CLASS_TEMPLATE \
-                or cursor.kind == cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+        elif cursor.kind in (cindex.CursorKind.CLASS_TEMPLATE,
+                cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
             return True
         else:
             return False
@@ -766,12 +766,12 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
     @property
     def constructors(self) -> Tuple[ConstructorInfo]:
         """Constructors associated with class."""
-        return cast(Tuple[ConstructorInfo], tuple(filter(lambda e: type(e) is ConstructorInfo, self.content)))
+        return cast(Tuple[ConstructorInfo], tuple(filter(lambda e: isinstance(e, ConstructorInfo), self.content)))
 
     @property
     def destructor(self) -> Optional[DestructorInfo]:
         """Destructor associated with class."""
-        destructor = list(filter(lambda e: type(e) is DestructorInfo, self.content))
+        destructor = list(filter(lambda e: isinstance(e, DestructorInfo), self.content))
         if len(destructor) == 0:
             return None
         return destructor[0]
@@ -784,11 +784,11 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
     @property
     def fields(self) -> Tuple[FieldInfo]:
         """Class fields."""
-        return cast(Tuple[FieldInfo], tuple(filter(lambda e: type(e) is FieldInfo, self.content)))
+        return cast(Tuple[FieldInfo], tuple(filter(lambda e: isinstance(e, FieldInfo), self.content)))
 
     @property
     def methods(self) -> Tuple[MethodInfo]:
-        return cast(Tuple[MethodInfo], tuple(filter(lambda e: type(e) is MethodInfo, self.content)))
+        return cast(Tuple[MethodInfo], tuple(filter(lambda e: isinstance(e, MethodInfo), self.content)))
 
     @property
     def private(self) -> Tuple[any]:
@@ -854,7 +854,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             return cast(Tuple[SectionInfo], ())
 
         section = None
-        if not type(self.content[0]) is SectionInfo:
+        if not isinstance(self.content[0], SectionInfo):
             section = SectionInfo(parent=self)
             section.content = []
             if self.is_class:
@@ -864,7 +864,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             sections.append(section)
 
         for content in self.content:
-            if type(content) is SectionInfo:
+            if isinstance(content, SectionInfo):
                 section = None
                 sections.append(content)
             else:
@@ -1003,6 +1003,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
 
     @property
     def _content_types(self) -> List:
+        # pylint: disable=import-outside-toplevel
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.enuminfo import EnumInfo
         from devana.syntax_abstraction.using import Using
@@ -1017,11 +1018,11 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         is_abort_on_error = config.parsing.error_strategy == ParsingErrorPolicy.ABORT
         is_ignore_on_error = config.parsing.error_strategy == ParsingErrorPolicy.IGNORE
         for children in self._cursor.get_children():
-            if children.kind == cindex.CursorKind.CXX_FINAL_ATTR \
-                    or children.kind == cindex.CursorKind.TEMPLATE_TYPE_PARAMETER \
-                    or children.kind == cindex.CursorKind.CXX_BASE_SPECIFIER \
-                    or children.kind == cindex.CursorKind.NAMESPACE_REF \
-                    or children.kind == cindex.CursorKind.TYPE_REF:
+            if children.kind in (cindex.CursorKind.CXX_FINAL_ATTR,
+                    cindex.CursorKind.TEMPLATE_TYPE_PARAMETER,
+                    cindex.CursorKind.CXX_BASE_SPECIFIER,
+                    cindex.CursorKind.NAMESPACE_REF,
+                    cindex.CursorKind.TYPE_REF):
                 continue  # to avoid parsing keywords in class declaration - final and templates params
             element: Optional = None
             for t in types:
@@ -1029,8 +1030,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
                     element = t.from_cursor(children, self)
                     if element is None:
                         continue
-                    else:
-                        break
+                    break
                 except ParserError:
                     if is_ignore_on_error:
                         continue
@@ -1044,7 +1044,8 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
                     continue
                 if is_abort_on_error:
                     raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
-                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning('Cannot match any type for content of %s n cursor %s.',
+                                      self, children.spelling)
                 continue
             content.append(element)
         return content

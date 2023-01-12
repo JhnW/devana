@@ -1,10 +1,10 @@
+from typing import Optional, List
+from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.utility.errors import ParserError
 from devana.utility.lazy import lazy_invoke
-from typing import Optional, List
-from clang import cindex
 
 
 class ExternC(CodeContainer):

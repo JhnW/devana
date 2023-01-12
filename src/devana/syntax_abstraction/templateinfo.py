@@ -1,3 +1,7 @@
+import re
+from pathlib import Path
+from typing import Optional, List, Union, Tuple
+from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -5,13 +9,10 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
-import re
-from pathlib import Path
-from typing import Optional, List, Union, Tuple
-from clang import cindex
 
 
 class GenericTypeParameter:
+    """An unresolved generic template parameter, known idiomatically in C++ as T."""
 
     def __init__(self, name: str, parent: Optional = None):
         self._name = name
@@ -55,6 +56,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
     """General template syntax information abut template definition."""
 
     class TemplateParameter(IBasicCreatable, ICursorValidate):
+        """A description of the generic component for the type/function claim."""
+
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             self._cursor = cursor
@@ -96,7 +99,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
 
         @specifier.setter
         def specifier(self, value):
-            if value != "class" and value != "typename":
+            if value not in ("class", "typename"):
                 raise ValueError("Only class or typename specifier is allowed.")
             self._specifier = value
 
@@ -194,8 +197,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
     @property
     @lazy_invoke
     def specialisation_values(self) -> List[Union[TypeExpression, str]]:
-        """Used values for partial specialisation, types or string for other values."""
-        """Return all other defined specialisations of template."""
+        """Used values for partial specialisation, types or string for other values.
+        Return all other defined specialisations of template."""
         self._specialisation_values = []
         num_args = self._cursor.type.get_num_template_arguments()
         is_type = True
@@ -210,11 +213,10 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             self._specialisation_values.append(t)
             # reformat type names
             if t.is_generic:
-                import re
                 m = re.match(r"type-parameter-(\d+)-(\d+)", t.name)
                 i = int(m.group(2))
-                t._name = self.parameters[i].name
-                t.details._name = t.name
+                t._name = self.parameters[i].name # pylint: disable=protected-access
+                t.details._name = t.name # pylint: disable=protected-access
 
         if self._specialisation_values:
             return self._specialisation_values
@@ -228,12 +230,10 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         tokens = [t.spelling for t in tokens]
         base_text = "".join(tokens)
         pattern = self.parent.name + r"<(.+)>\("
-        import re
         match = re.findall(pattern, base_text)
         if match:
             arguments = match[0].split(",")
             num_args = len(arguments)
-            from devana.syntax_abstraction.codepiece import CodePiece
             code_piece = CodePiece(self._cursor.lexical_parent)
             text = code_piece.text
             fnc_text = self.parent.text_source.text
@@ -244,8 +244,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             function_placeholder += "int a);\n"
             text = text[0] + "\n" + fnc_text + "\n" + function_placeholder + "\n" + text[1]
 
-            from devana.syntax_abstraction.functioninfo import FunctionInfo
-            from devana.syntax_abstraction.organizers.sourcefile import SourceFile
+            from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
+            from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
             idx = cindex.Index.create()
             tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
                            unsaved_files=[('tmp.h', text)], options=0)
@@ -256,21 +256,21 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             element = self.parent
             while True:
                 parent = element.parent
-                if parent is None or type(parent) is SourceFile:
+                if parent is None or isinstance(parent, SourceFile):
                     break
                 parents.append(parent.name)
 
             container = file
             for p in reversed(parents):
                 container = container.content
-                container = list(filter(lambda x: hasattr(x, "name") and x.name == p, container))[0]
+                container = list(filter(lambda x: hasattr(x, "name") and x.name == p, container))[0] # pylint: disable=cell-var-from-loop
 
             stub_function_find = filter(
                 lambda f: hasattr(f, "name") and f.name == "___devana______fooPlaceholderToGetParm",
                 container.content)
             stub_function: FunctionInfo = list(stub_function_find)[0]
-            stub_function._parent = self.parent.parent
-            stub_function._lexicon = self.parent.lexicon
+            stub_function._parent = self.parent.parent # pylint: disable=protected-access
+            stub_function._lexicon = self.parent.lexicon # pylint: disable=protected-access
 
             # now extracts type information based on stub functions args
             for i in range(num_args):
@@ -300,7 +300,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         values = filter(lambda v: v.template is not None, values)
         values = filter(lambda v: v.template.specialisation_values, values)
 
-        from devana.syntax_abstraction.functioninfo import FunctionInfo
+        from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
         if isinstance(self.parent, FunctionInfo):  # handle overloading functions
             if self.parent.template.specialisation_values:
                 return ()
@@ -316,7 +316,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
                     if self.parent.arguments[i].type.is_generic:
                         # find template parameter
                         param_id = None
-                        for j, p in enumerate(self.parameters):
+                        for _, p in enumerate(self.parameters):
                             if p.name == self.parent.arguments[i].type.details.name:
                                 param_id = i
                         if param_id is None:

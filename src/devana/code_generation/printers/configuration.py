@@ -1,11 +1,12 @@
-from devana.syntax_abstraction.attribute import AttributeDeclaration, Attribute
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from sys import platform
 from typing import List, Optional
+from devana.syntax_abstraction.attribute import AttributeDeclaration, Attribute
 
 
 class LineEndings(Enum):
+    """Kind of used line endings."""
     LF = auto()
     CR_LF = auto()
     CR = auto()
@@ -26,7 +27,7 @@ class LineEndings(Enum):
 
     @staticmethod
     def detect():
-        if platform == "linux" or platform == "linux2":
+        if platform in ("linux", "linux2"):
             return LineEndings.LINUX
         elif platform == "darwin":
             return LineEndings.MAC_OS
@@ -43,6 +44,7 @@ class LineEndings(Enum):
 
 
 class IndentCharacter(Enum):
+    """Indent character to configure."""
     SPACE = auto()
     TAB = auto()
 
@@ -76,7 +78,7 @@ class Indent:
         return result
 
     def __add__(self, other):
-        if not type(other) is int:
+        if not isinstance(other, int):
             raise NotImplementedError()
         result = Indent(count=self.count + other)
         if result.count <= 0:
@@ -84,7 +86,7 @@ class Indent:
         return result
 
     def __sub__(self, other):
-        if not type(other) is int:
+        if not isinstance(other, int):
             raise NotImplementedError()
         result = Indent(count=self.count - other)
         if result.count < 0:
@@ -97,12 +99,14 @@ class Indent:
 
 @dataclass
 class AttributeFilter:
+    """Filter for possible and forbidden attributes."""
     values: List[str]
     is_forbidden: bool = False
 
 
 @dataclass
 class AttributesCriteria:
+    """More specific attribute admissibility criteria."""
     names: Optional[AttributeFilter] = field(default_factory=lambda: AttributeFilter(["noreturn",
                                                                                       "carries_dependency",
                                                                                       "deprecated",

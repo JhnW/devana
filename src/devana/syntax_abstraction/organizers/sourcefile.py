@@ -1,3 +1,8 @@
+from pathlib import Path
+from typing import Optional, Union, Literal, List, NoReturn
+from enum import Enum, auto
+import re
+from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -5,11 +10,6 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
-from pathlib import Path
-from clang import cindex
-from typing import Optional, Union, Literal, List, NoReturn
-from enum import Enum, auto
-import re
 
 
 class IncludeInfo:
@@ -30,8 +30,8 @@ class IncludeInfo:
             self._text = ""
             pattern = r'#\s*include\s*[<"](.+)[">]'
             file = cursor.source.name
-            with open(file, "r") as f:
-                for i in range(cursor.location.line - 1):
+            with open(file, "r") as f: # pylint: disable=unspecified-encoding
+                for _ in range(cursor.location.line - 1):
                     next(f)
                 self._text = f.readline().rstrip()
             value: Optional = re.search(pattern, self._text)
@@ -112,7 +112,7 @@ class IncludeInfo:
 
         for inc in translation_unit.get_includes():
             path_cursor = Path(inc.include.name).absolute()
-            result = list(filter(lambda p: p == path_cursor or p.name == path_cursor.name, text_includes))
+            result = list(filter(lambda p: p == path_cursor or p.name == path_cursor.name, text_includes)) # pylint: disable=cell-var-from-loop
             if len(result) != 0:
                 includes.append(IncludeInfo(inc))
                 if len(text_includes) > 0 and len(result) > 0:
@@ -121,6 +121,7 @@ class IncludeInfo:
         return includes
 
 class SourceFileType(Enum):
+    """Description of whether we are dealing with a header or source type."""
     HEADER = auto()
     IMPLEMENTATION = auto()
 
@@ -148,7 +149,7 @@ class SourceFile(CodeContainer):
             if not isinstance(source, str):
                 cursor = source
             else:
-                import clang
+                import clang # pylint: disable=import-outside-toplevel
                 index = clang.cindex.Index.create()
                 cursor = index.parse(source, args=self.configuration.parsing.language_version.value.options).cursor
         super().__init__(cursor, parent)
@@ -344,6 +345,7 @@ class SourceFile(CodeContainer):
 
     @property
     def _content_types(self) -> List:
+        # pylint: disable=import-outside-toplevel
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.functioninfo import FunctionInfo
@@ -374,25 +376,25 @@ class SourceFile(CodeContainer):
                     element = t.from_cursor(children, self)
                     if element is None:
                         continue
-                    else:
-                        break
+                    break
                 except ParserError:
                     if is_ignore_on_error:
                         continue
                     if is_abort_on_error:
                         raise
-                    config.logger.warning(f"Parser error during create content of {self} in type {t} "
-                                          f"for cursor {children.spelling}.")
+                    config.logger.warning("Parser error during create content of %s in type %s "
+                                          "for cursor %s.", self, t, children.spelling)
                     continue
             if element is None:
-                if children.kind == cindex.CursorKind.CLASS_TEMPLATE \
-                        or children.kind == cindex.CursorKind.CLASS_TEMPLATE.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION:
+                if children.kind in (cindex.CursorKind.CLASS_TEMPLATE,
+                                     cindex.CursorKind.CLASS_TEMPLATE.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
                     continue  # ignore templates error for special dragon case
                 if is_ignore_on_error:
                     continue
                 if is_abort_on_error:
                     raise ParserError(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
-                config.logger.warning(f"Cannot match any type for content of {self} n cursor {children.spelling}.")
+                config.logger.warning("Cannot match any type for content of %s n cursor %s.",
+                                      self, children.spelling)
                 continue
             content.append(element)
         return content

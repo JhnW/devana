@@ -1,5 +1,6 @@
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from typing import List, Union, Optional
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
+
 
 
 def namespaces_string(source: Optional[Union[List[str], List[Lexicon]]]) -> str:

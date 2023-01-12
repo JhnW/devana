@@ -1,12 +1,13 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, IncludeInfo
-from typing import Optional
 
 
 class FilePrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for whole file."""
 
     def print(self, source: SourceFile, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
@@ -38,13 +39,14 @@ class FilePrinter(ICodePrinter, DispatcherInjectable):
 
 
 class IncludePrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for include directive."""
 
     def print(self, source: IncludeInfo, config: Optional[PrinterConfiguration] = None,
               context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
-        formatter.line = f"#include "
+        formatter.line = "#include "
         if source.is_standard:
             value_begin = "<"
             value_end = ">"

@@ -1,21 +1,21 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.templateinfo import GenericTypeParameter
 from devana.syntax_abstraction.functiontype import FunctionType
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
-from typing import Optional
 
 
 class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for syntax of type usage."""
 
     def print(self, source: TypeExpression, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
-        if type(source.details) is FunctionType:
+        if isinstance(source.details, FunctionType):
             return self._print_with_function_pointer(source, config)
-        else:
-            return self._print_with_standard_type(source, config)
+        return self._print_with_standard_type(source, config)
 
     def _print_with_standard_type(self, source: TypeExpression, config: PrinterConfiguration) -> str:
         prefix = ""
@@ -76,7 +76,7 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
             mods += "mutable "
 
         if source.modification.is_pointer:
-            for i in range(source.modification.pointer_order):
+            for _ in range(source.modification.pointer_order):
                 mods = r"*" + mods
         elif source.modification.is_reference:
             mods = r"&" + mods
@@ -92,6 +92,7 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
 
 
 class GenericTypeParameterPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for generic type of template like T."""
 
     def print(self, source: GenericTypeParameter, _1=None, _2=None) -> str:
         return source.name

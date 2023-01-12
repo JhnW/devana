@@ -1,3 +1,5 @@
+from typing import Optional, List
+from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.codepiece import CodePiece
@@ -6,8 +8,6 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from clang import cindex
-from typing import Optional, List
 
 
 class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
@@ -74,6 +74,7 @@ class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
 
     @property
     def _content_types(self) -> List:
+        # pylint: disable=import-outside-toplevel
         from devana.syntax_abstraction.usingnamespace import UsingNamespace
         from devana.syntax_abstraction.using import Using
         from devana.syntax_abstraction.classinfo import ClassInfo, MethodInfo

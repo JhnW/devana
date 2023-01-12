@@ -1,18 +1,20 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.syntax_abstraction.functiontype import FunctionType
-from typing import Optional
+
 
 
 class VariablePrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for variable usage."""
 
     def print(self, source: Variable, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:
             config = PrinterConfiguration()
-        if type(source.type.details) is FunctionType:
+        if isinstance(source.type.details, FunctionType):
             fnc: FunctionType = source.type.details
             return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
             args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
@@ -30,7 +32,7 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
                 mods += "mutable "
 
             if source.type.modification.is_pointer:
-                for i in range(source.type.modification.pointer_order):
+                for _ in range(source.type.modification.pointer_order):
                     mods = mods + r"*"
             elif source.type.modification.is_reference:
                 mods = mods + r"&"
@@ -56,6 +58,7 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
 
 
 class GlobalVariablePrinter(VariablePrinter):
+    """Printer for global variable declaration."""
 
     def print(self, source: GlobalVariable, config: Optional[PrinterConfiguration] = None, _=None) -> str:
         if config is None:

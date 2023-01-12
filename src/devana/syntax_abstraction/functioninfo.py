@@ -1,3 +1,7 @@
+from typing import Optional, Tuple, List
+from enum import auto, IntFlag
+import re
+from clang import cindex
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -9,13 +13,10 @@ from devana.syntax_abstraction.attribute import DescriptiveByAttributes, Attribu
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
-from clang import cindex
-from typing import Optional, Tuple, List
-from enum import auto, IntFlag
-import re
 
 
 class FunctionModification(IntFlag):
+    """Modification for functions and methods."""
     NONE = auto()
     CONST = auto()
     EXPLICIT = auto()
@@ -169,7 +170,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        return cursor.kind == cindex.CursorKind.FUNCTION_DECL or cursor.kind == cindex.CursorKind.FUNCTION_TEMPLATE
+        return cursor.kind in (cindex.CursorKind.FUNCTION_DECL, cindex.CursorKind.FUNCTION_TEMPLATE)
 
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:

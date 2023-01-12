@@ -1,3 +1,4 @@
+from typing import Optional
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.enuminfo import EnumInfo
 from devana.syntax_abstraction.typeexpression import BasicType
@@ -5,16 +6,16 @@ from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.code_generation.printers.formatter import Formatter
-from typing import Optional
 
 
 class EnumPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for enum declaration."""
 
     def print(self, source: EnumInfo, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
-        if type(context) is TypeExpression:
+        if isinstance(context, TypeExpression):
             return source.name
 
         if source.associated_comment:
@@ -26,7 +27,7 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
         if source.is_scoped:
             formatter.line += f" {source.prefix}"
         formatter.line += f" {source.name}"
-        if source.numeric_type != BasicType.INT and source.numeric_type != BasicType.U_INT:  # OS standard types
+        if source.numeric_type not in (BasicType.INT, BasicType.U_INT):  # OS standard types
             formatter.line += f": {self.printer_dispatcher.print(source.numeric_type, config, source)}"
         if source.is_declaration:
             formatter.line += ";"
@@ -51,6 +52,7 @@ class EnumPrinter(ICodePrinter, DispatcherInjectable):
 
 
 class EnumAsTypePrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for enum used as type inside expression."""
 
     def print(self, source: EnumInfo, _1=None, _2=None) -> str:
         return source.name

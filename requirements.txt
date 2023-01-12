@@ -11,3 +11,4 @@ sphinx-autodoc-typehints==1.18.3
 gitchangelog==3.0.4
 wheel>=0.36.2
 keyring==23.7.0
+pylint==2.15.10

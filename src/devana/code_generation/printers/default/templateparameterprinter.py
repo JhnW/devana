@@ -4,6 +4,7 @@ from devana.code_generation.printers.dispatcherinjectable import DispatcherInjec
 
 
 class TemplateParameterPrinter(ICodePrinter, DispatcherInjectable):
+    """Printer for template parameter."""
 
     def print(self, source: TemplateInfo.TemplateParameter, _1=None, _2=None) -> str:
 

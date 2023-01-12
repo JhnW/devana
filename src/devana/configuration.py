@@ -12,7 +12,6 @@ class IValidateConfig(ABC):
     def validate(self):
         """This method do not return value. Each problem should be reported as an appropriate exception.
         This exception will be propagated to the client using the library."""
-        pass
 
 
 @dataclass
@@ -20,11 +19,11 @@ class CommentsParsing(IValidateConfig):
     """The class defines how and how extensively the parsing of comments in the code is performed."""
 
     accumulate: bool = True
-    """Setting that defines whether consecutive C ++ style one-line comments starting 
+    """Setting that defines whether consecutive C ++ style one-line comments starting
     with '//' will be combined into a single collective instance."""
     unpinned_comments_allowed: bool = False
-    """Specifies whether to parse or omit comments that are not attached to the code 
-    (they do not precede classes, functions, type definitions, class fields, methods, etc.). 
+    """Specifies whether to parse or omit comments that are not attached to the code
+    (they do not precede classes, functions, type definitions, class fields, methods, etc.).
     This does not affect the parsing of the file preamble."""
     deep_parsing: bool = False
     """Defines parsing of additional content, e.g. comments to function arguments."""
@@ -44,6 +43,7 @@ class LanguageStandard(Enum):
     """Defines according to the rules which language version the parsing of files will take place."""
 
     class LanguageStandardData:
+        """Version of C++ or C standard."""
         def __init__(self, options: List[str], value):
             self._value = value
             self._options = options
@@ -73,6 +73,7 @@ class LanguageStandard(Enum):
 
 
 class ParsingErrorPolicy(Enum):
+    """Rules for dealing with errors when parsing."""
     IGNORE = auto()
     """Ignore all errors."""
     LOG = auto()
@@ -87,6 +88,7 @@ class ParsingErrorPolicy(Enum):
 
 @dataclass
 class ParsingConfiguration(IValidateConfig):
+    """Code parser configuration."""
     comments: CommentsParsing = field(default_factory=lambda: CommentsParsing())
     """Comments parsing settings."""
     language_version: LanguageStandard = field(default_factory=lambda: LanguageStandard.create_default())
@@ -100,8 +102,9 @@ class ParsingConfiguration(IValidateConfig):
 
 @dataclass
 class Configuration(IValidateConfig):
+    """Main configuration."""
     parsing: ParsingConfiguration = field(default_factory=lambda: ParsingConfiguration())
-    """Configuring the parsing of C ++ files, this is how the C ++ code will be transformed 
+    """Configuring the parsing of C ++ files, this is how the C ++ code will be transformed
     into the appropriate python classes instances."""
     logger: logging = field(default_factory=lambda: Configuration._create_default_logger())
     """Currently used standard logger instance."""

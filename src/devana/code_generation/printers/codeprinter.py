@@ -1,7 +1,8 @@
-from devana.code_generation.printers.icodeprinter import ICodePrinter
-from devana.code_generation.printers.configuration import PrinterConfiguration
 from dataclasses import dataclass
 from typing import List, Optional, Dict
+from devana.code_generation.printers.icodeprinter import ICodePrinter
+from devana.code_generation.printers.configuration import PrinterConfiguration
+
 
 
 @dataclass

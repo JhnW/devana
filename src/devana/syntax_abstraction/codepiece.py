@@ -1,7 +1,7 @@
+from typing import Optional
+from clang import cindex
 from devana.syntax_abstraction.codelocation import CodeLocation
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from clang import cindex
-from typing import Optional
 
 
 class CodePiece:
@@ -118,7 +118,7 @@ class CodePiece:
         last_line = split_text[-1]
         indent_len = len(last_line) - len(last_line.lstrip())
         prefix = ""
-        for i in range(indent_len):
+        for _ in range(indent_len):
             prefix += " "
         result = ""
         for line in split_text:

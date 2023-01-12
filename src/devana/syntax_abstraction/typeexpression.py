@@ -1,12 +1,12 @@
+from typing import List, Optional, Union
+from enum import Enum, auto, IntFlag
+import re
+from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.utility.fakeenum import FakeEnum
 from devana.utility.traits import IBasicCreatable
-from clang import cindex
-from typing import List, Optional, Union
-from enum import Enum, auto, IntFlag
-import re
 
 
 class BasicType(Enum):
@@ -14,6 +14,7 @@ class BasicType(Enum):
     subclass."""
 
     class BasicTypeValue:
+        """Internal value od basic type."""
 
         def __init__(self, name: str, value, unsigned: bool = False):
             self._name = name
@@ -51,8 +52,8 @@ class BasicType(Enum):
         return self.value.unsigned
 
     @property
-    def name(self) -> str:
-        return self.value.name
+    def name(self) -> str: # pylint: disable=function-redefined disable=invalid-overridden-method
+        return self.value.name # pylint: disable=invalid-overridden-method
 
     @property
     def unknown(self) -> bool:
@@ -99,7 +100,9 @@ class BasicType(Enum):
 
 
 class TypeModification(metaclass=FakeEnum):
+    """Possible type modifications like const or being a pointer type."""
     class ModificationKind(IntFlag):
+        """Internal enum list."""
         NONE = auto()
         REFERENCE = auto()
         POINTER = auto()
@@ -156,11 +159,11 @@ class TypeModification(metaclass=FakeEnum):
 
     @classmethod
     def create_array(cls, order):
-        return TypeModification.ARRAY(order) # noqa
+        return TypeModification.ARRAY(order) # noqa pylint: disable=not-callable
 
     @classmethod
     def create_pointer(cls, order):
-        return TypeModification.POINTER(order) # noqa
+        return TypeModification.POINTER(order) # noqa pylint: disable=not-callable
 
     @property
     def value(self) -> ModificationKind:
@@ -422,8 +425,8 @@ class TypeExpression(IBasicCreatable):
         Name of type is exactly the same name as used in expression, with all type modifications, namespace,
         template arguments and use or not type aliases."""
         name = ""
-        from devana.syntax_abstraction.functiontype import FunctionType
-        if type(self.details) is not FunctionType:
+        from devana.syntax_abstraction.functiontype import FunctionType # pylint: disable=import-outside-toplevel
+        if not isinstance(self.details, FunctionType):
             if self.modification.is_static:
                 name += "static "
             if self.modification.is_const:
@@ -509,15 +512,15 @@ class TypeExpression(IBasicCreatable):
         tmp_modification = TypeModification.NONE
         type_c = self._base_type_c
 
-        if type_c.kind == cindex.TypeKind.CONSTANTARRAY or type_c.kind == cindex.TypeKind.INCOMPLETEARRAY:
+        if type_c.kind in (cindex.TypeKind.CONSTANTARRAY, cindex.TypeKind.INCOMPLETEARRAY):
             if type_c.kind == cindex.TypeKind.INCOMPLETEARRAY:
                 self._modification |= TypeModification.ARRAY
             else:
-                order = re.findall(r"\[(.*?)\]", CodePiece(self._cursor).text) # noqa
-                self._modification |= TypeModification.ARRAY(order) # noqa
+                order = re.findall(r"\[(.*?)\]", CodePiece(self._cursor).text) # noqa pylint: disable=not-callable
+                self._modification |= TypeModification.ARRAY(order) # noqa pylint: disable=not-callable
             while True:
                 type_c = type_c.get_array_element_type()
-                if type_c.kind != cindex.TypeKind.CONSTANTARRAY and type_c.kind != cindex.TypeKind.INCOMPLETEARRAY:
+                if type_c.kind not in (cindex.TypeKind.CONSTANTARRAY, cindex.TypeKind.INCOMPLETEARRAY):
                     break
 
         if type_c.kind == cindex.TypeKind.LVALUEREFERENCE:
@@ -533,7 +536,7 @@ class TypeExpression(IBasicCreatable):
                                               "const int *ptr is valid.")
                 tmp_type = tmp_type.get_pointee()
                 order += 1
-            tmp_modification |= TypeModification.POINTER(order) # noqa
+            tmp_modification |= TypeModification.POINTER(order) # noqa pylint: disable=not-callable
         if type_c.kind == cindex.TypeKind.RVALUEREFERENCE:
             tmp_modification |= TypeModification.RVALUE_REF
         type_source = type_c
@@ -604,8 +607,8 @@ class TypeExpression(IBasicCreatable):
     @property
     def is_generic(self) -> bool:
         """Flag informed type is generic or not."""
-        from devana.syntax_abstraction.templateinfo import GenericTypeParameter
-        return type(self.details) is GenericTypeParameter
+        from devana.syntax_abstraction.templateinfo import GenericTypeParameter # pylint: disable=import-outside-toplevel
+        return isinstance(self.details, GenericTypeParameter)
 
     @property
     @lazy_invoke
@@ -614,6 +617,7 @@ class TypeExpression(IBasicCreatable):
 
         This field linked to first type information. If TypeExpression is used by alias, details contain typedef
         information, so jump to root of typedef declaration may be needed."""
+        # pylint: disable=import-outside-toplevel
         type_c = self._base_type_c
         if self.modification.is_pointer or self.modification.is_reference or self.modification.is_rvalue_ref:
             if self.modification.is_pointer:
