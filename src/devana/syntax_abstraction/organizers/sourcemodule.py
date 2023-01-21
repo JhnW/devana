@@ -103,3 +103,8 @@ class SourceModule:
         if not hasattr(element, "parent"):
             return None
         return SourceModule.get_module(element.parent)
+
+
+def get_std_lib_path() -> str:
+    from . import __path__ as ROOT_PATH
+    return ROOT_PATH

@@ -1,8 +1,10 @@
 from enum import Enum, auto
 from dataclasses import dataclass, field
 import logging
+import platform
+from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 
 
 class IValidateConfig(ABC):
@@ -50,7 +52,7 @@ class LanguageStandard(Enum):
 
         @property
         def _compiler_option(self) -> List[str]:
-            """Compiler option, for internal usage"""
+            """Compiler option, for internal usage."""
             return self._options
 
         @property
@@ -86,6 +88,38 @@ class ParsingErrorPolicy(Enum):
         return cls.IGNORE
 
 
+class StandardLibraryMode(Enum):
+    """C/C++ Standard Library delivery mode."""
+    NONE = auto()
+    """Disable standard library delivery."""
+    PLATFORM = auto()
+    """Library provided by the default compiler on your platform, if any are installed."""
+    DEVANA_CLANG = auto()
+    """Library shipped with Devan. Recommended choice for Linux platform."""
+    CUSTOM = auto()
+    """Use  custom std Library provided by path."""
+
+    @classmethod
+    def create_default(cls):
+        """This feature is platform dependent, trying to return the best way to provide a standard library
+        for a given machine."""
+        return cls.DEVANA_CLANG if platform.system() == 'Linux' else cls.PLATFORM
+
+@dataclass
+class StandardLibraryConfiguration(IValidateConfig):
+    """Configuration of std usage."""
+    mode: StandardLibraryMode = field(default_factory=lambda: StandardLibraryMode.create_default())
+    """Delivery mode"""
+    path: Optional[Path] = None
+    """Path for custom standard library, if any."""
+
+    def validate(self):
+        if self.mode is StandardLibraryMode.CUSTOM and self.path is None:
+            raise ValueError("For custom mode path is required.")
+        if self.path is not None and not self.path.is_dir():
+            raise ValueError("Path must be directory.")
+
+
 @dataclass
 class ParsingConfiguration(IValidateConfig):
     """Code parser configuration."""
@@ -95,9 +129,12 @@ class ParsingConfiguration(IValidateConfig):
     """C or C++ standard version."""
     error_strategy: ParsingErrorPolicy = field(default_factory=lambda: ParsingErrorPolicy.create_default())
     """Behavior when non-parsable elements are detected."""
+    standard_library: StandardLibraryConfiguration = field(default_factory=lambda: StandardLibraryConfiguration())
+    """How to provide the language standard library."""
 
     def validate(self):
         self.comments.validate()
+        self.standard_library.validate()
 
 
 @dataclass
