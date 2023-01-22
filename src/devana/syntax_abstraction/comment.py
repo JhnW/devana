@@ -45,7 +45,8 @@ class Comment:
             self._text = []
         else:
             self._text = LazyNotInit
-        from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
+        # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.organizers.sourcefile import SourceFile
         self._parent: SourceFile = parent
 
     @classmethod
@@ -100,7 +101,7 @@ class Comment:
     def _text_from_location(self) -> List[str]:
         if self._parent.path is None:
             return []
-        with open(self._parent.path, "r") as file: # pylint: disable=unspecified-encoding
+        with open(self._parent.path, "r") as file:  # pylint: disable=unspecified-encoding
             lines = file.read().split('\n')
             lines = list(map(lambda e: e.rstrip('\r'), lines))
             if self._marker == CommentMarker.MULTI_LINE and self._begin.row == self._end.row:
@@ -123,8 +124,8 @@ class Comment:
         config: Configuration = self._parent.configuration
         for index, line in enumerate(lines):
             if self.marker == CommentMarker.MULTI_LINE:
-                if 0 < index < len(lines)-1:
-                    line = line[self.begin.col-1:]
+                if 0 < index < len(lines) - 1:
+                    line = line[self.begin.col - 1:]
             if config.parsing.comments.remove_asterisks:
                 if line.startswith("*"):
                     line = line[1:]

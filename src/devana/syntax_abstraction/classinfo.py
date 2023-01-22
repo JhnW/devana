@@ -758,7 +758,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         elif cursor.kind == cindex.CursorKind.CLASS_DECL:
             return True
         elif cursor.kind in (cindex.CursorKind.CLASS_TEMPLATE,
-                cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
+                             cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
             return True
         else:
             return False
@@ -1019,10 +1019,10 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         is_ignore_on_error = config.parsing.error_strategy == ParsingErrorPolicy.IGNORE
         for children in self._cursor.get_children():
             if children.kind in (cindex.CursorKind.CXX_FINAL_ATTR,
-                    cindex.CursorKind.TEMPLATE_TYPE_PARAMETER,
-                    cindex.CursorKind.CXX_BASE_SPECIFIER,
-                    cindex.CursorKind.NAMESPACE_REF,
-                    cindex.CursorKind.TYPE_REF):
+                                 cindex.CursorKind.TEMPLATE_TYPE_PARAMETER,
+                                 cindex.CursorKind.CXX_BASE_SPECIFIER,
+                                 cindex.CursorKind.NAMESPACE_REF,
+                                 cindex.CursorKind.TYPE_REF):
                 continue  # to avoid parsing keywords in class declaration - final and templates params
             element: Optional = None
             for t in types:

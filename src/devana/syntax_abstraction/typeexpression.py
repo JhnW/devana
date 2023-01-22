@@ -52,12 +52,8 @@ class BasicType(Enum):
         return self.value.unsigned
 
     @property
-    def name(self) -> str: # pylint: disable=function-redefined disable=invalid-overridden-method
-        return self.value.name # pylint: disable=invalid-overridden-method
-
-    @property
-    def unknown(self) -> bool:
-        return self.value.unknown
+    def name(self) -> str:  # pylint: disable=function-redefined disable=invalid-overridden-method
+        return self.value.name  # pylint: disable=invalid-overridden-method
 
     @staticmethod
     def from_cursor(cursor: Union[cindex.Cursor, cindex.Type]):
@@ -101,6 +97,7 @@ class BasicType(Enum):
 
 class TypeModification(metaclass=FakeEnum):
     """Possible type modifications like const or being a pointer type."""
+
     class ModificationKind(IntFlag):
         """Internal enum list."""
         NONE = auto()
@@ -260,7 +257,7 @@ class TypeModification(metaclass=FakeEnum):
     def __eq__(self, other):
         if isinstance(other, TypeModification):
             return self.value == other.value and self.pointer_order == other.pointer_order \
-                   and self.array_order == other.array_order
+                and self.array_order == other.array_order
         elif isinstance(other, TypeModification.ModificationKind):
             if self.pointer_order is not None:
                 if self.pointer_order > 1:
@@ -425,7 +422,7 @@ class TypeExpression(IBasicCreatable):
         Name of type is exactly the same name as used in expression, with all type modifications, namespace,
         template arguments and use or not type aliases."""
         name = ""
-        from devana.syntax_abstraction.functiontype import FunctionType # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.functiontype import FunctionType  # pylint: disable=import-outside-toplevel
         if not isinstance(self.details, FunctionType):
             if self.modification.is_static:
                 name += "static "
@@ -607,7 +604,8 @@ class TypeExpression(IBasicCreatable):
     @property
     def is_generic(self) -> bool:
         """Flag informed type is generic or not."""
-        from devana.syntax_abstraction.templateinfo import GenericTypeParameter # pylint: disable=import-outside-toplevel
+        # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.templateinfo import GenericTypeParameter
         return isinstance(self.details, GenericTypeParameter)
 
     @property

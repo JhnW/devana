@@ -8,7 +8,6 @@ from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.classinfo import InheritanceInfo
 
 
-
 class UsingPrinter(ICodePrinter, DispatcherInjectable):
     """Printer for using syntax."""
 

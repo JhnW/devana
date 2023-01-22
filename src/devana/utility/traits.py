@@ -3,7 +3,6 @@ from typing import Optional
 from clang import cindex
 
 
-
 class ICursorValidate(ABC):
     """An interface that specifies that an object can only work with certain types of clang cursors."""
 

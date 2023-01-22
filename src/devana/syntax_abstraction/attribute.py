@@ -4,7 +4,6 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.syntax_abstraction.codepiece import CodePiece
 
 
-
 class Attribute:
     """An attribute defined by the C++11 and C23 standard. In addition to the standard attributes of the C ++ language,
     it can contain any custom attributes, both specific to compilers and not existing in any compiler.
@@ -14,6 +13,7 @@ class Attribute:
     you to enter any compilers (no clear list of attributes, it is impossible to know all compiler-specific attributes).
     Whether the attributes will be printed depends on the currently used configuration.
     Attributes are pre-parsed to extract the namespace and arguments. """
+
     def __init__(self, name: str, namespace: Optional = None, arguments: Optional[List[str]] = None,
                  parent: Optional = None):
         self._name = name
@@ -138,7 +138,7 @@ class AttributeDeclaration:
             return []
 
         index_in_scope = scope.index(source)
-        begin = source.parent.text_source.begin if index_in_scope == 0 else scope[index_in_scope-1].text_source.end
+        begin = source.parent.text_source.begin if index_in_scope == 0 else scope[index_in_scope - 1].text_source.end
         end = source.text_source.begin
         text = CodePiece.from_location(begin, end, source.parent.text_source.file).text
         pattern = r"\[\[(.*?)\]\]"

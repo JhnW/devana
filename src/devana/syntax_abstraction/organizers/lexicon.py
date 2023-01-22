@@ -30,14 +30,13 @@ class Lexicon:
                 return cls(source)
             raise ValueError("CodeContainer source is needed for root lexicon.")
 
-
         if issubclass(type(source), CodeContainer):
-
-            from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
+            # pylint: disable=import-outside-toplevel
+            from devana.syntax_abstraction.organizers.sourcefile import SourceFile
             if issubclass(type(source), SourceFile):
                 instance: Lexicon = source.parent.lexicon
                 if source is not None:
-                    instance._sources.append(source) # pylint: disable=protected-access
+                    instance._sources.append(source)  # pylint: disable=protected-access
                 return instance
 
             match = list(x for x in source.parent.lexicon.nodes if x.namespace == source.namespace)
@@ -47,7 +46,7 @@ class Lexicon:
 
                 if hasattr(source, "is_declaration") and (hasattr(source, "template") and source.template is None):
                     sources = []
-                    for s in instance._sources: # pylint: disable=protected-access
+                    for s in instance._sources:  # pylint: disable=protected-access
                         if not hasattr(s, "is_declaration"):
                             sources.append(s)
                             continue
@@ -64,10 +63,10 @@ class Lexicon:
                                 if s.is_definition: # noqa
                                     raise ParserError("Multiple definitions.")
                                 sources.append(source)
-                    instance._sources = sources # pylint: disable=protected-access
+                    instance._sources = sources  # pylint: disable=protected-access
                 else:
                     if source is not None:
-                        instance._sources.append(source) # pylint: disable=protected-access
+                        instance._sources.append(source)  # pylint: disable=protected-access
 
                 return instance
             return cls(source)
@@ -210,7 +209,7 @@ class Lexicon:
         lex = self.root
         result = None
         templates_count = 0
-        from devana.syntax_abstraction.classinfo import ClassInfo # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.classinfo import ClassInfo  # pylint: disable=import-outside-toplevel
         for i, n in enumerate(reversed(namespaces)):
             if i == len(namespaces) - 1:
                 result = lex.find_content(n)
@@ -272,7 +271,7 @@ class Lexicon:
     @property
     def allowed_namespaces(self) -> List:
         """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
-        from devana.syntax_abstraction.usingnamespace import UsingNamespace # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.usingnamespace import UsingNamespace  # pylint: disable=import-outside-toplevel
         allowed = []
         for c in self.content:
             if isinstance(c, UsingNamespace):

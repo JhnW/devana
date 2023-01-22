@@ -76,25 +76,25 @@ class CodePiece:
                 with open(self.file, "rb") as f:
                     if self._cursor is None:
                         lines = f.read().split(b'\n')
-                        row_start = self.begin.row-1
-                        row_end = self.end.row-1
-                        col_start = self.begin.col-1
+                        row_start = self.begin.row - 1
+                        row_end = self.end.row - 1
+                        col_start = self.begin.col - 1
                         col_end = self.end.col
                         text = b""
                         if len(lines) < row_start or len(lines) < row_end:
                             raise ValueError("Code begin and end extend file size.")
                         for index, line in enumerate(lines):
                             if row_start == index and row_end == index:
-                                text = line[col_start:col_end+1]
-                                if len(lines) != index+1:
+                                text = line[col_start:col_end + 1]
+                                if len(lines) != index + 1:
                                     text += b'\n'
                                 return str(text)
                             elif row_start == index:
-                                text += line[col_start:]+b'\n'
+                                text += line[col_start:] + b'\n'
                             elif row_end == index:
                                 text += line[:col_end]
                             elif row_start <= index <= row_end:
-                                text += line+b'\n'
+                                text += line + b'\n'
                             elif row_end < index:
                                 break
                         return str(text)

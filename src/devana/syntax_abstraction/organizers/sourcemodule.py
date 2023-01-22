@@ -73,7 +73,7 @@ class SourceModule:
 
         compile_args = self.configuration.parsing.language_version.value.options.copy()
         for d in os.walk(self.path):
-            compile_args.append(r"-I"+d[0])
+            compile_args.append(r"-I" + d[0])
 
         index = clang.cindex.Index.create()
         for r, d, f in os.walk(self.path):
@@ -106,5 +106,6 @@ class SourceModule:
 
 
 def get_std_lib_path() -> str:
-    from . import __path__ as ROOT_PATH
-    return ROOT_PATH
+    # from . import __path__ as ROOT_PATH
+    # return ROOT_PATH
+    return ""

@@ -5,7 +5,6 @@ from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.syntax_abstraction.functiontype import FunctionType
 
 
-
 class FunctionTypePrinter(ICodePrinter, DispatcherInjectable):
     """Printer for function use as type like function pointer."""
 

@@ -8,7 +8,6 @@ from devana.utility.errors import ParserError
 from devana.utility.traits import IFromCursorCreatable, ICursorValidate
 
 
-
 class UsingNamespace(IFromCursorCreatable, ICursorValidate):
     """Using namespace in scope."""
 

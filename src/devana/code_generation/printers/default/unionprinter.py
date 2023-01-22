@@ -7,7 +7,6 @@ from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
 
 
-
 class UnionPrinter(ICodePrinter, DispatcherInjectable):
     """Printer for union declaration."""
 

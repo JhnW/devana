@@ -128,7 +128,7 @@ class AttributesCriteria:
 
         def filter_using_namespaces(decl: AttributeDeclaration) -> bool:
             return ((decl.using_namespace in self.namespaces.values) ^ self.namespaces.is_forbidden) \
-                   | (decl.using_namespace is None)
+                | (decl.using_namespace is None)
 
         if self.namespaces is not None:
             results = list(filter(filter_using_namespaces, results))

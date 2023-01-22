@@ -14,7 +14,7 @@ class AccessSpecifierPrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
-        formatter.print_line(source.value+":")
+        formatter.print_line(source.value + ":")
         return formatter.text
 
 
@@ -137,6 +137,7 @@ class DestructorPrinter(FunctionPrinter):
 
 class FieldPrinter(VariablePrinter):
     """Printer for class field."""
+
     def print(self, source: FieldInfo, config: Optional[PrinterConfiguration] = None, context: Optional = None) -> str:
         if config is None:
             config = PrinterConfiguration()

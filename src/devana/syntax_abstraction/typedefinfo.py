@@ -10,7 +10,6 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 
 
-
 class TypedefInfo(IBasicCreatable, ICursorValidate):
     """Class represented typedef declaration."""
 

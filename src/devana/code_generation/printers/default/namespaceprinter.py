@@ -6,7 +6,6 @@ from devana.code_generation.printers.formatter import Formatter
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 
 
-
 class NamespacePrinter(ICodePrinter, DispatcherInjectable):
     """Printer for namespace."""
 

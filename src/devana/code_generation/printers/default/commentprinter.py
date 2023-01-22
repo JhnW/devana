@@ -29,7 +29,7 @@ class CommentPrinter(ICodePrinter, DispatcherInjectable):
             formatter.line = "/*"
             formatter.next_line()
         for index, line in enumerate(source.text):
-            formatter.line = line if source.marker == CommentMarker.MULTI_LINE else "//"+line
+            formatter.line = line if source.marker == CommentMarker.MULTI_LINE else "//" + line
             if index != len(source.text) - 1 or source.marker == CommentMarker.MULTI_LINE:
                 formatter.next_line()
             else:

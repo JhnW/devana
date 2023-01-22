@@ -74,7 +74,7 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         """List of all others allowed namespaces in container without Name:: prefix given by using namespace."""
         if self.lexicon is not None:
             return self.lexicon.allowed_namespaces # noqa
-        from devana.syntax_abstraction.usingnamespace import UsingNamespace # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.usingnamespace import UsingNamespace  # pylint: disable=import-outside-toplevel
         allowed = []
         for c in self.content:
             if isinstance(c, UsingNamespace):

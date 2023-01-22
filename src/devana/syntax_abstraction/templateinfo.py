@@ -58,7 +58,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
     class TemplateParameter(IBasicCreatable, ICursorValidate):
         """A description of the generic component for the type/function claim."""
 
-
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             self._cursor = cursor
             self._parent = parent
@@ -215,8 +214,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             if t.is_generic:
                 m = re.match(r"type-parameter-(\d+)-(\d+)", t.name)
                 i = int(m.group(2))
-                t._name = self.parameters[i].name # pylint: disable=protected-access
-                t.details._name = t.name # pylint: disable=protected-access
+                t._name = self.parameters[i].name  # pylint: disable=protected-access
+                t.details._name = t.name  # pylint: disable=protected-access
 
         if self._specialisation_values:
             return self._specialisation_values
@@ -244,13 +243,14 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             function_placeholder += "int a);\n"
             text = text[0] + "\n" + fnc_text + "\n" + function_placeholder + "\n" + text[1]
 
-            from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
-            from devana.syntax_abstraction.organizers.sourcefile import SourceFile # pylint: disable=import-outside-toplevel
+            from devana.syntax_abstraction.functioninfo import FunctionInfo  # pylint: disable=import-outside-toplevel
+            # pylint: disable=import-outside-toplevel
+            from devana.syntax_abstraction.organizers.sourcefile import SourceFile
             idx = cindex.Index.create()
             tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
                            unsaved_files=[('tmp.h', text)], options=0)
             file = SourceFile(tu.cursor)
-            file.path = Path('tmp.h') #normally file uses absolute paths, we need to work around
+            file.path = Path('tmp.h')  #normally file uses absolute paths, we need to work around
 
             parents = []
             element = self.parent
@@ -263,14 +263,15 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             container = file
             for p in reversed(parents):
                 container = container.content
-                container = list(filter(lambda x: hasattr(x, "name") and x.name == p, container))[0] # pylint: disable=cell-var-from-loop
+                # pylint: disable=cell-var-from-loop
+                container = list(filter(lambda x: hasattr(x, "name") and x.name == p, container))[0]
 
             stub_function_find = filter(
                 lambda f: hasattr(f, "name") and f.name == "___devana______fooPlaceholderToGetParm",
                 container.content)
             stub_function: FunctionInfo = list(stub_function_find)[0]
-            stub_function._parent = self.parent.parent # pylint: disable=protected-access
-            stub_function._lexicon = self.parent.lexicon # pylint: disable=protected-access
+            stub_function._parent = self.parent.parent  # pylint: disable=protected-access
+            stub_function._lexicon = self.parent.lexicon  # pylint: disable=protected-access
 
             # now extracts type information based on stub functions args
             for i in range(num_args):
@@ -300,7 +301,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         values = filter(lambda v: v.template is not None, values)
         values = filter(lambda v: v.template.specialisation_values, values)
 
-        from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.functioninfo import FunctionInfo  # pylint: disable=import-outside-toplevel
         if isinstance(self.parent, FunctionInfo):  # handle overloading functions
             if self.parent.template.specialisation_values:
                 return ()

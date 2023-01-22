@@ -6,7 +6,6 @@ from devana.code_generation.printers.formatter import Formatter
 from devana.syntax_abstraction.externc import ExternC
 
 
-
 class ExternCPrinter(ICodePrinter, DispatcherInjectable):
     """Printer for extern c syntax."""
 

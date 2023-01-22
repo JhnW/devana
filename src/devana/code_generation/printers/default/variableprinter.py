@@ -7,7 +7,6 @@ from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.syntax_abstraction.functiontype import FunctionType
 
 
-
 class VariablePrinter(ICodePrinter, DispatcherInjectable):
     """Printer for variable usage."""
 
@@ -50,7 +49,7 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
                 if source.type.modification.array_order is None:
                     result += "[]"
                 else:
-                    result += "["+"][".join(source.type.modification.array_order) + "]"
+                    result += "[" + "][".join(source.type.modification.array_order) + "]"
         if source.default_value is not None:
             result += f" = {source.default_value}"
 
@@ -67,5 +66,5 @@ class GlobalVariablePrinter(VariablePrinter):
         formatter = Formatter(config)
         if source.associated_comment:
             formatter.print_line(self.printer_dispatcher.print(source.associated_comment, config, source))
-        formatter.print_line(result+";")
+        formatter.print_line(result + ";")
         return formatter.text

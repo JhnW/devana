@@ -4,7 +4,6 @@ from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.configuration import PrinterConfiguration
 
 
-
 @dataclass
 class PrinterRecord:
     """Light abstraction layer for a printer that does not implement the full set of functionalities. """

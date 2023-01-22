@@ -30,7 +30,7 @@ class IncludeInfo:
             self._text = ""
             pattern = r'#\s*include\s*[<"](.+)[">]'
             file = cursor.source.name
-            with open(file, "r") as f: # pylint: disable=unspecified-encoding
+            with open(file, "r") as f:  # pylint: disable=unspecified-encoding
                 for _ in range(cursor.location.line - 1):
                     next(f)
                 self._text = f.readline().rstrip()
@@ -108,17 +108,19 @@ class IncludeInfo:
         code_piece = CodePiece(translation_unit.cursor)
         match = re.findall(pattern, code_piece.text)
         file_root_path: Path = Path(code_piece.file).parent
-        text_includes = [(file_root_path/Path(inc)).absolute() for inc in match]
+        text_includes = [(file_root_path / Path(inc)).absolute() for inc in match]
 
         for inc in translation_unit.get_includes():
             path_cursor = Path(inc.include.name).absolute()
-            result = list(filter(lambda p: p == path_cursor or p.name == path_cursor.name, text_includes)) # pylint: disable=cell-var-from-loop
+            # pylint: disable=cell-var-from-loop
+            result = list(filter(lambda p: p == path_cursor or p.name == path_cursor.name, text_includes))
             if len(result) != 0:
                 includes.append(IncludeInfo(inc))
                 if len(text_includes) > 0 and len(result) > 0:
                     text_includes.remove(result[0])
 
         return includes
+
 
 class SourceFileType(Enum):
     """Description of whether we are dealing with a header or source type."""
@@ -149,7 +151,7 @@ class SourceFile(CodeContainer):
             if not isinstance(source, str):
                 cursor = source
             else:
-                import clang # pylint: disable=import-outside-toplevel
+                import clang  # pylint: disable=import-outside-toplevel
                 index = clang.cindex.Index.create()
                 cursor = index.parse(source, args=self.configuration.parsing.language_version.value.options).cursor
         super().__init__(cursor, parent)
@@ -175,7 +177,7 @@ class SourceFile(CodeContainer):
             else:
                 if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not valid cursor kind.")
-                self._path = Path(cursor.spelling)#.absolute()
+                self._path = Path(cursor.spelling)  #.absolute()
                 self._text_source = LazyNotInit
                 self._includes = LazyNotInit
                 self._type = LazyNotInit

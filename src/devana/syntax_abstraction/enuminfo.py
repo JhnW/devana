@@ -17,6 +17,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
 
     class EnumValue(IBasicCreatable, ICursorValidate):
         """Enum value stored in EnumInfo."""
+
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
             self._cursor = cursor
             self._parent = parent

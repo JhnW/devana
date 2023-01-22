@@ -46,6 +46,7 @@ class LanguageStandard(Enum):
 
     class LanguageStandardData:
         """Version of C++ or C standard."""
+
         def __init__(self, options: List[str], value):
             self._value = value
             self._options = options
@@ -104,6 +105,7 @@ class StandardLibraryMode(Enum):
         """This feature is platform dependent, trying to return the best way to provide a standard library
         for a given machine."""
         return cls.DEVANA_CLANG if platform.system() == 'Linux' else cls.PLATFORM
+
 
 @dataclass
 class StandardLibraryConfiguration(IValidateConfig):

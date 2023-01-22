@@ -10,7 +10,6 @@ from devana.code_generation.printers.default.variableprinter import VariablePrin
 from .utilityprinters import namespaces_string
 
 
-
 class FunctionPrinter(ICodePrinter, DispatcherInjectable):
     """Printer for function declaration."""
 
