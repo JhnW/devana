@@ -153,7 +153,7 @@ class SourceFile(CodeContainer):
             else:
                 import clang  # pylint: disable=import-outside-toplevel
                 index = clang.cindex.Index.create()
-                cursor = index.parse(source, args=self.configuration.parsing.language_version.value.options).cursor
+                cursor = index.parse(source, args=self.configuration.parsing.parsing_options()).cursor
         super().__init__(cursor, parent)
         self._source = source
         self._cursor = cursor

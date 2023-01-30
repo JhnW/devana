@@ -121,6 +121,33 @@ class StandardLibraryConfiguration(IValidateConfig):
         if self.path is not None and not self.path.is_dir():
             raise ValueError("Path must be directory.")
 
+    def get_compilation_flags(self) -> List[str]:
+        if self.mode is StandardLibraryMode.PLATFORM:
+            return []
+        no_std_flags: List[str] = ["-nostdinc", "-nostdinc++"]
+        if self.mode is StandardLibraryMode.CUSTOM:
+            path = [f"-I{self.path}"] if self.path else []
+            return no_std_flags + path
+        if self.mode is StandardLibraryMode.DEVANA_CLANG:
+            from devana import __path__ as root_path  # pylint: disable=import-outside-toplevel
+            std_path = [f"-I{root_path[0]}/libcxx/include"]
+            return no_std_flags + std_path
+        return []
+
+
+@dataclass
+class IncludesSet(IValidateConfig):
+    """A set of directories containing header files. """
+    directories: List[Path] = field(default_factory=lambda: [])
+
+    def validate(self):
+        for directory in self.directories:
+            if not directory.is_dir() or not directory.exists():
+                raise ValueError("Paths to existing directories are required.")
+
+    def get_compilation_flags(self) -> List[str]:
+        return [f"-I{d}" for d in self.directories]
+
 
 @dataclass
 class ParsingConfiguration(IValidateConfig):
@@ -133,10 +160,20 @@ class ParsingConfiguration(IValidateConfig):
     """Behavior when non-parsable elements are detected."""
     standard_library: StandardLibraryConfiguration = field(default_factory=lambda: StandardLibraryConfiguration())
     """How to provide the language standard library."""
+    libraries: IncludesSet = field(default_factory=lambda: IncludesSet())
+    """Library search directories. It can contain both normal paths to directories, header paths that will support
+    parsing, and paths to the location of an external library that will not be parsed within the module."""
 
     def validate(self):
         self.comments.validate()
         self.standard_library.validate()
+        self.libraries.validate()
+
+    def parsing_options(self) -> List[str]:
+        includes = self.libraries.get_compilation_flags()
+        std_library = self.standard_library.get_compilation_flags()
+        language = self.language_version.value.options
+        return language + includes + std_library
 
 
 @dataclass

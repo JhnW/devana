@@ -2,7 +2,6 @@ import os
 import re
 from typing import Optional, List
 from dataclasses import dataclass
-import clang
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
@@ -71,12 +70,7 @@ class SourceModule:
                     return True
             return False
 
-        compile_args = self.configuration.parsing.language_version.value.options.copy()
-        for d in os.walk(self.path):
-            compile_args.append(r"-I" + d[0])
-
-        index = clang.cindex.Index.create()
-        for r, d, f in os.walk(self.path):
+        for r, _, f in os.walk(self.path):
             for file in f:
                 p = os.path.join(r, file)
                 if is_in_filter_list(p, forbidden):
@@ -84,8 +78,7 @@ class SourceModule:
                 if allowed:
                     if not is_in_filter_list(p, allowed):
                         continue
-                cursor = index.parse(p, args=compile_args).cursor
-                self._files.append(SourceFile(cursor, self))
+                self._files.append(SourceFile(p, self, self._configuration))
         return self._files
 
     @property

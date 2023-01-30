@@ -1,17 +1,16 @@
-import unittest
-import clang.cindex
-import clang
 import os
 import sys
+import unittest
+from pathlib import Path
+import clang.cindex
+import clang
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, SourceFileType
 from devana.syntax_abstraction.classinfo import *
-from pathlib import Path
 
 
 class TestSourceFile(unittest.TestCase):
 
     def test_creation(self):
-
         with self.subTest("Create from cursor"):
             index = clang.cindex.Index.create()
             cursor: cindex.Cursor = index.parse(os.path.dirname(__file__)
@@ -63,10 +62,10 @@ class TestSourceFile(unittest.TestCase):
 
         for ex in extensions:
             with self.subTest(ex[0]):
-                file = SourceFile(base_path+ex[0])
-                self.assertEqual(file.name, "file_extension."+ex[0])
+                file = SourceFile(base_path + ex[0])
+                self.assertEqual(file.name, "file_extension." + ex[0])
                 self.assertEqual(file.parent, None)
-                self.assertEqual(str(file.path.as_posix()), str(Path(base_path+ex[0]).as_posix()))
+                self.assertEqual(str(file.path.as_posix()), str(Path(base_path + ex[0]).as_posix()))
                 self.assertEqual(file.namespace, None)
                 self.assertEqual(file.type, ex[1])
                 self.assertEqual(file.extension, ex[0])
@@ -139,3 +138,8 @@ class TestSourceFile(unittest.TestCase):
         self.assertEqual(len(file.includes), 2)
         self.assertEqual(file.includes[0].value, "include_2.hpp")
         self.assertEqual(file.includes[1].value, "include_1.hpp")
+
+    def test_headers_directory_in_folder(self):
+        file = SourceFile(os.path.dirname(__file__) + r"/source_files/complex_includes/include_4.hpp")
+        self.assertEqual(len(file.includes), 1)
+        self.assertEqual(file.includes[0].value, "subdir/subinc.hpp")
