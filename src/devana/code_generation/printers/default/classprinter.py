@@ -208,8 +208,11 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
                             value = f"{parent.access_specifier.value} "
                             if parent.is_virtual:
                                 value += "virtual "
-                            value += self.printer_dispatcher.print(parent.type, config,
-                                                                   InheritanceInfo.InheritanceValue())
+                            namespaces = "::".join(parent.namespaces)
+                            if namespaces:
+                                namespaces = namespaces + "::"
+                            value += namespaces + self.printer_dispatcher.print(parent.type, config,
+                                                                                InheritanceInfo.InheritanceValue())
                             parents.append(value)
                         formatter.line += ", ".join(parents)
                 formatter.next_line()

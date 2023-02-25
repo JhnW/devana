@@ -366,8 +366,14 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
     def namespaces(self) -> List[str]:
         """Explicitly declared namespaces.
         For example: double namespace1::namespace2::functionName()."""
-        self._namespaces = [n.spelling for n in self._cursor.get_children()
-                            if n.kind == cindex.CursorKind.NAMESPACE_REF]
+        self._namespaces = []
+        text_without_function_name = CodePiece(self._cursor).text
+        text = text_without_function_name[:text_without_function_name.find(f"{self._cursor.spelling}(")]
+        if text[-1].isspace():
+            return self._namespaces
+        namespace_tokens = text.split()[-1].split("::")
+        namespace_tokens = list(filter(lambda element: element, namespace_tokens))
+        self._namespaces = namespace_tokens
         return self._namespaces
 
     @namespaces.setter

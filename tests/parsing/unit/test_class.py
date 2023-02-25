@@ -417,6 +417,12 @@ class TestInheritance(unittest.TestCase):
         self.assertEqual(result.inheritance.type_parents[0].access_specifier, AccessSpecifier.PRIVATE)
         self.assertTrue(result.inheritance.type_parents[0].is_virtual)
 
+    def test_namespace_parent(self):
+        result: ClassInfo = self.file.content[18]
+        self.assertEqual(result.name, "ChildrenOutsideNamespace")
+        self.assertEqual(len(result.inheritance.type_parents), 1)
+        self.assertEqual(result.inheritance.type_parents[0].type.name, "ParentInNamespace")
+        self.assertEqual(result.inheritance.type_parents[0].namespaces, ["TestNamespace"])
 
 class TestClassTemplate(unittest.TestCase):
 

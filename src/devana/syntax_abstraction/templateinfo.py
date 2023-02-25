@@ -27,7 +27,7 @@ class GenericTypeParameter:
         self._name = value
 
     @staticmethod
-    def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None):
+    def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None) -> Optional:
         if type_c.kind == cindex.TypeKind.UNEXPOSED:
             if type_c.get_num_template_arguments() > 0:
                 return None

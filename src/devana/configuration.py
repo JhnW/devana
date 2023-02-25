@@ -124,13 +124,13 @@ class StandardLibraryConfiguration(IValidateConfig):
     def get_compilation_flags(self) -> List[str]:
         if self.mode is StandardLibraryMode.PLATFORM:
             return []
-        no_std_flags: List[str] = ["-nostdinc", "-nostdinc++"]
+        no_std_flags: List[str] = ["-nostdinc++"]
         if self.mode is StandardLibraryMode.CUSTOM:
             path = [f"-I{self.path}"] if self.path else []
             return no_std_flags + path
         if self.mode is StandardLibraryMode.DEVANA_CLANG:
             from devana import __path__ as root_path  # pylint: disable=import-outside-toplevel
-            std_path = [f"-I{root_path[0]}/libcxx/include"]
+            std_path = [f"-I{root_path[0]}/libcxx/include", f"-I{root_path[0]}/libcxx/internal"]
             return no_std_flags + std_path
         return []
 

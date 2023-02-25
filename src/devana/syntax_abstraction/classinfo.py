@@ -11,6 +11,7 @@ from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes
+from devana.syntax_abstraction._external_source import create_external
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
 from devana.configuration import Configuration, ParsingErrorPolicy
@@ -543,11 +544,13 @@ class InheritanceInfo(IFromCursorCreatable):
                 self._is_virtual = False
                 self._type = None
                 self._template_arguments = []
+                self._namespaces = []
             else:
                 self._access_specifier = LazyNotInit
                 self._is_virtual = LazyNotInit
                 self._type = LazyNotInit
                 self._template_arguments = LazyNotInit
+                self._namespaces = LazyNotInit
 
         @classmethod
         def create_default(cls, parent: Optional = None) -> any:
@@ -586,6 +589,8 @@ class InheritanceInfo(IFromCursorCreatable):
             if self.parent.lexicon is None:
                 return None
             result = self.parent.lexicon.find_type(self._cursor.get_definition())
+            if result is None: # create external type like std lib
+                result = create_external(self._cursor.get_definition())
             if result is None:
                 name: str = self._cursor.spelling
                 if name.startswith("class "):
@@ -629,6 +634,22 @@ class InheritanceInfo(IFromCursorCreatable):
         @template_arguments.setter
         def template_arguments(self, value):
             self._template_arguments = value
+
+        @property
+        @lazy_invoke
+        def namespaces(self) -> List[str]:
+            """Provide information about used namespaces in parent type."""
+            self._namespaces = []
+            type_name: str = self._cursor.get_definition().spelling
+            namespaces: List[str] = self._cursor.spelling.split("::")[:-1]
+            for namespace in namespaces:
+                if namespace.find(f"{type_name}<") == -1:
+                    self._namespaces.append(namespace)
+            return self._namespaces
+
+        @namespaces.setter
+        def namespaces(self, value: List[str]):
+            self._namespaces = value
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
         self._cursor = cursor
@@ -704,9 +725,10 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
                 self._is_class = True
             elif cursor.kind in (cindex.CursorKind.CLASS_TEMPLATE,
                                  cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION):
-                if re.search(rf"class\s+{self.name}", self.text_source.text):
+                # we need handle clang internal _LIBCPP_TEMPLATE_VIS macro
+                if re.search(rf"class\s+(_LIBCPP_TEMPLATE_VIS)?\s*{self.name}", self.text_source.text):
                     self._is_class = True
-                elif re.search(rf"struct\s+{self.name}", self.text_source.text):
+                elif re.search(rf"struct\s+(_LIBCPP_TEMPLATE_VIS)?\s*{self.name}", self.text_source.text):
                     self._is_class = False
                 else:
                     raise ParserError("It is not a valid type cursor.")

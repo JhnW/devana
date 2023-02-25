@@ -1,7 +1,7 @@
 from typing import Optional, List, Union
 from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
-from devana.utility.errors import ParserError, CodeError
+from devana.utility.errors import ParserError
 
 
 class Lexicon:
@@ -150,7 +150,8 @@ class Lexicon:
         if namespaces:
             node = self.find_node(namespaces[0])
             if node is None:
-                raise CodeError("Namespace do not know in Lexicon.")
+                return None
+                #raise CodeError("Namespace do not know in Lexicon.")
             return node.find_content(name, namespaces[1:])
 
         content = self.content

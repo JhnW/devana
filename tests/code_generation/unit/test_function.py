@@ -129,7 +129,8 @@ class TestFunctionCore(unittest.TestCase):
         source.arguments = [arg1, arg2]
         source.body = "float c = a * *b;\nif(c > 10.0f)\n    c *=0.5f;\nreturn c;"
         result = self.printer.print(source)
-        self.assertEqual(result, """long foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
+        self.assertEqual(result,
+                         """long foo(float a, int* b = nullptr)\n{\n    float c = a * *b;\n    if(c > 10.0f)\n        c *=0.5f;\n    return c;\n}\n""")
 
     def test_function_namespace(self):
         source = FunctionInfo.create_default()

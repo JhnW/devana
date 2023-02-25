@@ -200,3 +200,14 @@ class DefaultFieldsValue
     const double default_value = (1.0+0.7)/4.25;
     static constexpr float default_constexpr_value = 15.75f;
 }
+
+namespace TestNamespace
+{
+    class ParentInNamespace
+    {
+    };
+}
+
+class ChildrenOutsideNamespace: public TestNamespace::ParentInNamespace
+{
+};

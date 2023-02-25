@@ -3,7 +3,7 @@ from devana.code_generation.printers.default.basictypeprinter import BasicTypePr
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.templateparameterprinter import TemplateParameterPrinter
 from devana.code_generation.printers.default.typeexpressionprinter import GenericTypeParameterPrinter
-from devana.code_generation.printers.default.functionprinter import FunctionPrinter, ArgumentPrinter
+from devana.code_generation.printers.default.functionprinter import ArgumentPrinter
 from devana.code_generation.printers.default.classprinter import *
 from devana.code_generation.printers.codeprinter import CodePrinter
 from devana.syntax_abstraction.functioninfo import FunctionModification
@@ -321,6 +321,22 @@ class TestClassComplex(unittest.TestCase):
         source.inheritance = inheritance
         result = self.printer.print(source)
         self.assertEqual(result, "class TestClass: public ParentA, private virtual ParentB\n{\n};\n")
+
+    def test_namespace_inheritance(self):
+        parent_1 = ClassInfo.create_default()
+        parent_1.name = "ParentA"
+        parent_1.is_class = True
+        inheritance = InheritanceInfo()
+        inheritance.type_parents.append(InheritanceInfo.InheritanceValue())
+        inheritance.type_parents[0].access_specifier = AccessSpecifier.PUBLIC
+        inheritance.type_parents[0].type = parent_1
+        inheritance.type_parents[0].namespaces = ["test"]
+        source = ClassInfo()
+        source.is_class = True
+        source.name = "TestClass"
+        source.inheritance = inheritance
+        result = self.printer.print(source)
+        self.assertEqual(result, "class TestClass: public test::ParentA\n{\n};\n")
 
     def test_simple_struct(self):
         source = ClassInfo.create_default()

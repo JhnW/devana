@@ -4,9 +4,11 @@ import re
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
+from devana.syntax_abstraction._external_source import create_external
 from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.utility.fakeenum import FakeEnum
 from devana.utility.traits import IBasicCreatable
+from devana.utility.errors import ParserError
 
 
 class BasicType(Enum):
@@ -566,11 +568,30 @@ class TypeExpression(IBasicCreatable):
         if not hasattr(self._cursor, "get_children"):
             # for function return types we need complete this list by regular expression
             # it would be nice to find another way to do it by clang tools
-            self._namespaces = self._cursor.spelling.split("::")[:-1]
+
+            # we need to prevent namespaces to catch self type name with template
+            # in case like std::vector<std::vector<double>> we get std and vector<std
+            if hasattr(self._cursor, "get_declaration"):
+                type_name = self._cursor.get_declaration().spelling
+                base_spelling = self._cursor.spelling
+
+                # filter prefix like const in, for example const std::string
+                names = re.findall(r"\s*(\S+::\S+)\s*", self._cursor.spelling)
+                if names:
+                    base_spelling = names[0]
+
+                namespaces: List[str] = base_spelling.split("::")[:-1]
+                for namespace in namespaces:
+                    if namespace.find(f"{type_name}<") == -1:
+                        self._namespaces.append(namespace)
+            else:
+                self._namespaces = self._cursor.spelling.split("::")[:-1]
             return self._namespaces
         for children in self._cursor.get_children():
             if children.kind == cindex.CursorKind.NAMESPACE_REF:
                 self._namespaces.append(children.spelling)
+            else:
+                break
         self._namespaces = self._namespaces
         return self._namespaces
 
@@ -589,6 +610,13 @@ class TypeExpression(IBasicCreatable):
                 type_c = TypeExpression.cursor_parse_from_pointer(type_c)
             else:
                 type_c = type_c.get_pointee()
+
+        match = re.match(r"^.+<.+>", type_c.spelling)
+        # disable to get template patterns from typedef parent type
+        if type_c.kind is cindex.TypeKind.TYPEDEF or (
+                type_c.kind is cindex.TypeKind.ELABORATED and match is None):
+            self._template_arguments = None
+            return self._template_arguments
         for i in range(type_c.get_num_template_arguments()):
             el = type_c.get_template_argument_type(i)
             self._template_arguments.append(TypeExpression(el, self))
@@ -645,8 +673,9 @@ class TypeExpression(IBasicCreatable):
                     self._details = self.parent.lexicon.find_type(type_c.spelling, self.namespaces)
             # check external types
             if self._details is None:
-                from devana.syntax_abstraction.typedefinfo import TypedefInfo
-                self._details = TypedefInfo(type_c)
+                self._details = create_external(type_c)
+            if self._details is None:
+                raise ParserError("Unable to parse type.")
 
         return self._details
 
