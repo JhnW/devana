@@ -104,7 +104,7 @@ class StandardLibraryMode(Enum):
     def create_default(cls):
         """This feature is platform dependent, trying to return the best way to provide a standard library
         for a given machine."""
-        return cls.DEVANA_CLANG if platform.system() == 'Linux' else cls.PLATFORM
+        return cls.PLATFORM if platform.system() == 'Windows' else cls.DEVANA_CLANG
 
 
 @dataclass
