@@ -6,6 +6,7 @@ on:
        - v*
 jobs:
   tests:
+    if: github.ref_type == 'tag'
     strategy:
       fail-fast: false
       matrix:
@@ -26,6 +27,7 @@ jobs:
       run: |
         python -m tox -e py
   release:
+    if: github.ref_type == 'tag'
     needs: tests 
     strategy:
       fail-fast: true
