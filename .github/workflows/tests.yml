@@ -2,7 +2,8 @@ name: Tests
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - '**'
   pull_request:
     branches: [ main ]
 
@@ -15,18 +16,18 @@ jobs:
         os-environment: [ubuntu-20.04, windows-2019, macos-11]
     runs-on: ${{ matrix.os-environment }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt
-    - name: run tests
-      run: |
-        python -m tox -e py
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: run tests
+        run: |
+          python -m tox -e py
   build_doc:
     needs: tests 
     strategy:
@@ -36,24 +37,24 @@ jobs:
         os-environment: [ubuntu-20.04]
     runs-on: ${{ matrix.os-environment }}
     steps:
-    - name: Full checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt
-    - name: Build package
-      run: |
-        python -m build
-    - name: Build documentation
-      shell: bash
-      run: |
-        python build_local.py
-        rm -d -r docs
-        python build_doc.py
+      - name: Full checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Build package
+        run: |
+          python -m build
+      - name: Build documentation
+        shell: bash
+        run: |
+          python build_local.py
+          rm -d -r docs
+          python build_doc.py
