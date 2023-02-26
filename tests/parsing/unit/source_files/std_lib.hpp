@@ -11,7 +11,7 @@ struct TestClass
 {
     std::string a;
     std::vector<float> b;
-    std::vector<TestElement&> c;
+    std::vector<TestElement> c;
     const std::vector<std::vector<double>> *d;
     std::shared_ptr<TestElement> e;
     std::vector<std::vector<double>> foo();

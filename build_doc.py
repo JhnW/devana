@@ -2,7 +2,7 @@
 import subprocess
 from subprocess import PIPE
 import argparse
-from pathlib import Path
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--no_test_coverage', action='store_true', required=False)

@@ -32,12 +32,11 @@ class TestParsingStandardLibrary(unittest.TestCase):
             expected_type = self.file.content[0]
             field: FieldInfo = c.content[2]
             self.assertEqual(field.name, "c")
-            self.assertEqual(field.type.name, "vector<TestElement&>")
+            self.assertEqual(field.type.name, "vector<TestElement>")
             self.assertEqual(field.type.namespaces, ["std"])
             self.assertTrue(field.type.modification.is_no_modification)
             self.assertEqual(len(field.type.template_arguments), 1)
             self.assertEqual(field.type.template_arguments[0].details, expected_type)
-            self.assertTrue(field.type.template_arguments[0].modification.is_reference)
         with self.subTest("nested vector"):
             field: FieldInfo = c.content[3]
             self.assertEqual(field.name, "d")
