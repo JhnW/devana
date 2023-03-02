@@ -267,7 +267,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
             self.assertTrue(result.modification.is_pointer)
             self.assertEqual(result.modification.pointer_order, 1)
 
-    @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
+    @unittest.skipIf(sys.platform == "darwin", "requires STD lib")
     def test_td_type_t_types(self):
         cases = (
             ("unknown_int64", "int64_t"), # noqa
@@ -295,7 +295,7 @@ class TestTypeExpressionBasic(unittest.TestCase):
                 self.assertEqual(result.modification, TypeModification.NONE)
                 self.assertEqual(result.modification.pointer_order, None)
 
-    @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
+    @unittest.skipIf(sys.platform == "darwin", "requires STD lib")
     def test_modification_std_type_t_types(self):
 
         with self.subTest("unknown_const_u_int8"):

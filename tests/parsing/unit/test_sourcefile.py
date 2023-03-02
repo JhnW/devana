@@ -72,7 +72,7 @@ class TestSourceFile(unittest.TestCase):
                 self.assertEqual(len(file.content), 1)
                 self.assertTrue(file.content[0].name, "A")
 
-    @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
+    @unittest.skipIf(sys.platform == "darwin", "requires STD lib")
     def test_simple_include(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/multiple_files/file_2.hpp")
         self.assertEqual(len(file.includes), 3)
@@ -86,7 +86,7 @@ class TestSourceFile(unittest.TestCase):
         self.assertEqual(len(file.content), 1)
         self.assertEqual(file.content[0].name, "DataA")
 
-    @unittest.skipUnless(sys.platform.startswith("linux"), "requires STD lib")
+    @unittest.skipIf(sys.platform == "darwin", "requires STD lib")
     def test_include_stand_alone_file(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/multiple_files/file_2.hpp")
         self.assertEqual(len(file.includes), 3)

@@ -1,10 +1,11 @@
 import unittest
 import os
+import sys
 from devana.syntax_abstraction.organizers.sourcemodule import SourceFile
 from devana.syntax_abstraction.classinfo import ClassInfo, FieldInfo, MethodInfo, AccessSpecifier
 from devana.syntax_abstraction.typeexpression import BasicType, TypeExpression
 
-
+@unittest.skipIf(sys.platform == "darwin", "MacOS need manual std configuration")
 class TestParsingStandardLibrary(unittest.TestCase):
     """Tests parsing external source based on std lib."""
 
@@ -100,8 +101,6 @@ class TestParsingStandardLibrary(unittest.TestCase):
         element: TypeExpression = field.type.template_arguments[0]
         self.assertTrue(element.is_generic)
         self.assertEqual(element.name, "T")
-
-        # self.assertTrue(field.type.modification.is_no_modification)
 
     def test_template_argument(self):
         c: ClassInfo = self.file.content[3]
