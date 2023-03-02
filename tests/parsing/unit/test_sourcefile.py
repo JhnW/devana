@@ -92,7 +92,8 @@ class TestSourceFile(unittest.TestCase):
         self.assertEqual(len(file.includes), 3)
         self.assertTrue(file.includes[0].source_file is not None)
         self.assertEqual(file.includes[0].source_file.parent, None)
-        self.assertEqual(file.includes[0].source_file.text_source.text, """class A
+        text = "\n".join(file.includes[0].source_file.text_source.text.splitlines())
+        self.assertEqual(text, """class A
 {
     int *data;
 };""")
