@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Union, Literal, List, NoReturn
+from typing import Optional, Union, Literal, List
 from enum import Enum, auto
 import re
 from clang import cindex
@@ -50,10 +50,6 @@ class IncludeInfo:
     @value.setter
     def value(self, v):
         self._value = v
-
-    def format_value(self) -> NoReturn:
-        """Formats automatically value based on base source parent location."""
-        raise NotImplementedError()
 
     @property
     def is_standard(self) -> bool:
@@ -344,6 +340,13 @@ class SourceFile(CodeContainer):
         if self._comments_factory is None:
             return None
         return self._comments_factory.get_upper_comment(element.text_source)
+
+    @property
+    def diagnostics(self) -> List:
+        """Information about backend parsing warnings and errors."""
+        if self._cursor is None:
+            return []
+        return list(self._cursor.translation_unit.diagnostics)
 
     @property
     def _content_types(self) -> List:

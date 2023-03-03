@@ -164,6 +164,8 @@ class ParsingConfiguration(IValidateConfig):
     libraries: IncludesSet = field(default_factory=lambda: IncludesSet())
     """Library search directories. It can contain both normal paths to directories, header paths that will support
     parsing, and paths to the location of an external library that will not be parsed within the module."""
+    compiler_commands: List[str] = field(default_factory=lambda: [])
+    """Allows you to use any valid clang commands."""
 
     def validate(self):
         self.comments.validate()
@@ -174,7 +176,8 @@ class ParsingConfiguration(IValidateConfig):
         includes = self.libraries.get_compilation_flags()
         std_library = self.standard_library.get_compilation_flags()
         language = self.language_version.value.options
-        return language + includes + std_library
+        other_commands = self.compiler_commands
+        return language + includes + std_library + other_commands
 
 
 @dataclass
