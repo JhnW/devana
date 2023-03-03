@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.default.typeexpressionprinter &mdash; devana 1.0.0 documentation</title>
+  <title>devana.code_generation.printers.default.typeexpressionprinter &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/typeexpressionprinter.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -74,24 +74,24 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.code_generation.printers.default.typeexpressionprinter</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">devana.code_generation.printers.icodeprinter</span> <span class="kn">import</span> <span class="n">ICodePrinter</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">devana.code_generation.printers.icodeprinter</span> <span class="kn">import</span> <span class="n">ICodePrinter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typeexpression</span> <span class="kn">import</span> <span class="n">TypeExpression</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">GenericTypeParameter</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functiontype</span> <span class="kn">import</span> <span class="n">FunctionType</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.dispatcherinjectable</span> <span class="kn">import</span> <span class="n">DispatcherInjectable</span>
 <span class="kn">from</span> <span class="nn">devana.code_generation.printers.configuration</span> <span class="kn">import</span> <span class="n">PrinterConfiguration</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 
 <div class="viewcode-block" id="TypeExpressionPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.typeexpressionprinter.TypeExpressionPrinter">[docs]</a><span class="k">class</span> <span class="nc">TypeExpressionPrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Printer for syntax of type usage.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TypeExpressionPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.typeexpressionprinter.TypeExpressionPrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">TypeExpression</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">details</span><span class="p">)</span> <span class="ow">is</span> <span class="n">FunctionType</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">details</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_with_function_pointer</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_with_standard_type</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_with_standard_type</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_print_with_standard_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">TypeExpression</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PrinterConfiguration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -152,7 +152,7 @@
             <span class="n">mods</span> <span class="o">+=</span> <span class="s2">&quot;mutable &quot;</span>
 
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">pointer_order</span><span class="p">):</span>
                 <span class="n">mods</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;*&quot;</span> <span class="o">+</span> <span class="n">mods</span>
         <span class="k">elif</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_reference</span><span class="p">:</span>
             <span class="n">mods</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="n">mods</span>
@@ -168,6 +168,7 @@
 
 
 <div class="viewcode-block" id="GenericTypeParameterPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.typeexpressionprinter.GenericTypeParameterPrinter">[docs]</a><span class="k">class</span> <span class="nc">GenericTypeParameterPrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Printer for generic type of template like T.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GenericTypeParameterPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.typeexpressionprinter.GenericTypeParameterPrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">GenericTypeParameter</span><span class="p">,</span> <span class="n">_1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">source</span><span class="o">.</span><span class="n">name</span></div></div>

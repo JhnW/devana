@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.typeexpression &mdash; devana 1.0.0 documentation</title>
+  <title>devana.syntax_abstraction.typeexpression &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/typeexpression.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,22 +74,25 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.syntax_abstraction.typeexpression</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntFlag</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction._external_source</span> <span class="kn">import</span> <span class="n">create_external</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">lazy_invoke</span><span class="p">,</span> <span class="n">LazyNotInit</span>
 <span class="kn">from</span> <span class="nn">devana.utility.fakeenum</span> <span class="kn">import</span> <span class="n">FakeEnum</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span>
-<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntFlag</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 
 
 <div class="viewcode-block" id="BasicType"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType">[docs]</a><span class="k">class</span> <span class="nc">BasicType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Provides information about common types like integer of floating point. It should be implemented as Enum</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Provides information about common types like integer of floating point. It should be implemented as Enum</span>
 <span class="sd">    subclass.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BasicType.BasicTypeValue"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType.BasicTypeValue">[docs]</a>    <span class="k">class</span> <span class="nc">BasicTypeValue</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal value od basic type.&quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">unsigned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
@@ -98,12 +101,12 @@
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="sd">&quot;&quot;&quot;Name of type.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Name of type.&quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">unsigned</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-            <span class="sd">&quot;&quot;&quot;It is unsigned type or not.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;It is unsigned type or not.&quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unsigned</span></div>
 
     <span class="n">INT</span> <span class="o">=</span> <span class="n">BasicTypeValue</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="n">auto</span><span class="p">())</span>
@@ -127,12 +130,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">unsigned</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">unknown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">unknown</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>  <span class="c1"># pylint: disable=function-redefined disable=invalid-overridden-method</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># pylint: disable=invalid-overridden-method</span>
 
 <div class="viewcode-block" id="BasicType.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType.from_cursor">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="n">cursor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Type</span><span class="p">]):</span>
@@ -175,7 +174,10 @@
 
 
 <div class="viewcode-block" id="TypeModification"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification">[docs]</a><span class="k">class</span> <span class="nc">TypeModification</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">FakeEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Possible type modifications like const or being a pointer type.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="TypeModification.ModificationKind"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind">[docs]</a>    <span class="k">class</span> <span class="nc">ModificationKind</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal enum list.&quot;&quot;&quot;</span>
         <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">REFERENCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">POINTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
@@ -232,11 +234,11 @@
 
 <div class="viewcode-block" id="TypeModification.create_array"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification.create_array">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa</span></div>
+        <span class="k">return</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa pylint: disable=not-callable</span></div>
 
 <div class="viewcode-block" id="TypeModification.create_pointer"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeModification.create_pointer">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_pointer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa</span></div>
+        <span class="k">return</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa pylint: disable=not-callable</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModificationKind</span><span class="p">:</span>
@@ -333,7 +335,7 @@
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pointer_order</span> \
-                   <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">array_order</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">array_order</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">array_order</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">array_order</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointer_order</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -441,7 +443,7 @@
 
 
 <div class="viewcode-block" id="TypeExpression"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression">[docs]</a><span class="k">class</span> <span class="nc">TypeExpression</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Hold information about C++ type usage in common expression, for example function argument declaration,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hold information about C++ type usage in common expression, for example function argument declaration,</span>
 <span class="sd">    class field, function return value or part of typedef declaration.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Type</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -493,13 +495,13 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Used name of type in current context.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Used name of type in current context.</span>
 
 <span class="sd">        Name of type is exactly the same name as used in expression, with all type modifications, namespace,</span>
 <span class="sd">        template arguments and use or not type aliases.&quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functiontype</span> <span class="kn">import</span> <span class="n">FunctionType</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">FunctionType</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functiontype</span> <span class="kn">import</span> <span class="n">FunctionType</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">,</span> <span class="n">FunctionType</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_static</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;static &quot;</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_const</span><span class="p">:</span>
@@ -571,7 +573,7 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">modification</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeModification</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Usages modifications.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Usages modifications.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_modification</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">NONE</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">,</span> <span class="s2">&quot;is_mutable_field&quot;</span><span class="p">):</span>
@@ -585,15 +587,15 @@
         <span class="n">tmp_modification</span> <span class="o">=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">NONE</span>
         <span class="n">type_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_type_c</span>
 
-        <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">CONSTANTARRAY</span> <span class="ow">or</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">CONSTANTARRAY</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">order</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[(.*?)\]&quot;</span><span class="p">,</span> <span class="n">CodePiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="c1"># noqa</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa</span>
+                <span class="n">order</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[(.*?)\]&quot;</span><span class="p">,</span> <span class="n">CodePiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="c1"># noqa pylint: disable=not-callable</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ARRAY</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa pylint: disable=not-callable</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">type_c</span> <span class="o">=</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_array_element_type</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">CONSTANTARRAY</span> <span class="ow">and</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">CONSTANTARRAY</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">):</span>
                     <span class="k">break</span>
 
         <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">LVALUEREFERENCE</span><span class="p">:</span>
@@ -609,12 +611,12 @@
                                               <span class="s2">&quot;const int *ptr is valid.&quot;</span><span class="p">)</span>
                 <span class="n">tmp_type</span> <span class="o">=</span> <span class="n">tmp_type</span><span class="o">.</span><span class="n">get_pointee</span><span class="p">()</span>
                 <span class="n">order</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa</span>
+            <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="c1"># noqa pylint: disable=not-callable</span>
         <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">RVALUEREFERENCE</span><span class="p">:</span>
             <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">RVALUE_REF</span>
         <span class="n">type_source</span> <span class="o">=</span> <span class="n">type_c</span>
-        <span class="k">if</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span> <span class="c1"># noqa</span>
+            <span class="k">if</span> <span class="n">tmp_modification</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span> <span class="c1"># noqa</span>
                 <span class="n">type_source</span> <span class="o">=</span> <span class="n">TypeExpression</span><span class="o">.</span><span class="n">cursor_parse_from_pointer</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">type_source</span> <span class="o">=</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_pointee</span><span class="p">()</span>
@@ -637,16 +639,35 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">namespaces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;List of namespaces used in name.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of namespaces used in name.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">,</span> <span class="s2">&quot;get_children&quot;</span><span class="p">):</span>
             <span class="c1"># for function return types we need complete this list by regular expression</span>
             <span class="c1"># it would be nice to find another way to do it by clang tools</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># we need to prevent namespaces to catch self type name with template</span>
+            <span class="c1"># in case like std::vector&lt;std::vector&lt;double&gt;&gt; we get std and vector&lt;std</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">,</span> <span class="s2">&quot;get_declaration&quot;</span><span class="p">):</span>
+                <span class="n">type_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_declaration</span><span class="p">()</span><span class="o">.</span><span class="n">spelling</span>
+                <span class="n">base_spelling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span>
+
+                <span class="c1"># filter prefix like const in, for example const std::string</span>
+                <span class="n">names</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\s*(\S+::\S+)\s*&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">names</span><span class="p">:</span>
+                    <span class="n">base_spelling</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">namespaces</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_spelling</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">namespace</span> <span class="ow">in</span> <span class="n">namespaces</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">namespace</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_name</span><span class="si">}</span><span class="s2">&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">namespace</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span>
         <span class="k">for</span> <span class="n">children</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">children</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">NAMESPACE_REF</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span>
 
@@ -657,7 +678,7 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">template_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Arguments list of template concretization. None if  type is not template.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Arguments list of template concretization. None if  type is not template.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_template_arguments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">type_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_type_c</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span>
@@ -665,6 +686,13 @@
                 <span class="n">type_c</span> <span class="o">=</span> <span class="n">TypeExpression</span><span class="o">.</span><span class="n">cursor_parse_from_pointer</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">type_c</span> <span class="o">=</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_pointee</span><span class="p">()</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^.+&lt;.+&gt;&quot;</span><span class="p">,</span> <span class="n">type_c</span><span class="o">.</span><span class="n">spelling</span><span class="p">)</span>
+        <span class="c1"># disable to get template patterns from typedef parent type</span>
+        <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="ow">is</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">TYPEDEF</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="ow">is</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">ELABORATED</span> <span class="ow">and</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_template_arguments</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_template_arguments</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">type_c</span><span class="o">.</span><span class="n">get_num_template_arguments</span><span class="p">()):</span>
             <span class="n">el</span> <span class="o">=</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_template_argument_type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_template_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TypeExpression</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
@@ -679,17 +707,19 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_generic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Flag informed type is generic or not.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flag informed type is generic or not.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=import-outside-toplevel</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.templateinfo</span> <span class="kn">import</span> <span class="n">GenericTypeParameter</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">)</span> <span class="ow">is</span> <span class="n">GenericTypeParameter</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">,</span> <span class="n">GenericTypeParameter</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">details</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Object linked to all type information.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Object linked to all type information.</span>
 
 <span class="sd">        This field linked to first type information. If TypeExpression is used by alias, details contain typedef</span>
 <span class="sd">        information, so jump to root of typedef declaration may be needed.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=import-outside-toplevel</span>
         <span class="n">type_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_type_c</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
@@ -719,8 +749,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">find_type</span><span class="p">(</span><span class="n">type_c</span><span class="o">.</span><span class="n">spelling</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">namespaces</span><span class="p">)</span>
             <span class="c1"># check external types</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typedefinfo</span> <span class="kn">import</span> <span class="n">TypedefInfo</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="n">TypedefInfo</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="n">create_external</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="s2">&quot;Unable to parse type.&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_details</span>
 
@@ -732,7 +763,7 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">text_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodePiece</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Source of this element.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Source of this element.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_input_type</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
@@ -741,7 +772,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Object scope of usage this data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Object scope of usage this data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
 
     <span class="nd">@property</span>

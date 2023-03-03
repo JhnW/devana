@@ -3,6 +3,14 @@ devana.code\_generation.printers.default
 
 
 
+devana.code\_generation.printers.default.attributeprinter
+---------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.attributeprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.code\_generation.printers.default.basictypeprinter
 ---------------------------------------------------------
 

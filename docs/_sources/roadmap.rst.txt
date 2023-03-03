@@ -18,21 +18,18 @@ In addition to the properties listed below, the most important thing at the mome
 language features to ensure that valid exceptions are thrown.
 
 * **Parsing types and types traits**
-    * External types parsing: *medium priority*
+    * Make external types parsing better: *low priority*
 
 * **Other code**
     * Auto keyword: *extreme low priority*
     * Decltype: *extreme low priority*
     * Function declaration as trailing-return-type: *extreme low priority*
     * Noexcept and throw function declaration: *medium priority*
-    * C++ standard attributes: *medium priority*
     * GCC attributes: *medium priority*
     * Except destructor: *extreme low priority*
     * C++20 modules: *extreme low priority*
-    * Access from the parser level to types not present in the current devan module but resulting from the attached headers (e.g. standard library): *medium priority*
 
 * **Other**
-    * Includes list as an alternative to relative paths: *low priority*
     * Prevent re-parsing unchanged files: *low priority*
     * Reducing memory usage: *high priority*
 

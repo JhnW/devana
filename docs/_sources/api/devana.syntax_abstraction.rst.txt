@@ -10,6 +10,14 @@ Subpackages
 
 
 
+devana.syntax\_abstraction.attribute
+------------------------------------
+
+.. automodule:: devana.syntax_abstraction.attribute
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.classinfo
 ------------------------------------
 

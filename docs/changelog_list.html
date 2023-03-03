@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; devana 1.0.0 documentation</title>
+  <title>Changelog &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/changelog_list.html" />
@@ -32,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l2"><a class="reference internal" href="maintenance.html#external">External</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="maintenance.html#internal">Internal</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#v2-0-0-2023-03-03">v2.0.0 (2023-03-03)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#v1-0-0-2022-08-11">v1.0.0 (2022-08-11)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#v0-3-0-2022-04-16">v0.3.0 (2022-04-16)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#v0-2-1-2021-11-08">v0.2.1 (2021-11-08)</a></li>
@@ -94,10 +95,64 @@
              
   <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
-<section id="v1-0-0-2022-08-11">
-<h2>v1.0.0 (2022-08-11)<a class="headerlink" href="#v1-0-0-2022-08-11" title="Permalink to this heading"></a></h2>
+<section id="v2-0-0-2023-03-03">
+<h2>v2.0.0 (2023-03-03)<a class="headerlink" href="#v2-0-0-2023-03-03" title="Permalink to this heading"></a></h2>
 <section id="new">
 <h3>New<a class="headerlink" href="#new" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>Added possibility to use arbitrary parsing arguments. [JhnW]</p>
+<p>Any clang command line argument its posibble to use.</p>
+</li>
+<li><p>First version of parsing external code. [JhnW]</p>
+<p>It is now possible (to a limited extent) to parse non-lexic items. This functionality was introduced mainly to parse the standard library.
+Fixed several namespace parsing bugs and other necessary adjustments.</p>
+</li>
+<li><p>Configuration for use libcxx. [JhnW]</p>
+<p>For now Devana provide libcxx for all parsing targets.</p>
+</li>
+<li><p>Support C++11 attributes printing. [JhnW]</p>
+<p>Attributes are printed by code generator. Code generation configuration can filter out non-standard atribiutes from printing. Such attributes can be used as a source of information on how to generate code during parsing, but there is no need to include them in the resulting artifacts.</p>
+</li>
+<li><p>Support for parsing C++11 standard attributes. [JhnW]</p>
+<p>Attributes of classes, functions, namespaces, enums, function arguments, and class members are now recognized. Any attributes, even customs.</p>
+</li>
+<li><p>Add noexcept function mod for code printer. [JhnW]</p></li>
+<li><p>Add noexcept  function mods to parsing. [JhnW]</p></li>
+</ul>
+</section>
+<section id="fix">
+<h3>Fix<a class="headerlink" href="#fix" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>Skip MacOs std lib tests and tests cleanup. [JhnW]</p></li>
+<li><p>Update dev deps. [JhnW]</p></li>
+<li><p>Include property in SourceFiles now return right list. [JhnW]</p>
+<p>The previous implementation could lose header files if they were already included in the dependencies listed above: if we parased file X that contained include A and B, A contained include B, B was missing in the include list. The new implementation uses regular expressions and clang’s include list. Unfortunately, clang presents different levels of include nesting, removing those that have already appeared in the hierarchy.</p>
+</li>
+<li><p>Minimal file and module fixes. [JhnW]</p>
+<p>SorceFile force absolute paths in the path attribute. Better __repr__ SorceFile. SorceModule Lexicon instance clean up. Minor Lexicin clean - no more None in sources.</p>
+</li>
+</ul>
+</section>
+<section id="other">
+<h3>Other<a class="headerlink" href="#other" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>Pkg: chg: Version up. [JhnW]</p></li>
+<li><p>Doc: Cleanup roadmap. [JhnW]</p>
+<p>EXternal types now is aible to parsing so we need to delete this point.</p>
+</li>
+<li><p>Pkg: fix: Additional guard for release action flow. [JhnW]</p></li>
+<li><p>Dev: fix: Minor whitespaces refactor. [JhnW]</p></li>
+<li><p>Dev: new: Code quality on CI. [JhnW]</p></li>
+<li><p>Dev: chg: Add pylint configuration. [JhnW]</p>
+<p>Pylint configuration and a bit code refactor - but minor and safe</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="v1-0-0-2022-08-11">
+<h2>v1.0.0 (2022-08-11)<a class="headerlink" href="#v1-0-0-2022-08-11" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>New<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Add prefix for functions and class. [JhnW]</p>
 <p>Code generation may use it for print compiler attribiutes</p>
@@ -131,8 +186,8 @@
 </li>
 </ul>
 </section>
-<section id="fix">
-<h3>Fix<a class="headerlink" href="#fix" title="Permalink to this heading"></a></h3>
+<section id="id2">
+<h3>Fix<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Fix printing fuction body from parsed information. [JhnW]</p>
 <p>Old printing function may print double bracket</p>
@@ -142,8 +197,8 @@
 <li><p>Remove redudant module. [JhnW]</p></li>
 </ul>
 </section>
-<section id="other">
-<h3>Other<a class="headerlink" href="#other" title="Permalink to this heading"></a></h3>
+<section id="id3">
+<h3>Other<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Pkg: chg: Version up. [JhnW]</p></li>
 <li><p>Pkg: chg: Upgrade MacOS CI environment. [JhnW]</p></li>
@@ -156,8 +211,8 @@
 </section>
 <section id="v0-3-0-2022-04-16">
 <h2>v0.3.0 (2022-04-16)<a class="headerlink" href="#v0-3-0-2022-04-16" title="Permalink to this heading"></a></h2>
-<section id="id1">
-<h3>New<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<section id="id4">
+<h3>New<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Parsing and code generation for mutable fields. [JhnW]</p></li>
 <li><p>Roadmap update and description of common user problems. [JhnW]</p></li>
@@ -171,8 +226,8 @@
 </li>
 </ul>
 </section>
-<section id="id2">
-<h3>Fix<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<section id="id5">
+<h3>Fix<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>One additional comment pairings improvement for windows platform.
 [JhnW]</p></li>
@@ -189,8 +244,8 @@
 <li><p>Text: Fix Fixed a hidden syntax error in one of the C ++ files. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>Other<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<section id="id6">
+<h3>Other<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Pkg: chg: Version up. [JhnW]</p></li>
 </ul>
@@ -198,8 +253,8 @@
 </section>
 <section id="v0-2-1-2021-11-08">
 <h2>v0.2.1 (2021-11-08)<a class="headerlink" href="#v0-2-1-2021-11-08" title="Permalink to this heading"></a></h2>
-<section id="id4">
-<h3>New<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<section id="id7">
+<h3>New<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>StubType create. [JhnW]</p>
 <p>Stub Type will make easy and fast creating string-stub outside types like std::string for code generation, without import and parsing a lot of headers.</p>
@@ -208,15 +263,15 @@
 <li><p>Header guard idiom parsing. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>Fix<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<section id="id8">
+<h3>Fix<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Include printers change inlude to right include. [JhnW]</p></li>
 <li><p>Default printers list fix. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>Other<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<section id="id9">
+<h3>Other<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Pkg: chg: Version up. [JhnW]</p></li>
 <li><p>Doc: Example for code generation - meta enum. [JhnW]</p></li>
@@ -226,8 +281,8 @@
 </section>
 <section id="v0-2-0-2021-10-10">
 <h2>v0.2.0 (2021-10-10)<a class="headerlink" href="#v0-2-0-2021-10-10" title="Permalink to this heading"></a></h2>
-<section id="id7">
-<h3>New<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<section id="id10">
+<h3>New<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Core of code generation functionality. [JhnW]</p>
 <p>A lot of minor changes, fixes in parsing module, possibility of multiple pointers type modification (finally!) and writing code generator.
@@ -237,8 +292,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </li>
 </ul>
 </section>
-<section id="id8">
-<h3>Changes<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<section id="id11">
+<h3>Changes<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Disable automatic doc generation for every commit. [JhnW]</p>
 <p>It was messy idea.</p>
@@ -246,8 +301,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 <li><p>Build doc after every test. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>Fix<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<section id="id12">
+<h3>Fix<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Change log will not print automated doc gen. [JhnW]</p></li>
 <li><p>Release doc gen reparired. [JhnW]</p></li>
@@ -257,8 +312,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </section>
 <section id="v0-1-5-2021-08-15">
 <h2>v0.1.5 (2021-08-15)<a class="headerlink" href="#v0-1-5-2021-08-15" title="Permalink to this heading"></a></h2>
-<section id="id10">
-<h3>Fix<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<section id="id13">
+<h3>Fix<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Pointer order no longer confused class fields with instance fields.
 [JhnW]</p>
@@ -266,8 +321,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </li>
 </ul>
 </section>
-<section id="id11">
-<h3>Other<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<section id="id14">
+<h3>Other<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Pkg: chg: Version up. [JhnW]</p></li>
 <li><p>Doc: fix: Update docs. [JhnW]</p></li>
@@ -276,16 +331,16 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </section>
 <section id="v0-1-4-2021-08-08">
 <h2>v0.1.4 (2021-08-08)<a class="headerlink" href="#v0-1-4-2021-08-08" title="Permalink to this heading"></a></h2>
-<section id="id12">
-<h3>New<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<section id="id15">
+<h3>New<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>Pointer order basic API for nested pointers. [JhnW]</p>
 <p>Nested pointer parsing only for basic cases, without parsing nested type modification.</p>
 </li>
 </ul>
 </section>
-<section id="id13">
-<h3>Other<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<section id="id16">
+<h3>Other<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Pkg: chg: Version up. [JhnW]</p></li>
 <li><p>Doc: fix: Changelog will be generated right. [JhnW]</p></li>
@@ -295,8 +350,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </section>
 <section id="v0-1-3-2021-07-22">
 <h2>v0.1.3 (2021-07-22)<a class="headerlink" href="#v0-1-3-2021-07-22" title="Permalink to this heading"></a></h2>
-<section id="id14">
-<h3>Fix<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<section id="id17">
+<h3>Fix<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Better doc, add literally the specific C++17 version in clang. [JhnW]</p></li>
 <li><p>CI will automatic push doc. [JhnW]</p></li>
@@ -305,16 +360,16 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 </section>
 <section id="v0-1-2-2021-07-21">
 <h2>v0.1.2 (2021-07-21)<a class="headerlink" href="#v0-1-2-2021-07-21" title="Permalink to this heading"></a></h2>
-<section id="id15">
-<h3>New<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<section id="id18">
+<h3>New<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add badges. [JhnW]</p></li>
 <li><p>Setup standard CI test. [JhnW]</p></li>
 <li><p>Beta documentation generated by hand. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id16">
-<h3>Fix<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<section id="id19">
+<h3>Fix<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix autdoc generate and update. [JhnW]</p></li>
 <li><p>Version 0.1.1. [JhnW]</p></li>
@@ -333,8 +388,8 @@ Lexicon still need to be updated manually in no-parsing code case.</p>
 <li><p>Fix os env in CI. [JhnW]</p></li>
 </ul>
 </section>
-<section id="id17">
-<h3>Other<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<section id="id20">
+<h3>Other<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Merge remote-tracking branch ‘origin/main’ into main. [JhnW]</p></li>
 <li><p>Update tests.yml. [JhnW]</p></li>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana &mdash; devana 1.0.0 documentation</title>
+  <title>devana &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -99,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="devana.code_generation.printers.html">devana.code_generation.printers</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="devana.code_generation.printers.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="devana.code_generation.printers.default.html">devana.code_generation.printers.default</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.attributeprinter">devana.code_generation.printers.default.attributeprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.basictypeprinter">devana.code_generation.printers.default.basictypeprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.classprinter">devana.code_generation.printers.default.classprinter</a></li>
 <li class="toctree-l6"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.commentprinter">devana.code_generation.printers.default.commentprinter</a></li>
@@ -145,6 +146,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.attribute">devana.syntax_abstraction.attribute</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.classinfo">devana.syntax_abstraction.classinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.codelocation">devana.syntax_abstraction.codelocation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.codepiece">devana.syntax_abstraction.codepiece</a></li>
@@ -183,7 +185,7 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.CommentsParsing.accumulate">
 <span class="sig-name descname"><span class="pre">accumulate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.accumulate" title="Permalink to this definition"></a></dt>
-<dd><p>Setting that defines whether consecutive C ++ style one-line comments starting 
+<dd><p>Setting that defines whether consecutive C ++ style one-line comments starting
 with ‘//’ will be combined into a single collective instance.</p>
 </dd></dl>
 
@@ -208,8 +210,8 @@ with ‘//’ will be combined into a single collective instance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.CommentsParsing.unpinned_comments_allowed">
 <span class="sig-name descname"><span class="pre">unpinned_comments_allowed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.configuration.CommentsParsing.unpinned_comments_allowed" title="Permalink to this definition"></a></dt>
-<dd><p>Specifies whether to parse or omit comments that are not attached to the code 
-(they do not precede classes, functions, type definitions, class fields, methods, etc.). 
+<dd><p>Specifies whether to parse or omit comments that are not attached to the code
+(they do not precede classes, functions, type definitions, class fields, methods, etc.).
 This does not affect the parsing of the file preamble.</p>
 </dd></dl>
 
@@ -226,6 +228,7 @@ This exception will be propagated to the client using the library.</p>
 <dt class="sig sig-object py" id="devana.configuration.Configuration">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsing=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidateConfig</span></code></a></p>
+<p>Main configuration.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.get_configuration">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">this</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration.get_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration.get_configuration" title="Permalink to this definition"></a></dt>
@@ -233,14 +236,14 @@ This exception will be propagated to the client using the library.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'logging'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/logging/__init__.py'&gt;</span></em><a class="headerlink" href="#devana.configuration.Configuration.logger" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'logging'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/logging/__init__.py'&gt;</span></em><a class="headerlink" href="#devana.configuration.Configuration.logger" title="Permalink to this definition"></a></dt>
 <dd><p>Currently used standard logger instance.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.parsing">
 <span class="sig-name descname"><span class="pre">parsing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.ParsingConfiguration" title="devana.configuration.ParsingConfiguration"><span class="pre">ParsingConfiguration</span></a></em><a class="headerlink" href="#devana.configuration.Configuration.parsing" title="Permalink to this definition"></a></dt>
-<dd><p>Configuring the parsing of C ++ files, this is how the C ++ code will be transformed 
+<dd><p>Configuring the parsing of C ++ files, this is how the C ++ code will be transformed
 into the appropriate python classes instances.</p>
 </dd></dl>
 
@@ -261,6 +264,35 @@ This exception will be propagated to the client using the library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.IValidateConfig.validate">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IValidateConfig.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IValidateConfig.validate" title="Permalink to this definition"></a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.IncludesSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IncludesSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directories=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IncludesSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IncludesSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidateConfig</span></code></a></p>
+<p>A set of directories containing header files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.IncludesSet.directories">
+<span class="sig-name descname"><span class="pre">directories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.configuration.IncludesSet.directories" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.IncludesSet.get_compilation_flags">
+<span class="sig-name descname"><span class="pre">get_compilation_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IncludesSet.get_compilation_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IncludesSet.get_compilation_flags" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.IncludesSet.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IncludesSet.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IncludesSet.validate" title="Permalink to this definition"></a></dt>
 <dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
@@ -331,12 +363,19 @@ This exception will be propagated to the client using the library.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comments=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language_version=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_strategy=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comments=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language_version=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_strategy=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard_library=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libraries=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiler_commands=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidateConfig</span></code></a></p>
+<p>Code parser configuration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.comments">
 <span class="sig-name descname"><span class="pre">comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.CommentsParsing" title="devana.configuration.CommentsParsing"><span class="pre">CommentsParsing</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.comments" title="Permalink to this definition"></a></dt>
 <dd><p>Comments parsing settings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.compiler_commands">
+<span class="sig-name descname"><span class="pre">compiler_commands</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.compiler_commands" title="Permalink to this definition"></a></dt>
+<dd><p>Allows you to use any valid clang commands.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -349,6 +388,29 @@ This exception will be propagated to the client using the library.</p>
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.language_version">
 <span class="sig-name descname"><span class="pre">language_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.LanguageStandard" title="devana.configuration.LanguageStandard"><span class="pre">LanguageStandard</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.language_version" title="Permalink to this definition"></a></dt>
 <dd><p>C or C++ standard version.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.libraries">
+<span class="sig-name descname"><span class="pre">libraries</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.IncludesSet" title="devana.configuration.IncludesSet"><span class="pre">IncludesSet</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.libraries" title="Permalink to this definition"></a></dt>
+<dd><p>Library search directories. It can contain both normal paths to directories, header paths that will support
+parsing, and paths to the location of an external library that will not be parsed within the module.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.parsing_options">
+<span class="sig-name descname"><span class="pre">parsing_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration.parsing_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration.parsing_options" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.standard_library">
+<span class="sig-name descname"><span class="pre">standard_library</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.StandardLibraryConfiguration" title="devana.configuration.StandardLibraryConfiguration"><span class="pre">StandardLibraryConfiguration</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.standard_library" title="Permalink to this definition"></a></dt>
+<dd><p>How to provide the language standard library.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -364,7 +426,7 @@ This exception will be propagated to the client using the library.</p>
 <dt class="sig sig-object py" id="devana.configuration.ParsingErrorPolicy">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingErrorPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingErrorPolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingErrorPolicy" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
+<p>Rules for dealing with errors when parsing.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.ParsingErrorPolicy.ABORT">
 <span class="sig-name descname"><span class="pre">ABORT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#devana.configuration.ParsingErrorPolicy.ABORT" title="Permalink to this definition"></a></dt>
@@ -390,7 +452,89 @@ This exception will be propagated to the client using the library.</p>
 
 </dd></dl>
 
-<span class="target" id="module-devana"></span></section>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StandardLibraryConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidateConfig</span></code></a></p>
+<p>Configuration of std usage.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration.get_compilation_flags">
+<span class="sig-name descname"><span class="pre">get_compilation_flags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryConfiguration.get_compilation_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration.get_compilation_flags" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.StandardLibraryMode" title="devana.configuration.StandardLibraryMode"><span class="pre">StandardLibraryMode</span></a></em><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration.mode" title="Permalink to this definition"></a></dt>
+<dd><p>Delivery mode</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path for custom standard library, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryConfiguration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration.validate" title="Permalink to this definition"></a></dt>
+<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+This exception will be propagated to the client using the library.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StandardLibraryMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryMode" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>C/C++ Standard Library delivery mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode.CUSTOM">
+<span class="sig-name descname"><span class="pre">CUSTOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#devana.configuration.StandardLibraryMode.CUSTOM" title="Permalink to this definition"></a></dt>
+<dd><p>Use  custom std Library provided by path.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode.DEVANA_CLANG">
+<span class="sig-name descname"><span class="pre">DEVANA_CLANG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#devana.configuration.StandardLibraryMode.DEVANA_CLANG" title="Permalink to this definition"></a></dt>
+<dd><p>Library shipped with Devan. Recommended choice for Linux platform.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.configuration.StandardLibraryMode.NONE" title="Permalink to this definition"></a></dt>
+<dd><p>Disable standard library delivery.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode.PLATFORM">
+<span class="sig-name descname"><span class="pre">PLATFORM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#devana.configuration.StandardLibraryMode.PLATFORM" title="Permalink to this definition"></a></dt>
+<dd><p>Library provided by the default compiler on your platform, if any are installed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.configuration.StandardLibraryMode.create_default">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryMode.create_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryMode.create_default" title="Permalink to this definition"></a></dt>
+<dd><p>This feature is platform dependent, trying to return the best way to provide a standard library
+for a given machine.
+For macOS platform you may need to provide libc path from your xcode or other sdk.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-devana"></span><p>Devana is a python tool that make it easy to parsing, format, transform and generate C++ (or C) code.
+This tool uses libclang to parse the code. Fundamental problems, bugs and missing features of libclang are fixed in
+Devann’s internal code.</p>
+<p>Please note that Devana focuses on the header-level code e.g. class and functions definitions, templates resolving,
+typedefs and includes. Control statements, arithmetics operations etc. (pure body of functions) are supported as access
+to raw string field “body”. It is planned to introduce more control over this type of code in future versions.
+Devana is still under development.</p>
+</section>
 </section>
 
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.stubtype &mdash; devana 1.0.0 documentation</title>
+  <title>devana.code_generation.stubtype &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/stubtype.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -75,11 +75,11 @@
              
   <h1>Source code for devana.code_generation.stubtype</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="StubType"><a class="viewcode-back" href="../../../api/devana.code_generation.html#devana.code_generation.stubtype.StubType">[docs]</a><span></span><span class="k">class</span> <span class="nc">StubType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;This class serves to create outside type representation without sourcing this to lexicon as right type or</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class serves to create outside type representation without sourcing this to lexicon as right type or</span>
 <span class="sd">    parse source file. StubType is just free string.</span>
 
 <span class="sd">    Good example are std types ile std::string or size_t. Parsing stdlib is definitely what you don&#39;t want to do, so you</span>
-<span class="sd">    are able write this type as raw string for code generation. StubType is fast and easy way to stub type. For more</span>
+<span class="sd">    are able to write this type as raw string for code generation. StubType is fast and easy way to stub type. For more</span>
 <span class="sd">    complex features ypu should think about create yur own ClassInfo etc.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>

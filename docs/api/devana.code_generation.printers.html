@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers &mdash; devana 1.0.0 documentation</title>
+  <title>devana.code_generation.printers &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.code_generation.printers.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -97,6 +97,7 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="devana.code_generation.printers.default.html">devana.code_generation.printers.default</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.attributeprinter">devana.code_generation.printers.default.attributeprinter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.basictypeprinter">devana.code_generation.printers.default.basictypeprinter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.classprinter">devana.code_generation.printers.default.classprinter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.code_generation.printers.default.html#module-devana.code_generation.printers.default.commentprinter">devana.code_generation.printers.default.commentprinter</a></li>
@@ -207,11 +208,57 @@ it is possible to use a printer of its base type.</p>
 <section id="module-devana.code_generation.printers.configuration">
 <span id="devana-code-generation-printers-configuration"></span><h2>devana.code_generation.printers.configuration<a class="headerlink" href="#module-devana.code_generation.printers.configuration" title="Permalink to this heading"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributeFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AttributeFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_forbidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#AttributeFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributeFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Filter for possible and forbidden attributes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributeFilter.is_forbidden">
+<span class="sig-name descname"><span class="pre">is_forbidden</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributeFilter.is_forbidden" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributeFilter.values">
+<span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributeFilter.values" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributesCriteria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AttributesCriteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#AttributesCriteria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributesCriteria" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>More specific attribute admissibility criteria.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributesCriteria.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#AttributesCriteria.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributesCriteria.filter" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.attribute.AttributeDeclaration" title="devana.syntax_abstraction.attribute.AttributeDeclaration"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeDeclaration</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributesCriteria.names">
+<span class="sig-name descname"><span class="pre">names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.code_generation.printers.configuration.AttributeFilter" title="devana.code_generation.printers.configuration.AttributeFilter"><span class="pre">AttributeFilter</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributesCriteria.names" title="Permalink to this definition"></a></dt>
+<dd><p>List of allowed or forbidden attribute names.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.AttributesCriteria.namespaces">
+<span class="sig-name descname"><span class="pre">namespaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.code_generation.printers.configuration.AttributeFilter" title="devana.code_generation.printers.configuration.AttributeFilter"><span class="pre">AttributeFilter</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.AttributesCriteria.namespaces" title="Permalink to this definition"></a></dt>
+<dd><p>List of allowed or forbidden attribute namespaces.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.Indent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Indent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">character</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">IndentCharacter.SPACE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#Indent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.Indent" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Indent configuration. Value is the indent sign (space or tab) multiplier. For example value 2 mean indent
-2 spaces. Count mean how many separated indent we have, for example count count 3 mean 3 * value * character.</p>
+2 spaces. Count mean how many separated indent we have, for example count 3 mean 3 * value * character.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.Indent.character">
 <span class="sig-name descname"><span class="pre">character</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.code_generation.printers.configuration.IndentCharacter" title="devana.code_generation.printers.configuration.IndentCharacter"><span class="pre">IndentCharacter</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.Indent.character" title="Permalink to this definition"></a></dt>
@@ -243,7 +290,7 @@ it is possible to use a printer of its base type.</p>
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.IndentCharacter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IndentCharacter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#IndentCharacter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.IndentCharacter" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
+<p>Indent character to configure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.IndentCharacter.SPACE">
 <span class="sig-name descname"><span class="pre">SPACE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.IndentCharacter.SPACE" title="Permalink to this definition"></a></dt>
@@ -275,7 +322,7 @@ it is possible to use a printer of its base type.</p>
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.LineEndings">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LineEndings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#LineEndings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.LineEndings" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
+<p>Kind of used line endings.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.LineEndings.CR">
 <span class="sig-name descname"><span class="pre">CR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#devana.code_generation.printers.configuration.LineEndings.CR" title="Permalink to this definition"></a></dt>
@@ -335,9 +382,14 @@ it is possible to use a printer of its base type.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.PrinterConfiguration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PrinterConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_ending=LineEndings.LF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#PrinterConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.PrinterConfiguration" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PrinterConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_ending=LineEndings.LF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#PrinterConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.PrinterConfiguration" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Data structure that stores standard code printing settings e.g. newline format.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.code_generation.printers.configuration.PrinterConfiguration.attributes">
+<span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.code_generation.printers.configuration.AttributesCriteria" title="devana.code_generation.printers.configuration.AttributesCriteria"><span class="pre">AttributesCriteria</span></a></em><a class="headerlink" href="#devana.code_generation.printers.configuration.PrinterConfiguration.attributes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.code_generation.printers.configuration.PrinterConfiguration.format_line">
 <span class="sig-name descname"><span class="pre">format_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/code_generation/printers/configuration.html#PrinterConfiguration.format_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.code_generation.printers.configuration.PrinterConfiguration.format_line" title="Permalink to this definition"></a></dt>

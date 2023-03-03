@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.organizers.codecontainer &mdash; devana 1.0.0 documentation</title>
+  <title>devana.syntax_abstraction.organizers.codecontainer &mdash; devana 2.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/organizers/codecontainer.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                1.0
+                2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -74,18 +74,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.syntax_abstraction.organizers.codecontainer</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ParsingErrorPolicy</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 
 
 <div class="viewcode-block" id="CodeContainer"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer">[docs]</a><span class="k">class</span> <span class="nc">CodeContainer</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class representing part of code source who is able to hold other sources in his body.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class representing part of code source who is able to hold other sources in his body.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span> <span class="o">=</span> <span class="n">cursor</span>
@@ -112,7 +112,7 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;List of source code objects.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of source code objects.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_content</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span>
 
@@ -123,7 +123,7 @@
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">namespace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Namespace name if any.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Namespace name if any.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">spelling</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span>
 
@@ -133,7 +133,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Higher in the hierarchy scope, if any. In most cases another CodeContainer.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Higher in the hierarchy scope, if any. In most cases another CodeContainer.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
 
     <span class="nd">@parent</span><span class="o">.</span><span class="n">setter</span>
@@ -142,15 +142,15 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Current lexicon storage of object.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">allowed_namespaces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;List of all other allowed namespaces in container without Name:: prefix given by using namespace.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of all others allowed namespaces in container without Name:: prefix given by using namespace.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexicon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lexicon</span><span class="o">.</span><span class="n">allowed_namespaces</span> <span class="c1"># noqa</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.usingnamespace</span> <span class="kn">import</span> <span class="n">UsingNamespace</span>
+        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.usingnamespace</span> <span class="kn">import</span> <span class="n">UsingNamespace</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
         <span class="n">allowed</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">UsingNamespace</span><span class="p">):</span>
@@ -169,11 +169,10 @@
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">_content_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Overwrite this method to feed _create_content with a list of types.&quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite this method to feed _create_content with a list of types.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">_create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Overwrite this method to filter witch content should be parsed inside class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite this method to filter witch content should be parsed inside class.&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_types</span>
         <span class="n">content</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -186,22 +185,22 @@
                     <span class="n">element</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">from_cursor</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="k">continue</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">break</span>
+                    <span class="k">break</span>
                 <span class="k">except</span> <span class="n">ParserError</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">is_ignore_on_error</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="k">if</span> <span class="n">is_abort_on_error</span><span class="p">:</span>
                         <span class="k">raise</span>
-                    <span class="n">config</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parser error during create content of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> in type </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> &quot;</span>
-                                          <span class="sa">f</span><span class="s2">&quot;for cursor </span><span class="si">{</span><span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">config</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Parser error during create content of </span><span class="si">%s</span><span class="s2"> in type </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                                          <span class="s2">&quot;for cursor </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="p">)</span>
                     <span class="k">continue</span>
             <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">is_ignore_on_error</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">is_abort_on_error</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot match any type for content of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> n cursor </span><span class="si">{</span><span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-                <span class="n">config</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot match any type for content of </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> n cursor </span><span class="si">{</span><span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot match any type for content of </span><span class="si">%s</span><span class="s2"> n cursor </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">.</span><span class="n">spelling</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">content</span></div>

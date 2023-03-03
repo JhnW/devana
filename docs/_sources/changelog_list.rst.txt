@@ -2,6 +2,55 @@ Changelog
 =========
 
 
+v2.0.0 (2023-03-03)
+-------------------
+
+New
+~~~
+- Added possibility to use arbitrary parsing arguments. [JhnW]
+
+  Any clang command line argument its posibble to use.
+- First version of parsing external code. [JhnW]
+
+  It is now possible (to a limited extent) to parse non-lexic items. This functionality was introduced mainly to parse the standard library.
+  Fixed several namespace parsing bugs and other necessary adjustments.
+- Configuration for use libcxx. [JhnW]
+
+  For now Devana provide libcxx for all parsing targets.
+- Support C++11 attributes printing. [JhnW]
+
+  Attributes are printed by code generator. Code generation configuration can filter out non-standard atribiutes from printing. Such attributes can be used as a source of information on how to generate code during parsing, but there is no need to include them in the resulting artifacts.
+- Support for parsing C++11 standard attributes. [JhnW]
+
+  Attributes of classes, functions, namespaces, enums, function arguments, and class members are now recognized. Any attributes, even customs.
+- Add noexcept function mod for code printer. [JhnW]
+- Add noexcept  function mods to parsing. [JhnW]
+
+Fix
+~~~
+- Skip MacOs std lib tests and tests cleanup. [JhnW]
+- Update dev deps. [JhnW]
+- Include property in SourceFiles now return right list. [JhnW]
+
+  The previous implementation could lose header files if they were already included in the dependencies listed above: if we parased file X that contained include A and B, A contained include B, B was missing in the include list. The new implementation uses regular expressions and clang's include list. Unfortunately, clang presents different levels of include nesting, removing those that have already appeared in the hierarchy.
+- Minimal file and module fixes. [JhnW]
+
+  SorceFile force absolute paths in the path attribute. Better __repr__ SorceFile. SorceModule Lexicon instance clean up. Minor Lexicin clean - no more None in sources.
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Doc: Cleanup roadmap. [JhnW]
+
+  EXternal types now is aible to parsing so we need to delete this point.
+- Pkg: fix: Additional guard for release action flow. [JhnW]
+- Dev: fix: Minor whitespaces refactor. [JhnW]
+- Dev: new: Code quality on CI. [JhnW]
+- Dev: chg: Add pylint configuration. [JhnW]
+
+  Pylint configuration and a bit code refactor - but minor and safe
+
+
 v1.0.0 (2022-08-11)
 -------------------
 
