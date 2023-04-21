@@ -18,6 +18,7 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
             return_name = self._printer_dispatcher.print(fnc.return_type, config, source)
             args_names = ", ".join([self._printer_dispatcher.print(arg, config, source) for arg in fnc.arguments])
             prefix = "static " if source.type.modification.is_static else ""
+            prefix += "inline " if source.type.modification.is_inline else ""
             mods = ""
             if source.type.modification.is_const:
                 mods += "const "

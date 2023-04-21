@@ -50,6 +50,7 @@ class TestTypeExpression(unittest.TestCase):
             (TypeModification.REFERENCE, "double&"),
             (TypeModification.POINTER, "double*"),
             (TypeModification.STATIC, "static double"),
+            (TypeModification.INLINE, "inline double"),
             (TypeModification.TEMPLATE, "template double"),
             (TypeModification.CONSTEXPR, "constexpr double"),
             (TypeModification.RESTRICT, "restrict double"),

@@ -1,7 +1,7 @@
 import unittest
+import os
 import clang.cindex
 import clang
-import os
 from tests.helpers import find_by_name
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.classinfo import *

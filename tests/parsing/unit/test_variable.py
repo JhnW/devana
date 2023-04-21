@@ -5,7 +5,7 @@ import os
 from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
-
+from devana.syntax_abstraction.classinfo import ClassInfo
 
 class TestVariableBasic(unittest.TestCase):
 
@@ -302,3 +302,24 @@ class TestVariableBasic(unittest.TestCase):
             self.assertTrue(result.type.modification.is_constexpr)
             self.assertFalse(result.type.modification.is_static)
             self.assertEqual(result.default_value, "77")
+
+    def test_inline_variable(self):
+        node = find_by_name(self.cursor, "test_inline_variable")
+        result = GlobalVariable.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "test_inline_variable")
+        self.assertEqual(result.type.details, BasicType.DOUBLE)
+        self.assertTrue(result.type.modification.is_inline)
+        self.assertFalse(result.type.modification.is_static)
+        self.assertEqual(result.default_value, "7.3")
+
+    def test_inline_variable_in_struct_scope(self):
+        node = find_by_name(self.cursor, "TestGlobVars")
+        result = ClassInfo.from_cursor(node)
+        stub_lexicon(result)
+        field_inline: TypeModification = result.content[0].type.modification
+        self.assertTrue(field_inline.is_inline)
+        self.assertFalse(field_inline.is_static)
+        field_static: TypeModification = result.content[1].type.modification
+        self.assertTrue(field_static.is_static)
+        self.assertFalse(field_static.is_inline)

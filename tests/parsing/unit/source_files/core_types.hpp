@@ -161,3 +161,11 @@ char ***ptr_ptr_ptr_value;
 const int **ptr_ptr_const_value;
 static float ***ptr_ptr_ptr_static_value;
 double** const* ptr_ptr_const_ptr_value;
+
+inline double test_inline_variable = 7.3;
+
+struct TestGlobVars
+{
+    inline float in_x = 8.0f;
+    static double s_y = 9.99;
+};

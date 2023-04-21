@@ -21,6 +21,8 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
         prefix = ""
         suffix = ""
 
+        if source.modification.is_inline:
+            prefix = "inline "
         if source.modification.is_static:
             prefix = "static "
         if source.modification.is_const:

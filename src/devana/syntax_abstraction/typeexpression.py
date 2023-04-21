@@ -114,6 +114,7 @@ class TypeModification(metaclass=FakeEnum):
         RESTRICT = auto()
         CONSTEXPR = auto()
         MUTABLE = auto()
+        INLINE = auto()
 
     enum_source = ModificationKind
 
@@ -137,6 +138,7 @@ class TypeModification(metaclass=FakeEnum):
     RESTRICT = ModificationKind.RESTRICT
     CONSTEXPR = ModificationKind.CONSTEXPR
     MUTABLE = ModificationKind.MUTABLE
+    INLINE = ModificationKind.INLINE
 
     def __init__(self, value: Optional[int] = None, order: Optional[List[str]] = None):
         self._pointer_order = None
@@ -362,6 +364,10 @@ class TypeModification(metaclass=FakeEnum):
         return bool(self.value & TypeModification.ModificationKind.MUTABLE)
 
     @property
+    def is_inline(self) -> bool:
+        return bool(self.value & TypeModification.ModificationKind.INLINE)
+
+    @property
     def is_no_modification(self) -> bool:
         return self.value == TypeModification.ModificationKind.NONE
 
@@ -428,6 +434,8 @@ class TypeExpression(IBasicCreatable):
         if not isinstance(self.details, FunctionType):
             if self.modification.is_static:
                 name += "static "
+            if self.modification.is_inline:
+                name += "inline "
             if self.modification.is_const:
                 name += "const "
             elif self.modification.is_volatile:
@@ -465,6 +473,7 @@ class TypeExpression(IBasicCreatable):
             return_name = fnc.return_type.name
             args_names = ", ".join([arg.name for arg in fnc.arguments])
             prefix = "static " if self.modification.is_static else ""
+            prefix += "inline " if self.modification.is_inline else ""
 
             mods = ""
             if self.modification.is_const:
@@ -503,6 +512,9 @@ class TypeExpression(IBasicCreatable):
         if hasattr(self._cursor, "is_mutable_field"):
             if self._cursor.is_mutable_field():
                 self._modification |= TypeModification.MUTABLE
+
+        if self.text_source is not None and self.text_source.text.find("inline ") != -1:
+            self._modification |= TypeModification.INLINE
 
         if self._cursor.kind == cindex.CursorKind.VAR_DECL:
             self._modification |= TypeModification.STATIC

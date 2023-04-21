@@ -224,6 +224,15 @@ class TestClassElementsAlone(unittest.TestCase):
         result = self.printer.print(source)
         self.assertEqual(result, "mutable float a;\n")
 
+    def test_print_inline_field(self):
+        source = FieldInfo.create_default()
+        source.name = "a"
+        source.type = TypeExpression()
+        source.type.details = BasicType.FLOAT
+        source.type.modification = TypeModification.INLINE
+        result = self.printer.print(source)
+        self.assertEqual(result, "inline float a;\n")
+
 
 class TestClassComplex(unittest.TestCase):
 
