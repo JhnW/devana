@@ -13,19 +13,19 @@ class TestSourceModule(unittest.TestCase):
 
     def test_simple_creation(self):
         module = SourceModule("Test_1", self.module_path)
-        self.assertEqual(len(module.files), 5)
+        self.assertEqual(len(list(module.files)), 5)
 
     def test_filter_allowed(self):
         f = ModuleFilter()
         f.allowed_filter = [r"\.h", r"\.hpp"]
         module = SourceModule("Test_1", self.module_path, f)
-        self.assertEqual(len(module.files), 3)
+        self.assertEqual(len(list(module.files)), 3)
 
     def test_filter_forbidden(self):
         f = ModuleFilter()
         f.forbidden_filter = [r"\.h", r"\.hpp"]
         module = SourceModule("Test_1", self.module_path, f)
-        self.assertEqual(len(module.files), 2)
+        self.assertEqual(len(list(module.files)), 2)
 
 
 class TestSourceModuleSearchingTypes(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestSourceModuleSearchingTypes(unittest.TestCase):
         f = ModuleFilter()
         f.allowed_filter = [r"inc_types\.hpp", r"src_types\.cpp"]
         self.module = SourceModule("Test_1", module_path, f)
-        self.assertEqual(len(self.module.files), 2)
+        self.assertEqual(len(list(self.module.files)), 2)
         inc_file = next(file for file in self.module.files if file.name == "inc_types.hpp")
         self.src_file = next(file for file in self.module.files if file.name == "src_types.cpp")
         self.expected_type: ClassInfo = inc_file.content[0]

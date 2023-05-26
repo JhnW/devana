@@ -1,5 +1,6 @@
 #!/bin/bash/python3
 from devana.syntax_abstraction.organizers.sourcemodule import SourceModule, ModuleFilter
+from devana.configuration import Configuration
 from pyvis.network import Network
 import os
 import tarfile
@@ -37,16 +38,19 @@ def create_dependency_graph(api: SourceModule):
 def create_module(path=r"./dlib-19.22/dlib", pattern=r"/.h"):
     api_filter = ModuleFilter()
     api_filter.allowed_filter = [pattern]
-    source = SourceModule("API", path)
+    configuration = Configuration()
+    configuration.parsing.file_by_file_parsing = False  # change chere to true to slower mode but with less memory required
+    source = SourceModule("API", path, configuration=configuration)
     return source
 
 
 def check_system():
-    total_mem_gb = psutil.virtual_memory().total/1024**3
+    total_mem_gb = psutil.virtual_memory().total / 1024 ** 3
     if total_mem_gb < 15:
         print("WARNING")
         print("It is recommended to have at least 16 GB of RAM in order to process large modules.")
         print("If you don't have enough memory, choose a small subfolder to parse.")
+        print("Feel free to change parsing options but with file by file option program may rung long timr.")
         input("Press any key to continue...")
 
 

@@ -18,7 +18,7 @@ In addition to the properties listed below, the most important thing at the mome
 language features to ensure that valid exceptions are thrown.
 
 * **Parsing types and types traits**
-    * Make external types parsing better: *low priority*
+    * Make external types parsing better: *low priority, already mostly done*
 
 * **Other code**
     * Auto keyword: *extreme low priority*
@@ -27,11 +27,10 @@ language features to ensure that valid exceptions are thrown.
     * Noexcept and throw function declaration: *medium priority*
     * GCC attributes: *medium priority*
     * Except destructor: *extreme low priority*
-    * C++20 modules: *extreme low priority*
+    * C++20 modules: *low priority*
 
 * **Other**
     * Prevent re-parsing unchanged files: *low priority*
-    * Reducing memory usage: *high priority*
 
 Code generator
 --------------

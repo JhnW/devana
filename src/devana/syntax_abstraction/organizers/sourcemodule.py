@@ -1,10 +1,10 @@
 import os
 import re
-from typing import Optional, List
+from typing import Optional, List, Iterable
 from dataclasses import dataclass
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.utility.lazy import LazyNotInit
 from devana.configuration import Configuration
 
 
@@ -49,9 +49,12 @@ class SourceModule:
         return self._name
 
     @property
-    @lazy_invoke
-    def files(self) -> List[SourceFile]:
+    def files(self) -> Iterable[SourceFile]:
         """List of SourceFile from module."""
+        if not self._configuration.parsing.file_by_file_parsing and self._files is not LazyNotInit:
+            for file in self._files: # noqa
+                yield file
+
         self._files = []
         allowed = []
         forbidden = []
@@ -78,8 +81,15 @@ class SourceModule:
                 if allowed:
                     if not is_in_filter_list(p, allowed):
                         continue
-                self._files.append(SourceFile(p, self, self._configuration))
-        return self._files
+                if self._configuration.parsing.file_by_file_parsing:
+                    module = SourceModule(self._name, self._path)
+                    yield SourceFile(p, module, self._configuration)
+                else:
+                    self._files.append(SourceFile(p, self, self._configuration))
+
+        if not self._configuration.parsing.file_by_file_parsing:
+            for file in self._files:
+                yield file
 
     @property
     def parent(self):
@@ -96,9 +106,3 @@ class SourceModule:
         if not hasattr(element, "parent"):
             return None
         return SourceModule.get_module(element.parent)
-
-
-def get_std_lib_path() -> str:
-    # from . import __path__ as ROOT_PATH
-    # return ROOT_PATH
-    return ""

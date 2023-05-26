@@ -166,6 +166,12 @@ class ParsingConfiguration(IValidateConfig):
     parsing, and paths to the location of an external library that will not be parsed within the module."""
     compiler_commands: List[str] = field(default_factory=lambda: [])
     """Allows you to use any valid clang commands."""
+    file_by_file_parsing: bool = False
+    """If true, it does not load all files into memory and builds a full type lexicon for all given files.
+    Instead, it parses files about one another, treating other files as external dependencies.
+    This is a less powerful solution but more economical in terms of RAM. When working with larger projects,
+    we recommend creating multiple modules used sequentially, containing a small slice of local context
+    instead of this option."""
 
     def validate(self):
         self.comments.validate()
