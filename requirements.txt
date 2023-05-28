@@ -1,6 +1,6 @@
 libclang==15.0.6.1
 pytest==7.1.2
-tox==3.25.1
+tox==4.5.2
 Sphinx==5.0.2
 sphinx-rtd-theme==1.0.0
 coverage==6.4.2
