@@ -1,7 +1,5 @@
 
-
-[[nodiscard]]
-int foo(int x, int y)
+[[nodiscard]] int foo(int x, int y)
 {
     return y;
 }
