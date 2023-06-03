@@ -2,6 +2,33 @@ Changelog
 =========
 
 
+v2.1.0 (2023-06-03)
+-------------------
+
+New
+~~~
+- Check attribute in the same line as function. [JhnW]
+
+  Important for common usages, for example nodiscard
+- Inline variables parsing and code generation. [JhnW]
+
+Changes
+~~~~~~~
+- New: Reducing the need for RAM. [JhnW]
+
+  A new file-by-file parsing option has been introduced, which allows you to quickly implement parsing of large projects without manually dividing them into modules at the expense of slightly slower work.
+  For this reason, the interface of the files property has been changed to suit the new capabilities.
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Pkg: Add new version of python to pkg details. [JhnW]
+- Test: Adjust tox to new test flow. [JhnW]
+- Test: Fix Ut python version to 3.8. [JhnW]
+
+  Test on both 3.8 and 3.9 is inessesary
+
+
 v2.0.0 (2023-03-03)
 -------------------
 

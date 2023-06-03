@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.configuration &mdash; devana 2.0.0 documentation</title>
+  <title>devana.configuration &mdash; devana 2.1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/configuration.html" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.0
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -242,6 +242,12 @@
 <span class="sd">    parsing, and paths to the location of an external library that will not be parsed within the module.&quot;&quot;&quot;</span>
     <span class="n">compiler_commands</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[])</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Allows you to use any valid clang commands.&quot;&quot;&quot;</span>
+    <span class="n">file_by_file_parsing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;If true, it does not load all files into memory and builds a full type lexicon for all given files.</span>
+<span class="sd">    Instead, it parses files about one another, treating other files as external dependencies.</span>
+<span class="sd">    This is a less powerful solution but more economical in terms of RAM. When working with larger projects,</span>
+<span class="sd">    we recommend creating multiple modules used sequentially, containing a small slice of local context</span>
+<span class="sd">    instead of this option.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="ParsingConfiguration.validate"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.ParsingConfiguration.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>

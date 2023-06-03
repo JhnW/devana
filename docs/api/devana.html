@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana &mdash; devana 2.0.0 documentation</title>
+  <title>devana &mdash; devana 2.1.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.0
+                2.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -363,7 +363,7 @@ This exception will be propagated to the client using the library.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comments=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language_version=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_strategy=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard_library=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libraries=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiler_commands=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comments=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language_version=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_strategy=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard_library=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">libraries=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiler_commands=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_by_file_parsing=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.configuration.IValidateConfig" title="devana.configuration.IValidateConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidateConfig</span></code></a></p>
 <p>Code parser configuration.</p>
 <dl class="py attribute">
@@ -382,6 +382,16 @@ This exception will be propagated to the client using the library.</p>
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.error_strategy">
 <span class="sig-name descname"><span class="pre">error_strategy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.configuration.ParsingErrorPolicy" title="devana.configuration.ParsingErrorPolicy"><span class="pre">ParsingErrorPolicy</span></a></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.error_strategy" title="Permalink to this definition"></a></dt>
 <dd><p>Behavior when non-parsable elements are detected.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.file_by_file_parsing">
+<span class="sig-name descname"><span class="pre">file_by_file_parsing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.configuration.ParsingConfiguration.file_by_file_parsing" title="Permalink to this definition"></a></dt>
+<dd><p>If true, it does not load all files into memory and builds a full type lexicon for all given files.
+Instead, it parses files about one another, treating other files as external dependencies.
+This is a less powerful solution but more economical in terms of RAM. When working with larger projects,
+we recommend creating multiple modules used sequentially, containing a small slice of local context
+instead of this option.</p>
 </dd></dl>
 
 <dl class="py attribute">
