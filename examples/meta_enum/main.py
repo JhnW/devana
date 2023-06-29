@@ -1,4 +1,6 @@
 #!/bin/bash/python3
+from shutil import copyfile
+import os
 from devana.syntax_abstraction.organizers.sourcemodule import SourceModule, ModuleFilter
 from devana.syntax_abstraction.functioninfo import FunctionModification
 from devana.syntax_abstraction.typeexpression import *
@@ -8,7 +10,7 @@ from devana.code_generation.stubtype import StubType
 from devana.syntax_abstraction.enuminfo import EnumInfo
 from devana.code_generation.printers.configuration import PrinterConfiguration
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, IncludeInfo, SourceFileType
-from shutil import copyfile
+
 
 
 def create_enum_element() -> ClassInfo:
@@ -255,7 +257,8 @@ def enum_info_class_cpp(enum_class_info: ClassInfo):
 if __name__ == "__main__":
     module_filter = ModuleFilter([r"enums\.h"])  # we want only one file
     source = SourceModule("API", "./input", module_filter)  # create parsing module
-    file = source.files[0]  # in this example we are using one file
+    file = list(source.files)[0]  # in this example we are using one file
+    os.makedirs(os.path.dirname("./output/"))
     copyfile("./input/enums.h", "./output/enums.h")  # copy input file to output directory without changes
     enum_value_info_code = create_enum_element()  # create core structure for enum value information
     interface_code = create_enum_info_interface(enum_value_info_code)  # create c++ abstract class
