@@ -173,7 +173,7 @@ class SourceFile(CodeContainer):
             else:
                 if not self.is_cursor_valid(cursor):
                     raise ParserError("It is not valid cursor kind.")
-                self._path = Path(cursor.spelling)  #.absolute()
+                self._path = Path(cursor.spelling)
                 self._text_source = LazyNotInit
                 self._includes = LazyNotInit
                 self._type = LazyNotInit
