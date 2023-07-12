@@ -176,7 +176,7 @@ class PreprocessorAttribute:
 
         # pylint: disable=consider-using-generator
         mandatory_arguments_count = sum([1 for arg in self._signature.arguments if not arg.has_default])
-        if mandatory_arguments_count < len(text_arguments):
+        if mandatory_arguments_count > len(text_arguments):
             raise AttributeSyntaxError("Not enough arguments.")
 
         arguments = []
@@ -202,7 +202,8 @@ class PreprocessorAttribute:
                     quote_count = 0
             else:
                 if character == ",":
-                    arguments.append(argument)
+                    if argument != "":
+                        arguments.append(argument)
                     argument = ""
                     quote_count = 0
                 elif character == "\"":

@@ -247,3 +247,53 @@ class TestParserFromFunctionSignature(unittest.TestCase):
         self.assertTrue(call_result)
 
 
+    def test_parse_and_invoke_attribute_str_comma(self):
+
+        def test_fnc(source: ISource, test: str) -> bool:
+            return test == "test, test,t6"
+
+        signature = DataSignature.from_callable(test_fnc)
+        attr = PreprocessorAttribute(signature)
+        call_result = attr.invoke(self.TestSource(), 'test_fnc("test, test,t6")', True)
+        self.assertTrue(call_result)
+
+    def test_parse_and_invoke_attribute_str_comma(self):
+
+        def test_fnc(source: ISource, test: str) -> bool:
+            return test == "test, test,t6"
+
+        signature = DataSignature.from_callable(test_fnc)
+        attr = PreprocessorAttribute(signature)
+        call_result = attr.invoke(self.TestSource(), 'test_fnc("test, test,t6")', True)
+        self.assertTrue(call_result)
+
+    def test_parse_and_invoke_attribute_multiple_arguments(self):
+
+        def test_fnc(source: ISource, arg_1: str, arg_2: bool, arg_3: str, arg_4: bool) -> bool:
+            return arg_1 == "1,2" and arg_2 and arg_3 == "True" and not arg_4
+
+        signature = DataSignature.from_callable(test_fnc)
+        attr = PreprocessorAttribute(signature)
+        call_result = attr.invoke(self.TestSource(), 'test_fnc("1,2", True , "True",False)', True)
+        self.assertTrue(call_result)
+
+    def test_parse_and_invoke_attribute_multiple_arguments_default(self):
+
+        def test_fnc(source: ISource, arg_1: bool, arg_2: bool = True) -> bool:
+            return arg_2
+
+        signature = DataSignature.from_callable(test_fnc)
+        attr = PreprocessorAttribute(signature)
+        call_result = attr.invoke(self.TestSource(), 'test_fnc(True)', True)
+        self.assertTrue(call_result)
+        call_result = attr.invoke(self.TestSource(), 'test_fnc(True, False)', True)
+        self.assertFalse(call_result)
+
+
+
+
+
+
+
+
+
