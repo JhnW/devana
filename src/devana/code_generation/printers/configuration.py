@@ -78,12 +78,12 @@ class Indent:
         return result
 
     def increase(self):
-        self.value += 1
+        self.count += 1
 
     def decrease(self):
-        self.value -= 1
-        if self.value < 0:
-            self.value = 0
+        self.count -= 1
+        if self.count < 0:
+            self.count = 0
 
     def __add__(self, other):
         if not isinstance(other, int):
