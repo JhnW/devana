@@ -14,7 +14,12 @@ class AccessSpecifierPrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        indent_count = formatter.indent.count
+        if indent_count != 0:
+            formatter.indent.decrease()
         formatter.print_line(source.value + ":")
+        if indent_count != 0:
+            formatter.indent.increase()
         return formatter.text
 
 

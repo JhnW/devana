@@ -406,10 +406,10 @@ class TestClassComplex(unittest.TestCase):
         ref_result = "class TestClass\n"
         ref_result += "{\n"
         ref_result += "    float a;\n"
-        ref_result += "    public:\n"
+        ref_result += "public:\n"
         ref_result += "    unsigned int b;\n"
         ref_result += "    bool c;\n"
-        ref_result += "    private:\n"
+        ref_result += "private:\n"
         ref_result += "    double d;\n"
         ref_result += "};\n"
         self.assertEqual(ref_result, result)
@@ -570,4 +570,4 @@ class TestClassComplex(unittest.TestCase):
         source.is_class = True
         source.content = [SectionInfo.create_default(source), FieldInfo.create_default(source)]
         result = self.printer.print(source)
-        self.assertEqual(result, "class Class\n{\n    public:\n    int myVariable;\n};\n")
+        self.assertEqual(result, "class Class\n{\npublic:\n    int myVariable;\n};\n")
