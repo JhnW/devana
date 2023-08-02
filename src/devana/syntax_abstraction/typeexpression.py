@@ -200,7 +200,7 @@ class TypeModification(metaclass=FakeEnum):
             if result.is_array:
                 if self.is_array and other == TypeModification.ModificationKind.ARRAY and self.array_order != []:
                     result.array_order = None
-                return result
+            return result
         raise NotImplementedError()
 
     def __or__(self, other):
