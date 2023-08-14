@@ -73,7 +73,7 @@ class FunctionModification(metaclass=FakeEnum):
 
     @classmethod
     def create_noexcept(cls, noexcept_value):
-        return TypeModification.POINTER(noexcept_value)  # noqa pylint: disable=not-callable
+        return FunctionModification.NOEXCEPT(noexcept_value)  # noqa pylint: disable=not-callable
 
     @property
     def value(self) -> ModificationKind:
@@ -94,12 +94,11 @@ class FunctionModification(metaclass=FakeEnum):
             return result
         elif isinstance(other, FunctionModification.ModificationKind):
             result = FunctionModification(self.value & other)
-            # I do not know if it's required here
-            # ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-            # if result.is_noexcept:
-            #     if self.is_noexcept and other == FunctionModification.ModificationKind.NOEXCEPT \
-            #             and self.noexcept_value is None:
-            #         result._noexcept_value = None
+            if result.is_noexcept:
+                if self.noexcept_value is not None:
+                    result.noexcept_value = None
+            else:
+                raise CodeError("Idk")
             return result
         raise NotImplementedError()
 
@@ -111,9 +110,11 @@ class FunctionModification(metaclass=FakeEnum):
                     if self.noexcept_value is None:
                         result.noexcept_value = other.noexcept_value
                     else:
-                        pass  # What to do here
-                else:
+                        raise CodeError("Idk")
+                elif self.noexcept_value is not None:
                     result.noexcept_value = self.noexcept_value
+                else:
+                    result.noexcept_value = None
             return result
         elif isinstance(other, FunctionModification.ModificationKind):
             result = FunctionModification(self.value | other)
@@ -132,7 +133,7 @@ class FunctionModification(metaclass=FakeEnum):
                     result.noexcept_value = other.noexcept_value
             return result
         elif isinstance(other, FunctionModification.ModificationKind):
-            result = TypeModification(self.value.__or__(self.value, other)) # noqa
+            result = FunctionModification(self.value.__or__(self.value, other)) # noqa
             if result.is_noexcept:
                 if self.is_noexcept:
                     result.noexcept_value = self.noexcept_value
@@ -141,11 +142,15 @@ class FunctionModification(metaclass=FakeEnum):
 
     def __eq__(self, other):
         if isinstance(other, FunctionModification):
-            return self.value == other.value and self.noexcept_value == other.noexcept_value
+            if self.noexcept_value is not None and other.noexcept_value is not None:
+                return self.value == other.value and self.noexcept_value == other.noexcept_value
+            elif self.noexcept_value is None and other.noexcept_value is None:
+                return True
+            else:
+                return False
         elif isinstance(other, FunctionModification.ModificationKind):
-            if self.noexcept_value is not None:
-                pass  # What to do here
-            return self.value == other.value
+            if self.noexcept_value is None:
+                return True
         return False
 
     def __invert__(self):
