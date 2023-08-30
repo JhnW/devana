@@ -77,18 +77,26 @@ class Indent:
                 result += self.character.print()
         return result
 
+    def increase(self):
+        self.count += 1
+
+    def decrease(self):
+        self.count -= 1
+        if self.count < 0:
+            self.count = 0
+
     def __add__(self, other):
         if not isinstance(other, int):
             raise NotImplementedError()
-        result = Indent(count=self.count + other)
-        if result.count <= 0:
-            result.count = 1
+        result = Indent(self.character, self.value, self.count + other)
+        if result.count < 0:
+            result.count = 0
         return result
 
     def __sub__(self, other):
         if not isinstance(other, int):
             raise NotImplementedError()
-        result = Indent(count=self.count - other)
+        result = Indent(self.character, self.value, self.count - other)
         if result.count < 0:
             result.count = 0
         return result
