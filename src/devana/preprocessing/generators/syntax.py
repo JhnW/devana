@@ -132,7 +132,7 @@ class DataSignature:
     @property
     def namespace(self) -> Optional[str]:
         """Namespace for function call. All function using devana:: namespace implicitly, so it is second namespace.
-        Namespaces only to C++ attributes, not for comments."""
+        Namespaces apply only to C++ attributes, not for comments."""
         return self._namespace
 
     @property
@@ -169,9 +169,9 @@ class PreprocessorAttribute:
 
         match = re.match(pattern, text)
         text_arguments = []
-        if match and not self._signature.is_marker:
-            if len(match.groups()) < 1:
-                raise AttributeSyntaxError("General parsing error, its nort a function.")
+        if not self._signature.is_marker:
+            if not match or len(match.groups()) < 1:
+                raise AttributeSyntaxError("General parsing error, its not a function.")
             text_arguments = self._split_arguments(match.group(1))
 
         # pylint: disable=consider-using-generator

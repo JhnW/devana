@@ -6,6 +6,7 @@ from devana.syntax_abstraction.organizers.sourcemodule import SourceModule, Sour
 from devana.preprocessing.action import Action
 from abc import ABC, abstractmethod
 
+
 @dataclass
 class TargetsFilter:
     """Regular expressions to filter files and paths to process."""
@@ -45,14 +46,5 @@ class PreprocessorGroup:
                     continue
             self._process(file)
 
-
     def _process(self, target: SourceFile):
         pass
-
-
-
-
-
-
-
-
