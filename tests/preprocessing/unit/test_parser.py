@@ -294,9 +294,9 @@ class TestParserFromFunctionSignature(unittest.TestCase):
         def test_fnc(source: ISource) -> bool:
             return True
 
-        signature = DataSignature.from_callable(test_fnc)
+        signature = DataSignature.from_callable(test_fnc, is_marker=False)
         attr = PreprocessorAttribute(signature)
-        call_result = attr.invoke(self.TestSource(), 'devana::test_fnc(True)', False)
+        call_result = attr.invoke(self.TestSource(), 'devana::test_fnc()', False)
         self.assertTrue(call_result)
 
     def test_parse_attribute_from_two_namespace(self):
@@ -304,11 +304,9 @@ class TestParserFromFunctionSignature(unittest.TestCase):
         def test_fnc(source: ISource) -> bool:
             return True
 
-        signature = DataSignature.from_callable(test_fnc, namespace="test")
+        signature = DataSignature.from_callable(test_fnc, namespace="test", is_marker=False)
         attr = PreprocessorAttribute(signature)
-        call_result = attr.invoke(self.TestSource(), 'test::test_fnc(True)', False)
-        self.assertTrue(call_result)
-        call_result = attr.invoke(self.TestSource(), 'devana::test::test_fnc(True)', False)
+        call_result = attr.invoke(self.TestSource(), 'devana::test::test_fnc()', False)
         self.assertTrue(call_result)
 
     def test_parse_attribute_from_wrong_namespace(self):

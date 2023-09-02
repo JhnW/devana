@@ -164,7 +164,7 @@ class PreprocessorAttribute:
         # its very simple so we can parse it manually
         pattern = namespace + self._signature.name
         if not self._signature.is_marker:
-            pattern += r"\((.+)\)"
+            pattern += r"\((.*)\)"
         pattern = "^" + pattern + "$"
 
         match = re.match(pattern, text)
