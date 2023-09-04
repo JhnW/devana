@@ -3,8 +3,9 @@ class FakeEnum(type):
     You must provide enum_source argument."""
 
     def __new__(mcs, name, bases, args):
-        mcs.__enum_source__ = args["enum_source"]
-        return type.__new__(mcs, name, bases, args)
+        result = type.__new__(mcs, name, bases, args)
+        result.__enum_source__ = args["enum_source"]
+        return result
 
     def __getattribute__(cls, item):
         enum_source = type.__getattribute__(cls, "__enum_source__")

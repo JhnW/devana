@@ -66,8 +66,6 @@ class FunctionModification(metaclass=FakeEnum):
             if value & FunctionModification.ModificationKind.NOEXCEPT:
                 if expect_value is not None:
                     self._noexcept_value = expect_value
-                else:
-                    self._noexcept_value = None
         else:
             self._value = FunctionModification.ModificationKind.NONE
 
@@ -78,6 +76,10 @@ class FunctionModification(metaclass=FakeEnum):
     @property
     def value(self) -> ModificationKind:
         return self._value
+
+    @value.setter
+    def value(self, v):
+        self.value = v
 
     def __and__(self, other):
         if isinstance(other, type(self)):
@@ -446,6 +448,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         parse_noexcept: bool = False
         parse_noexcept_value: bool = False
         noexcept_value: str = ""
+        noexcept_has_value: bool = False
 
         for token in self._cursor.get_tokens():
             if parse_noexcept:
@@ -454,10 +457,14 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
                     continue
                 elif parse_noexcept_value:
                     if token.spelling == ")":
+                        if not noexcept_has_value:
+                            raise ParserError("xd")
+
                         self._modification |= FunctionModification.NOEXCEPT(noexcept_value) # noqa pylint: disable=not-callable
                         parse_noexcept = False
                         parse_noexcept_value = False
                     else:
+                        noexcept_has_value = True
                         noexcept_value += token.spelling
                     continue
                 else:
