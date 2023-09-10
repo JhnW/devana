@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Any
 from enum import Enum, auto, IntFlag
 import re
 from clang import cindex
@@ -413,7 +413,7 @@ class TypeExpression(IBasicCreatable):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         result = cls(None, parent)
         return result
 
@@ -650,7 +650,7 @@ class TypeExpression(IBasicCreatable):
 
     @property
     @lazy_invoke
-    def details(self) -> any:
+    def details(self) -> Any:
         """Object linked to all type information.
 
         This field linked to first type information. If TypeExpression is used by alias, details contain typedef
@@ -707,7 +707,7 @@ class TypeExpression(IBasicCreatable):
         return self._text_source
 
     @property
-    def parent(self) -> any:
+    def parent(self) -> Any:
         """Object scope of usage this data."""
         return self._parent
 

@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -37,7 +37,7 @@ class TypedefInfo(IBasicCreatable, ICursorValidate):
         return cls(cursor, parent)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @staticmethod

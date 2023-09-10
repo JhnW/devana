@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Union, Literal, List
+from typing import Optional, Union, Literal, List, Any
 from enum import Enum, auto
 import re
 from clang import cindex
@@ -15,7 +15,7 @@ from devana.utility.errors import ParserError
 class IncludeInfo:
     """Include present in file."""
 
-    def __init__(self, cursor: Optional[cindex.FileInclusion] = None, parent: Optional[any] = None):
+    def __init__(self, cursor: Optional[cindex.FileInclusion] = None, parent: Optional[Any] = None):
         self._parent = parent
         self._cursor = cursor
         if cursor is None:
@@ -135,7 +135,7 @@ class SourceFileType(Enum):
 class SourceFile(CodeContainer):
     """Information about specific source code file."""
 
-    def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[any] = None,
+    def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[Any] = None,
                  configuration: Optional[Configuration] = None):
         cursor = None
         if configuration is None:
@@ -186,7 +186,7 @@ class SourceFile(CodeContainer):
         return cursor.kind == cindex.CursorKind.TRANSLATION_UNIT
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @classmethod
@@ -197,7 +197,7 @@ class SourceFile(CodeContainer):
         return cls(cursor, parent, configuration)
 
     @classmethod
-    def from_path(cls, source: str, parent: Optional[any] = None, configuration: Optional[Configuration] = None):
+    def from_path(cls, source: str, parent: Optional[Any] = None, configuration: Optional[Configuration] = None):
         return cls(source, parent, configuration)
 
     @property
@@ -234,7 +234,7 @@ class SourceFile(CodeContainer):
         self._path = value
 
     @property
-    def module(self) -> any:
+    def module(self) -> Any:
         """Parent module of source file."""
         return super().parent
 
@@ -365,7 +365,7 @@ class SourceFile(CodeContainer):
                  MethodInfo, GlobalVariable, ExternC, Using]
         return types
 
-    def _create_content(self) -> List[any]:
+    def _create_content(self) -> List[Any]:
         """Overwrite this method to filter witch content should be parsed inside class."""
         types = self._content_types
         content = []

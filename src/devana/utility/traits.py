@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Any
 from clang import cindex
 
 
@@ -17,8 +17,8 @@ class IDefaultCreatable(ABC):
 
     @classmethod
     @abstractmethod
-    def create_default(cls, parent: Optional = None) -> any:
-        """Create a default, valid instance. Cls parameter allow to implement this method once if
+    def create_default(cls, parent: Optional = None) -> Any:
+        """Create a default, valid instance. Cls parameter allows to implement this method once if
         init meets requirements in all derivative types."""
 
 

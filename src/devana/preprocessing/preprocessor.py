@@ -53,7 +53,7 @@ class IGenerator(IInputContract, IOutputContract, ABC):
     input and output data."""
 
     @abstractmethod
-    def generate(self, data: Iterable[Any]) -> Iterable[any]:
+    def generate(self, data: Iterable[Any]) -> Iterable[Any]:
         """Generate data like generate code."""
 
 

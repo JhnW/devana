@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
@@ -30,12 +30,12 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         return cls(cursor, parent)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @property
     @lazy_invoke
-    def content(self) -> List[any]:
+    def content(self) -> List[Any]:
         """List of source code objects."""
         self._content = list(self._create_content())
         return self._content
@@ -56,7 +56,7 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         self._namespace = value
 
     @property
-    def parent(self) -> Optional[any]:
+    def parent(self) -> Optional[Any]:
         """Higher in the hierarchy scope, if any. In most cases another CodeContainer."""
         return self._parent
 
@@ -65,8 +65,8 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
         self._parent = value
 
     @property
-    def lexicon(self) -> any:
-        """Current lexicon storage of object."""
+    def lexicon(self) -> Any:
+        """Current lexicon storage of an object."""
         return None
 
     @property
@@ -95,7 +95,7 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
     def _content_types(self) -> List:
         """Overwrite this method to feed _create_content with a list of types."""
 
-    def _create_content(self) -> List[any]:
+    def _create_content(self) -> List[Any]:
         """Overwrite this method to filter witch content should be parsed inside class."""
         types = self._content_types
         content = []

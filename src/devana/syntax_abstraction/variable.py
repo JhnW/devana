@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import Optional, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -29,7 +29,7 @@ class Variable(IBasicCreatable):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         result = cls(None, parent)
         return result
 
@@ -62,7 +62,7 @@ class Variable(IBasicCreatable):
 
     @property
     @lazy_invoke
-    def default_value(self) -> Optional[any]:
+    def default_value(self) -> Optional[Any]:
         """Default value assigned to variable."""
         self._default_value = None
         pattern = r".+=\s*(.+)"
@@ -83,7 +83,7 @@ class Variable(IBasicCreatable):
         return self._text_source
 
     @property
-    def parent(self) -> any:
+    def parent(self) -> Any:
         """Object scope of usage this data."""
         return self._parent
 

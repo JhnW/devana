@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Optional, List, Iterable
+from typing import Optional, List, Iterable, Any
 from dataclasses import dataclass
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -19,7 +19,7 @@ class SourceModule:
     """Logic unit of code as named collection of source files."""
 
     def __init__(self, name: str, root_path: str, module_filter: Optional[ModuleFilter] = None,
-                 parent: Optional[any] = None, configuration: Optional[Configuration] = None):
+                 parent: Optional[Any] = None, configuration: Optional[Configuration] = None):
         self._path = root_path
         self._module_filter = module_filter
         self._parent = parent
@@ -39,7 +39,7 @@ class SourceModule:
         return self._path
 
     @property
-    def lexicon(self) -> any:
+    def lexicon(self) -> Any:
         """Lexicon linked to module."""
         return self._lexicon
 

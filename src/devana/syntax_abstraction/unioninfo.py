@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -67,7 +67,7 @@ class UnionInfo(CodeContainer):
         self._is_declaration = not value
 
     @property
-    def definition(self) -> Optional[any]:
+    def definition(self) -> Optional[Any]:
         """Definition of union."""
         if self.name in None:
             return None

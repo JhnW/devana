@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Optional, List, Union, Tuple
+from typing import Optional, List, Union, Tuple, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
@@ -76,7 +76,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             self._lexicon = Lexicon.create(self)
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> any:
+        def create_default(cls, parent: Optional = None) -> Any:
             return cls(None, parent)
 
         @classmethod
@@ -177,7 +177,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @classmethod

@@ -1,5 +1,5 @@
 import re
-from typing import Optional, List, Literal
+from typing import Optional, List, Literal, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -39,7 +39,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
                     self._is_default = False
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> any:
+        def create_default(cls, parent: Optional = None) -> Any:
             result = cls(None, parent)
             return result
 
@@ -245,7 +245,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
         self._is_declaration = not value
 
     @property
-    def definition(self) -> Optional[any]:
+    def definition(self) -> Optional[Any]:
         """Definition of enum."""
         if self.is_definition:
             return self

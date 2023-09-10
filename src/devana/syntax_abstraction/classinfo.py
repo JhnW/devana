@@ -1,6 +1,6 @@
 from enum import Enum, auto
 import re
-from typing import Optional, List, Tuple, cast
+from typing import Optional, List, Tuple, cast, Any
 from clang import cindex
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -46,7 +46,7 @@ class ClassMember(IBasicCreatable):
             self._access_specifier = AccessSpecifier.from_cursor(cursor)
 
     @classmethod
-    def create_default(cls, _: Optional = None) -> any:
+    def create_default(cls, _: Optional = None) -> Any:
         result = cls(None)
         return result
 
@@ -66,7 +66,7 @@ class ClassMember(IBasicCreatable):
 
 
 class MethodType(Enum):
-    """Information about type of described method."""
+    """Information about a type of described method."""
     STANDARD = auto()
     OPERATOR = auto()
     CONSTRUCTOR = auto()
@@ -226,7 +226,7 @@ class ConstructorInfo(MethodInfo):
     """Constructor method information."""
 
     class InitializerInfo:
-        """Information about one of initializer list."""
+        """Information about one of initializer lists."""
 
         def __init__(self, name, value):
             self._name: str = name
@@ -234,7 +234,7 @@ class ConstructorInfo(MethodInfo):
 
         @property
         def name(self) -> str:
-            """Name of initialized element."""
+            """Name of an initialized element."""
             return self._name
 
         @name.setter
@@ -397,7 +397,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
         return cursor.kind in (cindex.CursorKind.FIELD_DECL, cindex.CursorKind.VAR_DECL)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @classmethod
@@ -447,7 +447,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
                     raise ParserError("Expected CursorKind.CXX_ACCESS_SPEC_DECL.")
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         result = cls(None, parent)
         result.is_unnamed = False
         return result
@@ -486,7 +486,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
     @property
     @lazy_invoke
     def is_unnamed(self) -> bool:
-        """Return flag about section source if code line or standard access in class body."""
+        """Return a flag about section source if code line or standard access in class body."""
         self._is_unnamed = self._cursor is None
         return self._is_unnamed
 
@@ -507,7 +507,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
         return self._parent
 
     @property
-    def content(self) -> List[any]:
+    def content(self) -> List[Any]:
         if self._content is not None:
             return self._content
         content = []
@@ -553,7 +553,7 @@ class InheritanceInfo(IFromCursorCreatable):
                 self._namespaces = LazyNotInit
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> any:
+        def create_default(cls, parent: Optional = None) -> Any:
             return cls(None, parent)
 
         @classmethod
@@ -589,7 +589,7 @@ class InheritanceInfo(IFromCursorCreatable):
             if self.parent.lexicon is None:
                 return None
             result = self.parent.lexicon.find_type(self._cursor.get_definition())
-            if result is None: # create external type like std lib
+            if result is None: # create an external type like std lib
                 result = create_external(self._cursor.get_definition())
             if result is None:
                 name: str = self._cursor.spelling
@@ -693,7 +693,7 @@ class InheritanceInfo(IFromCursorCreatable):
 
 
 class ClassInfo(CodeContainer, DescriptiveByAttributes):
-    """Data of class type."""
+    """Data of a class type."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
@@ -761,7 +761,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @classmethod
@@ -813,7 +813,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return cast(Tuple[MethodInfo], tuple(filter(lambda e: isinstance(e, MethodInfo), self.content)))
 
     @property
-    def private(self) -> Tuple[any]:
+    def private(self) -> Tuple[Any]:
         private = []
         for s in self.sections:
             if s.type == AccessSpecifier.PRIVATE:
@@ -821,7 +821,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return tuple(private)
 
     @property
-    def public(self) -> Tuple[any]:
+    def public(self) -> Tuple[Any]:
         public = []
         for s in self.sections:
             if s.type == AccessSpecifier.PUBLIC:
@@ -829,7 +829,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return tuple(public)
 
     @property
-    def protected(self) -> Tuple[any]:
+    def protected(self) -> Tuple[Any]:
         protected = []
         for s in self.sections:
             if s.type == AccessSpecifier.PROTECTED:
@@ -870,7 +870,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
 
     @property
     def sections(self) -> Tuple[SectionInfo]:
-        """List of sections present in object."""
+        """List of sections present in an object."""
         sections = []
         if len(self.content) == 0:
             return cast(Tuple[SectionInfo], ())
@@ -908,7 +908,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
     @property
     @lazy_invoke
     def inheritance(self) -> Optional[InheritanceInfo]:
-        """Inheritance if any."""
+        """Inheritance, if any."""
         self._inheritance = InheritanceInfo(self._cursor, self)
         if len(self._inheritance.type_parents) == 0:
             self._inheritance = None
@@ -943,7 +943,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         self._is_declaration = not value
 
     @property
-    def definition(self) -> any:
+    def definition(self) -> Any:
         """Definition of class."""
         if self.is_definition:
             return self
@@ -967,7 +967,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         self._namespaces = value
 
     @property
-    def lexicon(self) -> any:
+    def lexicon(self) -> Any:
         return self._lexicon
 
     @lexicon.setter
@@ -1033,7 +1033,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
                  Using]
         return types
 
-    def _create_content(self) -> List[any]:
+    def _create_content(self) -> List[Any]:
         types = self._content_types
         content = []
         config = Configuration.get_configuration(self)

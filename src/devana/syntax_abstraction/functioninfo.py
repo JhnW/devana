@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Any
 from enum import auto, IntFlag
 import re
 from clang import cindex
@@ -164,7 +164,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         result = cls(None, parent)
         return result
 
@@ -217,7 +217,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
     @property
     @lazy_invoke
     def return_type(self) -> TypeExpression:
-        """Function return type. None for class functions like constructor."""
+        """Function return type. None of class functions like constructor."""
         self._return_type = TypeExpression(self._cursor.result_type, self)
         return self._return_type
 
@@ -227,7 +227,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
 
     @property
     def overloading(self) -> Tuple:
-        """List of other function overloading this name."""
+        """List of another function overloading this name."""
         family = list(self.overloading_family)
         if family:
             args = [arg.type for arg in self.arguments]
@@ -236,7 +236,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
 
     @property
     def overloading_family(self) -> Tuple:
-        """List of all function overloading this name including this one."""
+        """List of all functions overloading this name including this one."""
         if self._lexicon is None:
             return ()
 
@@ -279,7 +279,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
             if definition is not None:
                 result[i] = definition
 
-        # remove element from other namespaces
+        # remove an element from other namespaces
         base_namespace = self.lexicon.namespaces_chain + self.namespaces
         result = filter(lambda f: f.lexicon is None or f.lexicon.namespaces_chain + f.namespaces == base_namespace,
                         result)
@@ -329,7 +329,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
     @property
     @lazy_invoke
     def body(self) -> Optional[str]:
-        """Body of function - source code. None if it is declaration."""
+        """Body of function - source code. None if it is a declaration."""
         self._body = None
         for children in self._cursor.get_children():
             if children.kind == cindex.CursorKind.COMPOUND_STMT:
@@ -352,7 +352,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         return not self.is_declaration
 
     @property
-    def definition(self) -> any:
+    def definition(self) -> Any:
         """Definition of function."""
         if self.lexicon is None:
             return None
@@ -394,7 +394,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
 
     @property
     def lexicon(self) -> Lexicon:
-        """Current lexicon storage of object."""
+        """Current lexicon storage of an object."""
         return self._lexicon
 
     @lexicon.setter

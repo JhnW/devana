@@ -1,4 +1,4 @@
-from typing import Optional, List, Union
+from typing import Optional, List, Union, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -83,7 +83,7 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate):
         return self._text_source
 
     @property
-    def parent(self) -> Optional[any]:
+    def parent(self) -> Optional[Any]:
         """Higher in the hierarchy scope, if any. In most cases another CodeContainer."""
         return self._parent
 

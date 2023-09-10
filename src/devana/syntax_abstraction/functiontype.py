@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -36,7 +36,7 @@ class FunctionType(IBasicCreatable, ICursorValidate):
         return cls(cursor, parent)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> any:
+    def create_default(cls, parent: Optional = None) -> Any:
         return cls(None, parent)
 
     @staticmethod
