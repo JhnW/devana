@@ -77,10 +77,6 @@ class FunctionModification(metaclass=FakeEnum):
     def value(self) -> ModificationKind:
         return self._value
 
-    @value.setter
-    def value(self, v):
-        self.value = v
-
     def __and__(self, other):
         if isinstance(other, type(self)):
             result = FunctionModification(self.value & other.value)
@@ -445,33 +441,9 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         """Function modification enum flag."""
         self._modification = FunctionModification.NONE
 
-        parse_noexcept: bool = False
-        parse_noexcept_value: bool = False
-        noexcept_value: str = ""
-        noexcept_has_value: bool = False
-
-        for token in self._cursor.get_tokens():
-            if parse_noexcept:
-                if token.spelling == "(":
-                    parse_noexcept_value = True
-                    continue
-                elif parse_noexcept_value:
-                    if token.spelling == ")":
-                        if not noexcept_has_value:
-                            raise ParserError("xd")
-
-                        self._modification |= FunctionModification.NOEXCEPT(noexcept_value) # noqa pylint: disable=not-callable
-                        parse_noexcept = False
-                        parse_noexcept_value = False
-                    else:
-                        noexcept_has_value = True
-                        noexcept_value += token.spelling
-                    continue
-                else:
-                    self._modification |= FunctionModification.NOEXCEPT
-                    parse_noexcept = False
-                    parse_noexcept_value = False
-
+        for i in range(len(list(self._cursor.get_tokens()))):
+            tokens = list(self._cursor.get_tokens())
+            token = tokens[i]
 
             if token.spelling == "constexpr":
                 self._modification |= FunctionModification.CONSTEXPR
@@ -490,7 +462,18 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
             elif token.spelling == "volatile":
                 self._modification |= FunctionModification.VOLATILE
             elif token.spelling == "noexcept":
-                parse_noexcept = True
+                if i+1 != len(tokens) and tokens[i+1].spelling == "(":
+                    noexcept_value: str = ""
+                    i += 1
+                    if tokens[i+1].spelling == ")":
+                        raise ParserError("error message")
+                    i += 1
+                    while tokens[i].spelling != ")":
+                        noexcept_value += tokens[i].spelling
+                        i += 1
+                    self._modification |= FunctionModification.NOEXCEPT(noexcept_value) # noqa
+                else:
+                    self._modification |= FunctionModification.NOEXCEPT
 
 
         if self._cursor.is_static_method():
