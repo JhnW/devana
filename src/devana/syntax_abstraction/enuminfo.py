@@ -10,12 +10,13 @@ from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class EnumInfo(CodeContainer, DescriptiveByAttributes):
     """Enum declaration."""
 
-    class EnumValue(IBasicCreatable, ICursorValidate):
+    class EnumValue(IBasicCreatable, ICursorValidate, ISyntaxElement):
         """Enum value stored in EnumInfo."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -39,12 +40,12 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
                     self._is_default = False
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> Any:
+        def create_default(cls, parent: Optional = None) -> "EnumInfo.EnumValue":
             result = cls(None, parent)
             return result
 
         @classmethod
-        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["EnumInfo.EnumValue"]:
             if not cls.is_cursor_valid(cursor):
                 return None
             return cls(cursor, parent)

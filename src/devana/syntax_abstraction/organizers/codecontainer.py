@@ -6,9 +6,10 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class CodeContainer(IBasicCreatable, ICursorValidate, ABC):
+class CodeContainer(IBasicCreatable, ICursorValidate, ISyntaxElement, ABC):
     """Class representing part of code source who is able to hold other sources in his body."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):

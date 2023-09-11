@@ -13,6 +13,7 @@ from devana.syntax_abstraction.attribute import DescriptiveByAttributes, Attribu
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class FunctionModification(IntFlag):
@@ -98,10 +99,10 @@ class FunctionModification(IntFlag):
         return self.value & self.NOEXCEPT
 
 
-class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
+class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, ISyntaxElement):
     """Representative of function definition or declaration."""
 
-    class Argument(Variable, ICursorValidate, DescriptiveByAttributes):
+    class Argument(Variable, ICursorValidate, DescriptiveByAttributes, ISyntaxElement):
         """Data of function or method argument."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
@@ -164,7 +165,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "FunctionInfo":
         result = cls(None, parent)
         return result
 
@@ -173,7 +174,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         return cursor.kind in (cindex.CursorKind.FUNCTION_DECL, cindex.CursorKind.FUNCTION_TEMPLATE)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["FunctionInfo"]:
         if cls.is_cursor_valid(cursor):
             return cls(cursor, parent)
         return None
@@ -204,7 +205,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes):
         self._name = value
 
     @property
-    def complex_name(self):
+    def complex_name(self) -> str:
         """Name of function, without namespace, with return typ name and arguments types (but no variable names)."""
         name = self.name
         if self.return_type is not None:

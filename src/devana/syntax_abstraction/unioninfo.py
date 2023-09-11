@@ -6,6 +6,7 @@ from devana.syntax_abstraction.classinfo import FieldInfo
 from devana.syntax_abstraction.comment import Comment
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class UnionInfo(CodeContainer):

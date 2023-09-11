@@ -1,5 +1,5 @@
 import re
-from typing import Optional, Any
+from typing import Optional
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -8,9 +8,10 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class Variable(IBasicCreatable):
+class Variable(IBasicCreatable, ISyntaxElement):
     """Data about variable used in code"""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
@@ -29,12 +30,12 @@ class Variable(IBasicCreatable):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "Variable":
         result = cls(None, parent)
         return result
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["Variable"]:
         result = cls(cursor, parent)
         return result
 
@@ -62,7 +63,7 @@ class Variable(IBasicCreatable):
 
     @property
     @lazy_invoke
-    def default_value(self) -> Optional[Any]:
+    def default_value(self) -> Optional[str]:
         """Default value assigned to variable."""
         self._default_value = None
         pattern = r".+=\s*(.+)"
@@ -83,7 +84,7 @@ class Variable(IBasicCreatable):
         return self._text_source
 
     @property
-    def parent(self) -> Any:
+    def parent(self) -> ISyntaxElement:
         """Object scope of usage this data."""
         return self._parent
 
@@ -117,7 +118,7 @@ class GlobalVariable(Variable, ICursorValidate):
         return cursor.kind == cindex.CursorKind.VAR_DECL
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["GlobalVariable"]:
         if not cls.is_cursor_valid(cursor):
             return None
         result = cls(cursor, parent)

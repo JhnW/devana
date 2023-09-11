@@ -1,4 +1,4 @@
-from typing import Optional, Union, Any
+from typing import Optional, Union
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -8,9 +8,10 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class TypedefInfo(IBasicCreatable, ICursorValidate):
+class TypedefInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
     """Class represented typedef declaration."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -31,13 +32,13 @@ class TypedefInfo(IBasicCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["TypedefInfo"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "TypedefInfo":
         return cls(None, parent)
 
     @staticmethod
@@ -46,8 +47,8 @@ class TypedefInfo(IBasicCreatable, ICursorValidate):
 
     @property
     @lazy_invoke
-    def type_info(self) -> Union[TypeExpression, any]:
-        """Type alias, can be true type or next typedef."""
+    def type_info(self) -> Union[TypeExpression, ISyntaxElement]:
+        """Type alias can be true type or next typedef."""
         self._type_info = TypeExpression(self._cursor, self)
         return self._type_info
 

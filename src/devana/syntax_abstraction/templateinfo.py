@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Optional, List, Union, Tuple, Any
+from typing import Optional, List, Union, Tuple
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
@@ -9,9 +9,10 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class GenericTypeParameter:
+class GenericTypeParameter(ISyntaxElement):
     """An unresolved generic template parameter, known idiomatically in C++ as T."""
 
     def __init__(self, name: str, parent: Optional = None):
@@ -27,7 +28,7 @@ class GenericTypeParameter:
         self._name = value
 
     @staticmethod
-    def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None) -> Optional:
+    def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None) -> Optional["GenericTypeParameter"]:
         if type_c.kind == cindex.TypeKind.UNEXPOSED:
             if type_c.get_num_template_arguments() > 0:
                 return None
@@ -52,10 +53,10 @@ class GenericTypeParameter:
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
 
 
-class TemplateInfo(IBasicCreatable, ICursorValidate):
+class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
     """General template syntax information abut template definition."""
 
-    class TemplateParameter(IBasicCreatable, ICursorValidate):
+    class TemplateParameter(IBasicCreatable, ICursorValidate, ISyntaxElement):
         """A description of the generic component for the type/function claim."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
@@ -76,11 +77,12 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             self._lexicon = Lexicon.create(self)
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> Any:
+        def create_default(cls, parent: Optional = None) -> "TemplateInfo.TemplateParameter":
             return cls(None, parent)
 
         @classmethod
-        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional[("TemplateInfo"
+                                                                                          ".TemplateParameter")]:
             if not cls.is_cursor_valid(cursor):
                 return None
             return cls(cursor, parent)
@@ -145,7 +147,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
 
         @property
         def lexicon(self) -> CodeContainer:
-            """Current lexicon storage of object."""
+            """Current lexicon storage of an object."""
             return self._lexicon
 
         @property
@@ -177,11 +179,11 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "TemplateInfo":
         return cls(None, parent)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["TemplateInfo"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
@@ -221,7 +223,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             return self._specialisation_values
 
         # here be dragons
-        # for some cases cursor will not return template parameters, so we will do very ugly hack with parse fake file
+        # for some cases cursor will not return template parameters, so we will do a very ugly hack with parse fake file
         if self.parent is None:
             return self._specialisation_values
 
@@ -250,7 +252,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
             tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
                            unsaved_files=[('tmp.h', text)], options=0)
             file = SourceFile(tu.cursor)
-            file.path = Path('tmp.h')  #normally file uses absolute paths, we need to work around
+            file.path = Path('tmp.h')  # normally file uses absolute paths, we need to work around
 
             parents = []
             element = self.parent
@@ -326,7 +328,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
                         spe_type = s.template.specialisation_values[i]
                         expected_type_mod = self.parent.arguments[i].type.modification
                         spec_type_mod = spe_type.modification
-                        # check type mod duplicated (we do not support multiple pointer)
+                        # check type mod duplicated (we do not support a multiple pointer)
                         if not ~((expected_type_mod & spec_type_mod) & ~TypeModification.NONE):
                             is_valid = False
                             break
@@ -351,7 +353,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
 
     @property
     def specialisations_family(self) -> Tuple:
-        """Return all defined specialisations of template including this one."""
+        """Return all defined specializations of template including this one."""
         if self._lexicon is None:
             return ()
 
@@ -390,7 +392,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
 
     @property
     def lexicon(self) -> CodeContainer:
-        """Current lexicon storage of object."""
+        """Current lexicon storage of an object."""
         return self._lexicon
 
     @lexicon.setter
@@ -398,5 +400,5 @@ class TemplateInfo(IBasicCreatable, ICursorValidate):
         self._lexicon = value
 
     @property
-    def parent(self):
+    def parent(self) -> ISyntaxElement:
         return self._parent

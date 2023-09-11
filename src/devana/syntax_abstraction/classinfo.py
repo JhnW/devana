@@ -16,6 +16,7 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class AccessSpecifier(Enum):
@@ -36,7 +37,7 @@ class AccessSpecifier(Enum):
             raise ParserError("Cursor is not class/struct component.")
 
 
-class ClassMember(IBasicCreatable):
+class ClassMember(IBasicCreatable, ISyntaxElement):
     """Base class for all class members."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None):
@@ -46,12 +47,12 @@ class ClassMember(IBasicCreatable):
             self._access_specifier = AccessSpecifier.from_cursor(cursor)
 
     @classmethod
-    def create_default(cls, _: Optional = None) -> Any:
+    def create_default(cls, _: Optional = None) -> "ClassMember":
         result = cls(None)
         return result
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, _: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, _: Optional = None) -> Optional["ClassMember"]:
         result = cls(cursor)
         return result
 
@@ -397,11 +398,11 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
         return cursor.kind in (cindex.CursorKind.FIELD_DECL, cindex.CursorKind.VAR_DECL)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "FieldInfo":
         return cls(None, parent)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["FieldInfo"]:
         if cls.is_cursor_valid(cursor):
             return cls(cursor, parent)
         return None
@@ -423,7 +424,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
         self._associated_comment = value
 
 
-class SectionInfo(IBasicCreatable, ICursorValidate):
+class SectionInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
     """Representation of class sections like private, public and protected."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -447,13 +448,13 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
                     raise ParserError("Expected CursorKind.CXX_ACCESS_SPEC_DECL.")
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "SectionInfo":
         result = cls(None, parent)
         result.is_unnamed = False
         return result
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["SectionInfo"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
@@ -530,10 +531,10 @@ class SectionInfo(IBasicCreatable, ICursorValidate):
         return f"{type(self).__name__}:{self.type} ({super().__repr__()})"
 
 
-class InheritanceInfo(IFromCursorCreatable):
+class InheritanceInfo(IFromCursorCreatable, ISyntaxElement):
     """Information about class/structure inheritance."""
 
-    class InheritanceValue(IBasicCreatable):
+    class InheritanceValue(IBasicCreatable, ISyntaxElement):
         """One of parent (in C++ mean) information."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
@@ -553,11 +554,12 @@ class InheritanceInfo(IFromCursorCreatable):
                 self._namespaces = LazyNotInit
 
         @classmethod
-        def create_default(cls, parent: Optional = None) -> Any:
+        def create_default(cls, parent: Optional = None) -> "InheritanceInfo.InheritanceValue":
             return cls(None, parent)
 
         @classmethod
-        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+        def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional[("InheritanceInfo"
+                                                                                          ".InheritanceValue")]:
             return cls(cursor, parent)
 
         @property
@@ -661,7 +663,7 @@ class InheritanceInfo(IFromCursorCreatable):
             self._type_parents = LazyNotInit
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["InheritanceInfo"]:
         return cls(cursor, parent)
 
     @property
@@ -761,11 +763,11 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "ClassInfo":
         return cls(None, parent)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["ClassInfo"]:
         if not cls.is_cursor_valid(cursor):
             return None
         try:
@@ -813,7 +815,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return cast(Tuple[MethodInfo], tuple(filter(lambda e: isinstance(e, MethodInfo), self.content)))
 
     @property
-    def private(self) -> Tuple[Any]:
+    def private(self) -> Tuple[ISyntaxElement]:
         private = []
         for s in self.sections:
             if s.type == AccessSpecifier.PRIVATE:
@@ -821,7 +823,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return tuple(private)
 
     @property
-    def public(self) -> Tuple[Any]:
+    def public(self) -> Tuple[ISyntaxElement]:
         public = []
         for s in self.sections:
             if s.type == AccessSpecifier.PUBLIC:
@@ -829,7 +831,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         return tuple(public)
 
     @property
-    def protected(self) -> Tuple[Any]:
+    def protected(self) -> Tuple[ISyntaxElement]:
         protected = []
         for s in self.sections:
             if s.type == AccessSpecifier.PROTECTED:
@@ -967,7 +969,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
         self._namespaces = value
 
     @property
-    def lexicon(self) -> Any:
+    def lexicon(self) -> Lexicon:
         return self._lexicon
 
     @lexicon.setter

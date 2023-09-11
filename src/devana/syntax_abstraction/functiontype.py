@@ -1,4 +1,4 @@
-from typing import Optional, List, Any
+from typing import Optional, List
 from clang import cindex
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -7,9 +7,10 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class FunctionType(IBasicCreatable, ICursorValidate):
+class FunctionType(IBasicCreatable, ICursorValidate, ISyntaxElement):
     """Class representing the type of function (function pointer) that can
     appear as a variable or in a typedef etc."""
 
@@ -30,13 +31,13 @@ class FunctionType(IBasicCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["FunctionType"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "FunctionType":
         return cls(None, parent)
 
     @staticmethod

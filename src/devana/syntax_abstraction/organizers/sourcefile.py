@@ -10,9 +10,10 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class IncludeInfo:
+class IncludeInfo(ISyntaxElement):
     """Include present in file."""
 
     def __init__(self, cursor: Optional[cindex.FileInclusion] = None, parent: Optional[Any] = None):
@@ -186,7 +187,7 @@ class SourceFile(CodeContainer):
         return cursor.kind == cindex.CursorKind.TRANSLATION_UNIT
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional[ISyntaxElement] = None) -> Any:
         return cls(None, parent)
 
     @classmethod

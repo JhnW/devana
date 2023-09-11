@@ -18,3 +18,4 @@ from .classinfo import ClassMember, ConstructorInfo, DestructorInfo, FieldInfo, 
 from .externc import ExternC
 from .functiontype import FunctionType
 from .using import Using
+from .syntax import ISyntaxElement

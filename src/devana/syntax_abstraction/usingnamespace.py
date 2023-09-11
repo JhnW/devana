@@ -1,4 +1,4 @@
-from typing import Optional, List, Union, Any
+from typing import Optional, List, Union
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
@@ -6,9 +6,10 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IFromCursorCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class UsingNamespace(IFromCursorCreatable, ICursorValidate):
+class UsingNamespace(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
     """Using namespace in scope."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -27,13 +28,13 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["UsingNamespace"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
 
     @classmethod
-    def from_namespace(cls, namespace: str, parent: Optional = None):
+    def from_namespace(cls, namespace: str, parent: Optional = None) -> "UsingNamespace":
         result = cls(None, parent)
         result._namespace = namespace
         return result
@@ -83,8 +84,8 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate):
         return self._text_source
 
     @property
-    def parent(self) -> Optional[Any]:
-        """Higher in the hierarchy scope, if any. In most cases another CodeContainer."""
+    def parent(self) -> Optional[ISyntaxElement]:
+        """Higher in the hierarchy scope, if any. In most cases, another CodeContainer."""
         return self._parent
 
     @property

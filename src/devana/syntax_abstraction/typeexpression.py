@@ -1,4 +1,4 @@
-from typing import List, Optional, Union, Any
+from typing import List, Optional, Union
 from enum import Enum, auto, IntFlag
 import re
 from clang import cindex
@@ -9,6 +9,7 @@ from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.utility.fakeenum import FakeEnum
 from devana.utility.traits import IBasicCreatable
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class BasicType(Enum):
@@ -16,7 +17,7 @@ class BasicType(Enum):
     subclass."""
 
     class BasicTypeValue:
-        """Internal value od basic type."""
+        """Internal value od a basic type."""
 
         def __init__(self, name: str, value, unsigned: bool = False):
             self._name = name
@@ -372,8 +373,8 @@ class TypeModification(metaclass=FakeEnum):
         return self.value == TypeModification.ModificationKind.NONE
 
 
-class TypeExpression(IBasicCreatable):
-    """Hold information about C++ type usage in common expression, for example function argument declaration,
+class TypeExpression(IBasicCreatable, ISyntaxElement):
+    """Hold information about C++ type usage in common expression, for example, function argument declaration,
     class field, function return value or part of typedef declaration."""
 
     def __init__(self, cursor: Optional[Union[cindex.Cursor, cindex.Type]] = None, parent: Optional = None):
@@ -413,21 +414,21 @@ class TypeExpression(IBasicCreatable):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def create_default(cls, parent: Optional = None) -> Any:
+    def create_default(cls, parent: Optional = None) -> "TypeExpression":
         result = cls(None, parent)
         return result
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["TypeExpression"]:
         result = cls(cursor, parent)
         return result
 
     @property
     @lazy_invoke
     def name(self) -> str:
-        """Used name of type in current context.
+        """Used name of a type in the current context.
 
-        Name of type is exactly the same name as used in expression, with all type modifications, namespace,
+        Name of a type is exactly the same name as used in expression, with all type modifications, namespace,
         template arguments and use or not type aliases."""
         name = ""
         from devana.syntax_abstraction.functiontype import FunctionType  # pylint: disable=import-outside-toplevel
@@ -613,8 +614,8 @@ class TypeExpression(IBasicCreatable):
 
     @property
     @lazy_invoke
-    def template_arguments(self) -> Optional[List]:
-        """Arguments list of template concretization. None if  type is not template."""
+    def template_arguments(self) -> Optional[List["TypeExpression"]]:
+        """Arguments list of template concretization. None if type is not template."""
         self._template_arguments = []
         type_c = self._base_type_c
         if self.modification.is_pointer or self.modification.is_reference or self.modification.is_rvalue_ref:
@@ -650,7 +651,7 @@ class TypeExpression(IBasicCreatable):
 
     @property
     @lazy_invoke
-    def details(self) -> Any:
+    def details(self) -> ISyntaxElement:
         """Object linked to all type information.
 
         This field linked to first type information. If TypeExpression is used by alias, details contain typedef
@@ -707,7 +708,7 @@ class TypeExpression(IBasicCreatable):
         return self._text_source
 
     @property
-    def parent(self) -> Any:
+    def parent(self) -> ISyntaxElement:
         """Object scope of usage this data."""
         return self._parent
 
