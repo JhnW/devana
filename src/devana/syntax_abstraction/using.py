@@ -8,10 +8,11 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IFromCursorCreatable, ICursorValidate
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class Using(IFromCursorCreatable, ICursorValidate):
-    """Class represented typedef declaration e.g. using AliasTypeName = const namespace::namespace::Type.
+class Using(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
+    """Class represented typedef declaration e.g., using AliasTypeName = const namespace::namespace::Type.
     Using without "=" as using namespace::Type; is not supported."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -32,7 +33,7 @@ class Using(IFromCursorCreatable, ICursorValidate):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["Using"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
@@ -43,8 +44,8 @@ class Using(IFromCursorCreatable, ICursorValidate):
 
     @property
     @lazy_invoke
-    def type_info(self) -> Union[TypeExpression, any]:
-        """Type alias, can be true type or next typedef."""
+    def type_info(self) -> Union[TypeExpression, "ISyntaxElement"]:
+        """Type alias can be true type or next typedef."""
         self._type_info = TypeExpression(self._cursor, self)
         return self._type_info
 

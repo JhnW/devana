@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.code_generation.printers.configuration import PrinterConfiguration
 
@@ -51,7 +51,7 @@ class CodePrinter(ICodePrinter):
     """Collection of low-level printers for many types. CodePrinter will match correct printer to source object type."""
 
     def __init__(self, configuration: Optional[PrinterConfiguration] = None, is_fallback_allowed=False):
-        self._printers: Dict[any, ICodePrinter] = {}
+        self._printers: Dict[Any, ICodePrinter] = {}
         self._is_fallback_allowed = is_fallback_allowed
         self._configuration = configuration if configuration is not None else PrinterConfiguration()
 

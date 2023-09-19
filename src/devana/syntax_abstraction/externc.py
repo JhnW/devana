@@ -5,6 +5,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.utility.errors import ParserError
 from devana.utility.lazy import lazy_invoke
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class ExternC(CodeContainer):

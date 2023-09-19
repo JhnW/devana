@@ -83,6 +83,15 @@ class TestAttributesParser(unittest.TestCase):
         self.assertEqual("gnu", result[0].namespace)
         self.assertEqual(None, result[0].arguments)
 
+    def test_attribute_argument_string_with_comma(self):
+        result: List[Attribute] = Attribute.from_whole_declaration_text('text("Text, but with extra comma", "Another '
+                                                        'argument", 7)')
+        self.assertEqual(1, len(result))
+        self.assertEqual(3, len(result[0].arguments))
+        self.assertEqual("\"Text, but with extra comma\"", result[0].arguments[0])
+        self.assertEqual("\"Another argument\"", result[0].arguments[1])
+        self.assertEqual("7", result[0].arguments[2])
+
 
 class TestAttributesDeclarationParser(unittest.TestCase):
 
