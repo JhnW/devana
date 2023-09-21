@@ -34,7 +34,14 @@ class UnionInfo(CodeContainer):
     @lazy_invoke
     def name(self) -> Optional[str]:
         """Name of union or None is anonymous."""
-        self._name = self._cursor.displayname
+        tokens = list(self._cursor.get_tokens())
+        is_set = False
+        if len(tokens) >= 2:
+            if tokens[0].spelling == "union" and tokens[1].spelling == "{":
+                self._name = None
+                is_set = True
+        if not is_set:
+            self._name = self._cursor.displayname
         if not self._name:
             self._name = None
         return self._name

@@ -37,5 +37,3 @@ class TestUnion(unittest.TestCase):
         self.assertEqual(result.name, None)
         self.assertTrue(type(result) is UnionInfo)
         self.assertEqual(len(result.content), 2)
-
-

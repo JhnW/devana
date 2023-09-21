@@ -104,7 +104,7 @@ class StandardLibraryMode(Enum):
     def create_default(cls):
         """This feature is platform dependent, trying to return the best way to provide a standard library
         for a given machine.
-        For macOS platform you may need to provide libc path from your xcode or other sdk."""
+        For macOS platform, you may need to provide libc path from your xcode or other sdk."""
         return cls.PLATFORM if platform.system() == 'Windows' else cls.DEVANA_CLANG
 
 

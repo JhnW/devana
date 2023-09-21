@@ -1,4 +1,4 @@
-libclang==15.0.6.1
+libclang==16.0.6
 pytest==7.1.2
 tox==4.5.2
 Sphinx==5.0.2
