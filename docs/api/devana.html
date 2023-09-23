@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana &mdash; devana 2.1.0 documentation</title>
+  <title>devana &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,6 +50,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">devana</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="devana.utility.html">devana.utility</a></li>
 </ul>
@@ -135,6 +136,23 @@
 <li class="toctree-l2"><a class="reference internal" href="devana.code_generation.html#module-devana.code_generation.stubtype">devana.code_generation.stubtype</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="devana.preprocessing.components.html">devana.preprocessing.components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="devana.preprocessing.components.parser.html">devana.preprocessing.components.parser</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="devana.preprocessing.components.parser.html#module-devana.preprocessing.components.parser.attributeextractor">devana.preprocessing.components.parser.attributeextractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.html#module-devana.preprocessing.preprocessor">devana.preprocessing.preprocessor</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="devana.syntax_abstraction.organizers.html">devana.syntax_abstraction.organizers</a><ul>
@@ -156,6 +174,7 @@
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.functioninfo">devana.syntax_abstraction.functioninfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.functiontype">devana.syntax_abstraction.functiontype</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.namespaceinfo">devana.syntax_abstraction.namespaceinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.syntax">devana.syntax_abstraction.syntax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.templateinfo">devana.syntax_abstraction.templateinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.typedefinfo">devana.syntax_abstraction.typedefinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.syntax_abstraction.html#module-devana.syntax_abstraction.typeexpression">devana.syntax_abstraction.typeexpression</a></li>
@@ -236,7 +255,7 @@ This exception will be propagated to the client using the library.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'logging'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/logging/__init__.py'&gt;</span></em><a class="headerlink" href="#devana.configuration.Configuration.logger" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'logging'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/logging/__init__.py'&gt;</span></em><a class="headerlink" href="#devana.configuration.Configuration.logger" title="Permalink to this definition"></a></dt>
 <dd><p>Currently used standard logger instance.</p>
 </dd></dl>
 
@@ -532,7 +551,7 @@ This exception will be propagated to the client using the library.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryMode.create_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryMode.create_default" title="Permalink to this definition"></a></dt>
 <dd><p>This feature is platform dependent, trying to return the best way to provide a standard library
 for a given machine.
-For macOS platform you may need to provide libc path from your xcode or other sdk.</p>
+For macOS platform, you may need to provide libc path from your xcode or other sdk.</p>
 </dd></dl>
 
 </dd></dl>

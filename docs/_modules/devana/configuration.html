@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.configuration &mdash; devana 2.1.0 documentation</title>
+  <title>devana.configuration &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/configuration.html" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -80,7 +80,7 @@
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
 
 <div class="viewcode-block" id="IValidateConfig"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.IValidateConfig">[docs]</a><span class="k">class</span> <span class="nc">IValidateConfig</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
@@ -180,7 +180,7 @@
     <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This feature is platform dependent, trying to return the best way to provide a standard library</span>
 <span class="sd">        for a given machine.</span>
-<span class="sd">        For macOS platform you may need to provide libc path from your xcode or other sdk.&quot;&quot;&quot;</span>
+<span class="sd">        For macOS platform, you may need to provide libc path from your xcode or other sdk.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">PLATFORM</span> <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEVANA_CLANG</span></div></div>
 
 
@@ -275,7 +275,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parsing</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Configuration.get_configuration"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.Configuration.get_configuration">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_configuration</span><span class="p">(</span><span class="n">this</span><span class="p">:</span> <span class="nb">any</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_configuration</span><span class="p">(</span><span class="n">this</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">&quot;configuration&quot;</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">this</span><span class="o">.</span><span class="n">configuration</span>

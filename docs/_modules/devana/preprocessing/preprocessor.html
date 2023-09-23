@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.preprocessor &mdash; devana 2.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/preprocessing/preprocessor.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../how_to_start.html">How to start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>devana.preprocessing.preprocessor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for devana.preprocessing.preprocessor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+
+<div class="viewcode-block" id="IInputContract"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IInputContract">[docs]</a><span class="k">class</span> <span class="nc">IInputContract</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contract that allows you to define what specific type is required.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IInputContract.get_required_type"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IInputContract.get_required_type">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_required_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Specifies the required input type. In common cases should be interfaced.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="IOutputContract"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IOutputContract">[docs]</a><span class="k">class</span> <span class="nc">IOutputContract</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contract that allows you to define what specific type is provided in the output.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IOutputContract.get_produced_type"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IOutputContract.get_produced_type">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_produced_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Specifies a result type, typically as an interface.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="ISource"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.ISource">[docs]</a><span class="k">class</span> <span class="nc">ISource</span><span class="p">(</span><span class="n">IOutputContract</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The data source interface for the processor.</span>
+<span class="sd">    Typical implementation assumes reading files (json or header files) and returning the parsed output of</span>
+<span class="sd">    the generator, for example, C++ type systems from Devana.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ISource.feed"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.ISource.feed">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create data, one by one.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="IDestination"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IDestination">[docs]</a><span class="k">class</span> <span class="nc">IDestination</span><span class="p">(</span><span class="n">IInputContract</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface specifying a class that manages the recording of preprocessor output artifacts.</span>
+<span class="sd">    Typical use case is the generation of c++ code to files on disk, but other outputs are also possible,</span>
+<span class="sd">    although the artifacts are generally focused on the disk.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IDestination.Artifacts"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IDestination.Artifacts">[docs]</a>    <span class="nd">@dataclass</span>
+    <span class="k">class</span> <span class="nc">Artifacts</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resulting preprocessor artifacts.&quot;&quot;&quot;</span>
+        <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of touching files.&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="IDestination.consume"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IDestination.consume">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Artifacts</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Consume data from generator and save it.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="IGenerator"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IGenerator">[docs]</a><span class="k">class</span> <span class="nc">IGenerator</span><span class="p">(</span><span class="n">IInputContract</span><span class="p">,</span> <span class="n">IOutputContract</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A preprocessing unit which, based on general input data, generates output data by implementing methods of binding</span>
+<span class="sd">    input and output data.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IGenerator.generate"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.IGenerator.generate">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate data like generate code.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="Preprocessor"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.Preprocessor">[docs]</a><span class="k">class</span> <span class="nc">Preprocessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A preprocessor class that, through aggregation, combines the provided data source,</span>
+<span class="sd">    generator or class that saves input data into one coherent entity.</span>
+<span class="sd">    It also provides validation contracts of the classes used.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">ISource</span><span class="p">,</span> <span class="n">generator</span><span class="p">:</span> <span class="n">IGenerator</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="n">IDestination</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span> <span class="o">=</span> <span class="n">generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span> <span class="o">=</span> <span class="n">destination</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_contracts_match</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input ad output types do not match.&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IGenerator</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISource</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">destination</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IDestination</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span>
+
+<div class="viewcode-block" id="Preprocessor.process"><a class="viewcode-back" href="../../../api/devana.preprocessing.html#devana.preprocessing.preprocessor.Preprocessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IDestination</span><span class="o">.</span><span class="n">Artifacts</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_contracts_match</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="o">.</span><span class="n">get_produced_type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span><span class="o">.</span><span class="n">get_required_type</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_generator</span><span class="o">.</span><span class="n">get_produced_type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span><span class="o">.</span><span class="n">get_required_type</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">ISource</span><span class="p">,</span> <span class="n">generator</span><span class="p">:</span> <span class="n">IGenerator</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="n">IDestination</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IDestination</span><span class="o">.</span><span class="n">Artifacts</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">destination</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">feed</span><span class="p">()))</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

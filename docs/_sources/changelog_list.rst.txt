@@ -2,6 +2,31 @@ Changelog
 =========
 
 
+v2.2.0 (2023-09-23)
+-------------------
+
+New
+~~~
+- Basic preparations for a code processing framework. [JhnW]
+
+  Creation of basic interfaces, first sample implementation, general corrections of syntactic types.
+
+Changes
+~~~~~~~
+- Update libclang to 16.0.6. [JhnW]
+
+Fix
+~~~
+- Removed indent for access specifiers. [Miłosz]
+- Meta enum example fixed for newer python and devana generators. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Doc: Code of conduct. [JhnW]
+- Test: Run code quality on branchces. [JhnW]
+
+
 v2.1.0 (2023-06-03)
 -------------------
 

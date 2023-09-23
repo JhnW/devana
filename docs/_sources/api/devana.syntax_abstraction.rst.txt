@@ -90,6 +90,14 @@ devana.syntax\_abstraction.namespaceinfo
    :undoc-members:
    :show-inheritance:
 
+devana.syntax\_abstraction.syntax
+---------------------------------
+
+.. automodule:: devana.syntax_abstraction.syntax
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.templateinfo
 ---------------------------------------
 
