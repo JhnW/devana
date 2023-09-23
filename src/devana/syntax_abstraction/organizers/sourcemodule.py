@@ -100,7 +100,7 @@ class SourceModule:
         return self._configuration
 
     @staticmethod
-    def get_module(element: any) -> Optional:
+    def get_module(element: Any) -> Optional:
         if isinstance(element, SourceModule):
             return element
         if not hasattr(element, "parent"):
