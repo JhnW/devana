@@ -30,6 +30,7 @@ class FunctionModification(IntFlag):
     DELETE = auto()
     DEFAULT = auto()
     CONSTEXPR = auto()
+    CONSTEVAL = auto()
     VOLATILE = auto()
     NOEXCEPT = auto()
 
@@ -41,62 +42,67 @@ class FunctionModification(IntFlag):
     @property
     def is_explicit(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.EXPLICIT
+        return bool(self.value & self.EXPLICIT)
 
     @property
     def is_static(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.STATIC
+        return bool(self.value & self.STATIC)
 
     @property
     def is_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.VIRTUAL
+        return bool(self.value & self.VIRTUAL)
 
     @property
     def is_pure_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.PURE_VIRTUAL
+        return bool(self.value & self.PURE_VIRTUAL)
 
     @property
     def is_inline(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.INLINE
+        return bool(self.value & self.INLINE)
 
     @property
     def is_final(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.FINAL
+        return bool(self.value & self.FINAL)
 
     @property
     def is_override(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.OVERRIDE
+        return bool(self.value & self.OVERRIDE)
 
     @property
     def is_delete(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.DELETE
+        return bool(self.value & self.DELETE)
 
     @property
     def is_default(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.DEFAULT
+        return bool(self.value & self.DEFAULT)
 
     @property
     def is_constexpr(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.CONSTEXPR
+        return bool(self.value & self.CONSTEXPR)
+
+    @property
+    def is_consteval(self) -> bool:
+        # noinspection PyTypeChecker
+        return bool(self.value & self.CONSTEVAL)
 
     @property
     def is_volatile(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.VOLATILE
+        return bool(self.value & self.VOLATILE)
 
     @property
     def is_noexcept(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.NOEXCEPT
+        return bool(self.value & self.NOEXCEPT)
 
 
 class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, ISyntaxElement):
@@ -290,11 +296,20 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     @property
     @lazy_invoke
     def modification(self) -> FunctionModification:
+        # for
         """Function modification enum flag."""
         self._modification = FunctionModification.NONE
-        for token in self._cursor.get_tokens():
+        tokens = list(self._cursor.get_tokens())
+        for i in range(len(tokens)):
+            token = tokens[i]
             if token.spelling == "constexpr":
                 self._modification |= FunctionModification.CONSTEXPR
+            if token.spelling == "consteval":
+                if i == 0:
+                    self._modification |= FunctionModification.CONSTEVAL
+                else:
+                    if tokens[i-1].spelling != "if":
+                        self._modification |= FunctionModification.CONSTEVAL
             elif token.spelling == "static":
                 self._modification |= FunctionModification.STATIC
             elif token.spelling == "inline":

@@ -7,13 +7,16 @@ from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.utility.errors import CodeError
+from devana.configuration import Configuration, LanguageStandard
 
 
 class TestFunctionsSimple(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp").cursor
+        config: Configuration = Configuration()
+        config.parsing.language_version = LanguageStandard.CPP_20
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp", args=config.parsing.parsing_options()).cursor
 
     def test_function_procedure(self):
         node = find_by_name(self.cursor, "procedure_forward")
@@ -102,11 +105,11 @@ class TestFunctionsSimple(unittest.TestCase):
 }""")
 
     def test_function_modification(self):
-        with self.subTest("mod_constexpt_func"):
-            node = find_by_name(self.cursor, "mod_constexpt_func")
+        with self.subTest("mod_constexpr_func"):
+            node = find_by_name(self.cursor, "mod_constexpr_func")
             result = FunctionInfo.from_cursor(node)
             stub_lexicon(result)
-            self.assertEqual(result.name, "mod_constexpt_func")
+            self.assertEqual(result.name, "mod_constexpr_func")
             self.assertEqual(result.return_type.modification, TypeModification.NONE)
             self.assertEqual(result.return_type.details, BasicType.INT)
             self.assertEqual(len(result.arguments), 1)
@@ -117,6 +120,22 @@ class TestFunctionsSimple(unittest.TestCase):
             self.assertFalse(result.is_definition)
             self.assertTrue(result.is_declaration)
             self.assertTrue(result.modification.is_constexpr)
+
+        with self.subTest("mod_consteval_func"):
+            node = find_by_name(self.cursor, "mod_consteval_func")
+            result = FunctionInfo.from_cursor(node)
+            stub_lexicon(result)
+            self.assertEqual(result.name, "mod_consteval_func")
+            self.assertEqual(result.return_type.modification, TypeModification.NONE)
+            self.assertEqual(result.return_type.details, BasicType.INT)
+            self.assertEqual(len(result.arguments), 1)
+            self.assertEqual(result.arguments[0].name, "a")
+            self.assertEqual(result.arguments[0].type.details, BasicType.INT)
+            self.assertEqual(len(result.overloading), 0)
+            self.assertEqual(result.template, None)
+            self.assertFalse(result.is_definition)
+            self.assertTrue(result.is_declaration)
+            self.assertTrue(result.modification.is_consteval)
 
         with self.subTest("mod_static_func"):
             node = find_by_name(self.cursor, "mod_static_func")

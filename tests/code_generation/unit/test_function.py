@@ -70,6 +70,10 @@ class TestFunctionCore(unittest.TestCase):
             source.modification = FunctionModification.CONSTEXPR
             result = self.printer.print(source)
             self.assertEqual(result, "constexpr long foo(float a, int* b = nullptr);\n")
+        with self.subTest("consteval"):
+            source.modification = FunctionModification.CONSTEVAL
+            result = self.printer.print(source)
+            self.assertEqual(result, "consteval long foo(float a, int* b = nullptr);\n")
         with self.subTest("const"):
             source.modification = FunctionModification.CONST
             result = self.printer.print(source)

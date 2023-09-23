@@ -28,6 +28,8 @@ class VariablePrinter(ICodePrinter, DispatcherInjectable):
                 mods += "restrict "
             elif source.type.modification.is_constexpr:
                 mods += "constexpr "
+            elif source.type.modification.is_constinit:
+                mods += "constinit"
             elif source.type.modification.is_mutable:
                 mods += "mutable "
 

@@ -11,7 +11,8 @@ void procedure_def()
     }
 }
 
-constexpr int mod_constexpt_func(int a);
+constexpr int mod_constexpr_func(int a);
+consteval int mod_consteval_func(int a);
 static int mod_static_func(int a);
 inline int mod_inline_func(int a);
 int mod_noexcept_func(int a) noexcept;
