@@ -4,7 +4,7 @@ import logging
 import platform
 from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Any
 
 
 class IValidateConfig(ABC):
@@ -199,7 +199,7 @@ class Configuration(IValidateConfig):
         self.parsing.validate()
 
     @staticmethod
-    def get_configuration(this: any):
+    def get_configuration(this: Any):
         while True:
             if hasattr(this, "configuration"):
                 return this.configuration

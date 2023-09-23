@@ -579,7 +579,7 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
         """List of namespaces used in name."""
         self._namespaces = []
         if not hasattr(self._cursor, "get_children"):
-            # for function return types we need complete this list by regular expression
+            # for function return types we need to complete this list by regular expression
             # it would be nice to find another way to do it by clang tools
 
             # we need to prevent namespaces to catch self type name with template
