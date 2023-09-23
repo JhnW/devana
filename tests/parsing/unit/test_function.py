@@ -187,7 +187,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_namespace_return(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp")
-        result: FunctionInfo = file.content[9]
+        result: FunctionInfo = file.content[10]
         self.assertEqual(result.name, "namespace_return_func")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
         self.assertEqual(len(result.arguments), 1)
