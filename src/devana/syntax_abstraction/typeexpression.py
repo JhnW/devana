@@ -566,15 +566,17 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
             else:
                 type_source = type_c.get_pointee()
 
+        is_constinit = []
         if type(self._cursor) is cindex.Cursor:
             is_constinit = list(filter(lambda token: token.spelling == "constinit", self._cursor.get_tokens()))
-            if type_source.is_const_qualified() or len(is_constinit) > 0:
-                if self.text_source is not None and self.text_source.text.find("constexpr ") != -1:
-                    tmp_modification |= TypeModification.CONSTEXPR
-                elif self.text_source is not None and self.text_source.text.find("constinit ") != -1:
-                    tmp_modification |= TypeModification.CONSTINIT
-                else:
-                    tmp_modification |= TypeModification.CONST
+        if type_source.is_const_qualified() or len(is_constinit) > 0:
+            if self.text_source is not None and self.text_source.text.find("constexpr ") != -1:
+                tmp_modification |= TypeModification.CONSTEXPR
+            elif self.text_source is not None and self.text_source.text.find("constinit ") != -1:
+                tmp_modification |= TypeModification.CONSTINIT
+            else:
+                tmp_modification |= TypeModification.CONST
+
         if type_source.is_volatile_qualified():
             tmp_modification |= TypeModification.VOLATILE
 
