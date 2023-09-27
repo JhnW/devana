@@ -296,7 +296,6 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     @property
     @lazy_invoke
     def modification(self) -> FunctionModification:
-        # for
         """Function modification enum flag."""
         self._modification = FunctionModification.NONE
         tokens = list(self._cursor.get_tokens())
@@ -305,11 +304,12 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             if token.spelling == "constexpr":
                 self._modification |= FunctionModification.CONSTEXPR
             if token.spelling == "consteval":
-                if i == 0:
-                    self._modification |= FunctionModification.CONSTEVAL
-                else:
-                    if tokens[i-1].spelling != "if":
+                try:
+                    opening_bracket_index = list(map(lambda t: t.spelling, tokens)).index("{")
+                    if i < opening_bracket_index:
                         self._modification |= FunctionModification.CONSTEVAL
+                except ValueError:
+                    self._modification |= FunctionModification.CONSTEVAL
             elif token.spelling == "static":
                 self._modification |= FunctionModification.STATIC
             elif token.spelling == "inline":

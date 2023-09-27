@@ -256,3 +256,11 @@ class TestFunctionTemplate(unittest.TestCase):
         source.prefix = "__declspec(dllexport)"
         result = self.printer.print(source)
         self.assertEqual(result, "__declspec(dllexport) long foo();\n")
+
+    def test_consteval_body(self):
+        source = FunctionInfo.create_default()
+        source.name = "foo"
+        source.return_type = TypeExpression.create_default()
+        source.return_type.details = BasicType.VOID
+        source.body = "if consteval() { foo(); }"
+        self.assertFalse(source.modification.is_consteval)
