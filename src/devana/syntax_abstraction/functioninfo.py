@@ -42,67 +42,67 @@ class FunctionModification(IntFlag):
     @property
     def is_explicit(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.EXPLICIT)
+        return self.value & self.EXPLICIT
 
     @property
     def is_static(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.STATIC)
+        return self.value & self.STATIC
 
     @property
     def is_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.VIRTUAL)
+        return self.value & self.VIRTUAL
 
     @property
     def is_pure_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.PURE_VIRTUAL)
+        return self.value & self.PURE_VIRTUAL
 
     @property
     def is_inline(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.INLINE)
+        return self.value & self.INLINE
 
     @property
     def is_final(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.FINAL)
+        return self.value & self.FINAL
 
     @property
     def is_override(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.OVERRIDE)
+        return self.value & self.OVERRIDE
 
     @property
     def is_delete(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.DELETE)
+        return self.value & self.DELETE
 
     @property
     def is_default(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.DEFAULT)
+        return self.value & self.DEFAULT
 
     @property
     def is_constexpr(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.CONSTEXPR)
+        return self.value & self.CONSTEXPR
 
     @property
     def is_consteval(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.CONSTEVAL)
+        return self.value & self.CONSTEVAL
 
     @property
     def is_volatile(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.VOLATILE)
+        return self.value & self.VOLATILE
 
     @property
     def is_noexcept(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.NOEXCEPT)
+        return self.value & self.NOEXCEPT
 
 
 class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, ISyntaxElement):
