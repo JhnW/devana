@@ -566,7 +566,7 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
             else:
                 type_source = type_c.get_pointee()
 
-        if type(self._cursor) is cindex.Cursor:
+        if isinstance(self._cursor, cindex.Cursor):
             is_constinit = list(filter(lambda token: token.spelling == "constinit", self._cursor.get_tokens()))
             if is_constinit:
                 tmp_modification |= TypeModification.CONSTINIT
