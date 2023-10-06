@@ -3,7 +3,7 @@ import clang.cindex
 import clang
 import os
 from tests.helpers import find_by_name, stub_lexicon
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
+from devana.syntax_abstraction.typeexpression import BasicType, TypeModification, TypeExpression
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.utility.errors import CodeError
@@ -187,7 +187,7 @@ class TestFunctionsSimple(unittest.TestCase):
 
     def test_function_namespace_return(self):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/simple_functions.hpp")
-        result: FunctionInfo = file.content[10]
+        result: FunctionInfo = file.content[11]
         self.assertEqual(result.name, "namespace_return_func")
         self.assertEqual(result.return_type.modification, TypeModification.NONE)
         self.assertEqual(len(result.arguments), 1)
@@ -224,6 +224,11 @@ class TestFunctionsSimple(unittest.TestCase):
         self.assertEqual(result.modification, FunctionModification.NONE
                          | FunctionModification.STATIC
                          | FunctionModification.INLINE)
+
+    def test_consteval_body(self):
+        node = find_by_name(self.cursor, "mod_consteval_if_func")
+        result = FunctionInfo.from_cursor(node)
+        self.assertFalse(result.modification.is_consteval)
 
 
 class TestFunctionsTemplate(unittest.TestCase):

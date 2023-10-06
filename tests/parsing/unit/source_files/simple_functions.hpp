@@ -13,6 +13,17 @@ void procedure_def()
 
 constexpr int mod_constexpr_func(int a);
 consteval int mod_consteval_func(int a);
+int mod_consteval_if_func(int a)
+{
+    if consteval
+    {
+        return 8;
+    }
+    else
+    {
+        return 7;
+    }
+}
 static int mod_static_func(int a);
 inline int mod_inline_func(int a);
 int mod_noexcept_func(int a) noexcept;
