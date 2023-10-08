@@ -155,6 +155,8 @@ void arrayGetFunction(int inTab[]);
 char* global_var;
 
 constexpr int constexpr_global_var = 77;
+constinit int constinit_global_var = 78;
+
 
 double **ptr_ptr_value;
 char ***ptr_ptr_ptr_value;

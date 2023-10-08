@@ -30,6 +30,7 @@ class FunctionModification(IntFlag):
     DELETE = auto()
     DEFAULT = auto()
     CONSTEXPR = auto()
+    CONSTEVAL = auto()
     VOLATILE = auto()
     NOEXCEPT = auto()
 
@@ -87,6 +88,11 @@ class FunctionModification(IntFlag):
     def is_constexpr(self) -> bool:
         # noinspection PyTypeChecker
         return self.value & self.CONSTEXPR
+
+    @property
+    def is_consteval(self) -> bool:
+        # noinspection PyTypeChecker
+        return self.value & self.CONSTEVAL
 
     @property
     def is_volatile(self) -> bool:
@@ -292,9 +298,18 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     def modification(self) -> FunctionModification:
         """Function modification enum flag."""
         self._modification = FunctionModification.NONE
-        for token in self._cursor.get_tokens():
+        tokens = list(self._cursor.get_tokens())
+        for i in range(len(tokens)):
+            token = tokens[i]
             if token.spelling == "constexpr":
                 self._modification |= FunctionModification.CONSTEXPR
+            if token.spelling == "consteval":
+                try:
+                    opening_bracket_index = list(map(lambda t: t.spelling, tokens)).index("{")
+                    if i < opening_bracket_index:
+                        self._modification |= FunctionModification.CONSTEVAL
+                except ValueError:
+                    self._modification |= FunctionModification.CONSTEVAL
             elif token.spelling == "static":
                 self._modification |= FunctionModification.STATIC
             elif token.spelling == "inline":

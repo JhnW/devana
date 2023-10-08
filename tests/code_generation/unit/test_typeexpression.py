@@ -53,6 +53,7 @@ class TestTypeExpression(unittest.TestCase):
             (TypeModification.INLINE, "inline double"),
             (TypeModification.TEMPLATE, "template double"),
             (TypeModification.CONSTEXPR, "constexpr double"),
+            (TypeModification.CONSTINIT, "constinit double"),
             (TypeModification.RESTRICT, "restrict double"),
             (TypeModification.VOLATILE, "volatile double"),
             (TypeModification.RVALUE_REF, "double&&"),
