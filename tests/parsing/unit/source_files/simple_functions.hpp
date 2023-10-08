@@ -15,14 +15,7 @@ constexpr int mod_constexpr_func(int a);
 consteval int mod_consteval_func(int a);
 int mod_consteval_if_func(int a)
 {
-    if consteval
-    {
-        return 8;
-    }
-    else
-    {
-        return 7;
-    }
+    auto* code = "if consteval\n{\n\treturn 8;\n}\nelse\n{\n\treturn 7;\n}";
 }
 static int mod_static_func(int a);
 inline int mod_inline_func(int a);
