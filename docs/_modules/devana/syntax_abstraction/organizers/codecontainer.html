@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.organizers.codecontainer &mdash; devana 2.1.0 documentation</title>
+  <title>devana.syntax_abstraction.organizers.codecontainer &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/organizers/codecontainer.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -75,16 +75,17 @@
              
   <h1>Source code for devana.syntax_abstraction.organizers.codecontainer</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span>
 <span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ParsingErrorPolicy</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
 
 
-<div class="viewcode-block" id="CodeContainer"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer">[docs]</a><span class="k">class</span> <span class="nc">CodeContainer</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="CodeContainer"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer">[docs]</a><span class="k">class</span> <span class="nc">CodeContainer</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class representing part of code source who is able to hold other sources in his body.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -106,12 +107,12 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CodeContainer.create_default"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer.create_default">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List of source code objects.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_content</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content</span>
@@ -132,7 +133,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespace</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Higher in the hierarchy scope, if any. In most cases another CodeContainer.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
 
@@ -141,8 +142,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of object.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of an object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
@@ -171,7 +172,7 @@
     <span class="k">def</span> <span class="nf">_content_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite this method to feed _create_content with a list of types.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_create_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite this method to filter witch content should be parsed inside class.&quot;&quot;&quot;</span>
         <span class="n">types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_content_types</span>
         <span class="n">content</span> <span class="o">=</span> <span class="p">[]</span>

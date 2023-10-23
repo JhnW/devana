@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.configuration &mdash; devana 2.1.0 documentation</title>
+  <title>devana.code_generation.printers.configuration &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/configuration.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -153,18 +153,26 @@
                 <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
+<div class="viewcode-block" id="Indent.increase"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.configuration.Indent.increase">[docs]</a>    <span class="k">def</span> <span class="nf">increase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Indent.decrease"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.configuration.Indent.decrease">[docs]</a>    <span class="k">def</span> <span class="nf">decrease</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span></div>
+
     <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">Indent</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+</span> <span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Indent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">Indent</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="n">other</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Indent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">character</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-</span> <span class="n">other</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">result</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.templateinfo &mdash; devana 2.1.0 documentation</title>
+  <title>devana.syntax_abstraction.templateinfo &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/templateinfo.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -85,9 +85,10 @@
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
 
 
-<div class="viewcode-block" id="GenericTypeParameter"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.GenericTypeParameter">[docs]</a><span class="k">class</span> <span class="nc">GenericTypeParameter</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericTypeParameter"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.GenericTypeParameter">[docs]</a><span class="k">class</span> <span class="nc">GenericTypeParameter</span><span class="p">(</span><span class="n">ISyntaxElement</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An unresolved generic template parameter, known idiomatically in C++ as T.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -103,7 +104,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="GenericTypeParameter.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.GenericTypeParameter.from_cursor">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="n">type_c</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Type</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="n">type_c</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Type</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;GenericTypeParameter&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">UNEXPOSED</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_num_template_arguments</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
@@ -128,10 +129,10 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="TemplateInfo"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo">[docs]</a><span class="k">class</span> <span class="nc">TemplateInfo</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">):</span>
+<div class="viewcode-block" id="TemplateInfo"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo">[docs]</a><span class="k">class</span> <span class="nc">TemplateInfo</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;General template syntax information abut template definition.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TemplateInfo.TemplateParameter"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter">[docs]</a>    <span class="k">class</span> <span class="nc">TemplateParameter</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">):</span>
+<div class="viewcode-block" id="TemplateInfo.TemplateParameter"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter">[docs]</a>    <span class="k">class</span> <span class="nc">TemplateParameter</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;A description of the generic component for the type/function claim.&quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -152,11 +153,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TemplateInfo.TemplateParameter.create_default"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.create_default">[docs]</a>        <span class="nd">@classmethod</span>
-        <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TemplateInfo.TemplateParameter&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TemplateInfo.TemplateParameter.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.from_cursor">[docs]</a>        <span class="nd">@classmethod</span>
-        <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[(</span><span class="s2">&quot;TemplateInfo&quot;</span>
+                                                                                          <span class="s2">&quot;.TemplateParameter&quot;</span><span class="p">)]:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
@@ -221,7 +223,7 @@
 
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CodeContainer</span><span class="p">:</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of object.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of an object.&quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span>
 
         <span class="nd">@property</span>
@@ -253,11 +255,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TemplateInfo.create_default"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.create_default">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TemplateInfo&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TemplateInfo.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.templateinfo.TemplateInfo.from_cursor">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;TemplateInfo&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
@@ -297,7 +299,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specialisation_values</span>
 
         <span class="c1"># here be dragons</span>
-        <span class="c1"># for some cases cursor will not return template parameters, so we will do very ugly hack with parse fake file</span>
+        <span class="c1"># for some cases cursor will not return template parameters, so we will do a very ugly hack with parse fake file</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specialisation_values</span>
 
@@ -326,7 +328,7 @@
             <span class="n">tu</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;tmp.h&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-std=c++17&#39;</span><span class="p">,</span> <span class="s1">&#39;-xc++&#39;</span><span class="p">],</span>
                            <span class="n">unsaved_files</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;tmp.h&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)],</span> <span class="n">options</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">file</span> <span class="o">=</span> <span class="n">SourceFile</span><span class="p">(</span><span class="n">tu</span><span class="o">.</span><span class="n">cursor</span><span class="p">)</span>
-            <span class="n">file</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;tmp.h&#39;</span><span class="p">)</span>  <span class="c1">#normally file uses absolute paths, we need to work around</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;tmp.h&#39;</span><span class="p">)</span>  <span class="c1"># normally file uses absolute paths, we need to work around</span>
 
             <span class="n">parents</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
@@ -402,7 +404,7 @@
                         <span class="n">spe_type</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">specialisation_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                         <span class="n">expected_type_mod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">modification</span>
                         <span class="n">spec_type_mod</span> <span class="o">=</span> <span class="n">spe_type</span><span class="o">.</span><span class="n">modification</span>
-                        <span class="c1"># check type mod duplicated (we do not support multiple pointer)</span>
+                        <span class="c1"># check type mod duplicated (we do not support a multiple pointer)</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="o">~</span><span class="p">((</span><span class="n">expected_type_mod</span> <span class="o">&amp;</span> <span class="n">spec_type_mod</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">TypeModification</span><span class="o">.</span><span class="n">NONE</span><span class="p">):</span>
                             <span class="n">is_valid</span> <span class="o">=</span> <span class="kc">False</span>
                             <span class="k">break</span>
@@ -427,7 +429,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">specialisations_family</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all defined specialisations of template including this one.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all defined specializations of template including this one.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">()</span>
 
@@ -466,7 +468,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CodeContainer</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of object.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Current lexicon storage of an object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span>
 
     <span class="nd">@lexicon</span><span class="o">.</span><span class="n">setter</span>
@@ -474,7 +476,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span></div>
 </pre></div>
 

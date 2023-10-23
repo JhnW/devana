@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.functiontype &mdash; devana 2.1.0 documentation</title>
+  <title>devana.syntax_abstraction.functiontype &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/functiontype.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -83,9 +83,10 @@
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
 
 
-<div class="viewcode-block" id="FunctionType"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.functiontype.FunctionType">[docs]</a><span class="k">class</span> <span class="nc">FunctionType</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">):</span>
+<div class="viewcode-block" id="FunctionType"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.functiontype.FunctionType">[docs]</a><span class="k">class</span> <span class="nc">FunctionType</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class representing the type of function (function pointer) that can</span>
 <span class="sd">    appear as a variable or in a typedef etc.&quot;&quot;&quot;</span>
 
@@ -106,13 +107,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FunctionType.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.functiontype.FunctionType.from_cursor">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;FunctionType&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FunctionType.create_default"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.functiontype.FunctionType.create_default">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;FunctionType&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FunctionType.is_cursor_valid"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.functiontype.FunctionType.is_cursor_valid">[docs]</a>    <span class="nd">@staticmethod</span>

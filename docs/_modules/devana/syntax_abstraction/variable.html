@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.variable &mdash; devana 2.1.0 documentation</title>
+  <title>devana.syntax_abstraction.variable &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/variable.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -84,9 +84,10 @@
 <span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ICursorValidate</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
 
 
-<div class="viewcode-block" id="Variable"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.variable.Variable">[docs]</a><span class="k">class</span> <span class="nc">Variable</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">):</span>
+<div class="viewcode-block" id="Variable"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.variable.Variable">[docs]</a><span class="k">class</span> <span class="nc">Variable</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Data about variable used in code&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -105,12 +106,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Variable.create_default"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.variable.Variable.create_default">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Variable&quot;</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="Variable.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.variable.Variable.from_cursor">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Variable&quot;</span><span class="p">]:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -138,7 +139,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">default_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">default_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Default value assigned to variable.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;.+=\s*(.+)&quot;</span>
@@ -159,7 +160,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Object scope of usage this data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
 
@@ -193,7 +194,7 @@
         <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">VAR_DECL</span></div>
 
 <div class="viewcode-block" id="GlobalVariable.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.variable.GlobalVariable.from_cursor">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;GlobalVariable&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>

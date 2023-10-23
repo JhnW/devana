@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.default.classprinter &mdash; devana 2.1.0 documentation</title>
+  <title>devana.code_generation.printers.default.classprinter &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/classprinter.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -90,7 +90,12 @@
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
         <span class="n">formatter</span> <span class="o">=</span> <span class="n">Formatter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">indent_count</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">if</span> <span class="n">indent_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">decrease</span><span class="p">()</span>
         <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">indent_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">increase</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">text</span></div></div>
 
 
@@ -313,7 +318,12 @@
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">is_unnamed</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
+        <span class="n">indent_count</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">if</span> <span class="n">indent_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">decrease</span><span class="p">()</span>
         <span class="n">formatter</span><span class="o">.</span><span class="n">print_line</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">source</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">indent_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">formatter</span><span class="o">.</span><span class="n">indent</span><span class="o">.</span><span class="n">increase</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">text</span></div></div>
 </pre></div>
 
