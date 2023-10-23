@@ -114,6 +114,7 @@ class TypeModification(metaclass=FakeEnum):
         RVALUE_REF = auto()
         RESTRICT = auto()
         CONSTEXPR = auto()
+        CONSTINIT = auto()
         MUTABLE = auto()
         INLINE = auto()
 
@@ -138,6 +139,7 @@ class TypeModification(metaclass=FakeEnum):
     RVALUE_REF = ModificationKind.RVALUE_REF
     RESTRICT = ModificationKind.RESTRICT
     CONSTEXPR = ModificationKind.CONSTEXPR
+    CONSTINIT = ModificationKind.CONSTINIT
     MUTABLE = ModificationKind.MUTABLE
     INLINE = ModificationKind.INLINE
 
@@ -361,6 +363,10 @@ class TypeModification(metaclass=FakeEnum):
         return bool(self.value & TypeModification.ModificationKind.CONSTEXPR)
 
     @property
+    def is_constinit(self) -> bool:
+        return bool(self.value & TypeModification.ModificationKind.CONSTINIT)
+
+    @property
     def is_mutable(self) -> bool:
         return bool(self.value & TypeModification.ModificationKind.MUTABLE)
 
@@ -445,6 +451,8 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 name += "restrict "
             elif self.modification.is_constexpr:
                 name += "constexpr "
+            elif self.modification.is_constinit:
+                name += "constinit "
             elif self.modification.is_mutable:
                 name += "mutable "
 
@@ -557,11 +565,18 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 type_source = TypeExpression.cursor_parse_from_pointer(type_c)
             else:
                 type_source = type_c.get_pointee()
+
+        if isinstance(self._cursor, cindex.Cursor):
+            is_constinit = list(filter(lambda token: token.spelling == "constinit", self._cursor.get_tokens()))
+            if is_constinit:
+                tmp_modification |= TypeModification.CONSTINIT
+
         if type_source.is_const_qualified():
             if self.text_source is not None and self.text_source.text.find("constexpr ") != -1:
                 tmp_modification |= TypeModification.CONSTEXPR
             else:
                 tmp_modification |= TypeModification.CONST
+
         if type_source.is_volatile_qualified():
             tmp_modification |= TypeModification.VOLATILE
 

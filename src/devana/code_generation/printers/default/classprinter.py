@@ -77,6 +77,8 @@ class ConstructorPrinter(FunctionPrinter):
             result = "inline " + result
         if source.modification.is_constexpr:
             result = "constexpr " + result
+        if source.modification.is_consteval:
+            result = "consteval " + result
         if source.modification.is_const:
             result += " const"
         if source.modification.is_volatile:

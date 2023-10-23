@@ -6,12 +6,15 @@ from tests.helpers import find_by_name, stub_lexicon
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.variable import Variable, GlobalVariable
 from devana.syntax_abstraction.classinfo import ClassInfo
+from devana.configuration import Configuration, LanguageStandard
 
 class TestVariableBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_types.hpp").cursor
+        config: Configuration = Configuration()
+        config.parsing.language_version = LanguageStandard.CPP_20
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_types.hpp", args=config.parsing.parsing_options()).cursor
 
     def test_basic_types(self):
         cases = (
@@ -302,6 +305,15 @@ class TestVariableBasic(unittest.TestCase):
             self.assertTrue(result.type.modification.is_constexpr)
             self.assertFalse(result.type.modification.is_static)
             self.assertEqual(result.default_value, "77")
+        node = find_by_name(self.cursor, "constinit_global_var")
+        result = GlobalVariable.from_cursor(node)
+        stub_lexicon(result)
+        with self.subTest(result.name):
+            self.assertEqual(result.name, "constinit_global_var")
+            self.assertEqual(result.type.details, BasicType.INT)
+            self.assertTrue(result.type.modification.is_constinit)
+            self.assertFalse(result.type.modification.is_static)
+            self.assertEqual(result.default_value, "78")
 
     def test_inline_variable(self):
         node = find_by_name(self.cursor, "test_inline_variable")

@@ -34,6 +34,7 @@ class FunctionModification(metaclass=FakeEnum):
         DELETE = auto()
         DEFAULT = auto()
         CONSTEXPR = auto()
+        CONSTEVAL = auto()
         VOLATILE = auto()
         NOEXCEPT = auto()
 
@@ -57,6 +58,7 @@ class FunctionModification(metaclass=FakeEnum):
     DELETE = ModificationKind.DELETE
     DEFAULT = ModificationKind.DEFAULT
     CONSTEXPR = ModificationKind.CONSTEXPR
+    CONSTEVAL = ModificationKind.CONSTEVAL
     VOLATILE = ModificationKind.VOLATILE
     NOEXCEPT = ModificationKind.NOEXCEPT
 
@@ -236,6 +238,11 @@ class FunctionModification(metaclass=FakeEnum):
     def is_constexpr(self) -> bool:
         # noinspection PyTypeChecker
         return bool(self.value & FunctionModification.ModificationKind.CONSTEXPR)
+
+    @property
+    def is_consteval(self) -> bool:
+        # noinspection PyTypeChecker
+        return self.value & self.CONSTEVAL
 
     @property
     def is_volatile(self) -> bool:
@@ -441,13 +448,18 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     def modification(self) -> FunctionModification:
         """Function modification enum flag."""
         self._modification = FunctionModification.NONE
-
-        for i in range(len(list(self._cursor.get_tokens()))):
-            tokens = list(self._cursor.get_tokens())
+        tokens = list(self._cursor.get_tokens())
+        for i in range(len(tokens)):
             token = tokens[i]
-
             if token.spelling == "constexpr":
                 self._modification |= FunctionModification.CONSTEXPR
+            if token.spelling == "consteval":
+                try:
+                    opening_bracket_index = list(map(lambda t: t.spelling, tokens)).index("{")
+                    if i < opening_bracket_index:
+                        self._modification |= FunctionModification.CONSTEVAL
+                except ValueError:
+                    self._modification |= FunctionModification.CONSTEVAL
             elif token.spelling == "static":
                 self._modification |= FunctionModification.STATIC
             elif token.spelling == "inline":

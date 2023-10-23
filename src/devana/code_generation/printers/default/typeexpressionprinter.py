@@ -29,6 +29,8 @@ class TypeExpressionPrinter(ICodePrinter, DispatcherInjectable):
             prefix += "const "
         if source.modification.is_constexpr:
             prefix += "constexpr "
+        if source.modification.is_constinit:
+            prefix += "constinit "
         if source.modification.is_volatile:
             prefix += "volatile "
         if source.modification.is_restrict:
