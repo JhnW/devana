@@ -8,6 +8,7 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class NamespaceInfo(CodeContainer, DescriptiveByAttributes):

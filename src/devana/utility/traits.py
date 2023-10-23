@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 from clang import cindex
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class ICursorValidate(ABC):
@@ -17,8 +18,8 @@ class IDefaultCreatable(ABC):
 
     @classmethod
     @abstractmethod
-    def create_default(cls, parent: Optional = None) -> any:
-        """Create a default, valid instance. Cls parameter allow to implement this method once if
+    def create_default(cls, parent: Optional = None) -> ISyntaxElement:
+        """Create a default, valid instance. Cls parameter allows implementing this method once if
         init meets requirements in all derivative types."""
 
 
@@ -27,9 +28,9 @@ class IFromCursorCreatable(ABC):
 
     @classmethod
     @abstractmethod
-    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional[ISyntaxElement]:
         """Create an instance from parsed information from clang. Return None if creation is not possible.
-        Cls parameter allow to implement this method once if init meets requirements in all derivative types."""
+        Cls parameter allows implementing this method once if init meets requirements in all derivative types."""
 
 
 class IBasicCreatable(IDefaultCreatable, IFromCursorCreatable, ABC):
@@ -41,6 +42,6 @@ class IFromParamsCreatable(ABC):
 
     @classmethod
     @abstractmethod
-    def from_params(cls, *argv):
+    def from_params(cls, *argv) -> ISyntaxElement:
         """Multi-parameter constructor. Similar to the default value, except that it allows
         you to set some basic properties."""

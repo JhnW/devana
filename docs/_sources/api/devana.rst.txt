@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
    devana.code_generation
+   devana.preprocessing
    devana.syntax_abstraction
    devana.utility
 

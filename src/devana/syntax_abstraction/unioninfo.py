@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -6,6 +6,7 @@ from devana.syntax_abstraction.classinfo import FieldInfo
 from devana.syntax_abstraction.comment import Comment
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
+from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
 class UnionInfo(CodeContainer):
@@ -33,7 +34,14 @@ class UnionInfo(CodeContainer):
     @lazy_invoke
     def name(self) -> Optional[str]:
         """Name of union or None is anonymous."""
-        self._name = self._cursor.displayname
+        tokens = list(self._cursor.get_tokens())
+        is_set = False
+        if len(tokens) >= 2:
+            if tokens[0].spelling == "union" and tokens[1].spelling == "{":
+                self._name = None
+                is_set = True
+        if not is_set:
+            self._name = self._cursor.displayname
         if not self._name:
             self._name = None
         return self._name
@@ -67,7 +75,7 @@ class UnionInfo(CodeContainer):
         self._is_declaration = not value
 
     @property
-    def definition(self) -> Optional[any]:
+    def definition(self) -> Optional[Any]:
         """Definition of union."""
         if self.name in None:
             return None

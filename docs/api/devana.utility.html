@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.utility &mdash; devana 2.1.0 documentation</title>
+  <title>devana.utility &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.utility.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,6 +50,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="devana.html">devana</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="devana.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">devana.utility</a></li>
 </ul>
@@ -125,8 +126,8 @@ You must provide enum_source argument.</p>
 <dt class="sig sig-object py" id="devana.utility.lazy.LazyNotInit">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LazyNotInit</span></span><a class="reference internal" href="../_modules/devana/utility/lazy.html#LazyNotInit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.lazy.LazyNotInit" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Value used by lazy_invoke to determine property are initialized or not. Set this type to value of property
-in init function to inform that value must be initialized. For example: self._name = LazyNotInit</p>
+<p>Value used by lazy_invoke to determine property is initialized or not. Set this type to value of property
+in init function to inform that value must be initialized. For example, self._name = LazyNotInit</p>
 </dd></dl>
 
 <dl class="py function">
@@ -170,7 +171,7 @@ in init function to inform that value must be initialized. For example: self._na
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.utility.traits.IDefaultCreatable.create_default">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/traits.html#IDefaultCreatable.create_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IDefaultCreatable.create_default" title="Permalink to this definition"></a></dt>
-<dd><p>Create a default, valid instance. Cls parameter allow to implement this method once if
+<dd><p>Create a default, valid instance. Cls parameter allows implementing this method once if
 init meets requirements in all derivative types.</p>
 </dd></dl>
 
@@ -185,7 +186,7 @@ init meets requirements in all derivative types.</p>
 <dt class="sig sig-object py" id="devana.utility.traits.IFromCursorCreatable.from_cursor">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/traits.html#IFromCursorCreatable.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IFromCursorCreatable.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
-Cls parameter allow to implement this method once if init meets requirements in all derivative types.</p>
+Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
 </dd></dl>
 
 </dd></dl>
@@ -200,6 +201,11 @@ Cls parameter allow to implement this method once if init meets requirements in 
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/traits.html#IFromParamsCreatable.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IFromParamsCreatable.from_params" title="Permalink to this definition"></a></dt>
 <dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
 you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

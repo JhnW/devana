@@ -4,7 +4,7 @@ import logging
 import platform
 from pathlib import Path
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Any
 
 
 class IValidateConfig(ABC):
@@ -104,7 +104,7 @@ class StandardLibraryMode(Enum):
     def create_default(cls):
         """This feature is platform dependent, trying to return the best way to provide a standard library
         for a given machine.
-        For macOS platform you may need to provide libc path from your xcode or other sdk."""
+        For macOS platform, you may need to provide libc path from your xcode or other sdk."""
         return cls.PLATFORM if platform.system() == 'Windows' else cls.DEVANA_CLANG
 
 
@@ -199,7 +199,7 @@ class Configuration(IValidateConfig):
         self.parsing.validate()
 
     @staticmethod
-    def get_configuration(this: any):
+    def get_configuration(this: Any):
         while True:
             if hasattr(this, "configuration"):
                 return this.configuration

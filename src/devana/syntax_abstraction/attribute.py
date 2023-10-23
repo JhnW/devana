@@ -22,7 +22,7 @@ class Attribute:
         self._parent = parent
 
     @classmethod
-    def from_whole_declaration_text(cls, text: str) -> List:
+    def from_whole_declaration_text(cls, text: str, parent: Optional = None) -> List:
         using_pattern = r"^using (\w+) : "
         using_match = re.match(using_pattern, text)
         namespace = None
@@ -35,7 +35,7 @@ class Attribute:
         results = []
         for m in matches:
             match = m[0] if m[0] else m[1]
-            attr: Optional[Attribute] = cls.from_text(match)
+            attr: Optional[Attribute] = cls.from_text(match, parent)
             if attr:
                 if namespace is not None:
                     attr.namespace = namespace
@@ -43,7 +43,7 @@ class Attribute:
         return results
 
     @classmethod
-    def from_text(cls, text: str) -> Optional:
+    def from_text(cls, text: str, parent: Optional = None) -> Optional:
 
         pattern = r"(:?(\w+)::)?(\w+)(\((.*?)\))?"
         matches = re.match(pattern, text)
@@ -52,10 +52,37 @@ class Attribute:
         if not matches[0]:
             return None
         else:
-            args = None if not matches[5] else matches[5].split(",")
+            args = None if not matches[5] else cls._parse_arguments(matches[5])
             if args is None and matches[4]:
                 args = []
-            return Attribute(matches[3], matches[2], args)
+            return Attribute(matches[3], matches[2], args, parent)
+
+    @staticmethod
+    def _parse_arguments(text: str) -> List[str]:
+        arguments = []
+        quote_count = 0
+        argument = ""
+        for character in text:
+            if quote_count == 1:
+                argument += character
+                if character == "\"":
+                    arguments.append(argument)
+                    argument = ""
+                    quote_count = 0
+            else:
+                if character == ",":
+                    if argument != "":
+                        arguments.append(argument)
+                    argument = ""
+                    quote_count = 0
+                elif character == "\"":
+                    quote_count = 1
+                    argument += character
+                else:
+                    argument += character
+        if argument:
+            arguments.append(argument)
+        return arguments
 
     @property
     def name(self) -> str:
@@ -76,7 +103,7 @@ class Attribute:
         self._namespace = value
 
     @property
-    def arguments(self) -> List[str]:
+    def arguments(self) -> Optional[List[str]]:
         """Arguments of attribute - parsed value."""
         return self._arguments
 
@@ -152,7 +179,7 @@ class AttributeDeclaration:
             namespace = None
             if using_match:
                 namespace = using_match[1]
-            attributes = Attribute.from_whole_declaration_text(decl)
+            attributes = Attribute.from_whole_declaration_text(decl, parent)
             result.append(AttributeDeclaration(attributes, namespace, parent))
 
         return result
@@ -182,7 +209,8 @@ class DescriptiveByAttributes:
     @lazy_invoke
     def attributes(self) -> List[AttributeDeclaration]:
         """C++11/C23 attributes associated with the syntax."""
-        self._attributes = AttributeDeclaration.create_from_element(self, self._parent.content if self._parent else [])
+        self._attributes = AttributeDeclaration.create_from_element(self, self._parent.content if self._parent else [],
+                                                                    self)
         return self._attributes
 
     @attributes.setter

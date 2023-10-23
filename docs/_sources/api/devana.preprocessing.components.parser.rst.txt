@@ -1,0 +1,20 @@
+devana.preprocessing.components.parser 
+=======================================
+
+
+
+devana.preprocessing.components.parser.attributeextractor
+---------------------------------------------------------
+
+.. automodule:: devana.preprocessing.components.parser.attributeextractor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
+
+.. automodule:: devana.preprocessing.components.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:

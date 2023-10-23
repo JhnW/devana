@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.typeexpression &mdash; devana 2.1.0 documentation</title>
+  <title>devana.syntax_abstraction.typeexpression &mdash; devana 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/typeexpression.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.1
+                2.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -85,6 +85,7 @@
 <span class="kn">from</span> <span class="nn">devana.utility.fakeenum</span> <span class="kn">import</span> <span class="n">FakeEnum</span>
 <span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IBasicCreatable</span>
 <span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
 
 
 <div class="viewcode-block" id="BasicType"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType">[docs]</a><span class="k">class</span> <span class="nc">BasicType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -92,7 +93,7 @@
 <span class="sd">    subclass.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BasicType.BasicTypeValue"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.BasicType.BasicTypeValue">[docs]</a>    <span class="k">class</span> <span class="nc">BasicTypeValue</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal value od basic type.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal value od a basic type.&quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">unsigned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
@@ -448,8 +449,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">NONE</span></div>
 
 
-<div class="viewcode-block" id="TypeExpression"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression">[docs]</a><span class="k">class</span> <span class="nc">TypeExpression</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hold information about C++ type usage in common expression, for example function argument declaration,</span>
+<div class="viewcode-block" id="TypeExpression"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression">[docs]</a><span class="k">class</span> <span class="nc">TypeExpression</span><span class="p">(</span><span class="n">IBasicCreatable</span><span class="p">,</span> <span class="n">ISyntaxElement</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hold information about C++ type usage in common expression, for example, function argument declaration,</span>
 <span class="sd">    class field, function return value or part of typedef declaration.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Type</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -489,21 +490,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TypeExpression.create_default"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression.create_default">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TypeExpression&quot;</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="TypeExpression.from_cursor"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression.from_cursor">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_cursor</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;TypeExpression&quot;</span><span class="p">]:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Used name of type in current context.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Used name of a type in the current context.</span>
 
-<span class="sd">        Name of type is exactly the same name as used in expression, with all type modifications, namespace,</span>
+<span class="sd">        Name of a type is exactly the same name as used in expression, with all type modifications, namespace,</span>
 <span class="sd">        template arguments and use or not type aliases.&quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functiontype</span> <span class="kn">import</span> <span class="n">FunctionType</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
@@ -654,7 +655,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List of namespaces used in name.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_namespaces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">,</span> <span class="s2">&quot;get_children&quot;</span><span class="p">):</span>
-            <span class="c1"># for function return types we need complete this list by regular expression</span>
+            <span class="c1"># for function return types we need to complete this list by regular expression</span>
             <span class="c1"># it would be nice to find another way to do it by clang tools</span>
 
             <span class="c1"># we need to prevent namespaces to catch self type name with template</span>
@@ -689,8 +690,8 @@
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">template_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Arguments list of template concretization. None if  type is not template.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">template_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;TypeExpression&quot;</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Arguments list of template concretization. None if type is not template.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_template_arguments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">type_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_type_c</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span>
@@ -726,7 +727,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">details</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">details</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Object linked to all type information.</span>
 
 <span class="sd">        This field linked to first type information. If TypeExpression is used by alias, details contain typedef</span>
@@ -783,7 +784,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Object scope of usage this data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span>
 
