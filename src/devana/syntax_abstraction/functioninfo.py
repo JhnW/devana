@@ -99,7 +99,7 @@ class FunctionModification(metaclass=FakeEnum):
                 if self.noexcept_value is not None:
                     result.noexcept_value = None
             else:
-                raise CodeError("Idk")
+                raise CodeError("Cannot merge noexcept values")
             return result
         raise NotImplementedError()
 
@@ -111,7 +111,7 @@ class FunctionModification(metaclass=FakeEnum):
                     if self.noexcept_value is None:
                         result.noexcept_value = other.noexcept_value
                     else:
-                        raise CodeError("Idk")
+                        raise CodeError("Cannot merge noexcept values")
                 elif self.noexcept_value is not None:
                     result.noexcept_value = self.noexcept_value
                 else:
@@ -179,9 +179,7 @@ class FunctionModification(metaclass=FakeEnum):
     def noexcept_value(self, value):
         if not self.value & FunctionModification.ModificationKind.NOEXCEPT:
             if value is not None:
-                self.value |= FunctionModification.ModificationKind.NOEXCEPT # noqa
-        if value is None:
-            self.value &= ~FunctionModification.ModificationKind.NOEXCEPT  # noqa
+                self._value |= FunctionModification.ModificationKind.NOEXCEPT # noqa
         self._noexcept_value = value
 
     @property
