@@ -673,6 +673,8 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
         information, so jump to root of typedef declaration may be needed."""
         # pylint: disable=import-outside-toplevel
         type_c = self._base_type_c
+        if self.modification.is_array:
+            type_c = TypeExpression.cursor_parse_from_array(type_c)
         if self.modification.is_pointer or self.modification.is_reference or self.modification.is_rvalue_ref:
             if self.modification.is_pointer:
                 type_c = TypeExpression.cursor_parse_from_pointer(type_c)
@@ -747,6 +749,14 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
             if result.kind != cindex.TypeKind.POINTER:
                 return result
             result = result.get_pointee()
+
+    @staticmethod
+    def cursor_parse_from_array(cursor):
+        result = cursor
+        while True:
+            if result.kind not in (cindex.TypeKind.CONSTANTARRAY, cindex.TypeKind.INCOMPLETEARRAY):
+                return result
+            result = result.get_array_element_type()
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

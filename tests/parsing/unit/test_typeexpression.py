@@ -490,12 +490,14 @@ class TestTypeExpressionBasic(unittest.TestCase):
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["20"])
         self.assertEqual(result.modification.pointer_order, None)
+        self.assertEqual(result.details, BasicType.FLOAT)
 
         node = find_by_name(self.cursor, "arrayofarray")
         result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["4", "60"])
         self.assertEqual(result.modification.pointer_order, None)
+        self.assertEqual(result.details, BasicType.FLOAT)
 
         node = find_by_name(self.cursor, "ptrarray")
         result: TypeExpression = TypeExpression.from_cursor(node)
@@ -503,18 +505,21 @@ class TestTypeExpressionBasic(unittest.TestCase):
         self.assertEqual(result.modification.array_order, ["2", "3", "4"])
         self.assertTrue(result.modification.is_pointer)
         self.assertEqual(result.modification.pointer_order, 2)
+        self.assertEqual(result.details, BasicType.FLOAT)
 
         node = find_by_name(self.cursor, "strorderarray")
         result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, ["2", "MAX_ARRAY_SIZE"])
         self.assertEqual(result.modification.pointer_order, None)
+        self.assertEqual(result.details, BasicType.FLOAT)
 
         node = find_by_name(self.cursor, "dynarray")
         result: TypeExpression = TypeExpression.from_cursor(node)
         self.assertTrue(result.modification.is_array)
         self.assertEqual(result.modification.array_order, [""])
         self.assertEqual(result.modification.pointer_order, None)
+        self.assertEqual(result.details, BasicType.FLOAT)
 
         node = find_by_name(self.cursor, "arrayGetFunction")
         result: FunctionInfo = FunctionInfo.from_cursor(node)
@@ -522,3 +527,4 @@ class TestTypeExpressionBasic(unittest.TestCase):
         self.assertTrue(result.arguments[0].type.modification.is_array)
         self.assertEqual(result.arguments[0].type.modification.array_order, [""])
         self.assertEqual(result.arguments[0].type.modification.pointer_order, None)
+        self.assertEqual(result.arguments[0].type.details, BasicType.INT)
