@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.default.functionprinter &mdash; devana 2.2.0 documentation</title>
+  <title>devana.code_generation.printers.default.functionprinter &mdash; devana 2.2.1 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/functionprinter.html" />
@@ -154,6 +154,8 @@
             <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;inline &quot;</span> <span class="o">+</span> <span class="n">result</span>
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_constexpr</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;constexpr &quot;</span> <span class="o">+</span> <span class="n">result</span>
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_consteval</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;consteval &quot;</span> <span class="o">+</span> <span class="n">result</span>
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_const</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot; const&quot;</span>
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_volatile</span><span class="p">:</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.typeexpression &mdash; devana 2.2.0 documentation</title>
+  <title>devana.syntax_abstraction.typeexpression &mdash; devana 2.2.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/typeexpression.html" />
@@ -190,6 +190,7 @@
         <span class="n">RVALUE_REF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">RESTRICT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">CONSTEXPR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">CONSTINIT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">MUTABLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
         <span class="n">INLINE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
 
@@ -214,6 +215,7 @@
     <span class="n">RVALUE_REF</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">RVALUE_REF</span>
     <span class="n">RESTRICT</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">RESTRICT</span>
     <span class="n">CONSTEXPR</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTEXPR</span>
+    <span class="n">CONSTINIT</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTINIT</span>
     <span class="n">MUTABLE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">MUTABLE</span>
     <span class="n">INLINE</span> <span class="o">=</span> <span class="n">ModificationKind</span><span class="o">.</span><span class="n">INLINE</span>
 
@@ -437,6 +439,10 @@
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTEXPR</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_constinit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">CONSTINIT</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_mutable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">ModificationKind</span><span class="o">.</span><span class="n">MUTABLE</span><span class="p">)</span>
 
@@ -521,6 +527,8 @@
                 <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;restrict &quot;</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_constexpr</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;constexpr &quot;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_constinit</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;constinit &quot;</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_mutable</span><span class="p">:</span>
                 <span class="n">name</span> <span class="o">+=</span> <span class="s2">&quot;mutable &quot;</span>
 
@@ -633,11 +641,18 @@
                 <span class="n">type_source</span> <span class="o">=</span> <span class="n">TypeExpression</span><span class="o">.</span><span class="n">cursor_parse_from_pointer</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">type_source</span> <span class="o">=</span> <span class="n">type_c</span><span class="o">.</span><span class="n">get_pointee</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">):</span>
+            <span class="n">is_constinit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">token</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">spelling</span> <span class="o">==</span> <span class="s2">&quot;constinit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">get_tokens</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="n">is_constinit</span><span class="p">:</span>
+                <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">CONSTINIT</span>
+
         <span class="k">if</span> <span class="n">type_source</span><span class="o">.</span><span class="n">is_const_qualified</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_source</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;constexpr &quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">CONSTEXPR</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">CONST</span>
+
         <span class="k">if</span> <span class="n">type_source</span><span class="o">.</span><span class="n">is_volatile_qualified</span><span class="p">():</span>
             <span class="n">tmp_modification</span> <span class="o">|=</span> <span class="n">TypeModification</span><span class="o">.</span><span class="n">VOLATILE</span>
 
@@ -734,6 +749,8 @@
 <span class="sd">        information, so jump to root of typedef declaration may be needed.&quot;&quot;&quot;</span>
         <span class="c1"># pylint: disable=import-outside-toplevel</span>
         <span class="n">type_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_type_c</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_array</span><span class="p">:</span>
+            <span class="n">type_c</span> <span class="o">=</span> <span class="n">TypeExpression</span><span class="o">.</span><span class="n">cursor_parse_from_array</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_reference</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_rvalue_ref</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_pointer</span><span class="p">:</span>
                 <span class="n">type_c</span> <span class="o">=</span> <span class="n">TypeExpression</span><span class="o">.</span><span class="n">cursor_parse_from_pointer</span><span class="p">(</span><span class="n">type_c</span><span class="p">)</span>
@@ -808,6 +825,14 @@
             <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">POINTER</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">result</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_pointee</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TypeExpression.cursor_parse_from_array"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.typeexpression.TypeExpression.cursor_parse_from_array">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">cursor_parse_from_array</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">CONSTANTARRAY</span><span class="p">,</span> <span class="n">cindex</span><span class="o">.</span><span class="n">TypeKind</span><span class="o">.</span><span class="n">INCOMPLETEARRAY</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get_array_element_type</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>

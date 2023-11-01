@@ -2,6 +2,22 @@ Changelog
 =========
 
 
+v2.2.1 (2023-11-01)
+-------------------
+
+New
+~~~
+- Support for constinit and costeval. [Miłosz]
+
+Fix
+~~~
+- Improved type recognition for array variables. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+
+
 v2.2.0 (2023-09-23)
 -------------------
 

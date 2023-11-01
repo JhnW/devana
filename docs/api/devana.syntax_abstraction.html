@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction &mdash; devana 2.2.0 documentation</title>
+  <title>devana.syntax_abstraction &mdash; devana 2.2.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.syntax_abstraction.html" />
@@ -1983,6 +1983,11 @@ you to inject compiler attributes e.g. dllexport.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEVAL">
+<span class="sig-name descname"><span class="pre">CONSTEVAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEVAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEXPR">
 <span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEXPR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2014,7 +2019,7 @@ you to inject compiler attributes e.g. dllexport.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT">
-<span class="sig-name descname"><span class="pre">NOEXCEPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8192</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NOEXCEPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16384</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2044,12 +2049,22 @@ you to inject compiler attributes e.g. dllexport.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE">
-<span class="sig-name descname"><span class="pre">VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8192</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.is_const">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_const</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.is_const" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.is_consteval">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_consteval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.is_consteval" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
@@ -2794,6 +2809,11 @@ init meets requirements in all derivative types.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeExpression.cursor_parse_from_array">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cursor_parse_from_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typeexpression.html#TypeExpression.cursor_parse_from_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeExpression.cursor_parse_from_array" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeExpression.cursor_parse_from_pointer">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cursor_parse_from_pointer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typeexpression.html#TypeExpression.cursor_parse_from_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeExpression.cursor_parse_from_pointer" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2925,6 +2945,11 @@ template arguments and use or not type aliases.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.CONSTINIT">
+<span class="sig-name descname"><span class="pre">CONSTINIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.typeexpression.TypeModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.CONSTINIT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.INLINE">
 <span class="sig-name descname"><span class="pre">INLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.typeexpression.TypeModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.INLINE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2955,13 +2980,18 @@ template arguments and use or not type aliases.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.CONSTINIT">
+<span class="sig-name descname"><span class="pre">CONSTINIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.CONSTINIT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.INLINE">
-<span class="sig-name descname"><span class="pre">INLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.INLINE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">INLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8192</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.INLINE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.MUTABLE">
-<span class="sig-name descname"><span class="pre">MUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.MUTABLE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">MUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.ModificationKind.MUTABLE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3095,6 +3125,16 @@ template arguments and use or not type aliases.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.is_constexpr">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_constexpr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.is_constexpr" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeModification.is_constinit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_constinit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeModification.is_constinit" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
