@@ -10,84 +10,232 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
+from devana.utility import FakeEnum
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class FunctionModification(IntFlag):
+class FunctionModification(metaclass=FakeEnum):
     """Modification for functions and methods."""
-    NONE = auto()
-    CONST = auto()
-    EXPLICIT = auto()
-    STATIC = auto()
-    VIRTUAL = auto()
-    PURE_VIRTUAL = auto()
-    INLINE = auto()
-    FINAL = auto()
-    OVERRIDE = auto()
-    DELETE = auto()
-    DEFAULT = auto()
-    CONSTEXPR = auto()
-    CONSTEVAL = auto()
-    VOLATILE = auto()
-    NOEXCEPT = auto()
+
+    class ModificationKind(IntFlag):
+        """Internal enum list."""
+        NONE = auto()
+        CONST = auto()
+        EXPLICIT = auto()
+        STATIC = auto()
+        VIRTUAL = auto()
+        PURE_VIRTUAL = auto()
+        INLINE = auto()
+        FINAL = auto()
+        OVERRIDE = auto()
+        DELETE = auto()
+        DEFAULT = auto()
+        CONSTEXPR = auto()
+        CONSTEVAL = auto()
+        VOLATILE = auto()
+        NOEXCEPT = auto()
+
+    enum_source = ModificationKind
+
+    def __call__(self, expect_value):
+        if self.value is FunctionModification.ModificationKind.NOEXCEPT:
+            return FunctionModification(self.value, expect_value)
+        else:
+            raise NotImplementedError()
+
+    NONE = ModificationKind.NONE
+    CONST = ModificationKind.CONST
+    EXPLICIT = ModificationKind.EXPLICIT
+    STATIC = ModificationKind.STATIC
+    VIRTUAL = ModificationKind.VIRTUAL
+    PURE_VIRTUAL = ModificationKind.PURE_VIRTUAL
+    INLINE = ModificationKind.INLINE
+    FINAL = ModificationKind.FINAL
+    OVERRIDE = ModificationKind.OVERRIDE
+    DELETE = ModificationKind.DELETE
+    DEFAULT = ModificationKind.DEFAULT
+    CONSTEXPR = ModificationKind.CONSTEXPR
+    CONSTEVAL = ModificationKind.CONSTEVAL
+    VOLATILE = ModificationKind.VOLATILE
+    NOEXCEPT = ModificationKind.NOEXCEPT
+
+    def __init__(self, value: Optional[int] = None, expect_value: Optional[str] = None):
+        self._noexcept_value: Optional[str] = None
+        if value is not None:
+            self._value = FunctionModification.ModificationKind(value)
+            if value & FunctionModification.ModificationKind.NOEXCEPT:
+                if expect_value is not None:
+                    self._noexcept_value = expect_value
+        else:
+            self._value = FunctionModification.ModificationKind.NONE
+
+    @classmethod
+    def create_noexcept(cls, noexcept_value):
+        return FunctionModification.NOEXCEPT(noexcept_value)  # noqa pylint: disable=not-callable
+
+    @property
+    def value(self) -> ModificationKind:
+        return self._value
+
+    def __and__(self, other):
+        if isinstance(other, type(self)):
+            result = FunctionModification(self.value & other.value)
+            if result.is_noexcept:
+                if other.noexcept_value is not None:
+                    if self.noexcept_value is None:
+                        result.noexcept_value = other.noexcept_value
+                    else:
+                        if self.noexcept_value != other.noexcept_value:
+                            result.noexcept_value = None
+                else:
+                    result.noexcept_value = self.noexcept_value
+            return result
+        elif isinstance(other, FunctionModification.ModificationKind):
+            result = FunctionModification(self.value & other)
+            if result.is_noexcept:
+                if self.noexcept_value is not None:
+                    result.noexcept_value = None
+            else:
+                raise CodeError("Cannot merge noexcept values")
+            return result
+        raise NotImplementedError()
+
+    def __or__(self, other):
+        if isinstance(other, type(self)):
+            result = FunctionModification(self.value | other.value)
+            if result.is_noexcept:
+                if other.noexcept_value is not None:
+                    if self.noexcept_value is None:
+                        result.noexcept_value = other.noexcept_value
+                    else:
+                        raise CodeError("Cannot merge noexcept values")
+                elif self.noexcept_value is not None:
+                    result.noexcept_value = self.noexcept_value
+                else:
+                    result.noexcept_value = None
+            return result
+        elif isinstance(other, FunctionModification.ModificationKind):
+            result = FunctionModification(self.value | other)
+            if self.is_noexcept:
+                result.noexcept_value = self.noexcept_value
+            return result
+        raise NotImplementedError()
+
+    def __xor__(self, other):
+        if isinstance(other, type(self)):
+            result = FunctionModification(self.value.__or__(self.value, other.value))  # noqa
+            if result.is_noexcept:
+                if self.is_noexcept:
+                    result.noexcept_value = self.noexcept_value
+                else:
+                    result.noexcept_value = other.noexcept_value
+            return result
+        elif isinstance(other, FunctionModification.ModificationKind):
+            result = FunctionModification(self.value.__or__(self.value, other)) # noqa
+            if result.is_noexcept:
+                if self.is_noexcept:
+                    result.noexcept_value = self.noexcept_value
+            return result
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        if isinstance(other, FunctionModification):
+            if self.noexcept_value is not None and other.noexcept_value is not None:
+                return self.value == other.value and self.noexcept_value == other.noexcept_value
+            elif self.noexcept_value is None and other.noexcept_value is None:
+                return True
+            else:
+                return False
+        elif isinstance(other, FunctionModification.ModificationKind):
+            if self.noexcept_value is None:
+                return True
+        return False
+
+    def __invert__(self):
+        result = FunctionModification(~self.value)
+        return result
+
+    def __bool__(self):
+        return bool(self.value)
+
+    __ror__ = __or__
+    __rand__ = __and__
+    __rxor__ = __xor__
+
+    def __str__(self):
+        result = f"{str(self.value)}"
+        if self.value & FunctionModification.ModificationKind.NOEXCEPT:
+            result += f" (Noexcept value: {self.noexcept_value})"
+        return result
+
+    @property
+    def noexcept_value(self) -> Optional[str]:
+        return self._noexcept_value
+
+    @noexcept_value.setter
+    def noexcept_value(self, value):
+        if not self.value & FunctionModification.ModificationKind.NOEXCEPT:
+            if value is not None:
+                self._value |= FunctionModification.ModificationKind.NOEXCEPT # noqa
+        self._noexcept_value = value
 
     @property
     def is_const(self) -> bool:
         # noinspection PyTypeChecker
-        return bool(self.value & self.CONST)
+        return bool(self.value & FunctionModification.ModificationKind.CONST)
 
     @property
     def is_explicit(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.EXPLICIT
+        return bool(self.value & FunctionModification.ModificationKind.EXPLICIT)
 
     @property
     def is_static(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.STATIC
+        return bool(self.value & FunctionModification.ModificationKind.STATIC)
 
     @property
     def is_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.VIRTUAL
+        return bool(self.value & FunctionModification.ModificationKind.VIRTUAL)
 
     @property
     def is_pure_virtual(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.PURE_VIRTUAL
+        return bool(self.value & FunctionModification.ModificationKind.PURE_VIRTUAL)
 
     @property
     def is_inline(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.INLINE
+        return bool(self.value & FunctionModification.ModificationKind.INLINE)
 
     @property
     def is_final(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.FINAL
+        return bool(self.value & FunctionModification.ModificationKind.FINAL)
 
     @property
     def is_override(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.OVERRIDE
+        return bool(self.value & FunctionModification.ModificationKind.OVERRIDE)
 
     @property
     def is_delete(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.DELETE
+        return bool(self.value & FunctionModification.ModificationKind.DELETE)
 
     @property
     def is_default(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.DEFAULT
+        return bool(self.value & FunctionModification.ModificationKind.DEFAULT)
 
     @property
     def is_constexpr(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.CONSTEXPR
+        return bool(self.value & FunctionModification.ModificationKind.CONSTEXPR)
 
     @property
     def is_consteval(self) -> bool:
@@ -97,12 +245,12 @@ class FunctionModification(IntFlag):
     @property
     def is_volatile(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.VOLATILE
+        return bool(self.value & FunctionModification.ModificationKind.VOLATILE)
 
     @property
     def is_noexcept(self) -> bool:
         # noinspection PyTypeChecker
-        return self.value & self.NOEXCEPT
+        return bool(self.value & FunctionModification.ModificationKind.NOEXCEPT)
 
 
 class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, ISyntaxElement):
@@ -325,7 +473,20 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             elif token.spelling == "volatile":
                 self._modification |= FunctionModification.VOLATILE
             elif token.spelling == "noexcept":
-                self._modification |= FunctionModification.NOEXCEPT
+                if i+1 != len(tokens) and tokens[i+1].spelling == "(":
+                    noexcept_value: str = ""
+                    i += 1
+                    if tokens[i+1].spelling == ")":
+                        raise ParserError("error message")
+                    i += 1
+                    while tokens[i].spelling != ")":
+                        noexcept_value += tokens[i].spelling
+                        i += 1
+                    self._modification |= FunctionModification.NOEXCEPT(noexcept_value) # noqa
+                else:
+                    self._modification |= FunctionModification.NOEXCEPT
+
+
         if self._cursor.is_static_method():
             self._modification |= FunctionModification.STATIC
         if self._cursor.is_const_method():
@@ -337,6 +498,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         if self._cursor.is_default_method():
             self._modification |= FunctionModification.DEFAULT
         return self._modification
+
 
     @modification.setter
     def modification(self, value):
