@@ -14,7 +14,7 @@ class ExternC(CodeContainer):
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         if cursor is not None:
-            if self._cursor.kind != cindex.CursorKind.UNEXPOSED_DECL:
+            if self._cursor.kind != cindex.CursorKind.LINKAGE_SPEC:
                 raise ParserError("It is not a valid type cursor.")
             if len(list(self._cursor.get_children())) <= 0:
                 raise ParserError("It is not a valid type cursor.")
@@ -27,7 +27,7 @@ class ExternC(CodeContainer):
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        if cursor.kind != cindex.CursorKind.UNEXPOSED_DECL:
+        if cursor.kind != cindex.CursorKind.LINKAGE_SPEC:
             return False
         if len(list(cursor.get_children())) <= 0:
             return False
