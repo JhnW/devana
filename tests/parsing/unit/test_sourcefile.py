@@ -77,7 +77,7 @@ class TestSourceFile(unittest.TestCase):
         file = SourceFile(os.path.dirname(__file__) + r"/source_files/multiple_files/file_2.hpp")
         self.assertEqual(len(file.includes), 3)
         self.assertEqual(file.includes[0].value, "file_1.hpp")
-        self.assertEqual(file.includes[0].path, os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp")
+        self.assertEqual(Path(file.includes[0].path), Path(os.path.dirname(__file__) + r"/source_files/multiple_files/file_1.hpp"))
         self.assertFalse(file.includes[0].is_standard)
         self.assertEqual(file.includes[1].value, "math.h")
         self.assertTrue(file.includes[1].is_standard)
