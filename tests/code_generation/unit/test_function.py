@@ -114,6 +114,10 @@ class TestFunctionCore(unittest.TestCase):
             source.modification = FunctionModification.NOEXCEPT
             result = self.printer.print(source)
             self.assertEqual(result, "long foo(float a, int* b = nullptr) noexcept;\n")
+        with self.subTest("noexcept_value"):
+            source.modification = FunctionModification.create_noexcept("1==5")
+            result = self.printer.print(source)
+            self.assertEqual(result, "long foo(float a, int* b = nullptr) noexcept(1==5);\n")
 
     def test_basic_function_definition(self):
         source = FunctionInfo.create_default()

@@ -37,3 +37,8 @@ constexpr double attribute_func_3(char a)
 
 static inline double attribute_func_4(char a);
 
+void mod_simple_noexcept_func() noexcept;
+
+static void mod_multiple_noexcept_func() noexcept;
+
+static void mod_arg_noexcept_func() noexcept(1==5 || (2 == 2));

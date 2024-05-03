@@ -230,6 +230,22 @@ class TestFunctionsSimple(unittest.TestCase):
         result = FunctionInfo.from_cursor(node)
         self.assertFalse(result.modification.is_consteval)
 
+    def test_noexcept_func(self):
+        node = find_by_name(self.cursor, "mod_simple_noexcept_func")
+        result = FunctionInfo.from_cursor(node)
+        self.assertTrue(result.modification.is_noexcept)
+
+        node = find_by_name(self.cursor, "mod_multiple_noexcept_func")
+        result = FunctionInfo.from_cursor(node)
+        self.assertTrue(result.modification.is_noexcept)
+        self.assertTrue(result.modification.is_static)
+
+        node = find_by_name(self.cursor, "mod_arg_noexcept_func")
+        result = FunctionInfo.from_cursor(node)
+        self.assertTrue(result.modification.is_noexcept)
+        self.assertTrue(result.modification.is_static)
+        self.assertEqual(result.modification.noexcept_value, "1==5||(2==2)")
+
 
 class TestFunctionsTemplate(unittest.TestCase):
 

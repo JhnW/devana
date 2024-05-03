@@ -134,7 +134,7 @@ class FunctionModification(metaclass=FakeEnum):
                     result.noexcept_value = other.noexcept_value
             return result
         elif isinstance(other, FunctionModification.ModificationKind):
-            result = FunctionModification(self.value.__or__(self.value, other)) # noqa
+            result = FunctionModification(self.value.__or__(self.value, other))  # noqa
             if result.is_noexcept:
                 if self.is_noexcept:
                     result.noexcept_value = self.noexcept_value
@@ -173,13 +173,15 @@ class FunctionModification(metaclass=FakeEnum):
 
     @property
     def noexcept_value(self) -> Optional[str]:
+        """Returns noexcept if it appears with parentheses. Due to parsing based on the token list, whitespace
+        (meaning nothing for c++) is skipped."""
         return self._noexcept_value
 
     @noexcept_value.setter
     def noexcept_value(self, value):
         if not self.value & FunctionModification.ModificationKind.NOEXCEPT:
             if value is not None:
-                self._value |= FunctionModification.ModificationKind.NOEXCEPT # noqa
+                self._value |= FunctionModification.ModificationKind.NOEXCEPT  # noqa
         self._noexcept_value = value
 
     @property
@@ -473,19 +475,22 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             elif token.spelling == "volatile":
                 self._modification |= FunctionModification.VOLATILE
             elif token.spelling == "noexcept":
-                if i+1 != len(tokens) and tokens[i+1].spelling == "(":
+                if i + 1 != len(tokens) and tokens[i + 1].spelling == "(":
                     noexcept_value: str = ""
-                    i += 1
-                    if tokens[i+1].spelling == ")":
-                        raise ParserError("error message")
-                    i += 1
-                    while tokens[i].spelling != ")":
-                        noexcept_value += tokens[i].spelling
+                    bracket_counter = 0
+                    while True:
                         i += 1
-                    self._modification |= FunctionModification.NOEXCEPT(noexcept_value) # noqa
+                        if tokens[i].spelling == "(":
+                            bracket_counter += 1
+                        elif tokens[i].spelling == ")":
+                            bracket_counter -= 1
+                        noexcept_value += tokens[i].spelling
+                        if not bracket_counter > 0:
+                            break
+
+                    self._modification |= FunctionModification.NOEXCEPT(noexcept_value[1:-1])  # noqa pylint: disable=not-callable
                 else:
                     self._modification |= FunctionModification.NOEXCEPT
-
 
         if self._cursor.is_static_method():
             self._modification |= FunctionModification.STATIC
@@ -497,8 +502,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             self._modification |= FunctionModification.VIRTUAL
         if self._cursor.is_default_method():
             self._modification |= FunctionModification.DEFAULT
-        return self._modification
-
+        return self._modification # noqa
 
     @modification.setter
     def modification(self, value):

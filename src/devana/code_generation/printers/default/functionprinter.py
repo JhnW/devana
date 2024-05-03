@@ -85,7 +85,10 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
         if source.modification.is_volatile:
             result += " volatile"
         if source.modification.is_noexcept:
-            result += " noexcept"
+            if source.modification.noexcept_value is None:
+                result += " noexcept"
+            else:
+                result += f" noexcept({source.modification.noexcept_value})"
 
         if source.modification.is_default:
             result += " = default"
