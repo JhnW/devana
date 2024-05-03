@@ -12,7 +12,7 @@ class IValidateConfig(ABC):
 
     @abstractmethod
     def validate(self):
-        """This method do not return value. Each problem should be reported as an appropriate exception.
+        """This method does not return value. Each problem should be reported as an appropriate exception.
         This exception will be propagated to the client using the library."""
 
 
@@ -42,7 +42,7 @@ class CommentsParsing(IValidateConfig):
 
 
 class LanguageStandard(Enum):
-    """Defines according to the rules which language version the parsing of files will take place."""
+    """Defines, according to the rules, which language version the parsing of files will take place."""
 
     class LanguageStandardData:
         """Version of C++ or C standard."""
@@ -69,6 +69,7 @@ class LanguageStandard(Enum):
     CPP_11 = LanguageStandardData(["-xc++", "-std=c++11"], auto())
     CPP_17 = LanguageStandardData(["-xc++", "-std=c++17"], auto())
     CPP_20 = LanguageStandardData(["-xc++", "-std=c++20"], auto())
+    CPP_23 = LanguageStandardData(["-xc++", "-std=c++23"], auto())
 
     @classmethod
     def create_default(cls):
