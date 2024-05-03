@@ -10,7 +10,7 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.syntax_abstraction.syntax import ISyntaxElement
-
+from devana.configuration import Configuration
 
 class GenericTypeParameter(ISyntaxElement):
     """An unresolved generic template parameter, known idiomatically in C++ as T."""
@@ -249,7 +249,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             # pylint: disable=import-outside-toplevel
             from devana.syntax_abstraction.organizers.sourcefile import SourceFile
             idx = cindex.Index.create()
-            tu = idx.parse('tmp.h', args=['-std=c++17', '-xc++'],
+            tu = idx.parse('tmp.h', args=Configuration.get_configuration(self).parsing.parsing_options(),
                            unsaved_files=[('tmp.h', text)], options=0)
             file = SourceFile(tu.cursor)
             file.path = Path('tmp.h')  # normally file uses absolute paths, we need to work around
