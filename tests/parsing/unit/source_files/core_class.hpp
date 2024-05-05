@@ -46,6 +46,7 @@ class ClassOperators
     bool operator<=(double a);
     bool operator<(double a);
     bool operator>(double a);
+    bool operator<=>(double a);
     bool operator+(double a);
     bool operator-(double a);
     bool operator*(double a);

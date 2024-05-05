@@ -157,6 +157,22 @@ class TestFunctionCore(unittest.TestCase):
         result = self.printer.print(source)
         self.assertEqual(result, "float foo()\n{\n    return 6.7;\n}\n")
 
+    def test_print_three_way_comparison_operator(self):
+        source = FunctionInfo()
+        source.name = "operator<=>"
+        source.return_type = BasicType.BOOL
+        arg1 = FunctionInfo.Argument()
+        arg1.type = TypeExpression()
+        arg1.type.details = BasicType.INT
+        arg1.name = "a"
+        arg2 = FunctionInfo.Argument()
+        arg2.type = TypeExpression()
+        arg2.type.details = BasicType.INT
+        arg2.name = "b"
+        source.arguments = [arg1, arg2]
+        result = self.printer.print(source)
+        self.assertEqual(result, "bool operator<=>(int a, int b);\n")
+
 
 class TestFunctionTemplate(unittest.TestCase):
 

@@ -2,6 +2,8 @@ import unittest
 import os
 import clang.cindex
 import clang
+
+from devana.configuration import LanguageStandard
 from tests.helpers import find_by_name
 from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.classinfo import *
@@ -13,7 +15,9 @@ class TestClassBasic(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp").cursor
+        config: Configuration = Configuration()
+        config.parsing.language_version = LanguageStandard.CPP_20
+        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/core_class.hpp", args=config.parsing.parsing_options()).cursor
 
     def test_struct_simple_def(self):
         node = find_by_name(self.cursor, "SimpleStructTest")
@@ -183,7 +187,7 @@ class TestClassBasic(unittest.TestCase):
     def test_class_operators(self):
         node = find_by_name(self.cursor, "ClassOperators")
         result = ClassInfo.from_cursor(node)
-        self.assertEqual(len(result.content), 46)
+        self.assertEqual(len(result.content), 47)
         for op in result.content:
             self.assertTrue(op.type.is_operator, f"{op}")
 
