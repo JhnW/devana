@@ -233,6 +233,19 @@ class TestClassElementsAlone(unittest.TestCase):
         result = self.printer.print(source)
         self.assertEqual(result, "inline float a;\n")
 
+    def test_print_three_way_comparison_operator(self):
+        source = MethodInfo()
+        source.name = "operator<=>"
+        source.type = MethodType.OPERATOR
+        source.return_type = BasicType.BOOL
+        arg = FunctionInfo.Argument()
+        arg.type = TypeExpression()
+        arg.type.details = BasicType.INT
+        arg.name = "a"
+        source.arguments = [arg]
+        result = self.printer.print(source)
+        self.assertEqual(result, "bool operator<=>(int a);\n")
+
 
 class TestClassComplex(unittest.TestCase):
 

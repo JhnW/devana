@@ -127,6 +127,7 @@ class MethodType(Enum):
             "operator<=",
             "operator<",
             "operator>",
+            "operator<=>",
             "operator+",
             "operator-",
             "operator*",
