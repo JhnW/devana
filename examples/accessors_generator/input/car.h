@@ -2,13 +2,13 @@
 #define CAR_H
 
 #include <iostream>
+#include <string>
 
 class Car {
 private:
     std::string brand;
     float speed;
 
-    // Ignore maybe_unused and nodiscard attributes.
     // devana: ignore-attributes
     bool working;
 public:

@@ -85,4 +85,4 @@ Examples
 
    demos/demo_include_map
    demos/demo_meta_info_enum
-   demos/demo_accessor_generator
+   demos/demo_accessors_generator

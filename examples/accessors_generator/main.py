@@ -1,12 +1,12 @@
 import os
 from typing import Iterable, Tuple, Optional
 
+from devana.syntax_abstraction.classinfo import MethodInfo, Comment, FunctionInfo, AccessSpecifier, ClassInfo, FieldInfo, ConstructorInfo
+from devana.syntax_abstraction.organizers import ModuleFilter, SourceModule, SourceFile, SourceFileType, IncludeInfo
 from devana.code_generation.printers.default.defaultprinter import create_default_printer, CodePrinter
-from devana.syntax_abstraction.attribute import Attribute, AttributeDeclaration
-from devana.syntax_abstraction.classinfo import MethodInfo, Comment, FunctionInfo, AccessSpecifier, ClassInfo, FieldInfo
 from devana.syntax_abstraction.functioninfo import BasicType, FunctionModification
+from devana.syntax_abstraction.attribute import Attribute, AttributeDeclaration
 from devana.syntax_abstraction.typeexpression import TypeModification
-from devana.syntax_abstraction.organizers import *
 
 
 def get_devana_comments(comment: Comment) -> Iterable[str]:
@@ -60,16 +60,25 @@ def create_field_methods(field: FieldInfo) -> Tuple[MethodInfo, MethodInfo]:
     field_getter.modification |= FunctionModification.CONST
 
     if not should_ignore_attributes(field.associated_comment):
-        field_getter.attributes.append(AttributeDeclaration([nodiscard_attribute, maybe_unused_attribute]))
-        field_setter.attributes.append(AttributeDeclaration([maybe_unused_attribute]))
+        field_getter.attributes.append(
+            AttributeDeclaration([nodiscard_attribute, maybe_unused_attribute])
+        )
+        field_setter.attributes.append(
+            AttributeDeclaration([maybe_unused_attribute])
+        )
 
     return field_setter, field_getter
 
 
-def create_class_methods(class_info: ClassInfo) -> None:
+def create_class_methods(class_info: ClassInfo):
     # Function to generate methods for all class fields.
     def should_ignore_field(comment: Optional[Comment]) -> bool:
         return "devana: ignore-field" in get_devana_comments(comment) if comment else False
+
+    for constructor in filter(lambda constr: isinstance(constr, ConstructorInfo), class_info.constructors):
+        if constructor.body == "{}":
+            # We need to define body (as empty in this case) to say devana: it is function definition.
+            constructor.body = ""
 
     for private_field in filter(lambda field: isinstance(field, FieldInfo), class_info.private):
         if should_ignore_field(private_field.associated_comment):
@@ -80,12 +89,12 @@ def create_class_methods(class_info: ClassInfo) -> None:
 
 def load_files_content() -> Iterable[Tuple[str, Iterable[ClassInfo]]]:
     module_filter: ModuleFilter = ModuleFilter(allowed_filter=[".h"])  # Accept only header files.
-    source: SourceModule = SourceModule(name="HEADERS", root_path="./input", module_filter=module_filter)
+    source: SourceModule = SourceModule("HEADERS", "./input", module_filter=module_filter)
     for file in source.files:
         yield file.name, filter(lambda element: isinstance(element, ClassInfo), file.content)
 
 
-def main() -> None:
+def main():
     if not os.path.exists("./output"):
         os.makedirs(os.path.dirname("./output/"))
 
@@ -95,18 +104,22 @@ def main() -> None:
     iostream_include.value = "iostream"
     iostream_include.is_standard = True  # to write this as <iostream> instead of "iostream"
 
+    string_include = IncludeInfo()
+    string_include.value = "string"
+    string_include.is_standard = True  # to write this as <string> instead of "string"
+
     for file_name, file_content in load_files_content():
         header_file: SourceFile = SourceFile()
         header_file.type = SourceFileType.HEADER
         header_file.header_guard = file_name.upper().replace(".", "_")
-        header_file.includes.append(iostream_include)
+        header_file.includes.extend([string_include, iostream_include])
 
         for class_info in file_content:
             create_class_methods(class_info)
             header_file.content.append(class_info)
 
-        with open(f"./output/{file_name}", "w+", encoding="utf-8") as f:
-            f.write(printer.print(header_file))
+        with open(f"./output/{file_name}", "w+", encoding="utf-8") as file:
+            file.write(printer.print(header_file))
 
 
 if __name__ == "__main__":

@@ -2,20 +2,18 @@
 #define HUMAN_H
 
 #include <iostream>
+#include <string>
 
 class Human {
 private:
-    // Ignore maybe_unused and nodiscard attributes.
     // devana: ignore-attributes
     std::string name;
 
     std::string lastName;
 
-    // Change the name of the methods.
     // devana: custom-name=Age
     int _age;
 
-    // To ignore this field completely.
     // devana: ignore-field
     double height;
 
