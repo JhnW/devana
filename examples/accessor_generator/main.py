@@ -77,8 +77,6 @@ def create_class_methods(class_info: ClassInfo) -> None:
 
         class_info.content.extend(create_field_methods(field=private_field))
 
-    return None
-
 
 def load_files_content() -> Iterable[Tuple[str, Iterable[ClassInfo]]]:
     module_filter: ModuleFilter = ModuleFilter(allowed_filter=[".h"])  # Accept only header files.
@@ -107,7 +105,7 @@ def main() -> None:
             create_class_methods(class_info)
             header_file.content.append(class_info)
 
-        with open(f"./output/{file_name}", "w+") as f:
+        with open(f"./output/{file_name}", "w+", encoding="utf-8") as f:
             f.write(printer.print(header_file))
 
 
