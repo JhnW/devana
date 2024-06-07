@@ -1,12 +1,25 @@
-import os
-from typing import Iterable, Tuple, Optional
+from typing import Iterable, Tuple, Optional, List
+from dataclasses import dataclass
+from os import path, makedirs
 
-from devana.syntax_abstraction.classinfo import MethodInfo, Comment, FunctionInfo, AccessSpecifier, ClassInfo, FieldInfo, ConstructorInfo
-from devana.syntax_abstraction.organizers import ModuleFilter, SourceModule, SourceFile, SourceFileType, IncludeInfo
 from devana.code_generation.printers.default.defaultprinter import create_default_printer, CodePrinter
+from devana.syntax_abstraction.classinfo import MethodInfo, Comment, FunctionInfo, AccessSpecifier, ClassInfo, FieldInfo
+from devana.syntax_abstraction.organizers import ModuleFilter, SourceModule, SourceFile, SourceFileType, IncludeInfo
+from devana.syntax_abstraction.syntax import ISyntaxElement
+
 from devana.syntax_abstraction.functioninfo import BasicType, FunctionModification
 from devana.syntax_abstraction.attribute import Attribute, AttributeDeclaration
 from devana.syntax_abstraction.typeexpression import TypeModification
+
+
+@dataclass
+class HeaderFileData:
+    name: str
+    content: List[ISyntaxElement]
+
+    @property
+    def class_infos(self) -> Iterable[ClassInfo]:
+        return filter(lambda element: isinstance(element, ClassInfo), self.content)
 
 
 def get_devana_comments(comment: Comment) -> Iterable[str]:
@@ -38,13 +51,14 @@ def create_field_methods(field: FieldInfo) -> Tuple[MethodInfo, MethodInfo]:
     maybe_unused_attribute: Attribute = Attribute("maybe_unused")
     nodiscard_attribute: Attribute = Attribute("nodiscard")
 
-    field_setter: MethodInfo = MethodInfo()
+    field_setter = MethodInfo()
     field_setter.body = f"{field.name} = new{field.name.capitalize()};"
     field_setter.access_specifier = AccessSpecifier.PUBLIC
+
     field_setter.name = f"set{field_name}"
     field_setter.return_type = BasicType.VOID
 
-    setter_arg: FunctionInfo.Argument = FunctionInfo.Argument()
+    setter_arg = FunctionInfo.Argument()
     setter_arg.name = f"new{field.name.capitalize()}"
     setter_arg.type.details = field.type
     if field.type.name == "string":
@@ -52,9 +66,10 @@ def create_field_methods(field: FieldInfo) -> Tuple[MethodInfo, MethodInfo]:
 
     field_setter.arguments.append(setter_arg)
 
-    field_getter: MethodInfo = MethodInfo()
+    field_getter = MethodInfo()
     field_getter.body = f"return {field.name};"
     field_getter.access_specifier = AccessSpecifier.PUBLIC
+
     field_getter.name = f"get{field_name}"
     field_getter.return_type = field.type
     field_getter.modification |= FunctionModification.CONST
@@ -75,7 +90,7 @@ def create_class_methods(class_info: ClassInfo):
     def should_ignore_field(comment: Optional[Comment]) -> bool:
         return "devana: ignore-field" in get_devana_comments(comment) if comment else False
 
-    for constructor in filter(lambda constr: isinstance(constr, ConstructorInfo), class_info.constructors):
+    for constructor in class_info.constructors:
         if constructor.body == "{}":
             # We need to define body (as empty in this case) to say devana: it is function definition.
             constructor.body = ""
@@ -87,16 +102,16 @@ def create_class_methods(class_info: ClassInfo):
         class_info.content.extend(create_field_methods(field=private_field))
 
 
-def load_files_content() -> Iterable[Tuple[str, Iterable[ClassInfo]]]:
-    module_filter: ModuleFilter = ModuleFilter(allowed_filter=[".h"])  # Accept only header files.
-    source: SourceModule = SourceModule("HEADERS", "./input", module_filter=module_filter)
+def load_files_content() -> Iterable[HeaderFileData]:
+    module_filter = ModuleFilter(allowed_filter=[".h"])  # Accept only header files.
+    source = SourceModule("HEADERS", "./input", module_filter=module_filter)
     for file in source.files:
-        yield file.name, filter(lambda element: isinstance(element, ClassInfo), file.content)
+        yield HeaderFileData(file.name, file.content)
 
 
 def main():
-    if not os.path.exists("./output"):
-        os.makedirs(os.path.dirname("./output/"))
+    if not path.exists("./output"):
+        makedirs(path.dirname("./output/"))
 
     printer: CodePrinter = create_default_printer()
 
@@ -108,13 +123,17 @@ def main():
     string_include.value = "string"
     string_include.is_standard = True  # to write this as <string> instead of "string"
 
-    for file_name, file_content in load_files_content():
-        header_file: SourceFile = SourceFile()
+    for file_data in load_files_content():
+        file_name: str = file_data.name
+
+        header_file = SourceFile()
         header_file.type = SourceFileType.HEADER
+
+        # Convert guard from 'EXAMPLE.H' to 'EXAMPLE_H'
         header_file.header_guard = file_name.upper().replace(".", "_")
         header_file.includes.extend([string_include, iostream_include])
 
-        for class_info in file_content:
+        for class_info in file_data.class_infos:
             create_class_methods(class_info)
             header_file.content.append(class_info)
 

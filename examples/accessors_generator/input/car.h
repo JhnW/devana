@@ -12,10 +12,9 @@ private:
     // devana: ignore-attributes
     bool working;
 public:
-    [[maybe_unused]]
     void speedUp() {
-        std::cout << "Speeeeed!" << std::endl;
-        setSpeed(speed + 10.1);  // The setSpeed method will be generated.
+    std::cout << "Speeeeed!" << std::endl;
+    setSpeed(speed + 10.1);  // The setSpeed method will be generated.
     }
 };
 

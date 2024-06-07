@@ -22,9 +22,8 @@ public:
     Human(const std::string &name, const std::string &lastName, int age, double height, double weight):
         name(name), lastName(lastName), _age(age), height(height), weight(weight) {}
 
-    [[maybe_unused]]
     void say() const {
-        std::cout << "Hello! My name is " << getName() << std::endl;  // The getName method will be generated.
+    std::cout << "Hello! My name is " << getName() << std::endl;  // The getName method will be generated.
     }
 };
 
