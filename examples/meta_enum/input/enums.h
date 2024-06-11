@@ -12,7 +12,7 @@ enum class AnimalPetKind
 
 enum class AnimalPetState
 {
-    OK = 0x0
+    OK = 0x0,
     HUNGRY = 0x2,
     SICK = 0x4,
     ANGRY = 0x6
