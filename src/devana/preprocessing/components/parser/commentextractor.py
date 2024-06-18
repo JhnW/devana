@@ -24,7 +24,6 @@ class CommentExtractor(IGenerator):
 
     def _parse(self, container) -> List[Comment]:
         result = []
-
         if isinstance(container, CodeContainer):
             for element in container.content:
                 result += self._parse(element)
