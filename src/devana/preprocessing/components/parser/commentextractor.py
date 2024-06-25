@@ -15,11 +15,11 @@ class CommentExtractor(IGenerator):
         return result
 
     @classmethod
-    def get_required_type(cls) -> Type[SourceFile]:
+    def get_required_type(cls) -> Type:
         return SourceFile
 
     @classmethod
-    def get_produced_type(cls) -> Type[Comment]:
+    def get_produced_type(cls) -> Type:
         return Comment
 
     def _parse(self, container) -> List[Comment]:
@@ -27,8 +27,6 @@ class CommentExtractor(IGenerator):
         if isinstance(container, CodeContainer):
             for element in container.content:
                 result += self._parse(element)
-
         elif comment := getattr(container, "associated_comment", None):
             result.append(comment)
-
         return result
