@@ -1,7 +1,7 @@
 import unittest
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
-from devana.preprocessing.components.parser.attributeextractor import AttributeExtractor
+from devana.preprocessing.components.extractors.attributeextractor import AttributeExtractor
 
 
 class TestAttributeExtractor(unittest.TestCase):

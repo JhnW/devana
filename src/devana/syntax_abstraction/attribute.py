@@ -22,7 +22,7 @@ class Attribute:
         self._parent = parent
 
     @classmethod
-    def from_whole_declaration_text(cls, text: str, parent: Optional = None) -> List:
+    def from_whole_declaration_text(cls, text: str, parent: Optional = None) -> List["Attribute"]:
         using_pattern = r"^using (\w+) : "
         using_match = re.match(using_pattern, text)
         namespace = None
@@ -43,7 +43,7 @@ class Attribute:
         return results
 
     @classmethod
-    def from_text(cls, text: str, parent: Optional = None) -> Optional:
+    def from_text(cls, text: str, parent: Optional = None) -> Optional["Attribute"]:
 
         pattern = r"(:?(\w+)::)?(\w+)(\((.*?)\))?"
         matches = re.match(pattern, text)
@@ -196,7 +196,7 @@ class AttributeDeclaration:
 
 
 class DescriptiveByAttributes:
-    """Mixin class for implement C++ standard attributes linked to code element."""
+    """Mixin class for implement C++ standard attributes linked to a code element."""
 
     def __init__(self, cursor: Optional, parent: Optional = None):
         if cursor is None:

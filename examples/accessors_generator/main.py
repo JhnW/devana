@@ -129,7 +129,7 @@ def main():
         header_file = SourceFile()
         header_file.type = SourceFileType.HEADER
 
-        # Convert guard from 'EXAMPLE.H' to 'EXAMPLE_H'
+        # Convert guard against 'EXAMPLE.H' to 'EXAMPLE_H'
         header_file.header_guard = file_name.upper().replace(".", "_")
         header_file.includes.extend([string_include, iostream_include])
 

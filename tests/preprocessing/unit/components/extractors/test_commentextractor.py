@@ -1,7 +1,7 @@
 import unittest
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
-from devana.preprocessing.components.parser.commentextractor import CommentExtractor
+from devana.preprocessing.components.extractors.commentextractor import CommentExtractor
 
 
 class TestCommentExtractor(unittest.TestCase):

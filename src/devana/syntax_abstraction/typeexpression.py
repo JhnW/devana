@@ -603,7 +603,7 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 type_name = self._cursor.get_declaration().spelling
                 base_spelling = self._cursor.spelling
 
-                # filter prefix like const in, for example const std::string
+                # filter prefix like const in, for example, const std::string
                 names = re.findall(r"\s*(\S+::\S+)\s*", self._cursor.spelling)
                 if names:
                     base_spelling = names[0]
