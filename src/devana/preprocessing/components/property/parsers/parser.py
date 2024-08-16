@@ -1,7 +1,6 @@
-from typing import Optional, Any
+from typing import Optional, Any, Union, Type
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from devana.preprocessing.components.property.parsers.types import *
 
 
 @dataclass
@@ -14,6 +13,7 @@ class ParsableElementError:
     def is_meaningless(self) -> bool:
         """Indicates when an error is used for fallback - it is not an actual user syntax error."""
         return self.what is None
+
 
 class IParsableElement(ABC):
     """A class that performs basic data parsing - the smallest component, for example, a type."""
