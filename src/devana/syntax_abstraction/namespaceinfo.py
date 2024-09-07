@@ -8,7 +8,7 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.utility.init_params import init_params
 
 
 class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
@@ -28,6 +28,18 @@ class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
             self._name = LazyNotInit
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            content: Optional = None,
+            namespace: Optional = None,
+            lexicon: Optional = None,
+            associated_comment: Optional = None,
+    ) -> "NamespaceInfo":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

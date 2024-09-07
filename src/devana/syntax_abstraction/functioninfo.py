@@ -14,6 +14,7 @@ from devana.utility import FakeEnum
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -334,6 +335,24 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         if cls.is_cursor_valid(cursor):
             return cls(cursor, parent)
         return None
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            arguments: Optional = None,
+            name: Optional = None,
+            return_type: Optional = None,
+            modification: Optional = None,
+            body: Optional = None,
+            namespaces: Optional = None,
+            lexicon: Optional = None,
+            template: Optional = None,
+            associated_comment: Optional = None,
+            prefix: Optional = None,
+    ) -> "FunctionInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

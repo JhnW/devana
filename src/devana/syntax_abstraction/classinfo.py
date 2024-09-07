@@ -13,7 +13,8 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.syntax_abstraction._external_source import create_external
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable
+from devana.utility.init_params import init_params
+from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable, IFromParamsCreatable
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.syntax import ISyntaxElement
@@ -55,6 +56,14 @@ class ClassMember(IBasicCreatable, ISyntaxElement):
     def from_cursor(cls, cursor: cindex.Cursor, _: Optional = None) -> Optional["ClassMember"]:
         result = cls(cursor)
         return result
+
+    @classmethod
+    @init_params(skip={"cls"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            access_specifier: Optional = None
+    ) -> "ClassMember":
+        return cls(None)
 
     @property
     def access_specifier(self) -> AccessSpecifier:
@@ -182,6 +191,25 @@ class MethodInfo(FunctionInfo, ClassMember):
         else:
             self._type = LazyNotInit
 
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            arguments: Optional = None,
+            name: Optional = None,
+            return_type: Optional = None,
+            modification: Optional = None,
+            body: Optional = None,
+            namespaces: Optional = None,
+            lexicon: Optional = None,
+            template: Optional = None,
+            associated_comment: Optional = None,
+            prefix: Optional = None,
+            type: Optional = None,
+    ) -> "MethodInfo":
+        return cls(None, parent)
+
     @property
     @lazy_invoke
     def type(self) -> MethodType:
@@ -260,6 +288,26 @@ class ConstructorInfo(MethodInfo):
         else:
             self._initializer_list = LazyNotInit
             self._name = LazyNotInit
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            arguments: Optional = None,
+            name: Optional = None,
+            return_type: Optional = None,
+            modification: Optional = None,
+            body: Optional = None,
+            namespaces: Optional = None,
+            lexicon: Optional = None,
+            template: Optional = None,
+            associated_comment: Optional = None,
+            prefix: Optional = None,
+            type: Optional = None,
+            initializer_list: Optional = None,
+    ) -> "ConstructorInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke
@@ -352,6 +400,24 @@ class DestructorInfo(MethodInfo):
         else:
             self._name = LazyNotInit
 
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params(  # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            arguments: Optional = None,
+            name: Optional = None,
+            return_type: Optional = None,
+            modification: Optional = None,
+            body: Optional = None,
+            namespaces: Optional = None,
+            lexicon: Optional = None,
+            template: Optional = None,
+            associated_comment: Optional = None,
+            prefix: Optional = None,
+    ) -> "DestructorInfo":
+        return cls(None, parent)
+
     @property
     @lazy_invoke
     def name(self) -> str:
@@ -408,6 +474,20 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
             return cls(cursor, parent)
         return None
 
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            name: Optional = None,
+            type: Optional = None,
+            default_value: Optional = None,
+            lexicon: Optional = None,
+            access_specifier: Optional = None,
+            associated_comment: Optional = None
+    ) -> "FieldInfo":
+        return cls(None, parent)
+
     @property
     @lazy_invoke
     def associated_comment(self) -> Optional[Comment]:
@@ -459,6 +539,17 @@ class SectionInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            type: Optional = None,
+            is_unnamed: Optional = None,
+            content: Optional = None,
+    ) -> "SectionInfo":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
@@ -532,7 +623,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         return f"{type(self).__name__}:{self.type} ({super().__repr__()})"
 
 
-class InheritanceInfo(IFromCursorCreatable, ISyntaxElement):
+class InheritanceInfo(IFromCursorCreatable, IFromParamsCreatable, ISyntaxElement):
     """Information about class/structure inheritance."""
 
     class InheritanceValue(IBasicCreatable, ISyntaxElement):
@@ -562,6 +653,19 @@ class InheritanceInfo(IFromCursorCreatable, ISyntaxElement):
         def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional[("InheritanceInfo"
                                                                                           ".InheritanceValue")]:
             return cls(cursor, parent)
+
+        @classmethod
+        @init_params(skip={"cls", "parent"})
+        def from_params( # pylint: disable=unused-argument
+                cls,
+                parent: Optional = None,
+                access_specifier: Optional = None,
+                type: Optional = None,
+                is_virtual: Optional = None,
+                template_arguments: Optional = None,
+                namespaces: Optional = None,
+        ) -> "InheritanceInfo.InheritanceValue":
+            return cls(None, parent)
 
         @property
         def parent(self) -> CodeContainer:
@@ -666,6 +770,15 @@ class InheritanceInfo(IFromCursorCreatable, ISyntaxElement):
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["InheritanceInfo"]:
         return cls(cursor, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            type_parents: Optional = None,
+    ) -> "InheritanceInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke
@@ -775,6 +888,28 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             return cls(cursor, parent)
         except ParserError:
             return None
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            content: Optional = None,
+            namespace: Optional = None,
+            is_class: Optional = None,
+            is_struct: Optional = None,
+            is_final: Optional = None,
+            name: Optional = None,
+            inheritance: Optional = None,
+            is_declaration: Optional = None,
+            is_definition: Optional = None,
+            namespaces: Optional = None,
+            lexicon: Optional = None,
+            template: Optional = None,
+            associated_comment: Optional = None,
+            prefix: Optional = None
+    ) -> "ClassInfo":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

@@ -7,6 +7,7 @@ from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -38,6 +39,17 @@ class FunctionType(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> "FunctionType":
+        return cls(None, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            arguments: Optional = None,
+            return_type: Optional = None,
+            lexicon: Optional = None,
+    ) -> "FunctionType":
         return cls(None, parent)
 
     @staticmethod

@@ -4,6 +4,7 @@ from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.syntax import ISyntaxElement
@@ -32,6 +33,16 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ISyntaxElement, ABC):
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> Any:
+        return cls(None, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            content: Optional = None,
+            namespace: Optional = None
+    ) -> "CodeContainer":
         return cls(None, parent)
 
     @property

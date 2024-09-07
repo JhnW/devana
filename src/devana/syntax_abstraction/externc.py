@@ -5,7 +5,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.utility.errors import ParserError
 from devana.utility.lazy import lazy_invoke
-from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.utility.init_params import init_params
 
 
 class ExternC(CodeContainer):
@@ -24,6 +24,18 @@ class ExternC(CodeContainer):
         self._name = 'extern "C"'
         self._namespace = None
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            content: Optional = None,
+            namespace: Optional = None,
+            name: Optional = None,
+            lexicon: Optional = None
+    ):
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

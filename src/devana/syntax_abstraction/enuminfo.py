@@ -10,6 +10,7 @@ from devana.syntax_abstraction.attribute import DescriptiveByAttributes
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -49,6 +50,18 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             if not cls.is_cursor_valid(cursor):
                 return None
             return cls(cursor, parent)
+
+        @classmethod
+        @init_params(skip={"cls", "parent"})
+        def from_params( # pylint: disable=unused-argument
+                cls,
+                parent: Optional = None,
+                name: Optional = None,
+                value: Optional = None,
+                is_default: Optional = None,
+                associated_comment: Optional = None,
+        ) -> "EnumInfo.EnumValue":
+            return cls(None, parent)
 
         @staticmethod
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
@@ -143,6 +156,24 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
         return cursor.kind == cindex.CursorKind.ENUM_DECL
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            content: Optional = None,
+            namespace: Optional = None,
+            name: Optional = None,
+            values: Optional = None,
+            is_scoped: Optional = None,
+            prefix: Optional = None,
+            numeric_type: Optional = None,
+            is_declaration: Optional = None,
+            is_definition: Optional = None,
+            associated_comment: Optional = None,
+    ) -> "EnumInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

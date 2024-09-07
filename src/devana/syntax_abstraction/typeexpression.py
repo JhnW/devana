@@ -9,6 +9,7 @@ from devana.utility.lazy import lazy_invoke, LazyNotInit
 from devana.utility.fakeenum import FakeEnum
 from devana.utility.traits import IBasicCreatable
 from devana.utility.errors import ParserError
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -428,6 +429,19 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["TypeExpression"]:
         result = cls(cursor, parent)
         return result
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            modification: Optional = None,
+            namespaces: Optional = None,
+            template_arguments: Optional = None,
+            details: Optional = None,
+            lexicon: Optional = None,
+    ) -> "TypeExpression":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

@@ -6,12 +6,13 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
+from devana.utility .init_params import init_params
 from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.utility.traits import IFromCursorCreatable, ICursorValidate
+from devana.utility.traits import IFromCursorCreatable, ICursorValidate, IFromParamsCreatable
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class Using(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
+class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntaxElement):
     """Class represented typedef declaration e.g., using AliasTypeName = const namespace::namespace::Type.
     Using without "=" as using namespace::Type; is not supported."""
 
@@ -37,6 +38,18 @@ class Using(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            type_info: Optional = None,
+            name: Optional = None,
+            lexicon: Optional = None,
+            associated_comment: Optional = None,
+    ) -> "Using":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

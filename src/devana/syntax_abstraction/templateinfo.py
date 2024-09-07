@@ -9,6 +9,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.configuration import Configuration
 
@@ -78,6 +79,18 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         @classmethod
         def create_default(cls, parent: Optional = None) -> "TemplateInfo.TemplateParameter":
+            return cls(None, parent)
+
+        @classmethod
+        @init_params(skip={"cls", "parent"})
+        def from_params( # pylint: disable=unused-argument
+                cls,
+                parent: Optional = None,
+                specifier: Optional = None,
+                name: Optional = None,
+                default_value: Optional = None,
+                is_variadic: Optional = None,
+        ) -> "TemplateInfo.TemplateParameter":
             return cls(None, parent)
 
         @classmethod
@@ -180,6 +193,19 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> "TemplateInfo":
+        return cls(None, parent)
+
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            specialisation_values: Optional = None,
+            specialisations: Optional = None,
+            parameters: Optional = None,
+            is_empty: Optional = None,
+            lexicon: Optional = None,
+    ) -> "TemplateInfo":
         return cls(None, parent)
 
     @classmethod
