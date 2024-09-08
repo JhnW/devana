@@ -40,7 +40,7 @@ class TypedefInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @classmethod
     @init_params(skip={"cls", "parent"})
-    def from_params(
+    def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional = None,
             type_info: Optional = None,

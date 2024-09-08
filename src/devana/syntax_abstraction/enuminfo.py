@@ -171,6 +171,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             numeric_type: Optional = None,
             is_declaration: Optional = None,
             is_definition: Optional = None,
+            lexicon: Optional = None,
             associated_comment: Optional = None,
     ) -> "EnumInfo":
         return cls(None, parent)

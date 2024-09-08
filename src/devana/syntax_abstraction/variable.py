@@ -137,6 +137,19 @@ class GlobalVariable(Variable, ICursorValidate):
         result = cls(cursor, parent)
         return result
 
+    @classmethod
+    @init_params(skip={"cls", "parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            name: Optional = None,
+            type: Optional = None,
+            default_value: Optional = None,
+            lexicon: Optional = None,
+            associated_comment: Optional = None
+    ) -> "GlobalVariable":
+        return cls(None, parent)
+
     @property
     @lazy_invoke
     def associated_comment(self) -> Optional[Comment]:

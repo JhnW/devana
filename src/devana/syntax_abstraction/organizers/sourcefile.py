@@ -212,11 +212,12 @@ class SourceFile(CodeContainer):
         return cls(cursor, parent, configuration)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"cls", "parent", "namespace"})
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional = None,
             content: Optional = None,
+            namespace: Optional = None,
             type: Optional = None,
             path: Optional = None,
             lexicon: Optional = None,

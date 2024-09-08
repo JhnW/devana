@@ -31,9 +31,9 @@ class UnionInfo(CodeContainer):
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional = None,
-            name: Optional = None,
             content: Optional = None,
             namespace: Optional = None,
+            name: Optional = None,
             is_declaration: Optional = None,
             is_definition: Optional = None,
             lexicon: Optional = None,

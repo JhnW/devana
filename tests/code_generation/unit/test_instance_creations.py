@@ -3,6 +3,7 @@ from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 from devana.syntax_abstraction.functiontype import FunctionType
+from devana.syntax_abstraction.variable import GlobalVariable
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
@@ -28,6 +29,20 @@ class TestInstanceCreations(unittest.TestCase):
         self.assertEqual(variable.default_value, 10)
         self.assertEqual(variable.name, "testVar")
 
+    def test_global_variable_creation(self):
+        global_variable = GlobalVariable.from_params(
+            name="testGlobalVar",
+            default_value=5.1,
+            type=TypeExpression.from_params(
+                details=BasicType.FLOAT,
+                modification=TypeModification.CONSTEXPR
+            )
+        )
+        self.assertEqual(global_variable.type.details, BasicType.FLOAT)
+        self.assertEqual(global_variable.type.modification, TypeModification.CONSTEXPR)
+        self.assertEqual(global_variable.default_value, 5.1)
+        self.assertEqual(global_variable.name, "testGlobalVar")
+
     def test_usingnamespace_creation(self):
         usingnamespace = UsingNamespace.from_params(namespaces=["foo", "bar"])
         self.assertEqual(usingnamespace.namespaces, ["foo", "bar"])
@@ -52,14 +67,14 @@ class TestInstanceCreations(unittest.TestCase):
         self.assertEqual(union.is_declaration, True)
         self.assertFalse(union.is_definition, False)
 
-    def test_typeexpression_creation(self):
-        typeexpr = TypeExpression.from_params(
+    def test_type_expression_creation(self):
+        type_expr = TypeExpression.from_params(
             modification=TypeModification.CONST | TypeModification.REFERENCE,
             namespaces=["foo"],
             details=BasicType.CHAR,
         )
-        self.assertEqual(typeexpr.name, "const char&")
-        self.assertEqual(typeexpr.namespaces, ["foo"])
+        self.assertEqual(type_expr.name, "const char&")
+        self.assertEqual(type_expr.namespaces, ["foo"])
 
     def test_typedef_creation(self):
         using = TypedefInfo.from_params(
@@ -115,7 +130,7 @@ class TestInstanceCreations(unittest.TestCase):
             modification=TypeModification.INLINE,
             body='std::cout << "Hello, " << name << std::endl;',
             arguments=[
-                Variable.from_params(
+                FunctionInfo.Argument.from_params(
                     name="name",
                     type=TypeExpression.from_params(
                         details=StubType("std::string"),

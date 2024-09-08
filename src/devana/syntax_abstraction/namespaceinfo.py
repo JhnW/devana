@@ -36,8 +36,10 @@ class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
             parent: Optional = None,
             content: Optional = None,
             namespace: Optional = None,
+            attributes: Optional = None,
+            name: Optional = None,
             lexicon: Optional = None,
-            associated_comment: Optional = None,
+            associated_comment: Optional = None
     ) -> "NamespaceInfo":
         return cls(None, parent)
 

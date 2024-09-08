@@ -276,6 +276,19 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
             return cursor.kind == cindex.CursorKind.PARM_DECL
 
+        @classmethod
+        @init_params(skip={"cls", "parent"})
+        def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional = None,
+            name: Optional = None,
+            type: Optional = None,
+            default_value: Optional = None,
+            lexicon: Optional = None,
+            attributes: Optional = None
+    ) -> "FunctionInfo.Argument":
+            return cls(None, parent)
+
         @property
         @lazy_invoke
         def attributes(self) -> List[AttributeDeclaration]:

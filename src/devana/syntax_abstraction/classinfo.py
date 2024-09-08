@@ -206,6 +206,7 @@ class MethodInfo(FunctionInfo, ClassMember):
             template: Optional = None,
             associated_comment: Optional = None,
             prefix: Optional = None,
+            access_specifier: Optional = None,
             type: Optional = None,
     ) -> "MethodInfo":
         return cls(None, parent)
@@ -304,6 +305,7 @@ class ConstructorInfo(MethodInfo):
             template: Optional = None,
             associated_comment: Optional = None,
             prefix: Optional = None,
+            access_specifier: Optional = None,
             type: Optional = None,
             initializer_list: Optional = None,
     ) -> "ConstructorInfo":
@@ -401,7 +403,7 @@ class DestructorInfo(MethodInfo):
             self._name = LazyNotInit
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"cls", "parent", "type"})
     def from_params(  # pylint: disable=unused-argument
             cls,
             parent: Optional = None,
@@ -415,6 +417,8 @@ class DestructorInfo(MethodInfo):
             template: Optional = None,
             associated_comment: Optional = None,
             prefix: Optional = None,
+            access_specifier: Optional = None,
+            type: Optional = None,
     ) -> "DestructorInfo":
         return cls(None, parent)
 
@@ -896,6 +900,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             parent: Optional = None,
             content: Optional = None,
             namespace: Optional = None,
+            attributes: Optional = None,
             is_class: Optional = None,
             is_struct: Optional = None,
             is_final: Optional = None,

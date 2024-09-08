@@ -6,7 +6,7 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
-from devana.utility .init_params import init_params
+from devana.utility.init_params import init_params
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IFromCursorCreatable, ICursorValidate, IFromParamsCreatable
 from devana.syntax_abstraction.syntax import ISyntaxElement
