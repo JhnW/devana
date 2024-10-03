@@ -55,11 +55,11 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
         @init_params(skip={"cls", "parent"})
         def from_params( # pylint: disable=unused-argument
                 cls,
-                parent: Optional = None,
-                name: Optional = None,
-                value: Optional = None,
-                is_default: Optional = None,
-                associated_comment: Optional = None,
+                parent: Optional[ISyntaxElement] = None,
+                name: Optional[str] = None,
+                value: Optional[int] = None,
+                is_default: Optional[bool] = None,
+                associated_comment: Optional[Comment] = None,
         ) -> "EnumInfo.EnumValue":
             return cls(None, parent)
 
@@ -161,18 +161,18 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
     @init_params(skip={"cls", "parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            content: Optional = None,
-            namespace: Optional = None,
-            name: Optional = None,
-            values: Optional = None,
-            is_scoped: Optional = None,
-            prefix: Optional = None,
-            numeric_type: Optional = None,
-            is_declaration: Optional = None,
-            is_definition: Optional = None,
-            lexicon: Optional = None,
-            associated_comment: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            name: Optional[str] = None,
+            values: Optional[List[EnumValue]] = None,
+            is_scoped: Optional[bool] = None,
+            prefix: Optional[Literal["class", "struct"]] = None,
+            numeric_type: Optional[BasicType] = None,
+            is_declaration: Optional[bool] = None,
+            is_definition: Optional[bool] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None,
     ) -> "EnumInfo":
         return cls(None, parent)
 

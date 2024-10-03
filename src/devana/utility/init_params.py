@@ -8,7 +8,7 @@ def init_params(skip: Optional[Set[str]] = None) -> Callable:
     if the attribute has a setter or exists as an instance variable.
 
     Parameters in the `skip` set will be ignored, "cls" is ignored by default.
-    If an attribute is not settable or doesn't exist, an AttributeError will be raised.
+    If parameter is not settable or doesn't exist in the instance, an AttributeError will be raised.
 
     Example usage::
 
