@@ -52,7 +52,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             return cls(cursor, parent)
 
         @classmethod
-        @init_params(skip={"cls", "parent"})
+        @init_params(skip={"parent"})
         def from_params( # pylint: disable=unused-argument
                 cls,
                 parent: Optional[ISyntaxElement] = None,
@@ -158,7 +158,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
         return cursor.kind == cindex.CursorKind.ENUM_DECL
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional[ISyntaxElement] = None,
