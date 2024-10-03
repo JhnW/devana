@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, List, Any
+from typing import Optional, Tuple, List, Any, Union
 from enum import auto, IntFlag
 import re
 from clang import cindex
@@ -16,6 +16,7 @@ from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
 from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.code_generation.stubtype import StubType
 
 
 class FunctionModification(metaclass=FakeEnum):
@@ -277,15 +278,15 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             return cursor.kind == cindex.CursorKind.PARM_DECL
 
         @classmethod
-        @init_params(skip={"cls", "parent"})
+        @init_params(skip={"parent"})
         def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            name: Optional = None,
-            type: Optional = None,
-            default_value: Optional = None,
-            lexicon: Optional = None,
-            attributes: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None
     ) -> "FunctionInfo.Argument":
             return cls(None, parent)
 
@@ -350,20 +351,20 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         return None
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            arguments: Optional = None,
-            name: Optional = None,
-            return_type: Optional = None,
-            modification: Optional = None,
-            body: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None,
-            template: Optional = None,
-            associated_comment: Optional = None,
-            prefix: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            arguments: Optional[List[Argument]] = None,
+            name: Optional[str] = None,
+            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
+            modification: Optional[FunctionModification.ModificationKind] = None,
+            body: Optional[str] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None,
     ) -> "FunctionInfo":
         return cls(None, parent)
 

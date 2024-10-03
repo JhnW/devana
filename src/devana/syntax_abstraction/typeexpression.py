@@ -11,6 +11,7 @@ from devana.utility.traits import IBasicCreatable
 from devana.utility.errors import ParserError
 from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.code_generation.stubtype import StubType
 
 
 class BasicType(Enum):
@@ -431,15 +432,15 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
         return result
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            modification: Optional = None,
-            namespaces: Optional = None,
-            template_arguments: Optional = None,
-            details: Optional = None,
-            lexicon: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            modification: Optional[TypeModification.ModificationKind] = None,
+            namespaces: Optional[List[str]] = None,
+            template_arguments: Optional[List["TypeExpression"]] = None,
+            details: Union[ISyntaxElement, BasicType, StubType, None] = None,
+            lexicon: Optional[Lexicon] = None,
     ) -> "TypeExpression":
         return cls(None, parent)
 

@@ -1,16 +1,16 @@
 from enum import Enum, auto
 import re
-from typing import Optional, List, Tuple, cast, Any
+from typing import Optional, List, Tuple, cast, Any, Union
 from clang import cindex
-from devana.syntax_abstraction.functioninfo import FunctionInfo
+from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.templateinfo import TemplateInfo
-from devana.syntax_abstraction.typeexpression import TypeExpression
+from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.comment import Comment
-from devana.syntax_abstraction.attribute import DescriptiveByAttributes
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
 from devana.syntax_abstraction._external_source import create_external
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
@@ -18,6 +18,7 @@ from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorC
 from devana.configuration import Configuration, ParsingErrorPolicy
 from devana.utility.errors import ParserError
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.code_generation.stubtype import StubType
 
 
 class AccessSpecifier(Enum):
@@ -58,10 +59,10 @@ class ClassMember(IBasicCreatable, ISyntaxElement):
         return result
 
     @classmethod
-    @init_params(skip={"cls"})
+    @init_params()
     def from_params( # pylint: disable=unused-argument
             cls,
-            access_specifier: Optional = None
+            access_specifier: Optional[AccessSpecifier] = None
     ) -> "ClassMember":
         return cls(None)
 
@@ -192,22 +193,22 @@ class MethodInfo(FunctionInfo, ClassMember):
             self._type = LazyNotInit
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            arguments: Optional = None,
-            name: Optional = None,
-            return_type: Optional = None,
-            modification: Optional = None,
-            body: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None,
-            template: Optional = None,
-            associated_comment: Optional = None,
-            prefix: Optional = None,
-            access_specifier: Optional = None,
-            type: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            arguments: Optional[List[FunctionInfo.Argument]] = None,
+            name: Optional[str] = None,
+            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
+            modification: Optional[FunctionModification] = None,
+            body: Optional[str] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None,
+            access_specifier: Optional[AccessSpecifier] = None,
+            type: Optional[MethodType] = None,
     ) -> "MethodInfo":
         return cls(None, parent)
 
@@ -291,23 +292,23 @@ class ConstructorInfo(MethodInfo):
             self._name = LazyNotInit
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            arguments: Optional = None,
-            name: Optional = None,
-            return_type: Optional = None,
-            modification: Optional = None,
-            body: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None,
-            template: Optional = None,
-            associated_comment: Optional = None,
-            prefix: Optional = None,
-            access_specifier: Optional = None,
-            type: Optional = None,
-            initializer_list: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            arguments: Optional[List[FunctionInfo.Argument]] = None,
+            name: Optional[str] = None,
+            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
+            modification: Optional[FunctionModification] = None,
+            body: Optional[str] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None,
+            access_specifier: Optional[AccessSpecifier] = None,
+            type: Optional[MethodType] = None,
+            initializer_list: Optional[List[InitializerInfo]] = None,
     ) -> "ConstructorInfo":
         return cls(None, parent)
 
@@ -403,22 +404,20 @@ class DestructorInfo(MethodInfo):
             self._name = LazyNotInit
 
     @classmethod
-    @init_params(skip={"cls", "parent", "type"})
-    def from_params(  # pylint: disable=unused-argument
+    @init_params(skip={"parent"})
+    def from_params(  # pylint: disable=unused-argument, arguments-differ
             cls,
-            parent: Optional = None,
-            arguments: Optional = None,
-            name: Optional = None,
-            return_type: Optional = None,
-            modification: Optional = None,
-            body: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None,
-            template: Optional = None,
-            associated_comment: Optional = None,
-            prefix: Optional = None,
-            access_specifier: Optional = None,
-            type: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            arguments: Optional[List[FunctionInfo.Argument]] = None,
+            name: Optional[str] = None,
+            modification: Optional[FunctionModification] = None,
+            body: Optional[str] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None,
+            access_specifier: Optional[AccessSpecifier] = None,
     ) -> "DestructorInfo":
         return cls(None, parent)
 
@@ -479,16 +478,17 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
         return None
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            name: Optional = None,
-            type: Optional = None,
-            default_value: Optional = None,
-            lexicon: Optional = None,
-            access_specifier: Optional = None,
-            associated_comment: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            access_specifier: Optional[AccessSpecifier] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
+            associated_comment: Optional[Comment] = None
     ) -> "FieldInfo":
         return cls(None, parent)
 
@@ -545,13 +545,13 @@ class SectionInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         return cls(cursor, parent)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            type: Optional = None,
-            is_unnamed: Optional = None,
-            content: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            type: Optional[AccessSpecifier] = None,
+            is_unnamed: Optional[bool] = None,
+            content: Optional[List[Any]] = None,
     ) -> "SectionInfo":
         return cls(None, parent)
 
@@ -659,15 +659,15 @@ class InheritanceInfo(IFromCursorCreatable, IFromParamsCreatable, ISyntaxElement
             return cls(cursor, parent)
 
         @classmethod
-        @init_params(skip={"cls", "parent"})
+        @init_params(skip={"parent"})
         def from_params( # pylint: disable=unused-argument
                 cls,
-                parent: Optional = None,
-                access_specifier: Optional = None,
-                type: Optional = None,
-                is_virtual: Optional = None,
-                template_arguments: Optional = None,
-                namespaces: Optional = None,
+                parent: Optional[ISyntaxElement] = None,
+                access_specifier: Optional[AccessSpecifier] = None,
+                type: Optional[Any] = None,
+                is_virtual: Optional[bool] = None,
+                template_arguments: Optional[List[TypeExpression]] = None,
+                namespaces: Optional[List[str]] = None,
         ) -> "InheritanceInfo.InheritanceValue":
             return cls(None, parent)
 
@@ -776,11 +776,11 @@ class InheritanceInfo(IFromCursorCreatable, IFromParamsCreatable, ISyntaxElement
         return cls(cursor, parent)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            type_parents: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            type_parents: Optional[List[InheritanceValue]] = None,
     ) -> "InheritanceInfo":
         return cls(None, parent)
 
@@ -894,25 +894,25 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
             return None
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            content: Optional = None,
-            namespace: Optional = None,
-            attributes: Optional = None,
-            is_class: Optional = None,
-            is_struct: Optional = None,
-            is_final: Optional = None,
-            name: Optional = None,
-            inheritance: Optional = None,
-            is_declaration: Optional = None,
-            is_definition: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None,
-            template: Optional = None,
-            associated_comment: Optional = None,
-            prefix: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
+            is_class: Optional[bool] = None,
+            is_struct: Optional[bool] = None,
+            is_final: Optional[bool] = None,
+            name: Optional[str] = None,
+            inheritance: Optional[InheritanceInfo] = None,
+            is_declaration: Optional[bool] = None,
+            is_definition: Optional[bool] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None
     ) -> "ClassInfo":
         return cls(None, parent)
 

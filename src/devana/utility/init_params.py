@@ -4,13 +4,29 @@ from functools import wraps
 
 
 def init_params(skip: Optional[Set[str]] = None) -> Callable:
-    """A decorator that assigns method parameters as instance attributes.
-    The attribute must have a setter or exist as an instance or class variable."""
+    """A decorator that automatically assigns classmethod parameters to instance attributes,
+    if the attribute has a setter or exists as an instance variable.
 
+    Parameters in the `skip` set will be ignored, "cls" is ignored by default.
+    If an attribute is not settable or doesn't exist, an AttributeError will be raised.
+
+    Example usage::
+
+        class Person:
+            name: str = ""
+            age: int = 0
+
+            @classmethod
+            @init_params()
+            def create(cls, name: str, age: int):
+                return cls()
+
+        jerry = Person.create("Jerry", 20)
+        print(jerry.name, jerry.age)  # Outputs: Jerry 20
+    """
     def decorator(_classmethod: Callable) -> Callable:
-
         def has_setter(instance: object, name: str) -> bool:
-            """Checks if the class attribute is a property with a defined setter method."""
+            """Checks if the class attribute is a property with a defined setter."""
             try:
                 maybe_property = getattr(instance.__class__, name)
             except AttributeError:
@@ -20,9 +36,8 @@ def init_params(skip: Optional[Set[str]] = None) -> Callable:
         def has_attr(instance: object, name: str) -> bool:
             """Checks if the attribute is directly in the instance or if it's a class attribute,
             excluding properties."""
-            if hasattr(instance.__class__, name):
-                if not isinstance(getattr(instance.__class__, name, property()), property):
-                    return True
+            if not isinstance(getattr(instance.__class__, name, property()), property):
+                return True
             return name in instance.__dict__
 
         @wraps(_classmethod)
@@ -30,13 +45,16 @@ def init_params(skip: Optional[Set[str]] = None) -> Callable:
             instance: object = _classmethod(*args, **kwargs)
             bound_args: BoundArguments = signature(_classmethod).bind(*args, **kwargs)
             bound_args.apply_defaults()
-            ignore = skip or set()
+            ignore: Set[str] = skip or set()
+            ignore.add("cls")
 
             for name, value in bound_args.arguments.items():
                 if name in ignore:
                     continue
                 if not any((has_setter(instance, name), has_attr(instance, name))):
-                    raise AttributeError(f"'{name}' is not a settable attribute on instance {instance}.")
+                    raise AttributeError(
+                        f"'{name}' is not a settable attribute on instance {instance}."
+                    )
                 if value is not None:
                     setattr(instance, name, value)
             return instance

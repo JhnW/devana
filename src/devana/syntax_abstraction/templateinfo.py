@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Optional, List, Union, Tuple
+from typing import Optional, List, Union, Tuple, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
@@ -82,14 +82,14 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             return cls(None, parent)
 
         @classmethod
-        @init_params(skip={"cls", "parent"})
+        @init_params(skip={"parent"})
         def from_params( # pylint: disable=unused-argument
                 cls,
-                parent: Optional = None,
-                specifier: Optional = None,
-                name: Optional = None,
-                default_value: Optional = None,
-                is_variadic: Optional = None,
+                parent: Optional[ISyntaxElement] = None,
+                specifier: Optional[str] = None,
+                name: Optional[str] = None,
+                default_value: Optional[str] = None,
+                is_variadic: Optional[bool] = None,
         ) -> "TemplateInfo.TemplateParameter":
             return cls(None, parent)
 
@@ -196,15 +196,15 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         return cls(None, parent)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            specialisation_values: Optional = None,
-            specialisations: Optional = None,
-            parameters: Optional = None,
-            is_empty: Optional = None,
-            lexicon: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            specialisation_values: Optional[List[Union[TypeExpression, str]]] = None,
+            specialisations: Optional[Tuple[Any, ...]] = None,
+            parameters: Optional[List[TemplateParameter]] = None,
+            is_empty: Optional[bool] = None,
+            lexicon: Optional[Lexicon] = None,
     ) -> "TemplateInfo":
         return cls(None, parent)
 

@@ -1,11 +1,12 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.comment import Comment
-from devana.syntax_abstraction.attribute import DescriptiveByAttributes
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
+from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
@@ -30,16 +31,16 @@ class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
         self._lexicon = Lexicon.create(self)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            content: Optional = None,
-            namespace: Optional = None,
-            attributes: Optional = None,
-            name: Optional = None,
-            lexicon: Optional = None,
-            associated_comment: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
+            name: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None
     ) -> "NamespaceInfo":
         return cls(None, parent)
 

@@ -36,12 +36,12 @@ class CodeContainer(IBasicCreatable, ICursorValidate, ISyntaxElement, ABC):
         return cls(None, parent)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            content: Optional = None,
-            namespace: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None
     ) -> "CodeContainer":
         return cls(None, parent)
 

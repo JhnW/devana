@@ -46,14 +46,14 @@ class IncludeInfo(ISyntaxElement, IFromParamsCreatable):
                 self._is_standard = True
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            value: Optional = None,
-            is_standard: Optional = None,
-            path: Optional = None,
-            source_file: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            value: Optional[str] = None,
+            is_standard: Optional[bool] = None,
+            path: Optional[str] = None,
+            source_file: Optional["SourceFile"] = None,
     ) -> "IncludeInfo":
         return cls(None, parent)
 
@@ -212,19 +212,18 @@ class SourceFile(CodeContainer):
         return cls(cursor, parent, configuration)
 
     @classmethod
-    @init_params(skip={"cls", "parent", "namespace"})
-    def from_params( # pylint: disable=unused-argument
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument, arguments-renamed
             cls,
-            parent: Optional = None,
-            content: Optional = None,
-            namespace: Optional = None,
-            type: Optional = None,
-            path: Optional = None,
-            lexicon: Optional = None,
-            includes: Optional = None,
-            preamble: Optional = None,
-            header_guard: Optional = None,
-            configuration: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            type: Optional[SourceFileType] = None,
+            path: Optional[Path] = None,
+            lexicon: Optional[Lexicon] = None,
+            includes: Optional[List[IncludeInfo]] = None,
+            preamble: Optional[Comment] = None,
+            header_guard: Optional[str] = None,
+            configuration: Optional[Configuration] = None
     ) -> "SourceFile":
         return cls(None, parent)
 

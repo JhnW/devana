@@ -41,12 +41,12 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable
         return result
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            namespaces: Optional = None,
-            lexicon: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None
     ) -> "UsingNamespace":
         return cls(None, parent)
 

@@ -39,14 +39,14 @@ class TypedefInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         return cls(cursor, parent)
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            type_info: Optional = None,
-            name: Optional = None,
-            lexicon: Optional = None,
-            associated_comment: Optional = None,
+            parent: Optional[ISyntaxElement] = None,
+            type_info: Union[TypeExpression, ISyntaxElement, None] = None,
+            name: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None,
     ) -> "TypedefInfo":
         return cls(None, parent)
 

@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import Optional, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -41,14 +41,14 @@ class Variable(IBasicCreatable, ISyntaxElement):
         return result
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            name: Optional = None,
-            type: Optional = None,
-            default_value: Optional = None,
-            lexicon: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[Any] = None,
+            lexicon: Optional[Lexicon] = None
     ) -> "Variable":
         return cls(None, parent)
 
@@ -138,15 +138,15 @@ class GlobalVariable(Variable, ICursorValidate):
         return result
 
     @classmethod
-    @init_params(skip={"cls", "parent"})
+    @init_params(skip={"parent"})
     def from_params( # pylint: disable=unused-argument
             cls,
-            parent: Optional = None,
-            name: Optional = None,
-            type: Optional = None,
-            default_value: Optional = None,
-            lexicon: Optional = None,
-            associated_comment: Optional = None
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[Any] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None
     ) -> "GlobalVariable":
         return cls(None, parent)
 

@@ -1,5 +1,5 @@
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile, IncludeInfo, SourceFileType
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
+from devana.syntax_abstraction.typeexpression import TypeModification
 from devana.syntax_abstraction.usingnamespace import UsingNamespace
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 from devana.syntax_abstraction.functiontype import FunctionType
@@ -8,9 +8,10 @@ from devana.syntax_abstraction.typedefinfo import TypedefInfo
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
 from devana.syntax_abstraction.externc import ExternC
-from devana.code_generation.stubtype import StubType
 from devana.syntax_abstraction.using import Using
 from devana.syntax_abstraction.classinfo import *
+
+from devana.utility.init_params import init_params
 import unittest
 
 class TestInstanceCreations(unittest.TestCase):
@@ -267,3 +268,50 @@ class TestInstanceCreations(unittest.TestCase):
         )
         self.assertEqual(include_info.value, "string")
         self.assertEqual(include_info.is_standard, True)
+
+    def test_init_params(self):
+        class A:
+            @classmethod
+            @init_params()
+            def create(cls, value: int):
+                return cls()
+
+        class B(A):
+            value: int = 0
+
+        class C(B):
+            @classmethod
+            @init_params()
+            def create(cls, value: int, name: Optional[str] = None):
+                return cls()
+
+        class D(C):
+            def __init__(self):
+                self._name = "name"
+
+            @property
+            def name(self) -> str:
+                return self._name
+
+            @name.setter
+            def name(self, value: str):
+                self._name = f"D_{value}"
+
+        class E(D):
+            @property
+            def name(self) -> str:
+                return "Always default"
+
+        with self.subTest("Cases that should raise AttributeError"):
+            self.assertRaises(AttributeError, A.create, value=10)
+            self.assertRaises(AttributeError, C.create, value=5)
+            self.assertRaises(AttributeError, E.create, value=10, name="test")
+
+        with self.subTest("Cases that should succeed"):
+            my_b = B.create(value=10)
+            self.assertEqual(my_b.value, 10)
+
+            my_d = D.create(value=5, name="test")
+            self.assertEqual(my_d.name, "D_test")
+            my_d.name = "test2"
+            self.assertEqual(my_d.name, "D_test2")
