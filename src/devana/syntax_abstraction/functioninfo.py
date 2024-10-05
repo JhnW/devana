@@ -355,6 +355,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional[ISyntaxElement] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
             arguments: Optional[List[Argument]] = None,
             name: Optional[str] = None,
             return_type: Union[TypeExpression, BasicType, StubType, None] = None,

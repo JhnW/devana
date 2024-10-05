@@ -6,7 +6,7 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.typeexpression import BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-from devana.syntax_abstraction.attribute import DescriptiveByAttributes
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
@@ -164,6 +164,7 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             parent: Optional[ISyntaxElement] = None,
             content: Optional[List[Any]] = None,
             namespace: Optional[str] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
             name: Optional[str] = None,
             values: Optional[List[EnumValue]] = None,
             is_scoped: Optional[bool] = None,

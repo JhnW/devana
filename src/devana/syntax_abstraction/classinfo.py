@@ -194,13 +194,13 @@ class MethodInfo(FunctionInfo, ClassMember):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, arguments-renamed
             cls,
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
             name: Optional[str] = None,
             return_type: Union[TypeExpression, BasicType, StubType, None] = None,
-            modification: Optional[FunctionModification] = None,
+            modification: Optional[FunctionModification.ModificationKind] = None,
             body: Optional[str] = None,
             namespaces: Optional[List[str]] = None,
             lexicon: Optional[Lexicon] = None,
@@ -293,13 +293,12 @@ class ConstructorInfo(MethodInfo):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, arguments-renamed
             cls,
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
             name: Optional[str] = None,
-            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
-            modification: Optional[FunctionModification] = None,
+            modification: Optional[FunctionModification.ModificationKind] = None,
             body: Optional[str] = None,
             namespaces: Optional[List[str]] = None,
             lexicon: Optional[Lexicon] = None,
@@ -410,7 +409,7 @@ class DestructorInfo(MethodInfo):
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
             name: Optional[str] = None,
-            modification: Optional[FunctionModification] = None,
+            modification: Optional[FunctionModification.ModificationKind] = None,
             body: Optional[str] = None,
             namespaces: Optional[List[str]] = None,
             lexicon: Optional[Lexicon] = None,
@@ -484,7 +483,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
             type: Optional[TypeExpression] = None,
-            default_value: Optional[str] = None,
+            default_value: Optional[Any] = None,
             lexicon: Optional[Lexicon] = None,
             access_specifier: Optional[AccessSpecifier] = None,
             attributes: Optional[List[AttributeDeclaration]] = None,
