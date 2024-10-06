@@ -19,15 +19,15 @@ class Value:
 class PropertySignature:
     """Invoking target property identification data."""
     name: str
-    namespaces: List[str] = field(default_factory=lambda: [])
-    arguments: List[Type] = field(default_factory=lambda: [])
+    namespaces: List[str] = field(default_factory=list)
+    arguments: List[Type] = field(default_factory=list)
 
 
 @dataclass
 class Arguments:
     """Calling arguments."""
-    positional: List[Value]
-    named: Dict[str, Value]
+    positional: List[Value] = field(default_factory=list)
+    named: Dict[str, Value] = field(default_factory=dict)
 
 
 @dataclass

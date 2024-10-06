@@ -1,10 +1,14 @@
 from typing import List, Union, Type
 import re
 from devana.preprocessing.components.property.parsers.descriptions import IDescribedType
-from devana.preprocessing.components.property.parsers.parser import IParsableElement, ParsableElementError
+from devana.preprocessing.components.property.parsers.parser import IParsableType, ParsableElementError
+from devana.utility.typeregister import register
 
 
-class IntegerType(IDescribedType, IParsableElement):
+__register = []
+
+@register(__register)
+class IntegerType(IParsableType):
     """Representation of integer number."""
 
     @property
@@ -24,7 +28,8 @@ class IntegerType(IDescribedType, IParsableElement):
         return int
 
 
-class FloatType(IDescribedType, IParsableElement):
+@register(__register)
+class FloatType(IParsableType):
     """Representation of floating point number."""
 
     @property
@@ -44,7 +49,8 @@ class FloatType(IDescribedType, IParsableElement):
         return float
 
 
-class StringType(IDescribedType, IParsableElement):
+@register(__register)
+class StringType(IParsableType):
     """Representation of text."""
 
     @property
@@ -64,7 +70,8 @@ class StringType(IDescribedType, IParsableElement):
         return str
 
 
-class BooleanType(IDescribedType, IParsableElement):
+@register(__register)
+class BooleanType(IParsableType):
     """Representation of true/false."""
 
     @property
@@ -105,7 +112,7 @@ class EnumType(IDescribedType):
 
 
 class _GenericType(IDescribedType):
-    """internal mixin for generic implementation."""
+    """Internal mixin for generic implementation."""
     def __init__(self, name: str, specialization: IDescribedType):
         self._name = name
         self._specialization = specialization
@@ -120,19 +127,19 @@ class _GenericType(IDescribedType):
 
 
 class ListType(_GenericType):
-    """internal of list like []"""
+    """Internal of list like []"""
     def __init__(self, specialization: IDescribedType):
         super().__init__("List", specialization)
 
 
 class OptionalType(_GenericType):
-    """internal of optional can be value of specialization type or none."""
+    """Internal of optional can be value of specialization type or none."""
     def __init__(self, specialization: IDescribedType):
         super().__init__("Optional", specialization)
 
 
 class UnionType(IDescribedType):
-    """internal of union type can be value of many types."""
+    """Internal of union type can be value of many types."""
     def __init__(self, types: List[IDescribedType]):
         self._types = types
 
@@ -143,3 +150,15 @@ class UnionType(IDescribedType):
     @property
     def name(self) -> str:
         return f"Union<{'|'.join([s.name for s in self._types])}>"
+
+
+def parsable_element_from_described_type(desc: IDescribedType) -> IParsableType:
+    """Create a parsing type from described."""
+    if isinstance(desc, IParsableType):
+        return desc
+    matches = list(filter(lambda e: e.name == desc.name, __register))
+    if len(matches) == 0:
+        raise ValueError(f"Could not find parser for type: {desc.name}")
+    if len(matches) > 1:
+        raise ValueError(f"Found more than one parser for type: {desc.name}")
+    return matches[0]

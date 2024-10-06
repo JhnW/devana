@@ -1,6 +1,6 @@
 import unittest
+from devana.preprocessing.components.property.parsers.parser import ParsingBackend
 from devana.preprocessing.components.property.parsers.types import *
-from devana.preprocessing.components.property.parsers.parser import IParsableElement, ParsableElementError
 
 
 class TestPreprocessorParsingTypesBoolean(unittest.TestCase):
@@ -139,3 +139,95 @@ class TestPreprocessorParsingTypesString(unittest.TestCase):
         text = '  "  test with somme data  " '
         result = parser.parse(text)
         self.assertEqual(result, "  test with somme data  ")
+
+
+class TestPreprocessorParsingBackendParseArgumentStructure(unittest.TestCase):
+
+    def setUp(self):
+        self._parser = ParsingBackend()
+        self._parser.add_type(BooleanType())
+        self._parser.add_type(StringType())
+        self._parser.add_type(FloatType())
+
+    def test_parse_stand_alone_argument(self):
+        parser = self._parser
+        text = "true"
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, True)
+        self.assertEqual(result.name, None)
+
+    def test_parse_named_argument(self):
+        parser = self._parser
+        text = "argument=true"
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, True)
+        self.assertEqual(result.name, "argument")
+
+    def test_parse_named_argument_complex(self):
+        parser = self._parser
+        text = " argument  = true  "
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, True)
+        self.assertEqual(result.name, "argument")
+
+    def test_parse_named_argument_double_eq(self):
+        parser = self._parser
+        text = " argument =  = true  "
+        with self.assertRaises(ValueError):
+            parser.parse_argument(text)
+
+    def test_parse_named_argument_no_eq_eq(self):
+        parser = self._parser
+        text = " argument true  "
+        with self.assertRaises(ValueError):
+            parser.parse_argument(text)
+
+    def test_parse_positional_string_without_space(self):
+        parser = self._parser
+        text = '"Text"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "Text")
+
+    def test_parse_positional_string_with_space(self):
+        parser = self._parser
+        text = '"Text 1"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "Text 1")
+
+    def test_parse_named_string_without_space(self):
+        parser = self._parser
+        text = 'name= "Text"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "Text")
+
+    def test_parse_named_string_with_space(self):
+        parser = self._parser
+        text = 'name= "Text 2"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "Text 2")
+
+    def test_parse_only_space(self):
+        parser = self._parser
+        text = '   '
+        with self.assertRaises(ValueError):
+            parser.parse_argument(text)
+
+    def test_parse_float_with_dot(self):
+        parser = self._parser
+        text = '7.5'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, 7.5)
+
+    def test_parse_eq_inside_string(self):
+        parser = self._parser
+        text = '"arg = 7"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "arg = 7")
+        self.assertEqual(result.name, None)
+
+    def test_parse_eq_inside_string_named(self):
+        parser = self._parser
+        text = 'arg2 ="arg = 7"'
+        result = parser.parse_argument(text)
+        self.assertEqual(result.value, "arg = 7")
+        self.assertEqual(result.name, "arg2")
