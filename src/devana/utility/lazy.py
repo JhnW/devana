@@ -2,8 +2,9 @@ import functools
 
 
 class LazyNotInit:
-    """Value used by lazy_invoke to determine property is initialized or not. Set this type to value of property
-    in init function to inform that value must be initialized. For example, self._name = LazyNotInit"""
+    """The Value used by lazy_invoke to determine property is initialized or not.
+    Set this type to value of property in init function to inform that value must be initialized.
+    For example, self._name = LazyNotInit"""
 
     def __new__(cls):
         return cls

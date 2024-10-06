@@ -50,6 +50,13 @@ class IDescribedArgument(ABC):
     def default_value(self) -> Optional[IDescribedValue]:
         """Default value of argument, if any."""
 
+    @property
+    @abstractmethod
+    def name(self) -> Optional[str]:
+        """Name of argument.
+        If the argument is only and exclusively positional, it can be None.
+        Otherwise, the syntax name1 = val1, name2 = val, etc. is allowed."""
+
 
 class IDescribedProperty(ABC):
     """Description property for parsing and diagnostic messages."""
