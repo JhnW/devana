@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import Optional, Any
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
@@ -8,6 +8,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -38,6 +39,18 @@ class Variable(IBasicCreatable, ISyntaxElement):
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["Variable"]:
         result = cls(cursor, parent)
         return result
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[Any] = None,
+            lexicon: Optional[Lexicon] = None
+    ) -> "Variable":
+        return cls(None, parent)
 
     @property
     @lazy_invoke
@@ -123,6 +136,19 @@ class GlobalVariable(Variable, ICursorValidate):
             return None
         result = cls(cursor, parent)
         return result
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[Any] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None
+    ) -> "GlobalVariable":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

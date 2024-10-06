@@ -7,13 +7,15 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import CommentMarker, Comment, CommentsFactory
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.codepiece import CodePiece
-from devana.utility.lazy import LazyNotInit, lazy_invoke
-from devana.configuration import Configuration, ParsingErrorPolicy
-from devana.utility.errors import ParserError
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.configuration import Configuration, ParsingErrorPolicy
+from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.utility.init_params import init_params
+from devana.utility.traits import IFromParamsCreatable
+from devana.utility.errors import ParserError
 
 
-class IncludeInfo(ISyntaxElement):
+class IncludeInfo(ISyntaxElement, IFromParamsCreatable):
     """Include present in file."""
 
     def __init__(self, cursor: Optional[cindex.FileInclusion] = None, parent: Optional[Any] = None):
@@ -42,6 +44,18 @@ class IncludeInfo(ISyntaxElement):
             self._path = cursor.include.name
             if "<" in self._text:
                 self._is_standard = True
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            value: Optional[str] = None,
+            is_standard: Optional[bool] = None,
+            path: Optional[str] = None,
+            source_file: Optional["SourceFile"] = None,
+    ) -> "IncludeInfo":
+        return cls(None, parent)
 
     @property
     def value(self) -> str:
@@ -196,6 +210,22 @@ class SourceFile(CodeContainer):
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent, configuration)
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument, arguments-renamed
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            type: Optional[SourceFileType] = None,
+            path: Optional[Path] = None,
+            lexicon: Optional[Lexicon] = None,
+            includes: Optional[List[IncludeInfo]] = None,
+            preamble: Optional[Comment] = None,
+            header_guard: Optional[str] = None,
+            configuration: Optional[Configuration] = None
+    ) -> "SourceFile":
+        return cls(None, parent)
 
     @classmethod
     def from_path(cls, source: str, parent: Optional[Any] = None, configuration: Optional[Configuration] = None):

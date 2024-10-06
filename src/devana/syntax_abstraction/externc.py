@@ -1,11 +1,12 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 from clang import cindex
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.functioninfo import FunctionInfo
+from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.utility.errors import ParserError
 from devana.utility.lazy import lazy_invoke
-from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.utility.init_params import init_params
 
 
 class ExternC(CodeContainer):
@@ -24,6 +25,18 @@ class ExternC(CodeContainer):
         self._name = 'extern "C"'
         self._namespace = None
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            name: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None
+    ):
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

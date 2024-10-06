@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, List, Any
+from typing import Optional, Tuple, List, Any, Union
 from enum import auto, IntFlag
 import re
 from clang import cindex
@@ -14,7 +14,9 @@ from devana.utility import FakeEnum
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.errors import ParserError, CodeError
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.code_generation.stubtype import StubType
 
 
 class FunctionModification(metaclass=FakeEnum):
@@ -275,6 +277,19 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
             return cursor.kind == cindex.CursorKind.PARM_DECL
 
+        @classmethod
+        @init_params(skip={"parent"})
+        def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            name: Optional[str] = None,
+            type: Optional[TypeExpression] = None,
+            default_value: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None
+    ) -> "FunctionInfo.Argument":
+            return cls(None, parent)
+
         @property
         @lazy_invoke
         def attributes(self) -> List[AttributeDeclaration]:
@@ -334,6 +349,25 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         if cls.is_cursor_valid(cursor):
             return cls(cursor, parent)
         return None
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
+            arguments: Optional[List[Argument]] = None,
+            name: Optional[str] = None,
+            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
+            modification: Optional[FunctionModification.ModificationKind] = None,
+            body: Optional[str] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None,
+            template: Optional[TemplateInfo] = None,
+            associated_comment: Optional[Comment] = None,
+            prefix: Optional[str] = None,
+    ) -> "FunctionInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

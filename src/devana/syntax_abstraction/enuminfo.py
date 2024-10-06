@@ -6,10 +6,11 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.typeexpression import BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
-from devana.syntax_abstraction.attribute import DescriptiveByAttributes
+from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -49,6 +50,18 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
             if not cls.is_cursor_valid(cursor):
                 return None
             return cls(cursor, parent)
+
+        @classmethod
+        @init_params(skip={"parent"})
+        def from_params( # pylint: disable=unused-argument
+                cls,
+                parent: Optional[ISyntaxElement] = None,
+                name: Optional[str] = None,
+                value: Optional[int] = None,
+                is_default: Optional[bool] = None,
+                associated_comment: Optional[Comment] = None,
+        ) -> "EnumInfo.EnumValue":
+            return cls(None, parent)
 
         @staticmethod
         def is_cursor_valid(cursor: cindex.Cursor) -> bool:
@@ -143,6 +156,26 @@ class EnumInfo(CodeContainer, DescriptiveByAttributes):
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
         return cursor.kind == cindex.CursorKind.ENUM_DECL
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            attributes: Optional[List[AttributeDeclaration]] = None,
+            name: Optional[str] = None,
+            values: Optional[List[EnumValue]] = None,
+            is_scoped: Optional[bool] = None,
+            prefix: Optional[Literal["class", "struct"]] = None,
+            numeric_type: Optional[BasicType] = None,
+            is_declaration: Optional[bool] = None,
+            is_definition: Optional[bool] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None,
+    ) -> "EnumInfo":
+        return cls(None, parent)
 
     @property
     @lazy_invoke

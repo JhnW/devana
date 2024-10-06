@@ -8,6 +8,7 @@ from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
@@ -36,6 +37,18 @@ class TypedefInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent)
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            type_info: Union[TypeExpression, ISyntaxElement, None] = None,
+            name: Optional[str] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None,
+    ) -> "TypedefInfo":
+        return cls(None, parent)
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> "TypedefInfo":

@@ -5,11 +5,12 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
-from devana.utility.traits import IFromCursorCreatable, ICursorValidate
+from devana.utility.traits import IFromCursorCreatable, ICursorValidate, IFromParamsCreatable
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 
 
-class UsingNamespace(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
+class UsingNamespace(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntaxElement):
     """Using namespace in scope."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
@@ -38,6 +39,16 @@ class UsingNamespace(IFromCursorCreatable, ICursorValidate, ISyntaxElement):
         result = cls(None, parent)
         result._namespace = namespace
         return result
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            namespaces: Optional[List[str]] = None,
+            lexicon: Optional[Lexicon] = None
+    ) -> "UsingNamespace":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:

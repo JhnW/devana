@@ -33,15 +33,15 @@ class IFromCursorCreatable(ABC):
         Cls parameter allows implementing this method once if init meets requirements in all derivative types."""
 
 
-class IBasicCreatable(IDefaultCreatable, IFromCursorCreatable, ABC):
-    """An interface that describes a set of constructors for a code element."""
-
-
 class IFromParamsCreatable(ABC):
     """The interface of an object that can be created from many parameters."""
 
     @classmethod
     @abstractmethod
-    def from_params(cls, *argv) -> ISyntaxElement:
+    def from_params(cls) -> ISyntaxElement:
         """Multi-parameter constructor. Similar to the default value, except that it allows
         you to set some basic properties."""
+
+
+class IBasicCreatable(IDefaultCreatable, IFromCursorCreatable, IFromParamsCreatable, ABC):
+    """An interface that describes a set of constructors for a code element."""

@@ -1,13 +1,15 @@
-from typing import Optional, List
+from typing import Optional, List, Union
 from clang import cindex
-from devana.syntax_abstraction.typeexpression import TypeExpression
+from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
 from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.code_generation.stubtype import StubType
 
 
 class FunctionType(IBasicCreatable, ICursorValidate, ISyntaxElement):
@@ -38,6 +40,17 @@ class FunctionType(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @classmethod
     def create_default(cls, parent: Optional = None) -> "FunctionType":
+        return cls(None, parent)
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            arguments: Optional[List[TypeExpression]] = None,
+            return_type: Union[TypeExpression, BasicType, StubType, None] = None,
+            lexicon: Optional[Lexicon] = None,
+    ) -> "FunctionType":
         return cls(None, parent)
 
     @staticmethod

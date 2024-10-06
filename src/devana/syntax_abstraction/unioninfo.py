@@ -4,9 +4,10 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.classinfo import FieldInfo
 from devana.syntax_abstraction.comment import Comment
+from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.errors import ParserError
-from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.utility.init_params import init_params
 
 
 class UnionInfo(CodeContainer):
@@ -25,6 +26,21 @@ class UnionInfo(CodeContainer):
                 raise ParserError("It is not a valid type cursor.")
             self._associated_comment = LazyNotInit
         self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params( # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
+            name: Optional[str] = None,
+            is_declaration: Optional[bool] = None,
+            is_definition: Optional[bool] = None,
+            lexicon: Optional[Lexicon] = None,
+            associated_comment: Optional[Comment] = None,
+    ) -> "UnionInfo":
+        return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
