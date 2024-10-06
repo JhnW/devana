@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.organizers &mdash; devana 2.2.1 documentation</title>
+  <title>devana.syntax_abstraction.organizers &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.syntax_abstraction.organizers.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -134,6 +134,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/codecontainer.html#CodeContainer.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.codecontainer.CodeContainer.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/codecontainer.html#CodeContainer.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeContainer</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -335,8 +347,20 @@ Lexicon data are stacked in tree-like structures by data namespaces.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.IncludeInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IncludeInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#IncludeInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromParamsCreatable" title="devana.utility.traits.IFromParamsCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromParamsCreatable</span></code></a></p>
 <p>Include present in file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.IncludeInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_standard</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#IncludeInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo" title="devana.syntax_abstraction.organizers.sourcefile.IncludeInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">IncludeInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.IncludeInfo.get_includes">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_includes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation_unit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#IncludeInfo.get_includes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo.get_includes" title="Permalink to this definition"></a></dt>
@@ -475,6 +499,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#SourceFile.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.SourceFile.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.organizers.sourcefile.SourceFile.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">includes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preamble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_guard</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/organizers/sourcefile.html#SourceFile.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.organizers.sourcefile.SourceFile.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.organizers.sourcefile.SourceFile" title="devana.syntax_abstraction.organizers.sourcefile.SourceFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceFile</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

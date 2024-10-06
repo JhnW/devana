@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.preprocessing.components.parser.attributeextractor &mdash; devana 2.2.1 documentation</title>
+  <title>devana.preprocessing.components.extractors.commentextractor &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/preprocessing/components/parser/attributeextractor.html" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/preprocessing/components/extractors/commentextractor.html" />
   <!--[if lt IE 9]>
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -30,7 +30,7 @@
             <a href="../../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -64,7 +64,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../../index.html">Module code</a> &raquo;</li>
-      <li>devana.preprocessing.components.parser.attributeextractor</li>
+      <li>devana.preprocessing.components.extractors.commentextractor</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -73,42 +73,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for devana.preprocessing.components.parser.attributeextractor</h1><div class="highlight"><pre>
+  <h1>Source code for devana.preprocessing.components.extractors.commentextractor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.sourcefile</span> <span class="kn">import</span> <span class="n">SourceFile</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functioninfo</span> <span class="kn">import</span> <span class="n">FunctionInfo</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.attribute</span> <span class="kn">import</span> <span class="n">Attribute</span><span class="p">,</span> <span class="n">DescriptiveByAttributes</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.codecontainer</span> <span class="kn">import</span> <span class="n">CodeContainer</span>
+<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">Comment</span>
 <span class="kn">from</span> <span class="nn">devana.preprocessing.preprocessor</span> <span class="kn">import</span> <span class="n">IGenerator</span>
 
 
-<div class="viewcode-block" id="AttributeExtractor"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.parser.html#devana.preprocessing.components.parser.attributeextractor.AttributeExtractor">[docs]</a><span class="k">class</span> <span class="nc">AttributeExtractor</span><span class="p">(</span><span class="n">IGenerator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract text data from C++ attributes.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CommentExtractor"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.extractors.html#devana.preprocessing.components.extractors.commentextractor.CommentExtractor">[docs]</a><span class="k">class</span> <span class="nc">CommentExtractor</span><span class="p">(</span><span class="n">IGenerator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract text data from comments.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AttributeExtractor.generate"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.parser.html#devana.preprocessing.components.parser.attributeextractor.AttributeExtractor.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">SourceFile</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attribute</span><span class="p">]:</span>
+<div class="viewcode-block" id="CommentExtractor.generate"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.extractors.html#devana.preprocessing.components.extractors.commentextractor.CommentExtractor.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">SourceFile</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="AttributeExtractor.get_required_type"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.parser.html#devana.preprocessing.components.parser.attributeextractor.AttributeExtractor.get_required_type">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CommentExtractor.get_required_type"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.extractors.html#devana.preprocessing.components.extractors.commentextractor.CommentExtractor.get_required_type">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_required_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">SourceFile</span></div>
 
-<div class="viewcode-block" id="AttributeExtractor.get_produced_type"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.parser.html#devana.preprocessing.components.parser.attributeextractor.AttributeExtractor.get_produced_type">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CommentExtractor.get_produced_type"><a class="viewcode-back" href="../../../../../api/devana.preprocessing.components.extractors.html#devana.preprocessing.components.extractors.commentextractor.CommentExtractor.get_produced_type">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_produced_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Attribute</span></div>
+        <span class="k">return</span> <span class="n">Comment</span></div>
 
-    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Attribute</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">DescriptiveByAttributes</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">+=</span> <span class="n">container</span><span class="o">.</span><span class="n">flatten_attributes</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">FunctionInfo</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">arguments</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="n">argument</span><span class="o">.</span><span class="n">flatten_attributes</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">CodeContainer</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">container</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">comment</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="s2">&quot;associated_comment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 

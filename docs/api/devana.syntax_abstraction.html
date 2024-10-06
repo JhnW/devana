@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction &mdash; devana 2.2.1 documentation</title>
+  <title>devana.syntax_abstraction &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.syntax_abstraction.html" />
@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="devana.syntax_abstraction.organizers" href="devana.syntax_abstraction.organizers.html" />
-    <link rel="prev" title="devana.preprocessing.components.parser" href="devana.preprocessing.components.parser.html" /> 
+    <link rel="prev" title="devana.preprocessing.components.property.parsers" href="devana.preprocessing.components.property.parsers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -233,7 +233,7 @@ either the using keyword or a list of multiple attributes.</p>
 <dt class="sig sig-object py" id="devana.syntax_abstraction.attribute.DescriptiveByAttributes">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DescriptiveByAttributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/attribute.html#DescriptiveByAttributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.attribute.DescriptiveByAttributes" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Mixin class for implement C++ standard attributes linked to code element.</p>
+<p>Mixin class for implement C++ standard attributes linked to a code element.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.attribute.DescriptiveByAttributes.attributes">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.syntax_abstraction.attribute.AttributeDeclaration" title="devana.syntax_abstraction.attribute.AttributeDeclaration"><span class="pre">AttributeDeclaration</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.syntax_abstraction.attribute.DescriptiveByAttributes.attributes" title="Permalink to this definition"></a></dt>
@@ -359,6 +359,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#ClassInfo.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassInfo.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.ClassInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_struct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inheritance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_declaration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#ClassInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.ClassInfo" title="devana.syntax_abstraction.classinfo.ClassInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -600,6 +612,18 @@ init meets requirements in all derivative types.</p>
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.ClassMember.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#ClassMember.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ClassMember.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.ClassMember" title="devana.syntax_abstraction.classinfo.ClassMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassMember</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -634,6 +658,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.ConstructorInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializer_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#ConstructorInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.ConstructorInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.ConstructorInfo" title="devana.syntax_abstraction.classinfo.ConstructorInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstructorInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -698,6 +734,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DestructorInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#DestructorInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.DestructorInfo" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.syntax_abstraction.classinfo.MethodInfo" title="devana.syntax_abstraction.classinfo.MethodInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">MethodInfo</span></code></a></p>
 <p>Destructor information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.DestructorInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#DestructorInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.DestructorInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.DestructorInfo" title="devana.syntax_abstraction.classinfo.DestructorInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">DestructorInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.DestructorInfo.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#DestructorInfo.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.DestructorInfo.is_cursor_valid" title="Permalink to this definition"></a></dt>
@@ -774,6 +822,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.FieldInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#FieldInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.FieldInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.FieldInfo" title="devana.syntax_abstraction.classinfo.FieldInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.FieldInfo.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#FieldInfo.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.FieldInfo.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -789,7 +849,7 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.InheritanceInfo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InheritanceInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#InheritanceInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.InheritanceInfo" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromParamsCreatable" title="devana.utility.traits.IFromParamsCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromParamsCreatable</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
 <p>Information about class/structure inheritance.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue">
@@ -819,6 +879,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#InheritanceInfo.InheritanceValue.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_virtual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#InheritanceInfo.InheritanceValue.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue" title="devana.syntax_abstraction.classinfo.InheritanceInfo.InheritanceValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">InheritanceValue</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -884,6 +956,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.InheritanceInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_parents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#InheritanceInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.InheritanceInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.InheritanceInfo" title="devana.syntax_abstraction.classinfo.InheritanceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">InheritanceInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.InheritanceInfo.lexicon">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lexicon</span></span><a class="headerlink" href="#devana.syntax_abstraction.classinfo.InheritanceInfo.lexicon" title="Permalink to this definition"></a></dt>
@@ -912,6 +996,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MethodInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#MethodInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.MethodInfo" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionInfo" title="devana.syntax_abstraction.functioninfo.FunctionInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionInfo</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.classinfo.ClassMember" title="devana.syntax_abstraction.classinfo.ClassMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassMember</span></code></a></p>
 <p>Information abut class member function - methods.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.MethodInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#MethodInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.MethodInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.MethodInfo" title="devana.syntax_abstraction.classinfo.MethodInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">MethodInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.MethodInfo.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#MethodInfo.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.MethodInfo.is_cursor_valid" title="Permalink to this definition"></a></dt>
@@ -1121,6 +1217,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#SectionInfo.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.SectionInfo.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.classinfo.SectionInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_unnamed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/classinfo.html#SectionInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.classinfo.SectionInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.classinfo.SectionInfo" title="devana.syntax_abstraction.classinfo.SectionInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SectionInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1466,6 +1574,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/enuminfo.html#EnumInfo.EnumValue.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue" title="devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumValue</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/enuminfo.html#EnumInfo.EnumValue.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.EnumValue.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -1550,6 +1670,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.enuminfo.EnumInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_scoped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_declaration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/enuminfo.html#EnumInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.enuminfo.EnumInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.enuminfo.EnumInfo" title="devana.syntax_abstraction.enuminfo.EnumInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">EnumInfo</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1676,6 +1808,13 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dd><p>Bases: <a class="reference internal" href="devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.codecontainer.CodeContainer" title="devana.syntax_abstraction.organizers.codecontainer.CodeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeContainer</span></code></a></p>
 <p>Object representation of current usage of extern C set of functions. It may contain one or more functions.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.externc.ExternC.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/externc.html#ExternC.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.externc.ExternC.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.externc.ExternC.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/externc.html#ExternC.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.externc.ExternC.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -1729,6 +1868,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.attribute.AttributeDeclaration" title="devana.syntax_abstraction.attribute.AttributeDeclaration"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeDeclaration</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionInfo.Argument.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionInfo.Argument.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.Argument.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.Argument" title="devana.syntax_abstraction.functioninfo.FunctionInfo.Argument"><code class="xref py py-class docutils literal notranslate"><span class="pre">Argument</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1812,6 +1963,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionInfo.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionInfo" title="devana.syntax_abstraction.functioninfo.FunctionInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1974,83 +2137,176 @@ you to inject compiler attributes e.g. dllexport.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FunctionModification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionModification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FunctionModification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expect_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionModification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Modification for functions and methods.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.CONST">
-<span class="sig-name descname"><span class="pre">CONST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONST" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CONST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONST" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEVAL">
-<span class="sig-name descname"><span class="pre">CONSTEVAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEVAL" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CONSTEVAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEVAL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEXPR">
-<span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEXPR" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.CONSTEXPR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.DEFAULT">
-<span class="sig-name descname"><span class="pre">DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1024</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.DEFAULT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">DEFAULT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.DEFAULT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.DELETE">
-<span class="sig-name descname"><span class="pre">DELETE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">512</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.DELETE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">DELETE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.DELETE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.EXPLICIT">
-<span class="sig-name descname"><span class="pre">EXPLICIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.EXPLICIT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EXPLICIT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.EXPLICIT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.FINAL">
-<span class="sig-name descname"><span class="pre">FINAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.FINAL" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FINAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.FINAL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.INLINE">
-<span class="sig-name descname"><span class="pre">INLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.INLINE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">INLINE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.INLINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModificationKind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionModification.ModificationKind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntFlag</span></code></p>
+<p>Internal enum list.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONST">
+<span class="sig-name descname"><span class="pre">CONST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONST" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONSTEVAL">
+<span class="sig-name descname"><span class="pre">CONSTEVAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONSTEVAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONSTEXPR">
+<span class="sig-name descname"><span class="pre">CONSTEXPR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2048</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.CONSTEXPR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.DEFAULT">
+<span class="sig-name descname"><span class="pre">DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1024</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.DEFAULT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.DELETE">
+<span class="sig-name descname"><span class="pre">DELETE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">512</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.DELETE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.EXPLICIT">
+<span class="sig-name descname"><span class="pre">EXPLICIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.EXPLICIT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.FINAL">
+<span class="sig-name descname"><span class="pre">FINAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.FINAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.INLINE">
+<span class="sig-name descname"><span class="pre">INLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.INLINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.NOEXCEPT">
+<span class="sig-name descname"><span class="pre">NOEXCEPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16384</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.NOEXCEPT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.NONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.OVERRIDE">
+<span class="sig-name descname"><span class="pre">OVERRIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.OVERRIDE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.PURE_VIRTUAL">
+<span class="sig-name descname"><span class="pre">PURE_VIRTUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.PURE_VIRTUAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.STATIC">
+<span class="sig-name descname"><span class="pre">STATIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.STATIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.VIRTUAL">
+<span class="sig-name descname"><span class="pre">VIRTUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.VIRTUAL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.VOLATILE">
+<span class="sig-name descname"><span class="pre">VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8192</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind.VOLATILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT">
-<span class="sig-name descname"><span class="pre">NOEXCEPT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16384</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NOEXCEPT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NOEXCEPT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.NONE">
-<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NONE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NONE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.NONE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.OVERRIDE">
-<span class="sig-name descname"><span class="pre">OVERRIDE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">256</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.OVERRIDE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">OVERRIDE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.OVERRIDE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.PURE_VIRTUAL">
-<span class="sig-name descname"><span class="pre">PURE_VIRTUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.PURE_VIRTUAL" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PURE_VIRTUAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.PURE_VIRTUAL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.STATIC">
-<span class="sig-name descname"><span class="pre">STATIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.STATIC" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">STATIC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.STATIC" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.VIRTUAL">
-<span class="sig-name descname"><span class="pre">VIRTUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VIRTUAL" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">VIRTUAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VIRTUAL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE">
-<span class="sig-name descname"><span class="pre">VOLATILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8192</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">VOLATILE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expect_value</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.syntax_abstraction.functioninfo.FunctionModification</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.VOLATILE" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.create_noexcept">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_noexcept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noexcept_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functioninfo.html#FunctionModification.create_noexcept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.create_noexcept" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.enum_source">
+<span class="sig-name descname"><span class="pre">enum_source</span></span><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.enum_source" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind" title="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModificationKind</span></code></a></p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.is_const">
@@ -2192,6 +2448,28 @@ you to inject compiler attributes e.g. dllexport.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.noexcept_value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">noexcept_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.noexcept_value" title="Permalink to this definition"></a></dt>
+<dd><p>Returns noexcept if it appears with parentheses. Due to parsing based on the token list, whitespace
+(meaning nothing for c++) is skipped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functioninfo.FunctionModification.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind" title="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind"><span class="pre">ModificationKind</span></a></em><a class="headerlink" href="#devana.syntax_abstraction.functioninfo.FunctionModification.value" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind" title="devana.syntax_abstraction.functioninfo.FunctionModification.ModificationKind"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModificationKind</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -2226,6 +2504,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functiontype.html#FunctionType.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functiontype.FunctionType.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.functiontype.FunctionType.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/functiontype.html#FunctionType.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.functiontype.FunctionType.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.functiontype.FunctionType" title="devana.syntax_abstraction.functiontype.FunctionType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionType</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2310,6 +2600,18 @@ namespaces component placed in many files.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.syntax_abstraction.comment.Comment" title="devana.syntax_abstraction.comment.Comment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comment</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.namespaceinfo.NamespaceInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/namespaceinfo.html#NamespaceInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.namespaceinfo.NamespaceInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.namespaceinfo.NamespaceInfo" title="devana.syntax_abstraction.namespaceinfo.NamespaceInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamespaceInfo</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2426,6 +2728,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_variadic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/templateinfo.html#TemplateInfo.TemplateParameter.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter" title="devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateParameter</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/templateinfo.html#TemplateInfo.TemplateParameter.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.templateinfo.TemplateInfo.TemplateParameter.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -2498,6 +2812,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/templateinfo.html#TemplateInfo.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.templateinfo.TemplateInfo.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.templateinfo.TemplateInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specialisation_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specialisations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_empty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/templateinfo.html#TemplateInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.templateinfo.TemplateInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.templateinfo.TemplateInfo" title="devana.syntax_abstraction.templateinfo.TemplateInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2619,6 +2945,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typedefinfo.html#TypedefInfo.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typedefinfo.TypedefInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typedefinfo.html#TypedefInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.typedefinfo.TypedefInfo" title="devana.syntax_abstraction.typedefinfo.TypedefInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedefInfo</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2836,6 +3174,18 @@ information, so jump to root of typedef declaration may be needed.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typeexpression.html#TypeExpression.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeExpression.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.typeexpression.TypeExpression.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/typeexpression.html#TypeExpression.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.typeexpression.TypeExpression.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.typeexpression.TypeExpression" title="devana.syntax_abstraction.typeexpression.TypeExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeExpression</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -3294,6 +3644,18 @@ template arguments and use or not type aliases.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.unioninfo.UnionInfo.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_declaration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/unioninfo.html#UnionInfo.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.unioninfo.UnionInfo.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.unioninfo.UnionInfo" title="devana.syntax_abstraction.unioninfo.UnionInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnionInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.unioninfo.UnionInfo.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/unioninfo.html#UnionInfo.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.unioninfo.UnionInfo.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -3351,7 +3713,7 @@ template arguments and use or not type aliases.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.using.Using">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Using</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/using.html#Using"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.using.Using" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.ICursorValidate" title="devana.utility.traits.ICursorValidate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICursorValidate</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.ICursorValidate" title="devana.utility.traits.ICursorValidate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICursorValidate</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromParamsCreatable" title="devana.utility.traits.IFromParamsCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromParamsCreatable</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
 <p>Class represented typedef declaration e.g., using AliasTypeName = const namespace::namespace::Type.
 Using without “=” as using namespace::Type; is not supported.</p>
 <dl class="py property">
@@ -3369,6 +3731,18 @@ Using without “=” as using namespace::Type; is not supported.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/using.html#Using.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.using.Using.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.using.Using.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/using.html#Using.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.using.Using.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.using.Using" title="devana.syntax_abstraction.using.Using"><code class="xref py py-class docutils literal notranslate"><span class="pre">Using</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3445,7 +3819,7 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.usingnamespace.UsingNamespace">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UsingNamespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/usingnamespace.html#UsingNamespace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.usingnamespace.UsingNamespace" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.ICursorValidate" title="devana.utility.traits.ICursorValidate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICursorValidate</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.ICursorValidate" title="devana.utility.traits.ICursorValidate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICursorValidate</span></code></a>, <a class="reference internal" href="devana.utility.html#devana.utility.traits.IFromParamsCreatable" title="devana.utility.traits.IFromParamsCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromParamsCreatable</span></code></a>, <a class="reference internal" href="#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a></p>
 <p>Using namespace in scope.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.usingnamespace.UsingNamespace.from_cursor">
@@ -3458,6 +3832,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 <dt class="sig sig-object py" id="devana.syntax_abstraction.usingnamespace.UsingNamespace.from_namespace">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_namespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">namespace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/usingnamespace.html#UsingNamespace.from_namespace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.usingnamespace.UsingNamespace.from_namespace" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.usingnamespace.UsingNamespace.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/usingnamespace.html#UsingNamespace.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.usingnamespace.UsingNamespace.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.usingnamespace.UsingNamespace" title="devana.syntax_abstraction.usingnamespace.UsingNamespace"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsingNamespace</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.usingnamespace.UsingNamespace.is_cursor_valid">
@@ -3545,6 +3931,18 @@ Cls parameter allows implementing this method once if init meets requirements in
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.variable.GlobalVariable.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">associated_comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/variable.html#GlobalVariable.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.variable.GlobalVariable.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.variable.GlobalVariable" title="devana.syntax_abstraction.variable.GlobalVariable"><code class="xref py py-class docutils literal notranslate"><span class="pre">GlobalVariable</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="devana.syntax_abstraction.variable.GlobalVariable.is_cursor_valid">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_cursor_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/variable.html#GlobalVariable.is_cursor_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.variable.GlobalVariable.is_cursor_valid" title="Permalink to this definition"></a></dt>
 <dd><p>It checks if it is possible to create a valid object on the basis of the rate.</p>
@@ -3585,6 +3983,18 @@ init meets requirements in all derivative types.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/variable.html#Variable.from_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.variable.Variable.from_cursor" title="Permalink to this definition"></a></dt>
 <dd><p>Create an instance from parsed information from clang. Return None if creation is not possible.
 Cls parameter allows implementing this method once if init meets requirements in all derivative types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.syntax_abstraction.variable.Variable.from_params">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lexicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/syntax_abstraction/variable.html#Variable.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.syntax_abstraction.variable.Variable.from_params" title="Permalink to this definition"></a></dt>
+<dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
+you to set some basic properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.syntax_abstraction.variable.Variable" title="devana.syntax_abstraction.variable.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Variable</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -3646,7 +4056,7 @@ Cls parameter allows implementing this method once if init meets requirements in
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="devana.preprocessing.components.parser.html" class="btn btn-neutral float-left" title="devana.preprocessing.components.parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.preprocessing.components.property.parsers.html" class="btn btn-neutral float-left" title="devana.preprocessing.components.property.parsers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="devana.syntax_abstraction.organizers.html" class="btn btn-neutral float-right" title="devana.syntax_abstraction.organizers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

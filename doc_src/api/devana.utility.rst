@@ -19,6 +19,14 @@ devana.utility.fakeenum
    :undoc-members:
    :show-inheritance:
 
+devana.utility.init\_params
+---------------------------
+
+.. automodule:: devana.utility.init_params
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.utility.lazy
 -------------------
 
@@ -31,6 +39,14 @@ devana.utility.traits
 ---------------------
 
 .. automodule:: devana.utility.traits
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.utility.typeregister
+---------------------------
+
+.. automodule:: devana.utility.typeregister
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.components.property.parsers &mdash; devana 2.3.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.components.property.parsers.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="devana.syntax_abstraction" href="devana.syntax_abstraction.html" />
+    <link rel="prev" title="devana.preprocessing.components.property" href="devana.preprocessing.components.property.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_start.html">How to start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="devana.html">devana</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="devana.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.utility.html">devana.utility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="devana.html#module-devana.configuration">devana.configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">API reference</a> &raquo;</li>
+          <li><a href="devana.html">devana</a> &raquo;</li>
+          <li><a href="devana.preprocessing.html">devana.preprocessing</a> &raquo;</li>
+          <li><a href="devana.preprocessing.components.html">devana.preprocessing.components</a> &raquo;</li>
+          <li><a href="devana.preprocessing.components.property.html">devana.preprocessing.components.property</a> &raquo;</li>
+      <li>devana.preprocessing.components.property.parsers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="devana-preprocessing-components-property-parsers">
+<h1>devana.preprocessing.components.property.parsers<a class="headerlink" href="#devana-preprocessing-components-property-parsers" title="Permalink to this heading"></a></h1>
+<section id="module-devana.preprocessing.components.property.parsers.attributeparser">
+<span id="devana-preprocessing-components-property-parsers-attributeparser"></span><h2>devana.preprocessing.components.property.parsers.attributeparser<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.attributeparser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.attributeparser.AttributeParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AttributeParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/attributeparser.html#AttributeParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.attributeparser.AttributeParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="devana.preprocessing.html#devana.preprocessing.preprocessor.IGenerator" title="devana.preprocessing.preprocessor.IGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGenerator</span></code></a></p>
+<p>Parser implementation using C++ standard attributes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.add_property">
+<span class="sig-name descname"><span class="pre">add_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/attributeparser.html#AttributeParser.add_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.add_property" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/attributeparser.html#AttributeParser.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.generate" title="Permalink to this definition"></a></dt>
+<dd><p>Generate data like generate code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.result.Result" title="devana.preprocessing.components.property.parsers.result.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.get_produced_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_produced_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/attributeparser.html#AttributeParser.get_produced_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.get_produced_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies a result type, typically as an interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.get_required_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_required_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/attributeparser.html#AttributeParser.get_required_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.attributeparser.AttributeParser.get_required_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies the required input type. In common cases should be interfaced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.components.property.parsers.configuration">
+<span id="devana-preprocessing-components-property-parsers-configuration"></span><h2>devana.preprocessing.components.property.parsers.configuration<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.configuration" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.configuration.Configuration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orphaned_enum_values_allowed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_overload_allowed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_unknown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/configuration.html#Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.configuration.Configuration" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parser core configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.configuration.Configuration.ignore_unknown">
+<span class="sig-name descname"><span class="pre">ignore_unknown</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.configuration.Configuration.ignore_unknown" title="Permalink to this definition"></a></dt>
+<dd><p>An option that determines whether to ignore a syntactically valid property with an unknown name without error.
+This does not apply to cases where unknown values assigned to a property with a known name.
+This option can be partially ignored for special parsers. In particular, C++11 attribute-based parsers may partially
+ignore this setting in order to more easily implement compiler extension attributes - this applies to the global
+namespace, so it is recommended for such parsers to always use their own namespaces.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.configuration.Configuration.orphaned_enum_values_allowed">
+<span class="sig-name descname"><span class="pre">orphaned_enum_values_allowed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.configuration.Configuration.orphaned_enum_values_allowed" title="Permalink to this definition"></a></dt>
+<dd><p>An orphaned enum is an enum value not preceded by an enum name. For example, EnumTypeName.Value1 is the standard
+value notation, but the user can only use Value1 in a given context - a parser based on the expected argument type
+can match the argument type.
+This option is mainly useful for simple preprocessors that do not use unions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.configuration.Configuration.property_overload_allowed">
+<span class="sig-name descname"><span class="pre">property_overload_allowed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.configuration.Configuration.property_overload_allowed" title="Permalink to this definition"></a></dt>
+<dd><p>Allows multiple properties with the same name (within namespace) with different argument types.
+Does not affect the ability to use default arguments.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.components.property.parsers.descriptions">
+<span id="devana-preprocessing-components-property-parsers-descriptions"></span><h2>devana.preprocessing.components.property.parsers.descriptions<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.descriptions" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IDescribedArgument</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/descriptions.html#IDescribedArgument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface describing the arguments accepted by property.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.default_value">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue"><span class="pre">IDescribedValue</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.default_value" title="Permalink to this definition"></a></dt>
+<dd><p>Default value of argument, if any.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedValue</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of argument.
+If the argument is only and exclusively positional, it can be None.
+Otherwise, the syntax name1 = val1, name2 = val, etc. is allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.type">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><span class="pre">IDescribedType</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument.type" title="Permalink to this definition"></a></dt>
+<dd><p>Type of argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IDescribedProperty</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/descriptions.html#IDescribedProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Description property for parsing and diagnostic messages.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.arguments">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument"><span class="pre">IDescribedArgument</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.arguments" title="Permalink to this definition"></a></dt>
+<dd><p>List of arguments for this property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedArgument"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedArgument</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.namespace">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">namespace</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedProperty.namespace" title="Permalink to this definition"></a></dt>
+<dd><p>Namespace in which the property is located (if it is located in any).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IDescribedType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/descriptions.html#IDescribedType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An interface containing a basic description of the type assumed by the property for unambiguous identification.
+Types can be (and often should be) created dynamically along with the creation of properties to provide support
+for example enums.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedType.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IDescribedValue</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/descriptions.html#IDescribedValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface describing the possible value taken by property. Its use is to describe property definitions in the
+context of default values, making the parser’s work easier and ensuring diagnostic messages of appropriate quality.
+This interface does not apply to actual property values.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.content">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.content" title="Permalink to this definition"></a></dt>
+<dd><p>Provides a value if you need to provide a more reliable or non-standard way to provide values instead of
+relying on the parser when providing default values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.content_as_string">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content_as_string</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.content_as_string" title="Permalink to this definition"></a></dt>
+<dd><p>Test representation of a stored value - without a type, object data, etc. For example, holding the number
+7.5, the text representation will be the string 7.5.
+If no content value is provided, the string should be paired to obtain the correct value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.type">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><span class="pre">IDescribedType</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedValue.type" title="Permalink to this definition"></a></dt>
+<dd><p>The type of the current value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.components.property.parsers.parser">
+<span id="devana-preprocessing-components-property-parsers-parser"></span><h2>devana.preprocessing.components.property.parsers.parser<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.parser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.IParsableElement">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IParsableElement</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#IParsableElement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>A class that performs basic data parsing - the smallest component, for example, a type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.IParsableElement.parse">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#IParsableElement.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Extraxt python data from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="devana.preprocessing.components.property.parsers.parser.ParsableElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsableElementError</span></code></a>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.IParsableElement.result_type">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement.result_type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.IParsableType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IParsableType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#IParsableType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement" title="devana.preprocessing.components.property.parsers.parser.IParsableElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableElement</span></code></a>, <a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mix of two interfaces needed by parser.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsableElementError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsableElementError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">what</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsableElementError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Possible parsing errors</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsableElementError.is_meaningless">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_meaningless</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError.is_meaningless" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates when an error is used for fallback - it is not an actual user syntax error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsableElementError.what">
+<span class="sig-name descname"><span class="pre">what</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError.what" title="Permalink to this definition"></a></dt>
+<dd><p>Error description. In most cases it will be empty allowing fallback to other types.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsingBackend</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsingBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core backend for all parser.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsingBackend.Argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class holding result arguments.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><span class="pre">IDescribedType</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParsedValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsingBackend.ParsedValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Internal value parsing result.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue.text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><span class="pre">IDescribedType</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.ParsedValue.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.add_type">
+<span class="sig-name descname"><span class="pre">add_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsingBackend.add_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.add_type" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new type to parser. May raise exceptions for duplicate types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.parse_argument">
+<span class="sig-name descname"><span class="pre">parse_argument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/parser.html#ParsingBackend.parse_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.parse_argument" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument" title="devana.preprocessing.components.property.parsers.parser.ParsingBackend.Argument"><code class="xref py py-class docutils literal notranslate"><span class="pre">Argument</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.parser.ParsingBackend.types">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement" title="devana.preprocessing.components.property.parsers.parser.IParsableElement"><span class="pre">IParsableElement</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.parser.ParsingBackend.types" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableElement" title="devana.preprocessing.components.property.parsers.parser.IParsableElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableElement</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.components.property.parsers.result">
+<span id="devana-preprocessing-components-property-parsers-result"></span><h2>devana.preprocessing.components.property.parsers.result<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.result" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Arguments">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positional=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">named=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/result.html#Arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Calling arguments.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Arguments.named">
+<span class="sig-name descname"><span class="pre">named</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.result.Value" title="devana.preprocessing.components.property.parsers.result.Value"><span class="pre">Value</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Arguments.named" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Arguments.positional">
+<span class="sig-name descname"><span class="pre">positional</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.result.Value" title="devana.preprocessing.components.property.parsers.result.Value"><span class="pre">Value</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Arguments.positional" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.PropertySignature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PropertySignature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/result.html#PropertySignature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.PropertySignature" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Invoking target property identification data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.PropertySignature.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.PropertySignature.arguments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.PropertySignature.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.PropertySignature.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.PropertySignature.namespaces">
+<span class="sig-name descname"><span class="pre">namespaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.PropertySignature.namespaces" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Result">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">property</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/result.html#Result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Result" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Call frame - target function, arguments and current context</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Result.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.result.Arguments" title="devana.preprocessing.components.property.parsers.result.Arguments"><span class="pre">Arguments</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Result.arguments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Result.property">
+<span class="sig-name descname"><span class="pre">property</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.result.PropertySignature" title="devana.preprocessing.components.property.parsers.result.PropertySignature"><span class="pre">PropertySignature</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Result.property" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Result.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><span class="pre">ISyntaxElement</span></a></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Result.target" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Value">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/result.html#Value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Value" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The current value of the property argument with which it will be called.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Value.content">
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Value.content" title="Permalink to this definition"></a></dt>
+<dd><p>Python value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.result.Value.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.result.Value.type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.components.property.parsers.types">
+<span id="devana-preprocessing-components-property-parsers-types"></span><h2>devana.preprocessing.components.property.parsers.types<a class="headerlink" href="#module-devana.preprocessing.components.property.parsers.types" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.BooleanType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BooleanType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#BooleanType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.BooleanType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="devana.preprocessing.components.property.parsers.parser.IParsableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableType</span></code></a></p>
+<p>Representation of true/false.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.BooleanType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.BooleanType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.BooleanType.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#BooleanType.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.BooleanType.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Extraxt python data from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="devana.preprocessing.components.property.parsers.parser.ParsableElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsableElementError</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.BooleanType.result_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.BooleanType.result_type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.EnumType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnumType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#EnumType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.EnumType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a></p>
+<p>Representation of enum.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.EnumType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.EnumType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.EnumType.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.EnumType.values" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.FloatType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FloatType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#FloatType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.FloatType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="devana.preprocessing.components.property.parsers.parser.IParsableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableType</span></code></a></p>
+<p>Representation of floating point number.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.FloatType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.FloatType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.FloatType.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#FloatType.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.FloatType.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Extraxt python data from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="devana.preprocessing.components.property.parsers.parser.ParsableElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsableElementError</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.FloatType.result_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.FloatType.result_type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.IntegerType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IntegerType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#IntegerType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.IntegerType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="devana.preprocessing.components.property.parsers.parser.IParsableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableType</span></code></a></p>
+<p>Representation of integer number.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.IntegerType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.IntegerType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.IntegerType.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#IntegerType.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.IntegerType.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Extraxt python data from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="devana.preprocessing.components.property.parsers.parser.ParsableElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsableElementError</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.IntegerType.result_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.IntegerType.result_type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.ListType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specialization</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#ListType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.ListType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_GenericType</span></code></p>
+<p>Internal of list like []</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.OptionalType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OptionalType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specialization</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#OptionalType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.OptionalType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_GenericType</span></code></p>
+<p>Internal of optional can be value of specialization type or none.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.StringType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StringType</span></span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#StringType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.StringType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="devana.preprocessing.components.property.parsers.parser.IParsableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableType</span></code></a></p>
+<p>Representation of text.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.StringType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.StringType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.StringType.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#StringType.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.StringType.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Extraxt python data from text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.ParsableElementError" title="devana.preprocessing.components.property.parsers.parser.ParsableElementError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParsableElementError</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.StringType.result_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.StringType.result_type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.UnionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UnionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#UnionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.UnionType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a></p>
+<p>Internal of union type can be value of many types.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.UnionType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.UnionType.name" title="Permalink to this definition"></a></dt>
+<dd><p>The full name of the type, including the names of the generic specialization types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.UnionType.types">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><span class="pre">IDescribedType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.UnionType.types" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.components.property.parsers.descriptions.IDescribedType" title="devana.preprocessing.components.property.parsers.descriptions.IDescribedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDescribedType</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="devana.preprocessing.components.property.parsers.types.parsable_element_from_described_type">
+<span class="sig-name descname"><span class="pre">parsable_element_from_described_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/components/property/parsers/types.html#parsable_element_from_described_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.components.property.parsers.types.parsable_element_from_described_type" title="Permalink to this definition"></a></dt>
+<dd><p>Create a parsing type from described.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.components.property.parsers.parser.IParsableType" title="devana.preprocessing.components.property.parsers.parser.IParsableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsableType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-devana.preprocessing.components.property.parsers"></span><p>Auxiliary classes that allow you to transform (parse) input data containing the text definition of a property
+into a set of Python data that can be used in the executor module.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devana.preprocessing.components.property.html" class="btn btn-neutral float-left" title="devana.preprocessing.components.property" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.syntax_abstraction.html" class="btn btn-neutral float-right" title="devana.syntax_abstraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

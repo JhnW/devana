@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.utility.traits &mdash; devana 2.2.1 documentation</title>
+  <title>devana.utility.traits &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/utility/traits.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -109,18 +109,18 @@
 <span class="sd">        Cls parameter allows implementing this method once if init meets requirements in all derivative types.&quot;&quot;&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="IBasicCreatable"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.traits.IBasicCreatable">[docs]</a><span class="k">class</span> <span class="nc">IBasicCreatable</span><span class="p">(</span><span class="n">IDefaultCreatable</span><span class="p">,</span> <span class="n">IFromCursorCreatable</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;An interface that describes a set of constructors for a code element.&quot;&quot;&quot;</span></div>
-
-
 <div class="viewcode-block" id="IFromParamsCreatable"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.traits.IFromParamsCreatable">[docs]</a><span class="k">class</span> <span class="nc">IFromParamsCreatable</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The interface of an object that can be created from many parameters.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="IFromParamsCreatable.from_params"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.traits.IFromParamsCreatable.from_params">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">from_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ISyntaxElement</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Multi-parameter constructor. Similar to the default value, except that it allows</span>
 <span class="sd">        you to set some basic properties.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="IBasicCreatable"><a class="viewcode-back" href="../../../api/devana.utility.html#devana.utility.traits.IBasicCreatable">[docs]</a><span class="k">class</span> <span class="nc">IBasicCreatable</span><span class="p">(</span><span class="n">IDefaultCreatable</span><span class="p">,</span> <span class="n">IFromCursorCreatable</span><span class="p">,</span> <span class="n">IFromParamsCreatable</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An interface that describes a set of constructors for a code element.&quot;&quot;&quot;</span></div>
 </pre></div>
 
            </div>

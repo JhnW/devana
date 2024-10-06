@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.organizers.sourcefile &mdash; devana 2.2.1 documentation</title>
+  <title>devana.syntax_abstraction.organizers.sourcefile &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/organizers/sourcefile.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -83,13 +83,15 @@
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">CommentMarker</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">CommentsFactory</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
-<span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
-<span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ParsingErrorPolicy</span>
-<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
+<span class="kn">from</span> <span class="nn">devana.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">ParsingErrorPolicy</span>
+<span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
+<span class="kn">from</span> <span class="nn">devana.utility.init_params</span> <span class="kn">import</span> <span class="n">init_params</span>
+<span class="kn">from</span> <span class="nn">devana.utility.traits</span> <span class="kn">import</span> <span class="n">IFromParamsCreatable</span>
+<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
 
 
-<div class="viewcode-block" id="IncludeInfo"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo">[docs]</a><span class="k">class</span> <span class="nc">IncludeInfo</span><span class="p">(</span><span class="n">ISyntaxElement</span><span class="p">):</span>
+<div class="viewcode-block" id="IncludeInfo"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo">[docs]</a><span class="k">class</span> <span class="nc">IncludeInfo</span><span class="p">(</span><span class="n">ISyntaxElement</span><span class="p">,</span> <span class="n">IFromParamsCreatable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Include present in file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">FileInclusion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -118,6 +120,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">include</span><span class="o">.</span><span class="n">name</span>
             <span class="k">if</span> <span class="s2">&quot;&lt;&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_is_standard</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="IncludeInfo.from_params"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.IncludeInfo.from_params">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@init_params</span><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parent&quot;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">from_params</span><span class="p">(</span> <span class="c1"># pylint: disable=unused-argument</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ISyntaxElement</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">is_standard</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">source_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;SourceFile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;IncludeInfo&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -272,6 +286,22 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">configuration</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SourceFile.from_params"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.SourceFile.from_params">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@init_params</span><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parent&quot;</span><span class="p">})</span>
+    <span class="k">def</span> <span class="nf">from_params</span><span class="p">(</span> <span class="c1"># pylint: disable=unused-argument, arguments-renamed</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ISyntaxElement</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SourceFileType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">lexicon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Lexicon</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">includes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">IncludeInfo</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">preamble</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">header_guard</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;SourceFile&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SourceFile.from_path"><a class="viewcode-back" href="../../../../api/devana.syntax_abstraction.organizers.html#devana.syntax_abstraction.organizers.sourcefile.SourceFile.from_path">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>

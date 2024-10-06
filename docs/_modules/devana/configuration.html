@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.configuration &mdash; devana 2.2.1 documentation</title>
+  <title>devana.configuration &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/configuration.html" />
@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -88,7 +88,7 @@
 
 <div class="viewcode-block" id="IValidateConfig.validate"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.IValidateConfig.validate">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method do not return value. Each problem should be reported as an appropriate exception.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method does not return value. Each problem should be reported as an appropriate exception.</span>
 <span class="sd">        This exception will be propagated to the client using the library.&quot;&quot;&quot;</span></div></div>
 
 
@@ -118,7 +118,7 @@
 
 
 <div class="viewcode-block" id="LanguageStandard"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.LanguageStandard">[docs]</a><span class="k">class</span> <span class="nc">LanguageStandard</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines according to the rules which language version the parsing of files will take place.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines, according to the rules, which language version the parsing of files will take place.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="LanguageStandard.LanguageStandardData"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.LanguageStandard.LanguageStandardData">[docs]</a>    <span class="k">class</span> <span class="nc">LanguageStandardData</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Version of C++ or C standard.&quot;&quot;&quot;</span>
@@ -145,6 +145,7 @@
     <span class="n">CPP_11</span> <span class="o">=</span> <span class="n">LanguageStandardData</span><span class="p">([</span><span class="s2">&quot;-xc++&quot;</span><span class="p">,</span> <span class="s2">&quot;-std=c++11&quot;</span><span class="p">],</span> <span class="n">auto</span><span class="p">())</span>
     <span class="n">CPP_17</span> <span class="o">=</span> <span class="n">LanguageStandardData</span><span class="p">([</span><span class="s2">&quot;-xc++&quot;</span><span class="p">,</span> <span class="s2">&quot;-std=c++17&quot;</span><span class="p">],</span> <span class="n">auto</span><span class="p">())</span>
     <span class="n">CPP_20</span> <span class="o">=</span> <span class="n">LanguageStandardData</span><span class="p">([</span><span class="s2">&quot;-xc++&quot;</span><span class="p">,</span> <span class="s2">&quot;-std=c++20&quot;</span><span class="p">],</span> <span class="n">auto</span><span class="p">())</span>
+    <span class="n">CPP_23</span> <span class="o">=</span> <span class="n">LanguageStandardData</span><span class="p">([</span><span class="s2">&quot;-xc++&quot;</span><span class="p">,</span> <span class="s2">&quot;-std=c++23&quot;</span><span class="p">],</span> <span class="n">auto</span><span class="p">())</span>
 
 <div class="viewcode-block" id="LanguageStandard.create_default"><a class="viewcode-back" href="../../api/devana.html#devana.configuration.LanguageStandard.create_default">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_default</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>

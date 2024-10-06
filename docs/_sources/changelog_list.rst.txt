@@ -2,6 +2,44 @@ Changelog
 =========
 
 
+v2.3.0 (2024-10-06)
+-------------------
+
+New
+~~~
+- Better object constructors. [xXenvy]
+
+  Adding a constructor to each syntactic element that allows you to set all of its parameters in one function call instead of using setter. Quality of life change.
+- Attribute parser. [JhnW]
+
+  Beta release of a C++ attribute parser that allows creating attribute signatures with the expected types - with basic support for numbers and strings for now. The API may still change slightly. This is a preview before the full release of the preprocessor module.
+- Preprocessing - add extractor for comments. [xXenvy]
+- Example of generating setters and getters. [xXenvy]
+- Three-way comparison support from C++20. [Miłosz]
+
+  Both parsing and printer
+- C++23 standard flag in configuration. [JhnW]
+- Update libcxx. [JhnW]
+- Noexcept  support. [Miłosz]
+
+  Added missing indent in return return statement in typeexpression.py,  FunctionModification as FakeEnum, Noexcept value
+
+Fix
+~~~
+- Adaptation of "dragon case" for template parsing. [JhnW]
+
+  Custom compiler flags are now supported for this very special case
+- Some simple fixes for printing and parsing the noexcept attribute.
+  [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Pkg: Global CI/CD update. [JhnW]
+- Test: Update Github actions for test. [JhnW]
+- Test: Fix path in test to avoid clang dizzy retun paths. [JhnW]
+
+
 v2.2.1 (2023-11-01)
 -------------------
 

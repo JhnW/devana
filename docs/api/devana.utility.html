@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.utility &mdash; devana 2.2.1 documentation</title>
+  <title>devana.utility &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.utility.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -120,14 +120,46 @@ You must provide enum_source argument.</p>
 </dd></dl>
 
 </section>
+<section id="module-devana.utility.init_params">
+<span id="devana-utility-init-params"></span><h2>devana.utility.init_params<a class="headerlink" href="#module-devana.utility.init_params" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="devana.utility.init_params.init_params">
+<span class="sig-name descname"><span class="pre">init_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/init_params.html#init_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.init_params.init_params" title="Permalink to this definition"></a></dt>
+<dd><p>A decorator that automatically assigns classmethod parameters to instance attributes,
+if the attribute has a setter or exists as an instance variable.</p>
+<p>Parameters in the <cite>skip</cite> set will be ignored, “cls” is ignored by default.
+If parameter is not settable or doesn’t exist in the instance, an AttributeError will be raised.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@init_params</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span>
+
+<span class="n">jerry</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jerry</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">jerry</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>  <span class="c1"># Outputs: Jerry 20</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-devana.utility.lazy">
 <span id="devana-utility-lazy"></span><h2>devana.utility.lazy<a class="headerlink" href="#module-devana.utility.lazy" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.utility.lazy.LazyNotInit">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LazyNotInit</span></span><a class="reference internal" href="../_modules/devana/utility/lazy.html#LazyNotInit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.lazy.LazyNotInit" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Value used by lazy_invoke to determine property is initialized or not. Set this type to value of property
-in init function to inform that value must be initialized. For example, self._name = LazyNotInit</p>
+<p>The Value used by lazy_invoke to determine property is initialized or not.
+Set this type to value of property in init function to inform that value must be initialized.
+For example, self._name = LazyNotInit</p>
 </dd></dl>
 
 <dl class="py function">
@@ -141,7 +173,7 @@ in init function to inform that value must be initialized. For example, self._na
 <dl class="py class">
 <dt class="sig sig-object py" id="devana.utility.traits.IBasicCreatable">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IBasicCreatable</span></span><a class="reference internal" href="../_modules/devana/utility/traits.html#IBasicCreatable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IBasicCreatable" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#devana.utility.traits.IDefaultCreatable" title="devana.utility.traits.IDefaultCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDefaultCreatable</span></code></a>, <a class="reference internal" href="#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#devana.utility.traits.IDefaultCreatable" title="devana.utility.traits.IDefaultCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDefaultCreatable</span></code></a>, <a class="reference internal" href="#devana.utility.traits.IFromCursorCreatable" title="devana.utility.traits.IFromCursorCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromCursorCreatable</span></code></a>, <a class="reference internal" href="#devana.utility.traits.IFromParamsCreatable" title="devana.utility.traits.IFromParamsCreatable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IFromParamsCreatable</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>An interface that describes a set of constructors for a code element.</p>
 </dd></dl>
 
@@ -198,7 +230,7 @@ Cls parameter allows implementing this method once if init meets requirements in
 <p>The interface of an object that can be created from many parameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.utility.traits.IFromParamsCreatable.from_params">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/traits.html#IFromParamsCreatable.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IFromParamsCreatable.from_params" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/traits.html#IFromParamsCreatable.from_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.traits.IFromParamsCreatable.from_params" title="Permalink to this definition"></a></dt>
 <dd><p>Multi-parameter constructor. Similar to the default value, except that it allows
 you to set some basic properties.</p>
 <dl class="field-list simple">
@@ -208,6 +240,16 @@ you to set some basic properties.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="module-devana.utility.typeregister">
+<span id="devana-utility-typeregister"></span><h2>devana.utility.typeregister<a class="headerlink" href="#module-devana.utility.typeregister" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="devana.utility.typeregister.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/utility/typeregister.html#register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.utility.typeregister.register" title="Permalink to this definition"></a></dt>
+<dd><p>Registers a type in the given variable - usually a global module variable.
+Useful for automatically creating lists of default supported classes, etc.</p>
 </dd></dl>
 
 <span class="target" id="module-devana.utility"></span><p>Sets of utility classes.</p>

@@ -6,7 +6,8 @@ Subpackages
 
 .. toctree::
 
-   devana.preprocessing.components.parser
+   devana.preprocessing.components.extractors
+   devana.preprocessing.components.property
 
 
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana &mdash; devana 2.2.1 documentation</title>
+  <title>devana &mdash; devana 2.3.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.html" />
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.2
+                2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -140,8 +140,24 @@
 <li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="devana.preprocessing.components.html">devana.preprocessing.components</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="devana.preprocessing.components.parser.html">devana.preprocessing.components.parser</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="devana.preprocessing.components.parser.html#module-devana.preprocessing.components.parser.attributeextractor">devana.preprocessing.components.parser.attributeextractor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="devana.preprocessing.components.extractors.html">devana.preprocessing.components.extractors</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="devana.preprocessing.components.extractors.html#module-devana.preprocessing.components.extractors.attributeextractor">devana.preprocessing.components.extractors.attributeextractor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="devana.preprocessing.components.extractors.html#module-devana.preprocessing.components.extractors.commentextractor">devana.preprocessing.components.extractors.commentextractor</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="devana.preprocessing.components.property.html">devana.preprocessing.components.property</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="devana.preprocessing.components.property.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html">devana.preprocessing.components.property.parsers</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.attributeparser">devana.preprocessing.components.property.parsers.attributeparser</a></li>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.configuration">devana.preprocessing.components.property.parsers.configuration</a></li>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.descriptions">devana.preprocessing.components.property.parsers.descriptions</a></li>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.parser">devana.preprocessing.components.property.parsers.parser</a></li>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.result">devana.preprocessing.components.property.parsers.result</a></li>
+<li class="toctree-l8"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.types">devana.preprocessing.components.property.parsers.types</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,8 +203,10 @@
 <li class="toctree-l1"><a class="reference internal" href="devana.utility.html">devana.utility</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.errors">devana.utility.errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.fakeenum">devana.utility.fakeenum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.init_params">devana.utility.init_params</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.lazy">devana.utility.lazy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.traits">devana.utility.traits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devana.utility.html#module-devana.utility.typeregister">devana.utility.typeregister</a></li>
 </ul>
 </li>
 </ul>
@@ -237,7 +255,7 @@ This does not affect the parsing of the file preamble.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.CommentsParsing.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#CommentsParsing.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.CommentsParsing.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
@@ -269,7 +287,7 @@ into the appropriate python classes instances.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.Configuration.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#Configuration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.Configuration.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
@@ -283,7 +301,7 @@ This exception will be propagated to the client using the library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.IValidateConfig.validate">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IValidateConfig.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IValidateConfig.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
@@ -312,7 +330,7 @@ This exception will be propagated to the client using the library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.IncludesSet.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#IncludesSet.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.IncludesSet.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
@@ -322,7 +340,7 @@ This exception will be propagated to the client using the library.</p>
 <dt class="sig sig-object py" id="devana.configuration.LanguageStandard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LanguageStandard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#LanguageStandard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.LanguageStandard" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>Defines according to the rules which language version the parsing of files will take place.</p>
+<p>Defines, according to the rules, which language version the parsing of files will take place.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.LanguageStandard.CPP_03">
 <span class="sig-name descname"><span class="pre">CPP_03</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.configuration.LanguageStandard.LanguageStandardData</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.configuration.LanguageStandard.CPP_03" title="Permalink to this definition"></a></dt>
@@ -341,6 +359,11 @@ This exception will be propagated to the client using the library.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="devana.configuration.LanguageStandard.CPP_20">
 <span class="sig-name descname"><span class="pre">CPP_20</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.configuration.LanguageStandard.LanguageStandardData</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.configuration.LanguageStandard.CPP_20" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.configuration.LanguageStandard.CPP_23">
+<span class="sig-name descname"><span class="pre">CPP_23</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;devana.configuration.LanguageStandard.LanguageStandardData</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#devana.configuration.LanguageStandard.CPP_23" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -445,7 +468,7 @@ parsing, and paths to the location of an external library that will not be parse
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.ParsingConfiguration.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#ParsingConfiguration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.ParsingConfiguration.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
@@ -511,7 +534,7 @@ This exception will be propagated to the client using the library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="devana.configuration.StandardLibraryConfiguration.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/configuration.html#StandardLibraryConfiguration.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.configuration.StandardLibraryConfiguration.validate" title="Permalink to this definition"></a></dt>
-<dd><p>This method do not return value. Each problem should be reported as an appropriate exception.
+<dd><p>This method does not return value. Each problem should be reported as an appropriate exception.
 This exception will be propagated to the client using the library.</p>
 </dd></dl>
 
