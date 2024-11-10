@@ -217,7 +217,7 @@ class SourceFile(CodeContainer):
             cls,
             parent: Optional[ISyntaxElement] = None,
             content: Optional[List[Any]] = None,
-            type: Optional[SourceFileType] = None,
+            type: Optional[SourceFileType] = None, # noqa pylint: disable=redefined-builtin
             path: Optional[Path] = None,
             lexicon: Optional[Lexicon] = None,
             includes: Optional[List[IncludeInfo]] = None,

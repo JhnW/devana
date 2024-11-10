@@ -283,7 +283,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
-            type: Optional[TypeExpression] = None,
+            type: Optional[TypeExpression] = None, # noqa pylint: disable=redefined-builtin
             default_value: Optional[str] = None,
             lexicon: Optional[Lexicon] = None,
             attributes: Optional[List[AttributeDeclaration]] = None

@@ -208,7 +208,7 @@ class MethodInfo(FunctionInfo, ClassMember):
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
             access_specifier: Optional[AccessSpecifier] = None,
-            type: Optional[MethodType] = None,
+            type: Optional[MethodType] = None, # noqa pylint: disable=redefined-builtin
     ) -> "MethodInfo":
         return cls(None, parent)
 
@@ -306,7 +306,7 @@ class ConstructorInfo(MethodInfo):
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
             access_specifier: Optional[AccessSpecifier] = None,
-            type: Optional[MethodType] = None,
+            type: Optional[MethodType] = None, # noqa pylint: disable=redefined-builtin
             initializer_list: Optional[List[InitializerInfo]] = None,
     ) -> "ConstructorInfo":
         return cls(None, parent)
@@ -482,7 +482,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
-            type: Optional[TypeExpression] = None,
+            type: Optional[TypeExpression] = None, # noqa pylint: disable=redefined-builtin
             default_value: Optional[Any] = None,
             lexicon: Optional[Lexicon] = None,
             access_specifier: Optional[AccessSpecifier] = None,
@@ -548,7 +548,7 @@ class SectionInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional[ISyntaxElement] = None,
-            type: Optional[AccessSpecifier] = None,
+            type: Optional[AccessSpecifier] = None, # noqa pylint: disable=redefined-builtin
             is_unnamed: Optional[bool] = None,
             content: Optional[List[Any]] = None,
     ) -> "SectionInfo":
@@ -663,7 +663,7 @@ class InheritanceInfo(IFromCursorCreatable, IFromParamsCreatable, ISyntaxElement
                 cls,
                 parent: Optional[ISyntaxElement] = None,
                 access_specifier: Optional[AccessSpecifier] = None,
-                type: Optional[Any] = None,
+                type: Optional[Any] = None, # noqa pylint: disable=redefined-builtin
                 is_virtual: Optional[bool] = None,
                 template_arguments: Optional[List[TypeExpression]] = None,
                 namespaces: Optional[List[str]] = None,

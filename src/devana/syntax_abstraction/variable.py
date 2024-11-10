@@ -46,7 +46,7 @@ class Variable(IBasicCreatable, ISyntaxElement):
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
-            type: Optional[TypeExpression] = None,
+            type: Optional[TypeExpression] = None, # noqa pylint: disable=redefined-builtin
             default_value: Optional[Any] = None,
             lexicon: Optional[Lexicon] = None
     ) -> "Variable":
@@ -143,7 +143,7 @@ class GlobalVariable(Variable, ICursorValidate):
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
-            type: Optional[TypeExpression] = None,
+            type: Optional[TypeExpression] = None, # noqa pylint: disable=redefined-builtin
             default_value: Optional[Any] = None,
             lexicon: Optional[Lexicon] = None,
             associated_comment: Optional[Comment] = None
