@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, List, Type, Iterable, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 class IInputContract(ABC):
@@ -40,7 +40,7 @@ class IDestination(IInputContract, ABC):
     @dataclass
     class Artifacts:
         """Resulting preprocessor artifacts."""
-        files: List[Path]
+        files: List[Path] = field(default_factory=list)
         """List of touching files."""
 
     @abstractmethod

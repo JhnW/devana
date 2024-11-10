@@ -38,7 +38,7 @@ class Formatter:
         return self._cfg.indent
 
     def print_line(self, text):
-        """Format next part of text and accumulate this to text."""
+        """Format the next part of text and accumulate this to text."""
         self._text += self._cfg.format_line(text)
 
     def clear(self):

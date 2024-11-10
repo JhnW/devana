@@ -164,7 +164,7 @@ class AttributesCriteria:
 
 @dataclass
 class PrinterConfiguration:
-    """Data structure that stores standard code printing settings e.g. newline format."""
+    """Data structure that stores standard code printing settings, e.g. newline format."""
 
     line_ending: LineEndings = LineEndings.default()
     indent: Indent = field(default_factory=lambda: Indent())

@@ -247,12 +247,12 @@ class SourceFile(CodeContainer):
 
     @property
     def name(self) -> str:
-        """Name of source file without extension."""
+        """Name of a source file without extension."""
         return self.path.name
 
     @property
     def extension(self) -> Union[Literal["h", "hpp", "hxx", "c", "cpp", "cxx", "cc"], str]:
-        """File extension. In most common way, it will be standard, well know C++ extension."""
+        """File extension. In the most common way, it will be standard, well know C++ extension."""
         return self.path.suffix.lstrip(".")
 
     @property
