@@ -148,7 +148,7 @@ class SourceFileType(Enum):
 
 
 class SourceFile(CodeContainer):
-    """Information about specific source code file."""
+    """Information about a specific source code file."""
 
     def __init__(self, source: Optional[Union[cindex.Cursor, str]] = None, parent: Optional[Any] = None,
                  configuration: Optional[Configuration] = None):
@@ -257,7 +257,7 @@ class SourceFile(CodeContainer):
 
     @property
     def path(self) -> Optional[Path]:
-        """Relative to module source file path."""
+        """Relative to a module source file path."""
         return self._path
 
     @path.setter

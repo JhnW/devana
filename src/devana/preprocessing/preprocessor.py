@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Optional, List, Type, Iterable, Any
+from typing import Optional, List, Type, Any
 from dataclasses import dataclass, field
 
 
@@ -24,11 +24,11 @@ class IOutputContract(ABC):
 
 class ISource(IOutputContract, ABC):
     """The data source interface for the processor.
-    Typical implementation assumes reading files (json or header files) and returning the parsed output of
+    Typical implementation assumes reading files (JSON or header files) and returning the parsed output of
     the generator, for example, C++ type systems from Devana."""
 
     @abstractmethod
-    def feed(self) -> Iterable[Any]:
+    def feed(self) -> List[Any]:
         """Create data, one by one."""
 
 
@@ -44,7 +44,7 @@ class IDestination(IInputContract, ABC):
         """List of touching files."""
 
     @abstractmethod
-    def consume(self, data: Iterable[Any]) -> Optional[Artifacts]:
+    def consume(self, data: List[Any]) -> Optional[Artifacts]:
         """Consume data from generator and save it."""
 
 
@@ -53,7 +53,7 @@ class IGenerator(IInputContract, IOutputContract, ABC):
     input and output data."""
 
     @abstractmethod
-    def generate(self, data: Iterable[Any]) -> Iterable[Any]:
+    def generate(self, data: List[Any]) -> List[Any]:
         """Generate data like generate code."""
 
 
