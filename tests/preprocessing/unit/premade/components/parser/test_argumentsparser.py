@@ -31,15 +31,33 @@ class TestArgumentsParser(unittest.TestCase):
         result = tokenizer.tokenize("7.5")
         self.assertEqual([7.5], result)
 
+        result = tokenizer.tokenize(".5")
+        self.assertEqual([.5], result)
+
+        result = tokenizer.tokenize("7.")
+        self.assertEqual([7.], result)
+
     def test_parse_minus_float(self):
         tokenizer = ArgumentsParser()
         result = tokenizer.tokenize("-7.5")
         self.assertEqual([-7.5], result)
 
+        result = tokenizer.tokenize("-.5")
+        self.assertEqual([-.5], result)
+
+        result = tokenizer.tokenize("-7.")
+        self.assertEqual([-7.], result)
+
     def test_parse_plus_float(self):
         tokenizer = ArgumentsParser()
         result = tokenizer.tokenize("+7.5")
         self.assertEqual([7.5], result)
+
+        result = tokenizer.tokenize("+.5")
+        self.assertEqual([+.5], result)
+
+        result = tokenizer.tokenize("+7.")
+        self.assertEqual([+7.], result)
 
     def test_parse_string(self):
         tokenizer = ArgumentsParser()

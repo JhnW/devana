@@ -137,7 +137,7 @@ class ArgumentsParser:
         self._name_parser = NameArgumentParser()
         self._parsers = []
         self._parsers.append(ArgumentGenericTypeParser(r"(?P<value>[+-]?\d+)", lambda v, _: int(v)))
-        self._parsers.append(ArgumentGenericTypeParser(r"(?P<value>[+-]?\d+\.?\d*)", lambda v, _: float(v)))
+        self._parsers.append(ArgumentGenericTypeParser(r"(?P<value>[+-]?(?:\.\d+|\d+\.?\d*))", lambda v, _: float(v)))
         self._parsers.append(ListArgumentParser())
         self._parsers.append(ArgumentGenericTypeParser(r'(\"(?P<value>.*)\")', lambda v, _: v))
         self._parsers.append(ArgumentGenericTypeParser( r'(?P<value>true)', lambda v, _: True))
