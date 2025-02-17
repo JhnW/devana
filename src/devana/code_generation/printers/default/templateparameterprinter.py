@@ -1,7 +1,6 @@
 from devana.code_generation.printers.icodeprinter import ICodePrinter
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.code_generation.printers.dispatcherinjectable import DispatcherInjectable
-from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 
 
 class TemplateParameterPrinter(ICodePrinter, DispatcherInjectable):

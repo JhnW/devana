@@ -1,7 +1,6 @@
 import re
-from ctypes import c_uint
 from pathlib import Path
-from typing import Optional, List, Union, Tuple, Any, TYPE_CHECKING, Iterable
+from typing import Optional, List, Union, Tuple, Any, TYPE_CHECKING
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
@@ -92,6 +91,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def from_params( # pylint: disable=unused-argument
                 cls,
                 parent: Optional[ISyntaxElement] = None,
+                content: Optional[List[Any]] = None,
+                namespace: Optional[str] = None,
                 specifier: Optional[Union[str, "ConceptInfo"]] = None,
                 name: Optional[str] = None,
                 default_value: Optional[str] = None,
@@ -114,7 +115,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         @lazy_invoke
         def specifier(self) -> Union["ConceptInfo", str]:
             """Keyword or ConceptInfo instance preceding the name."""
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo
+            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
 
             cursors = filter(
                 lambda c: c.kind == cindex.CursorKind.TEMPLATE_REF and c.referenced,
@@ -130,7 +131,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         @specifier.setter
         def specifier(self, value: Union["ConceptInfo", str]):
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo
+            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
             if not isinstance(value, ConceptInfo) and value not in ("class", "typename"):
                 raise ValueError("Specifier must be class, typename, or an instance of ConceptInfo.")
             self._specifier = value
@@ -192,7 +193,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         @property
         def _content_types(self) -> List:
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo
+            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
             return [ConceptInfo]
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):

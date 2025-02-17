@@ -1,3 +1,6 @@
+from typing import Optional, List, Any
+from clang import cindex
+
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.templateinfo import TemplateInfo
@@ -8,13 +11,11 @@ from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
 from devana.utility.errors import ParserError
 
-from clang.cindex import CursorKind, Cursor
-from typing import Optional, List
-
 
 class ConceptInfo(CodeContainer):
+    """Represents a C++ concept, either as a full definition or as a template requirement (e.g. in `template<Concept T>`)."""
 
-    def __init__(self, cursor: Optional[Cursor] = None, parent: Optional[CodeContainer] = None):
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         self._cursor = cursor
         self._parent = parent
@@ -42,16 +43,18 @@ class ConceptInfo(CodeContainer):
         return cls(None, parent)
 
     @classmethod
-    def from_cursor(cls, cursor: Cursor, parent: Optional = None) -> Optional["ConceptInfo"]:
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["ConceptInfo"]:
         if cls.is_cursor_valid(cursor):
             return cls(cursor, parent)
         return None
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params(
+    def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional[ISyntaxElement] = None,
+            content: Optional[List[Any]] = None,
+            namespace: Optional[str] = None,
             name: Optional[str] = None,
             body: Optional[str] = None,
             template: Optional[TemplateInfo] = None,
@@ -61,8 +64,8 @@ class ConceptInfo(CodeContainer):
         return cls(None, parent)
 
     @staticmethod
-    def is_cursor_valid(cursor: Cursor) -> bool:
-        return cursor.kind == CursorKind.CONCEPT_DECL
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        return cursor.kind == cindex.CursorKind.CONCEPT_DECL
 
     @property
     def parent(self) -> CodeContainer:
@@ -94,7 +97,7 @@ class ConceptInfo(CodeContainer):
     def body(self) -> str:
         self._body = ""
         for child in self._cursor.get_children():
-            if child.kind != CursorKind.TEMPLATE_TYPE_PARAMETER:
+            if child.kind != cindex.CursorKind.TEMPLATE_TYPE_PARAMETER:
                 self._body = CodePiece(child).text
                 break
         return self._body
