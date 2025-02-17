@@ -22,7 +22,7 @@ class TestConcept(unittest.TestCase):
         stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase1")
-        self.assertEqual(result.body, "requires(T a) {\r\n    { --a };\r\n    { a-- };\r\n}")
+        self.assertEqual(result.body, "requires(T a) {\n    { --a };\n    { a-- };\n}")
         self.assertEqual(len(result.template.parameters), 1)
 
     def test_addable(self):
@@ -31,7 +31,7 @@ class TestConcept(unittest.TestCase):
         stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase2")
-        self.assertEqual(result.body, "requires(T a, T b) {\r\n    { a + b };\r\n}")
+        self.assertEqual(result.body, "requires(T a, T b) {\n    { a + b };\n}")
         self.assertEqual(len(result.template.parameters), 1)
 
     def test_assignable(self):
@@ -41,7 +41,7 @@ class TestConcept(unittest.TestCase):
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase3")
         self.assertEqual(result.body,
-    "requires(T a, T b) {\r\n    a = b;\r\n} || requires(T a, T b) {\r\n    b = a;\r\n}"
+    "requires(T a, T b) {\n    a = b;\n} || requires(T a, T b) {\n    b = a;\n}"
         )
         self.assertEqual(len(result.template.parameters), 1)
 
@@ -51,7 +51,7 @@ class TestConcept(unittest.TestCase):
         stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase4")
-        self.assertEqual(result.body, "requires {\r\n    T{};\r\n}")
+        self.assertEqual(result.body, "requires {\n    T{};\n}")
         self.assertEqual(len(result.template.parameters), 1)
 
     def test_signed(self):
@@ -60,7 +60,7 @@ class TestConcept(unittest.TestCase):
         stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase5")
-        self.assertEqual(result.body, "requires {\r\n    T(-1) < T(0); \r\n}")
+        self.assertEqual(result.body, "requires {\n    T(-1) < T(0); \n}")
         self.assertEqual(len(result.template.parameters), 1)
 
     def test_rev_iterator(self):
@@ -69,7 +69,7 @@ class TestConcept(unittest.TestCase):
         stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase6")
-        self.assertEqual(result.body, "ConceptCase1<T> && requires(T t) {\r\n    *t;\r\n}")
+        self.assertEqual(result.body, "ConceptCase1<T> && requires(T t) {\n    *t;\n}")
         self.assertEqual(len(result.template.parameters), 1)
 
     def test_default_positive(self):
