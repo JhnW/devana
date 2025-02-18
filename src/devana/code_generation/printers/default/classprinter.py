@@ -181,6 +181,8 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
                     parameters.append(self.printer_dispatcher.print(p, config, source))
                 parameters = ','.join(parameters)
                 template_prefix = f"template<{parameters}>"
+                if source.template.requires:
+                    template_prefix += f" requires {source.template.requires}"
 
                 specialisation_values = []
 

@@ -3,18 +3,23 @@ import clang.cindex
 import clang
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
+from devana.syntax_abstraction.typeexpression import TypeModification
 from devana.syntax_abstraction.classinfo import *
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
+from devana.syntax_abstraction.conceptinfo import ConceptInfo
+from tests.helpers import find_by_name
 
 
 class TestTemplateAdvanced(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_template.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/advanced_template.hpp",
+            args=("-std=c++20",)
+        ).cursor
         self.file = SourceFile.from_cursor(self.cursor)
-        self.assertEqual(len(self.file.content), 32)
+        self.assertEqual(len(self.file.content), 34)
 
     def test_functions_arguments(self):
         result: FunctionInfo = self.file.content[2]
@@ -350,3 +355,26 @@ class TestTemplateAdvanced(unittest.TestCase):
         self.assertEqual(result.template.specialisation_values[0].details, self.file.content[23])
         self.assertEqual(len(result.template.specialisation_values[0].template_arguments), 1)
         self.assertEqual(result.template.specialisation_values[0].template_arguments[0].details, BasicType.CHAR)
+
+    def test_template_concept(self):
+        result: ConceptInfo = self.file.content[32]
+        with self.subTest(result.name):
+            self.assertEqual(result.name, "TestConceptCase1")
+            self.assertEqual(result.body, "A{} and B{}")
+            self.assertEqual(len(result.template.parameters), 2)
+            self.assertEqual(len(result.template.specialisation_values), 0)
+            self.assertEqual(result.template.parameters[0].name, "A")
+            self.assertEqual(result.template.parameters[0].specifier, "typename")
+            self.assertEqual(result.template.parameters[1].name, "B")
+            self.assertEqual(result.template.parameters[1].specifier, "class")
+            self.assertEqual(result.template.requires, None)
+
+        result = self.file.content[33]
+        with self.subTest(result.name):
+            self.assertEqual(result.name, "TestConceptCase2")
+            self.assertEqual(result.body, "false")
+            self.assertEqual(len(result.template.parameters), 1)
+            self.assertEqual(len(result.template.specialisation_values), 0)
+            self.assertEqual(result.template.parameters[0].name, "T")
+            self.assertEqual(result.template.parameters[0].specifier, "class")
+            self.assertEqual(result.template.requires, None)

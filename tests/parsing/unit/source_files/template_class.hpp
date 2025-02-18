@@ -103,3 +103,20 @@ struct multiple_pointer_struct
 {
     T** a;
 }
+
+template<typename T>
+concept TestConcept = true;
+
+template<TestConcept T, class B> requires true
+class ConceptClass {
+public:
+    T a;
+    void process(T arg) requires TestConcept<B>;
+};
+
+template<typename A, TestConcept T> requires false or true
+struct ConceptStruct {
+    T abc = 10;
+    T foo() requires TestConcept<T>;
+    T barFoo(T arg1, A arg2);
+};

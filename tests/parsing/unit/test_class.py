@@ -432,7 +432,10 @@ class TestClassTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_class.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/template_class.hpp",
+            args=("-std=c++20",)
+        ).cursor
 
     def test_simple_template_class(self):
         node = find_by_name(self.cursor, "simple_template_struct_1")
@@ -678,6 +681,7 @@ class TestClassTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[2].specifier, "typename")
         self.assertEqual(result.template.parameters[2].default_value, None)
         self.assertTrue(result.template.parameters[2].is_variadic)
+        self.assertIsNone(result.template.requires)
 
     def test_multiple_pointer_type_template(self):
         node = find_by_name(self.cursor, "multiple_pointer_struct")
@@ -694,7 +698,77 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(content.type.is_generic)
         self.assertEqual(content.type.modification.pointer_order, 2)
         self.assertEqual(content.type.details.name, "T")
+        self.assertIsNone(result.template.requires)
 
+    def test_concept_class(self):
+        node = find_by_name(self.cursor, "ConceptClass")
+        result = ClassInfo.from_cursor(node)
+        self.assertTrue(result.is_class)
+        self.assertEqual(result.name, "ConceptClass")
+        self.assertEqual(result.template.requires, "true")
+        self.assertEqual(len(result.template.parameters), 2)
+        self.assertEqual(result.template.parameters[0].name, "T")
+        self.assertEqual(result.template.parameters[0].specifier.name, "TestConcept")
+        self.assertEqual(result.template.parameters[0].specifier.body, "true")
+        self.assertEqual(result.template.parameters[1].name, "B")
+        self.assertEqual(result.template.parameters[1].specifier, "class")
+
+        field: FieldInfo = cast(FieldInfo, result.public[0])
+        self.assertEqual(field.name, "a")
+        self.assertEqual(field.type.is_generic, True)
+        self.assertEqual(field.type.details.name, "T")
+
+        # todo: fix this
+        # Currently there is no way to access the requires in this method
+        method: MethodInfo = cast(MethodInfo, result.public[1])
+        self.assertEqual(method.name, "process")
+        self.assertEqual(method.type, MethodType.STANDARD)
+        self.assertEqual(method.return_type.details, BasicType.VOID)
+        self.assertEqual(method.body, None)
+        self.assertEqual(method.arguments[0].type.is_generic, True)
+        self.assertEqual(method.arguments[0].type.details.name, "T")
+
+    def test_concept_struct(self):
+        node = find_by_name(self.cursor, "ConceptStruct")
+        result = ClassInfo.from_cursor(node)
+        self.assertTrue(result.is_struct)
+        self.assertEqual(result.name, "ConceptStruct")
+        self.assertEqual(result.template.requires, "false or true")
+        self.assertEqual(len(result.template.parameters), 2)
+        self.assertEqual(result.template.parameters[0].name, "A")
+        self.assertEqual(result.template.parameters[0].specifier, "typename")
+        self.assertEqual(result.template.parameters[1].name, "T")
+        self.assertEqual(result.template.parameters[1].specifier.name, "TestConcept")
+        self.assertEqual(result.template.parameters[1].specifier.body, "true")
+        self.assertEqual(result.template.parameters[1].default_value, None)
+
+        field: FieldInfo = cast(FieldInfo, result.public[0])
+        self.assertEqual(field.name, "abc")
+        self.assertEqual(field.type.is_generic, True)
+        self.assertEqual(field.type.details.name, "T")
+        self.assertEqual(field.default_value, "10")
+
+        # todo: fix this
+        # Currently there is no way to access the requires in this method
+        method: MethodInfo = cast(MethodInfo, result.public[1])
+        self.assertEqual(method.name, "foo")
+        self.assertEqual(method.return_type.is_generic, True)
+        self.assertEqual(method.return_type.name, "T")
+        self.assertEqual(len(method.arguments), 0)
+        self.assertEqual(method.body, None)
+
+        method: MethodInfo = cast(MethodInfo, result.public[2])
+        self.assertEqual(method.name, "barFoo")
+        self.assertEqual(method.return_type.is_generic, True)
+        self.assertEqual(method.return_type.name, "T")
+        self.assertEqual(len(method.arguments), 2)
+        self.assertEqual(method.arguments[0].name, "arg1")
+        self.assertEqual(method.arguments[0].type.is_generic, True)
+        self.assertEqual(method.arguments[0].type.name, "T")
+        self.assertEqual(method.arguments[1].name, "arg2")
+        self.assertEqual(method.arguments[1].type.is_generic, True)
+        self.assertEqual(method.arguments[1].type.name, "A")
+        self.assertEqual(method.body, None)
 
 class TestClassTemplatePartial(unittest.TestCase):
 

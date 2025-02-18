@@ -12,7 +12,10 @@ class TestUsing(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/using.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/using.hpp",
+            args=("-std=c++20",)
+        ).cursor
         self.file = SourceFile.from_cursor(self.cursor)
 
     def test_using_as_simple_alias(self):
@@ -31,3 +34,9 @@ class TestUsing(unittest.TestCase):
         self.assertEqual(source.type_info.details, self.file.content[3])
         self.assertEqual(len(source.type_info.template_arguments), 1)
         self.assertEqual(source.type_info.template_arguments[0].details, BasicType.DOUBLE)
+
+    def test_using_as_concept_template_alias(self):
+        pass
+        # todo: Add support to this
+        #source: Using = self.file.content[6]
+        # self.assertEqual(source.name, "TestConceptType")

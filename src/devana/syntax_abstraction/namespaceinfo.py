@@ -99,8 +99,9 @@ class NamespaceInfo(CodeContainer, DescriptiveByAttributes):
         from devana.syntax_abstraction.variable import GlobalVariable
         from devana.syntax_abstraction.unioninfo import UnionInfo
         from devana.syntax_abstraction.externc import ExternC
+        from devana.syntax_abstraction.conceptinfo import ConceptInfo
         types = [FunctionInfo, NamespaceInfo, UsingNamespace, ClassInfo, EnumInfo, TypedefInfo, MethodInfo, UnionInfo,
-                 GlobalVariable, ExternC, Using]
+                 GlobalVariable, ExternC, Using, ConceptInfo]
         return types
 
     def __repr__(self):

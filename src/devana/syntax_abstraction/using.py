@@ -53,7 +53,9 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        return cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL
+        return cursor.kind in (
+            cindex.CursorKind.TYPE_ALIAS_DECL,
+        )
 
     @property
     @lazy_invoke
