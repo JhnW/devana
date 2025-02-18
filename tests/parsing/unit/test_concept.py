@@ -19,7 +19,6 @@ class TestConcept(unittest.TestCase):
     def test_decrementable(self):
         node = find_by_name(self.cursor, "ConceptCase1")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase1")
         self.assertEqual(result.body.replace("\r\n", "\n"), "requires(T a) {\n    { --a };\n    { a-- };\n}")
@@ -28,7 +27,6 @@ class TestConcept(unittest.TestCase):
     def test_addable(self):
         node = find_by_name(self.cursor, "ConceptCase2")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase2")
         self.assertEqual(
@@ -40,7 +38,6 @@ class TestConcept(unittest.TestCase):
     def test_assignable(self):
         node = find_by_name(self.cursor, "ConceptCase3")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase3")
         self.assertEqual(
@@ -52,7 +49,6 @@ class TestConcept(unittest.TestCase):
     def test_default_constructible(self):
         node = find_by_name(self.cursor, "ConceptCase4")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase4")
         self.assertEqual(result.body.replace("\r\n", "\n"), "requires {\n    T{};\n}")
@@ -61,7 +57,6 @@ class TestConcept(unittest.TestCase):
     def test_signed(self):
         node = find_by_name(self.cursor, "ConceptCase5")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase5")
         self.assertEqual(
@@ -73,7 +68,6 @@ class TestConcept(unittest.TestCase):
     def test_rev_iterator(self):
         node = find_by_name(self.cursor, "ConceptCase6")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase6")
         self.assertEqual(
@@ -85,7 +79,6 @@ class TestConcept(unittest.TestCase):
     def test_default_positive(self):
         node = find_by_name(self.cursor, "ConceptCase7")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase7")
         self.assertEqual(result.body, "(T{} > 0)")
@@ -94,7 +87,6 @@ class TestConcept(unittest.TestCase):
     def test_integral(self):
         node = find_by_name(self.cursor, "ConceptCase8")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase8")
         self.assertEqual(result.body, "ConceptCase7<T>")
@@ -104,7 +96,6 @@ class TestConcept(unittest.TestCase):
     def test_decrementable_and_addable(self):
         node = find_by_name(self.cursor, "ConceptCase9")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase9")
         self.assertEqual(result.body, "ConceptCase1<T> && ConceptCase2<T>")
@@ -113,7 +104,6 @@ class TestConcept(unittest.TestCase):
     def test_decrementable_or_addable(self):
         node = find_by_name(self.cursor, "ConceptCase10")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase10")
         self.assertEqual(result.body, "ConceptCase1<T> || ConceptCase2<T>")
@@ -122,7 +112,6 @@ class TestConcept(unittest.TestCase):
     def test_always_true(self):
         node = find_by_name(self.cursor, "ConceptCase11")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase11")
         self.assertEqual(result.body, "true")
@@ -131,7 +120,6 @@ class TestConcept(unittest.TestCase):
     def test_has_value_with_bool(self):
         node = find_by_name(self.cursor, "ConceptCase12")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase12")
         self.assertEqual(result.body, "T::value || true")
@@ -140,7 +128,6 @@ class TestConcept(unittest.TestCase):
     def test_pointer(self):
         node = find_by_name(self.cursor, "ConceptCase13")
         result = ConceptInfo.from_cursor(node)
-        stub_lexicon(result)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase13")
         self.assertEqual(result.body, "ConceptCase11<U*>")

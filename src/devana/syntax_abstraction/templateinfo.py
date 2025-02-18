@@ -66,8 +66,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             super().__init__(cursor, parent)
-            self._cursor = cursor
-            self._parent = parent
             if cursor is None:
                 self._specifier = "typename"
                 self._name = "T"
@@ -80,7 +78,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
                 self._name = LazyNotInit
                 self._default_value = LazyNotInit
                 self._is_variadic = LazyNotInit
-            self._lexicon = Lexicon.create(self)
 
         @classmethod
         def create_default(cls, parent: Optional = None) -> "TemplateInfo.TemplateParameter":
@@ -176,15 +173,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         @is_variadic.setter
         def is_variadic(self, value):
             self._is_variadic = value
-
-        @property
-        def lexicon(self) -> CodeContainer:
-            """Current lexicon storage of an object."""
-            return self._lexicon
-
-        @property
-        def parent(self):
-            return self._parent
 
         def __eq__(self, other):
             if not isinstance(other, type(self)):

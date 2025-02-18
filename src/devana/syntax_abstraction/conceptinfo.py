@@ -5,7 +5,6 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.codepiece import CodePiece
-from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
@@ -17,8 +16,6 @@ class ConceptInfo(CodeContainer):
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
-        self._cursor = cursor
-        self._parent = parent
         if cursor is None:
             self._name = "DefaultConcept"
             self._body = "true"
@@ -33,7 +30,6 @@ class ConceptInfo(CodeContainer):
             self._body = LazyNotInit
             self._template = LazyNotInit
             self._parameters = LazyNotInit
-        self._lexicon = Lexicon.create(self)
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
@@ -58,19 +54,13 @@ class ConceptInfo(CodeContainer):
             name: Optional[str] = None,
             body: Optional[str] = None,
             template: Optional[TemplateInfo] = None,
-            parameters: Optional[List["TypeExpression"]] = None,
-            lexicon: Optional[Lexicon] = None
+            parameters: Optional[List["TypeExpression"]] = None
     ) -> "ConceptInfo":
         return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
         return cursor.kind == cindex.CursorKind.CONCEPT_DECL
-
-    @property
-    def parent(self) -> CodeContainer:
-        """Structural parent element like file, namespace or class."""
-        return self._parent
 
     @property
     @lazy_invoke
@@ -125,14 +115,6 @@ class ConceptInfo(CodeContainer):
     def is_specifier(self) -> bool:
         """Determines whether this ConceptInfo instance is acting as a template specifier."""
         return isinstance(self.parent, TemplateInfo.TemplateParameter)
-
-    @property
-    def lexicon(self):
-        return self._lexicon
-
-    @lexicon.setter
-    def lexicon(self, value):
-        self._lexicon = value
 
     @property
     def _content_types(self) -> List:
