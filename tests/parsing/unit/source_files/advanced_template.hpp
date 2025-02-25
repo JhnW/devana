@@ -110,4 +110,3 @@ struct TestTemplateFields
     BaseArray<BaseArray<const char*>> data2;
     BaseArray<T*> data3;
 };
-

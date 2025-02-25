@@ -5,6 +5,7 @@ from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 from devana.syntax_abstraction.functiontype import FunctionType
 from devana.syntax_abstraction.variable import GlobalVariable
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
+from devana.syntax_abstraction.conceptinfo import ConceptInfo
 from devana.syntax_abstraction.unioninfo import UnionInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
 from devana.syntax_abstraction.externc import ExternC
@@ -268,6 +269,15 @@ class TestInstanceCreations(unittest.TestCase):
         )
         self.assertEqual(include_info.value, "string")
         self.assertEqual(include_info.is_standard, True)
+
+    def test_concept_creation(self):
+        concept_info = ConceptInfo.from_params(
+            name="ConceptName",
+            body="false"
+        )
+        self.assertEqual(concept_info.name, "ConceptName")
+        self.assertEqual(concept_info.body, "false")
+        self.assertIsNotNone(concept_info.template)
 
     def test_init_params(self):
         class A:

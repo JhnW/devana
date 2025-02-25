@@ -1,13 +1,12 @@
 import unittest
 import os
-from typing import List
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.attribute import Attribute
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.classinfo import ClassInfo, FieldInfo, MethodInfo
 from devana.syntax_abstraction.namespaceinfo import NamespaceInfo
 from devana.syntax_abstraction.enuminfo import EnumInfo
-
+from typing import List
 
 
 class TestAttributesParser(unittest.TestCase):

@@ -3,7 +3,7 @@ import clang.cindex
 import clang
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
+from devana.syntax_abstraction.typeexpression import TypeModification
 from devana.syntax_abstraction.classinfo import *
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
 
@@ -12,7 +12,9 @@ class TestTemplateAdvanced(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/advanced_template.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/advanced_template.hpp"
+        ).cursor
         self.file = SourceFile.from_cursor(self.cursor)
         self.assertEqual(len(self.file.content), 32)
 

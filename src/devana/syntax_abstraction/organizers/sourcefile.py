@@ -392,8 +392,9 @@ class SourceFile(CodeContainer):
         from devana.syntax_abstraction.variable import GlobalVariable
         from devana.syntax_abstraction.externc import ExternC
         from devana.syntax_abstraction.using import Using
+        from devana.syntax_abstraction.conceptinfo import ConceptInfo
         types = [ClassInfo, UnionInfo, FunctionInfo, EnumInfo, TypedefInfo, NamespaceInfo, UsingNamespace,
-                 MethodInfo, GlobalVariable, ExternC, Using]
+                 MethodInfo, GlobalVariable, ExternC, Using, ConceptInfo]
         return types
 
     def _create_content(self) -> List[Any]:
