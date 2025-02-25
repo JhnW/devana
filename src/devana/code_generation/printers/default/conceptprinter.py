@@ -14,6 +14,14 @@ class ConceptPrinter(ICodePrinter, DispatcherInjectable):
         if config is None:
             config = PrinterConfiguration()
         formatter = Formatter(config)
+        if source.is_requirement:
+            parameters = []
+            for p in source.parameters:
+                parameters.append(self.printer_dispatcher.print(p, config, source))
+            parameters = ', '.join(parameters)
+            if len(parameters) > 0:
+                return f"{source.name}<{parameters}>"
+            return source.name
         parameters = []
         for p in source.template.parameters:
             parameters.append(self.printer_dispatcher.print(p, config, source))

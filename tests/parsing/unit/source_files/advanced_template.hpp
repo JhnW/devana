@@ -82,7 +82,7 @@ template<typename T>
 void templateFunctionSpec_1(double b, T a) {}
 
 template<>
-void templateFunctionSpec_1<FieldHolderTemplate<char>*>(double b, FieldHolderTemplate<char>* a) {}
+void  templateFunctionSpec_1<FieldHolderTemplate<char>*>(double b, FieldHolderTemplate<char>* a) {}
 
 struct TemplateFunctionSpecHolder
 {
@@ -110,9 +110,3 @@ struct TestTemplateFields
     BaseArray<BaseArray<const char*>> data2;
     BaseArray<T*> data3;
 };
-
-template<typename A, class B>
-concept TestConceptCase1 = A{} and B{};
-
-template<class T = int>
-concept TestConceptCase2 = false;

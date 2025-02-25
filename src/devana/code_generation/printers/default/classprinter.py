@@ -182,10 +182,14 @@ class ClassPrinter(ICodePrinter, DispatcherInjectable):
                 parameters = ','.join(parameters)
                 template_prefix = f"template<{parameters}>"
                 if source.template.requires:
-                    template_prefix += f" requires {source.template.requires}"
+                    template_prefix += " requires"
+                    for req in source.template.requires:
+                        if isinstance(req, str):
+                            template_prefix += f" {req}"
+                            continue
+                        template_prefix += f" {self.printer_dispatcher.print(req, config, source)}"
 
                 specialisation_values = []
-
                 for s in source.template.specialisation_values:
                     if isinstance(s, str):
                         specialisation_values.append(s)

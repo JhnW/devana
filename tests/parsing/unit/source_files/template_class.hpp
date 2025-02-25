@@ -52,10 +52,13 @@ private:
 };
 
 template<typename T, typename P, typename ...Ts>
-struct struct_varidaic_template
+struct struct_variadic_template
 {
     int a;
 };
+
+template<typename... Args>
+struct struct_variadic_template2;
 
 template<typename T, typename P>
 struct template_struct
@@ -107,14 +110,22 @@ struct multiple_pointer_struct
 template<typename T>
 concept TestConcept = true;
 
-template<TestConcept T, class B> requires true
+template<TestConcept T = bool, TestConcept ...Args>
+class BasicConceptClass {
+    T foo(T arg);
+};
+
+template<TestConcept T, class B = int> requires true
 class ConceptClass {
 public:
     T a;
-    void process(T arg) requires TestConcept<B>;
+    void process(T arg) requires TestConcept<B> or
+        true;
 };
 
-template<typename A, TestConcept T> requires false or true
+template<typename A, TestConcept T>
+    requires false or
+    true and TestConcept< T>
 struct ConceptStruct {
     T abc = 10;
     T foo() requires TestConcept<T>;

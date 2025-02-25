@@ -51,3 +51,6 @@ concept ConceptCase12 = T::value || true;
 
 template<typename U>
 concept ConceptCase13 = ConceptCase11<U*>;
+
+template<typename A, class B = int, typename... Args>
+concept ConceptTemplate = true;

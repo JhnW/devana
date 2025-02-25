@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Optional, List, Union, Tuple, Any, TYPE_CHECKING
+from typing import Optional, List, Union, Tuple, Any, Iterable, TYPE_CHECKING
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
@@ -35,6 +35,8 @@ class GenericTypeParameter(ISyntaxElement):
     @staticmethod
     def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None) -> Optional["GenericTypeParameter"]:
         if type_c.kind == cindex.TypeKind.UNEXPOSED:
+            if type_c.get_num_template_arguments() > 0:
+                return None
             if hasattr(cursor, 'get_children'):
                 for c in cursor.get_children():
                     if c.kind == cindex.CursorKind.TYPE_REF:
@@ -61,11 +63,12 @@ class GenericTypeParameter(ISyntaxElement):
 class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
     """General template syntax information abut template definition."""
 
-    class TemplateParameter(CodeContainer):
+    class TemplateParameter(IBasicCreatable, ICursorValidate, ISyntaxElement):
         """A description of the generic component for the type/function claim."""
 
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
-            super().__init__(cursor, parent)
+            self._cursor = cursor
+            self._parent = parent
             if cursor is None:
                 self._specifier = "typename"
                 self._name = "T"
@@ -78,6 +81,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
                 self._name = LazyNotInit
                 self._default_value = LazyNotInit
                 self._is_variadic = LazyNotInit
+            self._lexicon = Lexicon.create(self)
 
         @classmethod
         def create_default(cls, parent: Optional = None) -> "TemplateInfo.TemplateParameter":
@@ -88,8 +92,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def from_params( # pylint: disable=unused-argument
                 cls,
                 parent: Optional[ISyntaxElement] = None,
-                content: Optional[List[Any]] = None,
-                namespace: Optional[str] = None,
                 specifier: Optional[Union[str, "ConceptInfo"]] = None,
                 name: Optional[str] = None,
                 default_value: Optional[str] = None,
@@ -166,7 +168,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def is_variadic(self) -> bool:
             self._is_variadic = False
             text = CodePiece(self._cursor).text
-            if re.search(r"\.\.\." + self.name, text):
+            if re.search(r"\.\.\.\s*" + self.name, text):
                 self._is_variadic = True
             return self._is_variadic
 
@@ -174,15 +176,19 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def is_variadic(self, value):
             self._is_variadic = value
 
+        @property
+        def lexicon(self) -> CodeContainer:
+            """Current lexicon storage of an object."""
+            return self._lexicon
+
+        @property
+        def parent(self):
+            return self._parent
+
         def __eq__(self, other):
             if not isinstance(other, type(self)):
                 return False
             return self.name == other.name and self.is_variadic == other.is_variadic
-
-        @property
-        def _content_types(self) -> List:
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
-            return [ConceptInfo]
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
         self._cursor = cursor
@@ -219,7 +225,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             parameters: Optional[List[TemplateParameter]] = None,
             is_empty: Optional[bool] = None,
             lexicon: Optional[Lexicon] = None,
-            requires: Optional[str] = None
+            requires: Optional[List[Union[str, "ConceptInfo"]]] = None
     ) -> "TemplateInfo":
         return cls(None, parent)
 
@@ -451,19 +457,46 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @property
     @lazy_invoke
-    def requires(self) -> Optional[str]:
-        """Extracts the constraint expression from the 'requires' clause."""
+    def requires(self) -> Optional[List[Union[str, "ConceptInfo"]]]:
+        """Extracts constraints from the 'requires' clause of the template. None if absent."""
+        match = re.search(
+            r"template\s*<[^>]+>\s*(?:\r?\n\s*)?requires\s+(?:\r?\n\s*)?(.+?)(?=\r?\n\S|$)",
+            CodePiece(self._cursor).text,
+            flags=re.DOTALL
+        )
+        if not match:
+            self._requires = None
+            return self._requires
+        self._requires = []
 
-        # Eventually I'd like to go for the [ConceptInfo | str] list here,
-        # but that's going to be a bit of work, because clang gives little information here,
-        # and when it does, it's in a snide way.
-        # Additionally, this property should be in classes/methods/functions etc. I originally assumed template == requires, which was a mistake.
-        self._requires = None
-        match = re.search(r"(?<=requires\s)([^\n{}]+)", CodePiece(self._cursor).text)
-        if match:
-            self._requires = match.group().strip()
+        def find_concepts(cursor: cindex.Cursor) -> Iterable[cindex.Cursor]:
+            for child in cursor.get_children():
+                if child.kind == cindex.CursorKind.TEMPLATE_REF and child.referenced:
+                    yield child
+                if child.kind in (
+                        cindex.CursorKind.BINARY_OPERATOR,
+                        cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR,
+                        cindex.CursorKind.PAREN_EXPR
+                ):
+                    yield from find_concepts(child)
+        # clang does not provide info for all things in the requires (e.g., 'or', 'true'),
+        # so we use a regex to extract missing elements.
+        from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel)
+        raw_elements: List[str] = re.findall("((?:[^ <]+|<[^>]*>)+)", match.group(1))
+        cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
+
+        for raw_element in raw_elements:
+            if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
+                maybe_concept = ConceptInfo.from_cursor(
+                    cursor=cursors.pop(0).referenced,
+                    parent=self
+                )
+                if maybe_concept is not None:
+                    self._requires.append(maybe_concept)
+                    continue
+            self._requires.append(raw_element.strip().strip("()"))
         return self._requires
 
     @requires.setter
-    def requires(self, value: Optional[str]) -> None:
+    def requires(self, value: Optional[List[Union[str, "ConceptInfo"]]]) -> None:
         self._requires = value
