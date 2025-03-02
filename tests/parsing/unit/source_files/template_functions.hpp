@@ -22,7 +22,7 @@ void requires_template_function1(T a) requires true or false;
 template<AlwaysTrue T>
     requires true     or AlwaysTrue<T    >
 int requires_template_function2(T a = 1)
-    requires AlwaysTrue<T> and true;
+    requires AlwaysTrue<T > and (true);
 
 template<AlwaysTrue T> requires (AlwaysTrue<T> or true) and false
 void basic_concept_function();

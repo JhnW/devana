@@ -444,12 +444,11 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.arguments[0].type.is_generic, True)
         self.assertEqual(result.arguments[0].type.details.name, "T")
 
-        self.assertEqual(len(result.requires), 3)
+        self.assertEqual(len(result.requires), 5)
         self.assertEqual(result.requires[0].name, "AlwaysTrue")
         self.assertEqual(result.requires[0].is_requirement, True)
         self.assertEqual(result.requires[0].body, "true")
-        self.assertEqual(result.requires[1], "and")
-        self.assertEqual(result.requires[2], "true")
+        self.assertEqual(result.requires[1:5], ["and", "(", "true", ")"])
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier.name, "AlwaysTrue")
         self.assertEqual(result.template.parameters[0].specifier.body, "true")
@@ -470,11 +469,12 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.requires, None)
         self.assertEqual(len(result.arguments), 0)
         self.assertEqual(result.return_type.details, BasicType.VOID)
-        self.assertEqual(len(result.template.requires), 5)
-        self.assertEqual(result.template.requires[0].name, "AlwaysTrue")
-        self.assertEqual(result.template.requires[0].is_requirement, True)
-        self.assertEqual(result.template.requires[0].body, "true")
-        self.assertEqual(result.template.requires[1:5], ["or", "true", "and", "false"])
+        self.assertEqual(len(result.template.requires), 7)
+        self.assertEqual(result.template.requires[0], "(")
+        self.assertEqual(result.template.requires[1].name, "AlwaysTrue")
+        self.assertEqual(result.template.requires[1].is_requirement, True)
+        self.assertEqual(result.template.requires[1].body, "true")
+        self.assertEqual(result.template.requires[2:7], ["or", "true", ")", "and", "false"])
 
 
 class TestFunctionsOverload(unittest.TestCase):

@@ -479,10 +479,14 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
                         cindex.CursorKind.PAREN_EXPR
                 ):
                     yield from find_concepts(child)
+
         # clang does not provide info for all things in the requires (e.g., 'or', 'true'),
         # so we use a regex to extract missing elements.
         from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel)
-        raw_elements: List[str] = re.findall("((?:[^ <]+|<[^>]*>)+)", match.group(1))
+        raw_elements: List[str] = re.findall(
+            r'\(|\)|[^\s()<]+(?:\s*<\s*[^\s>]+(?:\s+[^\s>]+)*\s*>)?',
+            match.group(1)
+        )
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
 
         for raw_element in raw_elements:
@@ -494,7 +498,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
                 if maybe_concept is not None:
                     self._requires.append(maybe_concept)
                     continue
-            self._requires.append(raw_element.strip().strip("()"))
+            self._requires.append(raw_element.strip())
         return self._requires
 
     @requires.setter

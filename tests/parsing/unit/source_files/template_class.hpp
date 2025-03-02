@@ -119,8 +119,8 @@ template<TestConcept T, class B = int> requires true
 class ConceptClass {
 public:
     T a;
-    void process(T arg) requires TestConcept<B> or
-        true;
+    void process(T arg)
+        requires TestConcept<B>;
 };
 
 template<typename A, TestConcept T>
@@ -128,6 +128,6 @@ template<typename A, TestConcept T>
     true and TestConcept< T>
 struct ConceptStruct {
     T abc = 10;
-    T foo() requires TestConcept<T>;
+    T foo() requires (TestConcept<T> || true);
     T barFoo(T arg1, A arg2);
 };

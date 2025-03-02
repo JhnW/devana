@@ -699,7 +699,10 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
 
         # clang does not provide detailed info for all things in the requires (e.g., 'or', 'true'),
         # so we use a regex to extract missing elements.
-        raw_elements: List[str] = re.findall(r'((?:<[^>]+>|[^\s<])+)', match.group(1))
+        raw_elements: List[str] = re.findall(
+            r'\(|\)|[^\s()<]+(?:\s*<\s*[^\s>]+(?:\s+[^\s>]+)*\s*>)?',
+            match.group(1)
+        )
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
         for raw_element in raw_elements:
             if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
@@ -710,7 +713,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
                 if maybe_concept is not None:
                     self._requires.append(maybe_concept)
                     continue
-            self._requires.append(raw_element.strip().strip("()"))
+            self._requires.append(raw_element.strip())
         return self._requires
 
     @requires.setter
