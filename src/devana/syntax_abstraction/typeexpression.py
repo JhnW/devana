@@ -419,6 +419,7 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                         self._base_type_c = self._cursor.underlying_typedef_type
                 elif self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
                     self._base_type_c = self._cursor.type.get_canonical()
+
         self._lexicon = Lexicon.create(self)
 
     @classmethod
@@ -660,9 +661,21 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 type_c.kind is cindex.TypeKind.ELABORATED and match is None):
             self._template_arguments = None
             return self._template_arguments
+
+        params = tuple(
+            t.spelling for t in getattr(self._cursor, "get_children", lambda: [])()
+            if t.kind == cindex.CursorKind.TYPE_REF
+        )
         for i in range(type_c.get_num_template_arguments()):
             el = type_c.get_template_argument_type(i)
-            self._template_arguments.append(TypeExpression(el, self))
+            type_expr = TypeExpression(el, self)
+            if type_expr.is_generic:
+                match = re.match(r"type-parameter-(\d+)-(\d+)", type_expr.name)
+                if match:
+                    param_name = params[int(match.group(2))]
+                    type_expr._name = param_name
+                    type_expr.details._name = param_name
+            self._template_arguments.append(type_expr)
 
         if not self._template_arguments:
             self._template_arguments = None

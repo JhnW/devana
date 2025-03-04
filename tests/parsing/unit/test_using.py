@@ -26,6 +26,7 @@ class TestUsing(unittest.TestCase):
         self.assertEqual(source.type_info.details, self.file.content[0].content[0])
         fnc: FunctionInfo = self.file.content[2]
         self.assertEqual(fnc.arguments[0].type.details, source)
+        self.assertEqual(source.template, None)
 
     def test_using_as_template_alias(self):
         source: Using = self.file.content[4]
@@ -34,9 +35,72 @@ class TestUsing(unittest.TestCase):
         self.assertEqual(source.type_info.details, self.file.content[3])
         self.assertEqual(len(source.type_info.template_arguments), 1)
         self.assertEqual(source.type_info.template_arguments[0].details, BasicType.DOUBLE)
+        self.assertEqual(source.template, None)
 
-    def test_using_as_concept_template_alias(self):
-        pass
-        # todo: Add support to this
-        #source: Using = self.file.content[6]
-        # self.assertEqual(source.name, "TestConceptType")
+    def test_using_with_template(self):
+        source: Using = self.file.content[7]
+        self.assertEqual(source.name, "UsingTemplate")
+        self.assertEqual(source.type_info.is_generic, True)
+        self.assertEqual(source.type_info.details.name, "A")
+        self.assertEqual(source.associated_comment, None)
+        self.assertNotEqual(source.template, None)
+        self.assertEqual(source.template.requires, None)
+
+        self.assertEqual(len(source.template.parameters), 3)
+        self.assertEqual(source.template.parameters[0].specifier, "typename")
+        self.assertEqual(source.template.parameters[0].name, "A")
+        self.assertEqual(source.template.parameters[0].default_value, None)
+        self.assertEqual(source.template.parameters[0].is_variadic, False)
+        self.assertEqual(source.template.parameters[1].specifier, "class")
+        self.assertEqual(source.template.parameters[1].name, "B")
+        self.assertEqual(source.template.parameters[1].default_value, "float")
+        self.assertEqual(source.template.parameters[1].is_variadic, False)
+        self.assertEqual(source.template.parameters[2].specifier, "typename")
+        self.assertEqual(source.template.parameters[2].name, "Args")
+        self.assertEqual(source.template.parameters[2].default_value, None)
+        self.assertEqual(source.template.parameters[2].is_variadic, True)
+
+    def test_using_with_template_requires(self):
+        source: Using = self.file.content[8]
+        self.assertEqual(source.name, "UsingTemplateRequires")
+        self.assertEqual(source.type_info.is_generic, False)
+        self.assertEqual(source.type_info.modification.is_const, True)
+        self.assertEqual(source.type_info.details, self.file.content[3])
+        self.assertEqual(len(source.type_info.template_arguments), 1)
+        self.assertEqual(source.type_info.template_arguments[0].is_generic, True)
+        self.assertEqual(source.type_info.template_arguments[0].details.name, "T")
+        self.assertEqual(source.associated_comment, None)
+        self.assertNotEqual(source.template, None)
+
+        self.assertEqual(len(source.template.requires), 3)
+        self.assertEqual(source.template.requires[0:2], ["true", "or"])
+        self.assertEqual(source.template.requires[2].name, "TestConcept")
+        self.assertEqual(source.template.requires[2].is_requirement, True)
+        self.assertEqual(source.template.requires[2].body, "true")
+        self.assertEqual(len(source.template.parameters), 1)
+        self.assertEqual(source.template.parameters[0].specifier, "typename")
+        self.assertEqual(source.template.parameters[0].name, "T")
+        self.assertEqual(source.template.parameters[0].default_value, None)
+        self.assertEqual(source.template.parameters[0].is_variadic, False)
+
+    def test_using_with_concept(self):
+        source: Using = self.file.content[9]
+        self.assertEqual(source.name, "UsingConcept")
+        self.assertEqual(source.type_info.is_generic, False)
+        self.assertEqual(source.type_info.modification.is_const, True)
+        self.assertEqual(source.type_info.modification.is_pointer, True)
+        self.assertEqual(source.type_info.details, self.file.content[3])
+        self.assertEqual(len(source.type_info.template_arguments), 1)
+        self.assertEqual(source.type_info.template_arguments[0].is_generic, True)
+        self.assertEqual(source.type_info.template_arguments[0].details.name, "B")
+        self.assertEqual(source.associated_comment, None)
+        self.assertNotEqual(source.template, None)
+        self.assertEqual(source.template.requires, None)
+
+        self.assertEqual(len(source.template.parameters), 1)
+        self.assertEqual(source.template.parameters[0].specifier.name, "TestConcept")
+        self.assertEqual(source.template.parameters[0].specifier.is_requirement, True)
+        self.assertEqual(source.template.parameters[0].specifier.body, "true")
+        self.assertEqual(source.template.parameters[0].name, "B")
+        self.assertEqual(source.template.parameters[0].default_value, "int")
+        self.assertEqual(source.template.parameters[0].is_variadic, False)

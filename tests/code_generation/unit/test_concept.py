@@ -20,6 +20,9 @@ class TestConceptAlone(unittest.TestCase):
         self.printer = CodePrinter()
         self.printer.register(ConceptPrinter, ConceptInfo)
         self.printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
+        self.printer.register(TypeExpressionPrinter, TypeExpression)
+        self.printer.register(BasicTypePrinter, GenericTypeParameter)
+        self.printer.register(BasicTypePrinter, BasicType)
 
     def test_print_simple_concept(self):
         concept = ConceptInfo.from_params(
@@ -74,10 +77,19 @@ concept DefaultConcept = true;
         result = self.printer.print(concept)
         self.assertEqual(result, "template<typename T>\nconcept DefaultConcept = true;\n")
 
-    def test_print_concept_requirement(self):
+    def test_print_concept_as_requirement(self):
         concept = ConceptInfo.from_params(name="Test", is_requirement=True)
-        result = self.printer.print(concept)
-        self.assertEqual(result, "Test")
+        with self.subTest("No parameters"):
+            result = self.printer.print(concept)
+            self.assertEqual(result, "Test")
+
+        with self.subTest("With parameters"):
+            concept.parameters = [
+                TypeExpression.from_params(details=GenericTypeParameter("T")),
+                TypeExpression.create_default()
+            ]
+            result = self.printer.print(concept)
+            self.assertEqual(result, "Test<T, int>")
 
 class TestConceptClass(unittest.TestCase):
 

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Optional, List, Any
 from clang import cindex
 
@@ -5,7 +6,6 @@ from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.syntax import ISyntaxElement
-from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
 from devana.utility.errors import ParserError
@@ -17,6 +17,8 @@ class ConceptInfo(CodeContainer):
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
         super().__init__(cursor, parent)
         if cursor is None:
+            from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
+
             self._name = "DefaultConcept"
             self._body = "true"
             self._template = TemplateInfo.from_params(parameters=[
@@ -55,7 +57,7 @@ class ConceptInfo(CodeContainer):
             namespace: Optional[str] = None,
             name: Optional[str] = None,
             body: Optional[str] = None,
-            template: Optional[TemplateInfo] = None,
+            template: Optional[ISyntaxElement] = None,
             parameters: Optional[List[TypeExpression]] = None,
             is_requirement: Optional[bool] = None
     ) -> "ConceptInfo":
@@ -77,17 +79,20 @@ class ConceptInfo(CodeContainer):
 
     @property
     @lazy_invoke
-    def template(self) -> TemplateInfo:
+    def template(self) -> ISyntaxElement:
+        """Template associated with this concept."""
+        from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
         self._template = TemplateInfo.from_cursor(self._cursor)
         return self._template
 
     @template.setter
-    def template(self, value: TemplateInfo) -> None:
+    def template(self, value: ISyntaxElement) -> None:
         self._template = value
 
     @property
     @lazy_invoke
     def body(self) -> str:
+        """The body of the concept, which defines its constraint expression."""
         self._body = ""
         for child in self._cursor.get_children():
             if child.kind != cindex.CursorKind.TEMPLATE_TYPE_PARAMETER:
@@ -103,6 +108,7 @@ class ConceptInfo(CodeContainer):
     @lazy_invoke
     def parameters(self) -> List[TypeExpression]:
         """Retrieves the concept parameters '<...>'."""
+        from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
         if not isinstance(self.parent, TemplateInfo.TemplateParameter):
             return []
         # Probably without a cursor from the parent it will not be possible to extract it.
@@ -118,7 +124,8 @@ class ConceptInfo(CodeContainer):
     @lazy_invoke
     def is_requirement(self) -> bool:
         """Determines whether this ConceptInfo instance is acting as a requirement."""
-        from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel)
+        from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
+        from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
         self._is_requirement = isinstance(
             self.parent, (
                 TemplateInfo.TemplateParameter,

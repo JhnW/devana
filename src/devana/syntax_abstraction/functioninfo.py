@@ -698,7 +698,6 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
                     yield from find_concepts(child)
 
         # clang does not provide detailed info for all things in the requires (e.g., 'or', 'true'),
-        # so we use a regex to extract missing elements.
         raw_elements: List[str] = re.findall(
             r'\(|\)|[^\s()<]+(?:\s*<\s*[^\s>]+(?:\s+[^\s>]+)*\s*>)?',
             match.group(1)

@@ -1,9 +1,10 @@
 import re
 from pathlib import Path
-from typing import Optional, List, Union, Tuple, Any, Iterable, TYPE_CHECKING
+from typing import Optional, List, Union, Tuple, Any, Iterable
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
+from devana.syntax_abstraction.conceptinfo import ConceptInfo
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
@@ -12,9 +13,6 @@ from devana.utility.traits import IBasicCreatable, ICursorValidate
 from devana.utility.init_params import init_params
 from devana.syntax_abstraction.syntax import ISyntaxElement
 from devana.configuration import Configuration
-
-if TYPE_CHECKING:
-    from devana.syntax_abstraction.conceptinfo import ConceptInfo
 
 
 class GenericTypeParameter(ISyntaxElement):
@@ -33,7 +31,7 @@ class GenericTypeParameter(ISyntaxElement):
         self._name = value
 
     @staticmethod
-    def from_cursor(type_c, cursor: cindex.Type, parent: Optional = None) -> Optional["GenericTypeParameter"]:
+    def from_cursor(type_c, cursor: cindex.Cursor, parent: Optional = None) -> Optional["GenericTypeParameter"]:
         if type_c.kind == cindex.TypeKind.UNEXPOSED:
             if type_c.get_num_template_arguments() > 0:
                 return None
@@ -65,7 +63,6 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     class TemplateParameter(IBasicCreatable, ICursorValidate, ISyntaxElement):
         """A description of the generic component for the type/function claim."""
-
         def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional = None):
             self._cursor = cursor
             self._parent = parent
@@ -92,7 +89,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def from_params( # pylint: disable=unused-argument
                 cls,
                 parent: Optional[ISyntaxElement] = None,
-                specifier: Optional[Union[str, "ConceptInfo"]] = None,
+                specifier: Optional[Union[str, ConceptInfo]] = None,
                 name: Optional[str] = None,
                 default_value: Optional[str] = None,
                 is_variadic: Optional[bool] = None,
@@ -112,10 +109,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         @property
         @lazy_invoke
-        def specifier(self) -> Union["ConceptInfo", str]:
+        def specifier(self) -> Union[ConceptInfo, str]:
             """Keyword or ConceptInfo instance preceding the name."""
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
-
             cursors = filter(
                 lambda c: c.kind == cindex.CursorKind.TEMPLATE_REF and c.referenced,
                 self._cursor.get_children()
@@ -129,8 +124,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             return self._specifier
 
         @specifier.setter
-        def specifier(self, value: Union["ConceptInfo", str]):
-            from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel
+        def specifier(self, value: Union[ConceptInfo, str]):
             if not isinstance(value, ConceptInfo) and value not in ("class", "typename"):
                 raise ValueError("Specifier must be class, typename, or an instance of ConceptInfo.")
             self._specifier = value
@@ -241,7 +235,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             cindex.CursorKind.FUNCTION_TEMPLATE,
             cindex.CursorKind.CLASS_TEMPLATE,
             cindex.CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION,
-            cindex.CursorKind.CONCEPT_DECL
+            cindex.CursorKind.CONCEPT_DECL,
+            cindex.CursorKind.TYPE_ALIAS_TEMPLATE_DECL
         )
         return cursor.kind in valid_cursors or re.search(
             r"template\s*<>", CodePiece(cursor).text
@@ -481,14 +476,11 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
                     yield from find_concepts(child)
 
         # clang does not provide info for all things in the requires (e.g., 'or', 'true'),
-        # so we use a regex to extract missing elements.
-        from devana.syntax_abstraction.conceptinfo import ConceptInfo # pylint: disable=import-outside-toplevel)
         raw_elements: List[str] = re.findall(
             r'\(|\)|[^\s()<]+(?:\s*<\s*[^\s>]+(?:\s+[^\s>]+)*\s*>)?',
             match.group(1)
         )
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
-
         for raw_element in raw_elements:
             if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
                 maybe_concept = ConceptInfo.from_cursor(

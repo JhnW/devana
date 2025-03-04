@@ -419,12 +419,14 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.body, None)
         self.assertEqual(result.return_type.details, BasicType.VOID)
         self.assertEqual(result.requires, ["true", "or", "false"])
+
         self.assertEqual(len(result.arguments), 1)
         self.assertEqual(result.arguments[0].name, "a")
         self.assertEqual(result.arguments[0].type.is_generic, True)
         self.assertEqual(result.arguments[0].type.details.name, "T")
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "typename")
+        
         self.assertEqual(len(result.template.requires), 1)
         self.assertEqual(result.template.requires[0].name, "AlwaysTrue")
         self.assertEqual(result.template.requires[0].is_requirement, True)
