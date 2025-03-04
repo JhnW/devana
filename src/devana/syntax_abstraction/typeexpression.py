@@ -673,8 +673,8 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 match = re.match(r"type-parameter-(\d+)-(\d+)", type_expr.name)
                 if match:
                     param_name = params[int(match.group(2))]
-                    type_expr._name = param_name
-                    type_expr.details._name = param_name
+                    type_expr._name = param_name # pylint: disable=protected-access
+                    type_expr.details._name = param_name # pylint: disable=protected-access
             self._template_arguments.append(type_expr)
 
         if not self._template_arguments:
