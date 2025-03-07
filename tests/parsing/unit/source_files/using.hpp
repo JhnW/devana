@@ -29,14 +29,17 @@ namespace num {
     };
 }
 
+template<typename T, class B>
+struct TestStruct;
+
 template<typename T>
 concept TestConcept = true;
 
 template<typename A, class B = float, typename ...Args>
 using UsingTemplate = A;
 
-template<typename T> requires true or TestConcept<T>
-using UsingTemplateRequires = const A_T<T>;
+template<typename T, typename C> requires true or TestConcept<T>
+using UsingTemplateRequires = const TestStruct<C, T>;
 
 template<TestConcept B = int>
-using UsingConcept = const UsingTemplateRequires<B>*;
+using UsingConcept = const UsingTemplateRequires<float, B>*;

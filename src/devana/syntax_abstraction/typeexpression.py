@@ -662,17 +662,19 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
             self._template_arguments = None
             return self._template_arguments
 
-        params = tuple(
-            t.spelling for t in getattr(self._cursor, "get_children", lambda: [])()
-            if t.kind == cindex.CursorKind.TYPE_REF
-        )
+        params = []
+        if isinstance(self._cursor, cindex.Cursor) and self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
+            match = re.search(r'<([^>]+)>', CodePiece(self._cursor).text)
+            if match:
+                params = [param.strip() for param in match.group(1).split(',')]
+
         for i in range(type_c.get_num_template_arguments()):
             el = type_c.get_template_argument_type(i)
             type_expr = TypeExpression(el, self)
             if type_expr.is_generic:
                 match = re.match(r"type-parameter-(\d+)-(\d+)", type_expr.name)
-                if match:
-                    param_name = params[int(match.group(2))]
+                if match and params:
+                    param_name = params.pop(0)
                     type_expr._name = param_name # pylint: disable=protected-access
                     type_expr.details._name = param_name # pylint: disable=protected-access
             self._template_arguments.append(type_expr)
