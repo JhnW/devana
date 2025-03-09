@@ -13,10 +13,15 @@ const int* specialisation_function(float a, int* b, float& c, char d);
 template<typename T>
 concept AlwaysTrue = true;
 
+namespace test {
+    template<typename A, typename B>
+    concept AlwaysFalse = false;
+};
+
 template<AlwaysTrue T = int, AlwaysTrue ...Args>
 T template_concept_function();
 
-template<typename T> requires AlwaysTrue<  T>
+template<typename T> requires AlwaysTrue<T>
 void requires_template_function1(T a) requires true or false;
 
 template<AlwaysTrue T>
@@ -26,3 +31,6 @@ int requires_template_function2(T a = 1)
 
 template<AlwaysTrue T> requires (AlwaysTrue<T> or true) and false
 void basic_concept_function();
+
+template<test::AlwaysFalse<int> T>
+void concept_namespace_function();

@@ -14,7 +14,7 @@ class TestConcept(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
         self.cursor = index.parse(
-            os.path.dirname(__file__) + r"/source_files/concept.hpp",
+            os.path.dirname(__file__) + r"/source_files/concepts.hpp",
             args=("-std=c++20",)
         ).cursor
 
@@ -26,6 +26,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body.replace("\r\n", "\n"), "requires(T a) {\n    { --a };\n    { a-- };\n}")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_2(self):
         node = find_by_name(self.cursor, "ConceptCase2")
@@ -38,6 +39,7 @@ class TestConcept(unittest.TestCase):
         )
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_3(self):
         node = find_by_name(self.cursor, "ConceptCase3")
@@ -50,6 +52,7 @@ class TestConcept(unittest.TestCase):
         )
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_4(self):
         node = find_by_name(self.cursor, "ConceptCase4")
@@ -59,6 +62,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body.replace("\r\n", "\n"), "requires {\n    T{};\n}")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_5(self):
         node = find_by_name(self.cursor, "ConceptCase5")
@@ -71,6 +75,7 @@ class TestConcept(unittest.TestCase):
         )
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_6(self):
         node = find_by_name(self.cursor, "ConceptCase6")
@@ -83,6 +88,7 @@ class TestConcept(unittest.TestCase):
         )
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_7(self):
         node = find_by_name(self.cursor, "ConceptCase7")
@@ -92,6 +98,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body, "(T{} > 0)")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_8(self):
         node = find_by_name(self.cursor, "ConceptCase8")
@@ -103,6 +110,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.is_requirement, False)
         self.assertEqual(result.template.parameters[0].specifier.name, "ConceptCase7")
         self.assertEqual(result.template.parameters[0].specifier.is_requirement, True)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_9(self):
         node = find_by_name(self.cursor, "ConceptCase9")
@@ -112,6 +120,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body, "ConceptCase1<T> && ConceptCase2<T>")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_10(self):
         node = find_by_name(self.cursor, "ConceptCase10")
@@ -121,6 +130,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body, "ConceptCase1<T> || ConceptCase2<T>")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_11(self):
         node = find_by_name(self.cursor, "ConceptCase11")
@@ -130,6 +140,7 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body, "true")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_12(self):
         node = find_by_name(self.cursor, "ConceptCase12")
@@ -139,20 +150,23 @@ class TestConcept(unittest.TestCase):
         self.assertEqual(result.body, "T::value || true")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_case_13(self):
         node = find_by_name(self.cursor, "ConceptCase13")
         result = ConceptInfo.from_cursor(node)
         self.assertIsNone(result.parent)
         self.assertEqual(result.name, "ConceptCase13")
-        self.assertEqual(result.body, "ConceptCase11<U*>")
+        self.assertEqual(result.body, "testNamespace::ConceptCase11<U*>")
         self.assertEqual(len(result.template.parameters), 1)
         self.assertEqual(result.is_requirement, False)
+        self.assertEqual(len(result.parameters), 0)
 
     def test_concept_template(self):
         node = find_by_name(self.cursor, "ConceptTemplate")
         result = ConceptInfo.from_cursor(node)
         self.assertIsNone(result.parent)
+        self.assertEqual(len(result.parameters), 0)
         self.assertEqual(result.name, "ConceptTemplate")
         self.assertEqual(result.body, "true")
         self.assertEqual(result.template.parent, None)

@@ -478,6 +478,24 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.requires[1].body, "true")
         self.assertEqual(result.template.requires[2:7], ["or", "true", ")", "and", "false"])
 
+    def test_namespace_concept_function(self):
+        node = find_by_name(self.cursor, "concept_namespace_function")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "concept_namespace_function")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.requires, None)
+        self.assertEqual(len(result.arguments), 0)
+        self.assertEqual(result.return_type.details, BasicType.VOID)
+        self.assertEqual(result.template.requires, None)
+
+        param = result.template.parameters[0]
+        self.assertEqual(param.name, "T")
+        self.assertEqual(param.specifier.name, "AlwaysFalse")
+        self.assertEqual(param.specifier.is_requirement, True)
+        self.assertEqual(len(param.specifier.parameters), 1)
+        self.assertEqual(param.specifier.namespace, "test")
+
 
 class TestFunctionsOverload(unittest.TestCase):
     def setUp(self):
