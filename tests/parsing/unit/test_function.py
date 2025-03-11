@@ -2,8 +2,9 @@ import unittest
 import clang.cindex
 import clang
 import os
+
 from tests.helpers import find_by_name, stub_lexicon
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification, TypeExpression
+from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.utility.errors import CodeError
@@ -251,7 +252,10 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_functions.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/template_functions.hpp",
+            args=("-std=c++20",)
+        ).cursor
 
     def test_common_function_template(self):
         node = find_by_name(self.cursor, "simple_function_typename")
@@ -276,6 +280,8 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "typename")
         self.assertEqual(result.template.parameters[0].default_value, None)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
         node = find_by_name(self.cursor, "simple_function_class")
         result = FunctionInfo.from_cursor(node)
@@ -299,6 +305,8 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "class")
         self.assertEqual(result.template.parameters[0].default_value, None)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
     def test_complex_function_template(self):
         node = find_by_name(self.cursor, "complex_function")
@@ -339,12 +347,15 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[1].specifier, "typename")
         self.assertEqual(result.template.parameters[1].default_value, "const float")
         self.assertEqual(len(result.template.specialisations), 0)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
     def test_specialisation_function_template(self):
         node = find_by_name(self.cursor, "specialisation_function")
         result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
+        self.assertEqual(result.requires, None)
         self.assertTrue(result.template.is_empty)
         self.assertEqual(result.name, "specialisation_function")
         self.assertEqual(len(result.arguments), 4)
@@ -372,6 +383,118 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertTrue(result.return_type.modification.is_pointer)
         self.assertTrue(result.return_type.modification.is_const)
         self.assertEqual(result.body, None)
+        self.assertEqual(result.template.requires, None)
+
+    def test_template_concept_function(self):
+        node = find_by_name(self.cursor, "template_concept_function")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "template_concept_function")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.return_type.is_generic, True)
+        self.assertEqual(result.return_type.details.name, "T")
+        self.assertEqual(result.requires, None)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(len(result.template.parameters), 2)
+
+        self.assertEqual(result.template.parameters[0].name, "T")
+        self.assertEqual(result.template.parameters[0].specifier.name, "AlwaysTrue")
+        self.assertEqual(result.template.parameters[0].specifier.is_requirement, True)
+        self.assertEqual(result.template.parameters[0].specifier.body, "true")
+        self.assertEqual(result.template.parameters[0].default_value, "int")
+        self.assertEqual(result.template.parameters[0].is_variadic, False)
+
+        self.assertEqual(result.template.parameters[1].name, "Args")
+        self.assertEqual(result.template.parameters[1].specifier.name, "AlwaysTrue")
+        self.assertEqual(result.template.parameters[1].specifier.is_requirement, True)
+        self.assertEqual(result.template.parameters[1].specifier.body, "true")
+        self.assertEqual(result.template.parameters[1].default_value, None)
+        self.assertEqual(result.template.parameters[1].is_variadic, True)
+
+    def test_requires_template_function1(self):
+        node = find_by_name(self.cursor, "requires_template_function1")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "requires_template_function1")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.return_type.details, BasicType.VOID)
+        self.assertEqual(result.requires, ["true", "or", "false"])
+
+        self.assertEqual(len(result.arguments), 1)
+        self.assertEqual(result.arguments[0].name, "a")
+        self.assertEqual(result.arguments[0].type.is_generic, True)
+        self.assertEqual(result.arguments[0].type.details.name, "T")
+        self.assertEqual(result.template.parameters[0].name, "T")
+        self.assertEqual(result.template.parameters[0].specifier, "typename")
+        
+        self.assertEqual(len(result.template.requires), 1)
+        self.assertEqual(result.template.requires[0].name, "AlwaysTrue")
+        self.assertEqual(result.template.requires[0].is_requirement, True)
+        self.assertEqual(result.template.requires[0].body, "true")
+
+    def test_requires_template_function2(self):
+        node = find_by_name(self.cursor, "requires_template_function2")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "requires_template_function2")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.return_type.details, BasicType.INT)
+
+        self.assertEqual(len(result.arguments), 1)
+        self.assertEqual(result.arguments[0].name, "a")
+        self.assertEqual(result.arguments[0].default_value, "1")
+        self.assertEqual(result.arguments[0].type.is_generic, True)
+        self.assertEqual(result.arguments[0].type.details.name, "T")
+
+        self.assertEqual(len(result.requires), 5)
+        self.assertEqual(result.requires[0].name, "AlwaysTrue")
+        self.assertEqual(result.requires[0].is_requirement, True)
+        self.assertEqual(result.requires[0].body, "true")
+        self.assertEqual(result.requires[1:5], ["and", "(", "true", ")"])
+        self.assertEqual(result.template.parameters[0].name, "T")
+        self.assertEqual(result.template.parameters[0].specifier.name, "AlwaysTrue")
+        self.assertEqual(result.template.parameters[0].specifier.body, "true")
+
+        self.assertEqual(len(result.template.requires), 3)
+        self.assertEqual(result.template.requires[0], "true")
+        self.assertEqual(result.template.requires[1], "or")
+        self.assertEqual(result.template.requires[2].name, "AlwaysTrue")
+        self.assertEqual(result.template.requires[2].is_requirement, True)
+        self.assertEqual(result.template.requires[2].body, "true")
+
+    def test_basic_concept_function(self):
+        node = find_by_name(self.cursor, "basic_concept_function")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "basic_concept_function")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.requires, None)
+        self.assertEqual(len(result.arguments), 0)
+        self.assertEqual(result.return_type.details, BasicType.VOID)
+        self.assertEqual(len(result.template.requires), 7)
+        self.assertEqual(result.template.requires[0], "(")
+        self.assertEqual(result.template.requires[1].name, "AlwaysTrue")
+        self.assertEqual(result.template.requires[1].is_requirement, True)
+        self.assertEqual(result.template.requires[1].body, "true")
+        self.assertEqual(result.template.requires[2:7], ["or", "true", ")", "and", "false"])
+
+    def test_namespace_concept_function(self):
+        node = find_by_name(self.cursor, "concept_namespace_function")
+        result = FunctionInfo.from_cursor(node)
+        stub_lexicon(result)
+        self.assertEqual(result.name, "concept_namespace_function")
+        self.assertEqual(result.body, None)
+        self.assertEqual(result.requires, None)
+        self.assertEqual(len(result.arguments), 0)
+        self.assertEqual(result.return_type.details, BasicType.VOID)
+        self.assertEqual(result.template.requires, None)
+
+        param = result.template.parameters[0]
+        self.assertEqual(param.name, "T")
+        self.assertEqual(param.specifier.name, "AlwaysFalse")
+        self.assertEqual(param.specifier.is_requirement, True)
+        self.assertEqual(len(param.specifier.parameters), 1)
+        self.assertEqual(param.specifier.namespace, "test")
 
 
 class TestFunctionsOverload(unittest.TestCase):

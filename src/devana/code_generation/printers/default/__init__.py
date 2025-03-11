@@ -23,3 +23,4 @@ from .commentprinter import CommentPrinter
 from .functionprinter import FunctionPrinter
 from .functiontypeprinter import FunctionTypePrinter
 from .attributeprinter import AttributePrinter, AttributeDeclarationPrinter
+from .conceptprinter import ConceptPrinter

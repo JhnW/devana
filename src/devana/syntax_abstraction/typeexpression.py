@@ -419,6 +419,7 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                         self._base_type_c = self._cursor.underlying_typedef_type
                 elif self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
                     self._base_type_c = self._cursor.type.get_canonical()
+
         self._lexicon = Lexicon.create(self)
 
     @classmethod
@@ -660,9 +661,23 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
                 type_c.kind is cindex.TypeKind.ELABORATED and match is None):
             self._template_arguments = None
             return self._template_arguments
+
+        params = []
+        if isinstance(self._cursor, cindex.Cursor) and self._cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
+            match = re.search(r'<([^>]+)>', CodePiece(self._cursor).text)
+            if match:
+                params = [param.strip() for param in match.group(1).split(',')]
+
         for i in range(type_c.get_num_template_arguments()):
             el = type_c.get_template_argument_type(i)
-            self._template_arguments.append(TypeExpression(el, self))
+            type_expr = TypeExpression(el, self)
+            if type_expr.is_generic:
+                match = re.match(r"type-parameter-(\d+)-(\d+)", type_expr.name)
+                if match and params:
+                    param_name = params.pop(0)
+                    type_expr._name = param_name # pylint: disable=protected-access
+                    type_expr.details._name = param_name # pylint: disable=protected-access
+            self._template_arguments.append(type_expr)
 
         if not self._template_arguments:
             self._template_arguments = None
