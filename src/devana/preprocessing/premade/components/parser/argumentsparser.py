@@ -5,7 +5,7 @@ from enum import Enum
 
 
 class NoValue:
-    """Stub class to not-find argument token. We can't use None because None is valid value."""
+    """Stub class to not-find argument token. We can't use None because None is a valid value."""
     def __new__(cls):
         return cls
 
@@ -22,6 +22,7 @@ class IParsable(ABC):
 
 class ListArgumentParser(IParsable):
     """Implementation of a parsing list type."""
+
     def parse(self, text: str, dispatcher: Callable[[str], List[Any]]) -> Union[List[Any], Type[NoValue]]:
         count = 0
         ignore_mode = False
@@ -64,6 +65,7 @@ class ListArgumentParser(IParsable):
 
 class NameArgumentParser(IParsable):
     """Implementation of parsing named argument like name=value."""
+
     def parse(self, text: str, dispatcher: Callable[[str], List[Any]]) -> Union[List[Any], Type[NoValue]]:
         pattern = r"((?P<label>\S+)\s*=\s*(?P<value>.+))"
         pattern = r"^\s*"+pattern+self.end_pattern
@@ -79,6 +81,7 @@ class NameArgumentParser(IParsable):
 
 class ArgumentGenericTypeParser(IParsable):
     """Universal type parser created based on regex and callback function or based on enum to create enum parser."""
+
     @classmethod
     def create_from_enum(cls, enum: Type[Enum]):
         value_map = {v.name: v for v in enum}

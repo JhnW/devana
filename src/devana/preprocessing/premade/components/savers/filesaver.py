@@ -57,7 +57,7 @@ class FileSaver(IDestination):
             if self._configuration.path_prefix_generator is not None:
                 root_path /= self._configuration.path_prefix_generator(d)
             path = root_path / d.name
-            with open(root_path / d.name, "tw", encoding="utf-8") as f:
+            with open(path, "tw", encoding="utf-8") as f:
                 f.write(d.content)
             result.files.append(path)
         return result

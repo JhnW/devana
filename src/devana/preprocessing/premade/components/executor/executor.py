@@ -15,7 +15,7 @@ class Executor(Generic[T], IGenerator):
 
     @classmethod
     def get_required_type(cls) -> Type:
-        return Environment[T].CallingData[T]
+        return Environment.CallingData
 
     @classmethod
     def get_produced_type(cls) -> Type:

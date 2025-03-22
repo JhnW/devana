@@ -201,12 +201,12 @@ class SourceFile(CodeContainer):
         return cursor.kind == cindex.CursorKind.TRANSLATION_UNIT
 
     @classmethod
-    def create_default(cls, parent: Optional[ISyntaxElement] = None) -> Any:
+    def create_default(cls, parent: Optional[ISyntaxElement] = None) -> "SourceFile":
         return cls(None, parent)
 
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None,
-                    configuration: Optional[Configuration] = None) -> Optional:
+                    configuration: Optional[Configuration] = None) -> Optional["SourceFile"]:
         if not cls.is_cursor_valid(cursor):
             return None
         return cls(cursor, parent, configuration)
