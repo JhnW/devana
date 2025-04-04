@@ -24,15 +24,18 @@ class Parser(ISource):
         for signature in signatures:
             for arg in signature.arguments.positional:
                 enum_types += self._find_enum(arg)
-            for _, value in signature.arguments.named:
+            for value in signature.arguments.named.values():
                 enum_types += self._find_enum(value)
 
         self._arguments_parser = ArgumentsParser([ArgumentGenericTypeParser.create_from_enum(e) for e in enum_types])
 
     @classmethod
     def _find_enum(cls, hint) -> List[Type[Enum]]:
-        if issubclass(hint, Enum):
-            return [hint]
+        try:
+            if issubclass(hint, Enum):
+                return [hint]
+        except TypeError:
+            pass
         hint_origin = typing.get_origin(hint)
         if hint_origin is None:
             return []
@@ -44,7 +47,7 @@ class Parser(ISource):
 
     @classmethod
     def get_produced_type(cls) -> Type:
-        return Environment.CallingData[ISyntaxElement]
+        return Environment.CallingData
 
 
     def feed(self) -> List[Environment.CallingData[ISyntaxElement]]:

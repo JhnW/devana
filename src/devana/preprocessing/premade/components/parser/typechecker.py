@@ -2,8 +2,11 @@ import typing
 from typing import Any, Optional, List, Union
 from devana.preprocessing.premade.components.executor.executable import CallFrame, Signature
 
-def is_type_valid(value, hint) -> bool:
+def is_type_valid(value, maybe_hint) -> bool:
     # check typing without parameters and tread is as Any
+    hint = maybe_hint
+    if isinstance(maybe_hint, tuple):
+        hint = maybe_hint[1]
     if hint is Any:
         return True
     if hint is List:

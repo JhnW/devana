@@ -16,12 +16,13 @@
 
 
 # Create module doc
+from datetime import datetime
 import devana
 
 # -- Project information -----------------------------------------------------
 
 project = 'devana'
-copyright = '2021, JhnW'
+copyright = f"{datetime.now().year}, JhnW"
 author = 'JhnW'
 
 # The full version, including alpha/beta/rc tags
