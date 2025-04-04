@@ -78,7 +78,7 @@ class FunctionPrinter(ICodePrinter, DispatcherInjectable):
             result = f"{return_type} {name}{template_suffix}({args})"
         else:
             result = f"{name}{template_suffix}({args})"
-        if source.requires is not None:
+        if source.requires:
             result += " requires"
             for req in source.requires:
                 if isinstance(req, str):

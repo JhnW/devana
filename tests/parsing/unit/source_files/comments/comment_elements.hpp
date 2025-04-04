@@ -90,3 +90,14 @@ enum TestCommentValue
     TEST_VAL_2, //test doc bad
     TEST_VAL_3
 };
+
+//test concept comment
+template<typename T>
+concept TestConcept1 = true;
+
+/*
+Test more
+complex comment
+*/
+template<typename T>
+concept TestConcept2 = false;

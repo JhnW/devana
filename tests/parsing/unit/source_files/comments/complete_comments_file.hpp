@@ -61,6 +61,11 @@ union UnionFoo
 //test comment typedef
 typedef UnionTypedef UnionFoo;
 
+//Test comment for concept
+template<typename T>
+concept BasicConcept = false;
+
+
 class TestClassContent
 {
 public:

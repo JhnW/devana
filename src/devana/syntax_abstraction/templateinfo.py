@@ -4,7 +4,7 @@ from typing import Optional, List, Union, Tuple, Any, Iterable
 from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression, TypeModification
-from devana.syntax_abstraction.conceptinfo import ConceptInfo
+from devana.syntax_abstraction.conceptinfo import ConceptUsage
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.lazy import LazyNotInit, lazy_invoke
@@ -41,7 +41,8 @@ class GenericTypeParameter(ISyntaxElement):
                         return GenericTypeParameter(c.type.spelling, parent)
                     elif c.kind == cindex.CursorKind.TEMPLATE_REF:
                         if getattr(c, "referenced", None) and c.referenced.kind == cindex.CursorKind.CONCEPT_DECL:
-                            return GenericTypeParameter(type_c.spelling, parent)
+                            text = type_c.spelling
+                            return GenericTypeParameter(text[len("const "):] if text.startswith("const ") else text, parent)
                         return None
             text = type_c.spelling
             if "::" in text:
@@ -89,7 +90,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def from_params( # pylint: disable=unused-argument
                 cls,
                 parent: Optional[ISyntaxElement] = None,
-                specifier: Optional[Union[str, ConceptInfo]] = None,
+                specifier: Optional[Union[str, ConceptUsage]] = None,
                 name: Optional[str] = None,
                 default_value: Optional[str] = None,
                 is_variadic: Optional[bool] = None,
@@ -109,24 +110,20 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         @property
         @lazy_invoke
-        def specifier(self) -> Union[ConceptInfo, str]:
-            """Keyword or ConceptInfo instance preceding the name."""
-            cursors = filter(
-                lambda c: c.kind == cindex.CursorKind.TEMPLATE_REF and c.referenced,
-                self._cursor.get_children()
-            )
-            for cursor in cursors:
-                if maybe_concept := ConceptInfo.from_cursor(cursor=cursor.referenced, parent=self):
-                    self._specifier = maybe_concept
-                    return self._specifier
+        def specifier(self) -> Union[ConceptUsage, str]:
+            """Keyword or ConceptUsage instance preceding the name."""
+
+            if maybe_concept := ConceptUsage.from_cursor(cursor=self._cursor):
+                self._specifier = maybe_concept
+                return self._specifier
 
             self._specifier = "class" if CodePiece(self._cursor).text.find("class ") != -1 else "typename"
             return self._specifier
 
         @specifier.setter
-        def specifier(self, value: Union[ConceptInfo, str]):
-            if not isinstance(value, ConceptInfo) and value not in ("class", "typename"):
-                raise ValueError("Specifier must be class, typename, or an instance of ConceptInfo.")
+        def specifier(self, value: Union[ConceptUsage, str]):
+            if not isinstance(value, ConceptUsage) and value not in ("class", "typename"):
+                raise ValueError("Specifier must be class, typename, or an instance of ConceptUsage.")
             self._specifier = value
 
         @property
@@ -219,7 +216,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
             parameters: Optional[List[TemplateParameter]] = None,
             is_empty: Optional[bool] = None,
             lexicon: Optional[Lexicon] = None,
-            requires: Optional[List[Union[str, "ConceptInfo"]]] = None
+            requires: Optional[List[Union[str, ConceptUsage]]] = None
     ) -> "TemplateInfo":
         return cls(None, parent)
 
@@ -452,7 +449,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @property
     @lazy_invoke
-    def requires(self) -> Optional[List[Union[str, "ConceptInfo"]]]:
+    def requires(self) -> Optional[List[Union[str, ConceptUsage]]]:
         """Extracts constraints from the 'requires' clause of the template. None if absent."""
         match = re.search(
             r"template\s*<[^>]+>\s*(?:\r?\n\s*)?requires\s+(?:\r?\n\s*)?(.+?)(?=\r?\n\S|$)",
@@ -466,11 +463,10 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
         def find_concepts(cursor: cindex.Cursor) -> Iterable[cindex.Cursor]:
             for child in cursor.get_children():
-                if child.kind == cindex.CursorKind.TEMPLATE_REF and child.referenced:
+                if child.kind == cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR:
                     yield child
                 if child.kind in (
                         cindex.CursorKind.BINARY_OPERATOR,
-                        cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR,
                         cindex.CursorKind.PAREN_EXPR
                 ):
                     yield from find_concepts(child)
@@ -483,10 +479,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
         for raw_element in raw_elements:
             if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
-                maybe_concept = ConceptInfo.from_cursor(
-                    cursor=cursors.pop(0).referenced,
-                    parent=self
-                )
+                maybe_concept = ConceptUsage.from_cursor(cursor=cursors.pop(0))
                 if maybe_concept is not None:
                     self._requires.append(maybe_concept)
                     continue
@@ -494,5 +487,5 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         return self._requires
 
     @requires.setter
-    def requires(self, value: Optional[List[Union[str, "ConceptInfo"]]]) -> None:
+    def requires(self, value: Optional[List[Union[str, ConceptUsage]]]) -> None:
         self._requires = value

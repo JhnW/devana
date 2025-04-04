@@ -2,6 +2,7 @@ import unittest
 import os
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.syntax_abstraction.comment import Comment, CommentsFactory, CommentMarker
+from devana.configuration import Configuration, ParsingConfiguration, LanguageStandard
 
 
 class TestComment(unittest.TestCase):
@@ -124,7 +125,10 @@ class TestComment(unittest.TestCase):
 class TestCommentFactoryAssigned(unittest.TestCase):
 
     def setUp(self):
-        self.source_file = SourceFile(os.path.dirname(__file__) + r"/source_files/comments/comment_elements.hpp")
+        self.source_file = SourceFile(
+            os.path.dirname(__file__) + r"/source_files/comments/comment_elements.hpp",
+            configuration=Configuration(ParsingConfiguration(language_version=LanguageStandard.CPP_20))
+        )
         self.comments_factory = CommentsFactory(self.source_file)
 
     def test_function_comments(self):
@@ -213,11 +217,23 @@ class TestCommentFactoryAssigned(unittest.TestCase):
                          self.comments_factory.comments[18])
         self.assertEqual(self.comments_factory.get_upper_comment(value_3.text_source), None)
 
+    def test_concept_comments(self):
+        concept_1 = self.source_file.content[16]
+        comment = self.comments_factory.get_upper_comment(concept_1.text_source)
+        self.assertEqual(comment, self.comments_factory.comments[20])
+
+        concept_2 = self.source_file.content[17]
+        comment = self.comments_factory.get_upper_comment(concept_2.text_source)
+        self.assertEqual(comment, self.comments_factory.comments[21])
+
 
 class TestCommentSourceFileAssigned(unittest.TestCase):
 
     def setUp(self):
-        self.source = SourceFile(os.path.dirname(__file__) + r"/source_files/comments/complete_comments_file.hpp")
+        self.source = SourceFile(
+            os.path.dirname(__file__) + r"/source_files/comments/complete_comments_file.hpp",
+            configuration=Configuration(ParsingConfiguration(language_version=LanguageStandard.CPP_20))
+        )
 
     def test_file_preamble(self):
         self.assertNotEqual(self.source.preamble, None)
@@ -275,8 +291,13 @@ class TestCommentSourceFileAssigned(unittest.TestCase):
         self.assertEqual(len(comment.text), 1)
         self.assertEqual(comment.text[0], "test comment typedef")
 
+        element = self.source.content[10]
+        comment: Comment = element.associated_comment
+        self.assertEqual(len(comment.text), 1)
+        self.assertEqual(comment.text[0], "Test comment for concept")
+
     def test_file_nested_comments_simple_class(self):
-        class_info = self.source.content[10]
+        class_info = self.source.content[11]
         member = class_info.content[1]
         comment: Comment = member.associated_comment
         self.assertEqual(len(comment.text), 2)
@@ -291,7 +312,7 @@ class TestCommentSourceFileAssigned(unittest.TestCase):
         self.assertEqual(comment.text[0], "simple field doc")
 
     def test_file_nested_comments_enum_values(self):
-        enum_info = self.source.content[11]
+        enum_info = self.source.content[12]
         self.assertEqual(enum_info.values[0].associated_comment, None)
         self.assertEqual(enum_info.values[2].associated_comment, None)
         comment: Comment = enum_info.values[1].associated_comment

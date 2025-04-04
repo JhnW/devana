@@ -9,28 +9,3 @@ const T complex_function(float a, T b, P& c, char d = '3');
 
 template<>
 const int* specialisation_function(float a, int* b, float& c, char d);
-
-template<typename T>
-concept AlwaysTrue = true;
-
-namespace test {
-    template<typename A, typename B>
-    concept AlwaysFalse = false;
-};
-
-template<AlwaysTrue T = int, AlwaysTrue ...Args>
-T template_concept_function();
-
-template<typename T> requires AlwaysTrue<T>
-void requires_template_function1(T a) requires true or false;
-
-template<AlwaysTrue T>
-    requires true     or AlwaysTrue<T    >
-int requires_template_function2(T a = 1)
-    requires AlwaysTrue<T > and (true);
-
-template<AlwaysTrue T> requires (AlwaysTrue<T> or true) and false
-void basic_concept_function();
-
-template<test::AlwaysFalse<int> T>
-void concept_namespace_function();

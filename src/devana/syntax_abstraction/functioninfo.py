@@ -11,7 +11,7 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
-from devana.syntax_abstraction.conceptinfo import ConceptInfo
+from devana.syntax_abstraction.conceptinfo import ConceptUsage
 from devana.utility import FakeEnum
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
@@ -370,7 +370,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             template: Optional[TemplateInfo] = None,
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
-            requires: Optional[List[Union[str, ConceptInfo]]] = None
+            requires: Optional[List[Union[str, ConceptUsage]]] = None
     ) -> "FunctionInfo":
         return cls(None, parent)
 
@@ -667,7 +667,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
 
     @property
     @lazy_invoke
-    def requires(self) -> Optional[List[Union[ConceptInfo, str]]]:
+    def requires(self) -> Optional[List[Union[ConceptUsage, str]]]:
         """Extracts constraints from the 'requires' clause of the function. None if absent."""
 
         # Need to get rid of the template line, because it could also have a requires clause,
@@ -688,11 +688,10 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
                 if child.location.line < self._cursor.location.line:
                     # Ignore template elements.
                     continue
-                if child.kind == cindex.CursorKind.TEMPLATE_REF and child.referenced:
+                if child.kind == cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR:
                     yield child
                 if child.kind in (
                         cindex.CursorKind.BINARY_OPERATOR,
-                        cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR,
                         cindex.CursorKind.PAREN_EXPR
                 ):
                     yield from find_concepts(child)
@@ -705,8 +704,8 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
         for raw_element in raw_elements:
             if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
-                maybe_concept = ConceptInfo.from_cursor(
-                    cursor=cursors.pop(0).referenced,
+                maybe_concept = ConceptUsage.from_cursor(
+                    cursor=cursors.pop(0),
                     parent=self
                 )
                 if maybe_concept is not None:
@@ -716,7 +715,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
         return self._requires
 
     @requires.setter
-    def requires(self, value: Optional[List[Union[ConceptInfo, str]]]) -> None:
+    def requires(self, value: Optional[List[Union[ConceptUsage, str]]]) -> None:
         self._requires = value
 
     def __repr__(self):
