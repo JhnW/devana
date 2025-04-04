@@ -287,7 +287,6 @@ class TestInstanceCreations(unittest.TestCase):
         self.assertEqual(concept_usage.name, "DefaultConcept")
         self.assertEqual(concept_usage.namespaces, ["abc"])
         self.assertEqual(concept_usage.parameters, [])
-
     def test_init_params(self):
         class A:
             @classmethod

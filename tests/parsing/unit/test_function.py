@@ -384,7 +384,6 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.body, None)
         self.assertEqual(result.template.requires, None)
 
-
 class TestFunctionsOverload(unittest.TestCase):
     def setUp(self):
         index = clang.cindex.Index.create()
