@@ -197,6 +197,7 @@ class TestConceptWithFunction(unittest.TestCase):
     def setUp(self):
         self.printer = CodePrinter()
         self.printer.register(ConceptPrinter, ConceptInfo)
+        self.printer.register(ConceptUsagePrinter, ConceptUsage)
         self.printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         self.printer.register(ClassPrinter, ClassInfo)
         self.printer.register(TypeExpressionPrinter, TypeExpression)
