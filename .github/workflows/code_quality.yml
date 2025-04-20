@@ -27,5 +27,6 @@ jobs:
         python -m pip install -r requirements.txt
     - name: run pylint
       run: |
+        pip install -e .
         cd ./src/devana
         pylint --recursive=y  .
