@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8]
+        python-version: [3.12]
         os-environment: [ubuntu-24.04, windows-2019] # enable macos-14: https://github.com/sighingnow/libclang/issues/71
     runs-on: ${{ matrix.os-environment }}
     steps:
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: [3.8]
+        python-version: [3.12]
         os-environment: [ubuntu-24.04]
     runs-on: ${{ matrix.os-environment }}
     steps:
