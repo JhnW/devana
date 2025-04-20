@@ -1,0 +1,3 @@
+devana
+pyvis
+psutil

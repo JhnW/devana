@@ -25,7 +25,7 @@ class SourceFileEditor(IEditable):
     Please remember that name, path and other information like that from source file instance will be ignored in the
     context of destiny."""
 
-    def __init__(self, name: str, path_prefix: Optional[Path] = None, source: Optional[SourceFile] = BaseException):
+    def __init__(self, name: str, path_prefix: Optional[Path] = None, source: Optional[SourceFile] = None):
         self._destiny = SourceFileDestiny(self)
         self.source = source if source is not None else SourceFile()
         if source is None:

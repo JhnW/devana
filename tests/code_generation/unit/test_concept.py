@@ -1,11 +1,11 @@
 from devana.code_generation.printers.default.templateparameterprinter import TemplateParameterPrinter
-from devana.code_generation.printers.default.conceptprinter import ConceptPrinter
+from devana.code_generation.printers.default.conceptprinter import ConceptPrinter, ConceptUsagePrinter
 from devana.code_generation.printers.default.classprinter import ClassPrinter, FieldPrinter, MethodPrinter
 from devana.code_generation.printers.default.typeexpressionprinter import TypeExpressionPrinter
 from devana.code_generation.printers.default.basictypeprinter import BasicTypePrinter
 from devana.code_generation.printers.default.functionprinter import FunctionPrinter
 from devana.syntax_abstraction.templateinfo import GenericTypeParameter
-from devana.syntax_abstraction.conceptinfo import ConceptInfo
+from devana.syntax_abstraction.conceptinfo import ConceptInfo, ConceptUsage
 from devana.syntax_abstraction.functioninfo import FunctionInfo
 from devana.syntax_abstraction.classinfo import ClassInfo, FieldInfo, MethodInfo
 from devana.syntax_abstraction.templateinfo import TemplateInfo
@@ -19,6 +19,7 @@ class TestConceptAlone(unittest.TestCase):
     def setUp(self):
         self.printer = CodePrinter()
         self.printer.register(ConceptPrinter, ConceptInfo)
+        self.printer.register(ConceptUsagePrinter, ConceptUsage)
         self.printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         self.printer.register(TypeExpressionPrinter, TypeExpression)
         self.printer.register(BasicTypePrinter, GenericTypeParameter)
@@ -77,25 +78,30 @@ concept DefaultConcept = true;
         result = self.printer.print(concept)
         self.assertEqual(result, "template<typename T>\nconcept DefaultConcept = true;\n")
 
-    def test_print_concept_as_requirement(self):
-        concept = ConceptInfo.from_params(name="Test", is_requirement=True)
+    def test_print_concept_usage(self):
+        concept = ConceptInfo.from_params(name="Test")
         with self.subTest("No parameters"):
-            result = self.printer.print(concept)
+            result = self.printer.print(ConceptUsage.from_params(concept=concept))
             self.assertEqual(result, "Test")
+            result = self.printer.print(ConceptUsage.from_params(concept=concept, namespaces=["abc", "test"]))
+            self.assertEqual(result, "abc::test::Test")
 
         with self.subTest("With parameters"):
-            concept.parameters = [
+            parameters = [
                 TypeExpression.from_params(details=GenericTypeParameter("T")),
                 TypeExpression.create_default()
             ]
-            result = self.printer.print(concept)
+            result = self.printer.print(ConceptUsage.from_params(concept=concept, parameters=parameters))
             self.assertEqual(result, "Test<T, int>")
+            result = self.printer.print(ConceptUsage.from_params(concept=concept, parameters=parameters, namespaces=["abc"]))
+            self.assertEqual(result, "abc::Test<T, int>")
 
-class TestConceptClass(unittest.TestCase):
+class TestConceptWithClass(unittest.TestCase):
 
     def setUp(self):
         self.printer = CodePrinter()
         self.printer.register(ConceptPrinter, ConceptInfo)
+        self.printer.register(ConceptUsagePrinter, ConceptUsage)
         self.printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         self.printer.register(ClassPrinter, ClassInfo)
         self.printer.register(TypeExpressionPrinter, TypeExpression)
@@ -107,7 +113,6 @@ class TestConceptClass(unittest.TestCase):
     def test_print_simple_class_concept(self):
         concept = ConceptInfo.from_params(
             name="TestConcept",
-            is_requirement=True
         )
         class_ = ClassInfo.from_params(
             name="ClassConcept",
@@ -117,7 +122,7 @@ class TestConceptClass(unittest.TestCase):
                 parameters=[
                     TemplateInfo.TemplateParameter.from_params(
                         name="T",
-                        specifier=concept
+                        specifier=ConceptUsage.from_params(concept=concept)
                     )
                 ]
             )
@@ -143,13 +148,13 @@ struct ClassRequires;
 """)
 
     def test_print_complex_concept_class(self):
-        concept1 = ConceptInfo.from_params(
-            parameters=[TypeExpression.create_default()],
-            is_requirement=True
+        concept_usage_1 = ConceptUsage.from_params(
+            concept=ConceptInfo.create_default(),
+            namespaces=["abc"],
+            parameters=[TypeExpression.create_default()]
         )
-        concept2 = ConceptInfo.from_params(
-            is_requirement=True,
-            name="Testing",
+        concept_usage_2 = ConceptUsage.from_params(
+            concept=ConceptInfo.from_params(name="Testing"),
             parameters=[TypeExpression.from_params(details=GenericTypeParameter("T"))]
         )
         class_ = ClassInfo.from_params(
@@ -165,33 +170,34 @@ struct ClassRequires;
                 MethodInfo.from_params(
                     name="foo",
                     return_type=BasicType.VOID,
-                    requires=[concept2, "and", concept1]
+                    requires=[concept_usage_2, "and", concept_usage_1]
                 )
             ],
             template=TemplateInfo.from_params(
-                requires=["true", "&&", concept2],
+                requires=["true", "&&", concept_usage_2],
                 parameters=[
                     TemplateInfo.TemplateParameter.from_params(
                         name="T",
-                        specifier=concept1
+                        specifier=concept_usage_1
                     )
                 ]
             )
         )
         result = self.printer.print(class_)
-        self.assertEqual(result, """template<DefaultConcept<int> T> requires true && Testing<T>
+        self.assertEqual(result, """template<abc::DefaultConcept<int> T> requires true && Testing<T>
 class ComplexConceptClass
 {
     T atr;
-    void foo() requires Testing<T> and DefaultConcept<int>;
+    void foo() requires Testing<T> and abc::DefaultConcept<int>;
 };
 """)
 
-class TestConceptFunction(unittest.TestCase):
+class TestConceptWithFunction(unittest.TestCase):
 
     def setUp(self):
         self.printer = CodePrinter()
         self.printer.register(ConceptPrinter, ConceptInfo)
+        self.printer.register(ConceptUsagePrinter, ConceptUsage)
         self.printer.register(TemplateParameterPrinter, TemplateInfo.TemplateParameter)
         self.printer.register(ClassPrinter, ClassInfo)
         self.printer.register(TypeExpressionPrinter, TypeExpression)
@@ -201,33 +207,34 @@ class TestConceptFunction(unittest.TestCase):
         self.printer.register(FunctionPrinter, FunctionInfo)
 
     def test_function_requires(self):
-        concept = ConceptInfo.from_params(
-            is_requirement=True,
-            name="Concept",
+        concept_usage = ConceptUsage.from_params(
+            concept=ConceptInfo.from_params(name="TestConcept"),
             parameters=[TypeExpression.from_params(details=GenericTypeParameter("T"))]
         )
+
         source = FunctionInfo.from_params(
             template=TemplateInfo.from_params(
                 parameters=[TemplateInfo.TemplateParameter.create_default()],
-                requires=[concept, "or", "true"]
+                requires=[concept_usage, "or", "true"]
             ),
             body=None,
-            requires=["true", "||", concept]
+            requires=["true", "||", concept_usage]
         )
         result = self.printer.print(source)
-        self.assertEqual(result, "template<typename T> requires Concept<T> or true\nvoid foo() requires true || Concept<T>;\n")
+        self.assertEqual(result, "template<typename T> requires TestConcept<T> or true\nvoid foo() requires true || TestConcept<T>;\n")
 
     def test_function_concept(self):
         source = FunctionInfo.from_params(
             template=TemplateInfo.from_params(
                 parameters=[TemplateInfo.TemplateParameter.from_params(
                     name="T",
-                    specifier=ConceptInfo.from_params(
-                        parameters=[TypeExpression.create_default()],
-                        is_requirement=True
-                    )
+                    specifier=ConceptUsage.from_params(
+                        concept=ConceptInfo.create_default(),
+                        namespaces=["test", "abc"],
+                        parameters=[TypeExpression.create_default()]
+                    ),
                 )]
             )
         )
         result = self.printer.print(source)
-        self.assertEqual(result, "template<DefaultConcept<int> T>\nvoid foo();\n")
+        self.assertEqual(result, "template<test::abc::DefaultConcept<int> T>\nvoid foo();\n")

@@ -67,7 +67,7 @@ class CallFrame(Generic[T]):
         @abstractmethod
         def get_editor(self, name: str) -> IEditable:
             """Returns by name the identifier of the mutable object used as the output artifact of the executable.
-            In the case of multiple executables sharing the same context (typical case) the object will be shared.
+            In the case of multiple executables sharing the same context (typical case), the object will be shared.
             It is allowed to throw an exception in case of non-existent editors or to create an editor. The first
             approach is recommended, leaving the creation of the contexts' content to the executable grouping class."""
 
@@ -140,6 +140,8 @@ class Executable(Generic[T]):
     def scope(self) -> TargetScope[T]:
         return self._scope
 
+
+
     def _validate_call_frame(self, frame: CallFrame[T]):
         possible_position_type_list = self._signature.arguments.positional.copy()
         possible_position_type_list += [v for _, v in self._signature.arguments.named.items()]
@@ -153,8 +155,9 @@ class Executable(Generic[T]):
                              f"Expected maximum: {len(possible_position_type_list)}. "
                              f"Given: {len(frame.arguments.positional)}")
 
+        from devana.preprocessing.premade.components.parser.typechecker import is_type_valid # pylint: disable=import-outside-toplevel
         for i, arg in enumerate(frame.arguments.positional):
-            if not arg.type == possible_position_type_list[i]:
+            if not is_type_valid(arg.content, possible_position_type_list[i]):
                 raise ValueError(f"The argument at position {i} was given the wrong type. "
                                  f"Expected: {possible_position_type_list[i]}. Received: {arg.type}.")
 

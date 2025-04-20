@@ -1,39 +1,43 @@
 from __future__ import annotations
-from typing import Optional, List, Any
+from typing import Optional, List
 from clang import cindex
 
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
 from devana.syntax_abstraction.typeexpression import TypeExpression
-from devana.syntax_abstraction.codepiece import CodePiece
+from devana.utility.traits import IBasicCreatable, ICursorValidate
+from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.syntax_abstraction.syntax import ISyntaxElement
+from devana.syntax_abstraction.codepiece import CodePiece
 from devana.utility.lazy import LazyNotInit, lazy_invoke
+from devana.syntax_abstraction.comment import Comment
 from devana.utility.init_params import init_params
 from devana.utility.errors import ParserError
 
 
-class ConceptInfo(CodeContainer):
-    """Represents a C++ concept, either as a full definition or as a requirement."""
+class ConceptInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
+    """Represents a C++ concept as a full definition."""
 
     def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[CodeContainer] = None):
-        super().__init__(cursor, parent)
+        self._cursor = cursor
+        self._parent = parent
         if cursor is None:
             from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
-
             self._name = "DefaultConcept"
             self._body = "true"
             self._template = TemplateInfo.from_params(parameters=[
                 TemplateInfo.TemplateParameter.create_default()
             ])
-            self._parameters = []
-            self._is_requirement = False
+            self._associated_comment = None
+            self._text_source = None
         else:
             if not self.is_cursor_valid(cursor):
                 raise ParserError(f"It is not a valid type cursor: {cursor.kind}.")
             self._name = LazyNotInit
             self._body = LazyNotInit
             self._template = LazyNotInit
-            self._parameters = LazyNotInit
-            self._is_requirement = LazyNotInit
+            self._associated_comment = LazyNotInit
+            self._text_source = LazyNotInit
+        self._lexicon = Lexicon.create(self)
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"
@@ -53,13 +57,11 @@ class ConceptInfo(CodeContainer):
     def from_params( # pylint: disable=unused-argument
             cls,
             parent: Optional[ISyntaxElement] = None,
-            content: Optional[List[Any]] = None,
-            namespace: Optional[str] = None,
             name: Optional[str] = None,
             body: Optional[str] = None,
             template: Optional[ISyntaxElement] = None,
-            parameters: Optional[List[TypeExpression]] = None,
-            is_requirement: Optional[bool] = None
+            associated_comment: Optional[Comment] = None,
+            lexicon: Optional[Lexicon] = None
     ) -> "ConceptInfo":
         return cls(None, parent)
 
@@ -106,38 +108,129 @@ class ConceptInfo(CodeContainer):
 
     @property
     @lazy_invoke
+    def associated_comment(self) -> Optional[Comment]:
+        parent = self.parent
+        while parent is not None:
+            if hasattr(parent, "bind_comment"):
+                self._associated_comment = parent.bind_comment(self)
+                return self._associated_comment
+            parent = parent.parent
+        return None
+
+    @associated_comment.setter
+    def associated_comment(self, value: Optional[Comment]) -> None:
+        self._associated_comment = value
+
+    @property
+    @lazy_invoke
+    def text_source(self) -> CodePiece:
+        """Source of this element."""
+        self._text_source = CodePiece(self._cursor)
+        return self._text_source
+
+    @property
+    def lexicon(self) -> CodeContainer:
+        """Current lexicon storage of an object."""
+        return self._lexicon
+
+    @lexicon.setter
+    def lexicon(self, value):
+        self._lexicon = value
+
+    @property
+    def parent(self):
+        return self._parent
+
+class ConceptUsage(IBasicCreatable, ICursorValidate, ISyntaxElement):
+    """Represents a usage of a C++ concept."""
+
+    def __init__(self, cursor: Optional[cindex.Cursor] = None, parent: Optional[ISyntaxElement] = None):
+        self._cursor = cursor
+        self._parent = parent
+        if cursor is None:
+            self._concept = ConceptInfo.create_default()
+            self._namespaces = []
+            self._parameters = []
+        else:
+            if not self.is_cursor_valid(cursor):
+                raise ParserError(f"It is not a valid type cursor: {cursor.kind}.")
+            self._concept = LazyNotInit
+            self._namespaces = LazyNotInit
+            self._parameters = LazyNotInit
+        self._lexicon = Lexicon.create(self)
+
+    @classmethod
+    def create_default(cls, parent: Optional = None) -> "ConceptUsage":
+        return cls(None, parent)
+    @classmethod
+    def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["ConceptUsage"]:
+        if cls.is_cursor_valid(cursor):
+            return cls(cursor, parent)
+        return None
+
+    @classmethod
+    @init_params(skip={"parent"})
+    def from_params(  # pylint: disable=unused-argument
+            cls,
+            parent: Optional[ISyntaxElement] = None,
+            concept: Optional[ConceptInfo] = None,
+            namespaces: Optional[List[str]] = None,
+            parameters: Optional[List[TypeExpression]] = None
+    ) -> "ConceptUsage":
+        return cls(None, parent)
+
+    @staticmethod
+    def is_cursor_valid(cursor: cindex.Cursor) -> bool:
+        for child in cursor.get_children():
+            if child.referenced and child.referenced.kind == cindex.CursorKind.CONCEPT_DECL:
+                return True
+        return False
+
+    @property
+    @lazy_invoke
+    def concept(self) -> ConceptInfo:
+        concept_cursors = list(filter(
+            lambda c: c.referenced and c.referenced.kind == cindex.CursorKind.CONCEPT_DECL,
+            self._cursor.get_children())
+        )
+        self._concept = ConceptInfo.from_cursor(concept_cursors[0].referenced)
+        return self._concept
+
+    @concept.setter
+    def concept(self, value: ConceptInfo) -> None:
+        self._concept = value
+
+    @property
+    @lazy_invoke
+    def namespaces(self) -> List[str]:
+        self._namespaces = []
+        for child in self._cursor.get_children():
+            if child.kind == cindex.CursorKind.NAMESPACE_REF:
+                self._namespaces.append(child.spelling)
+        return self._namespaces
+
+    @namespaces.setter
+    def namespaces(self, value: List[str]) -> None:
+        self._namespaces = value
+
+    @property
+    @lazy_invoke
     def parameters(self) -> List[TypeExpression]:
         """Retrieves the concept parameters '<...>'."""
-        from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
-        if not isinstance(self.parent, TemplateInfo.TemplateParameter):
-            return []
-        # Probably without a cursor from the parent it will not be possible to extract it.
-        # I get a mental breakdown every time I see the number -1, when i want to extract parameters in the normal way.
-        # Fuck it for now.
-        return []
+        self._parameters = []
+        return self._parameters
 
     @parameters.setter
     def parameters(self, value: List[TypeExpression]) -> None:
         self._parameters = value
 
     @property
-    @lazy_invoke
-    def is_requirement(self) -> bool:
-        """Determines whether this ConceptInfo instance is acting as a requirement."""
-        from devana.syntax_abstraction.functioninfo import FunctionInfo # pylint: disable=import-outside-toplevel
-        from devana.syntax_abstraction.templateinfo import TemplateInfo # pylint: disable=import-outside-toplevel
-        self._is_requirement = isinstance(
-            self.parent, (
-                TemplateInfo.TemplateParameter,
-                TemplateInfo, FunctionInfo
-            )
-        )
-        return self._is_requirement
-
-    @is_requirement.setter
-    def is_requirement(self, value: bool) -> None:
-        self._is_requirement = value
+    def name(self) -> str:
+        return self.concept.name
 
     @property
-    def _content_types(self) -> List:
-        return [ConceptInfo]
+    def parent(self):
+        return self._parent
+
+    def __repr__(self):
+        return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

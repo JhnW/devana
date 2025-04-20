@@ -12,7 +12,7 @@ from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
 from devana.syntax_abstraction._external_source import create_external
-from devana.syntax_abstraction.conceptinfo import ConceptInfo
+from devana.syntax_abstraction.conceptinfo import ConceptUsage
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.init_params import init_params
 from devana.utility.traits import IBasicCreatable, ICursorValidate, IFromCursorCreatable, IFromParamsCreatable
@@ -208,7 +208,7 @@ class MethodInfo(FunctionInfo, ClassMember):
             template: Optional[TemplateInfo] = None,
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
-            requires: Optional[List[Union[str, ConceptInfo]]] = None,
+            requires: Optional[List[Union[str, ConceptUsage]]] = None,
             access_specifier: Optional[AccessSpecifier] = None,
             type: Optional[MethodType] = None, # noqa pylint: disable=redefined-builtin
     ) -> "MethodInfo":
@@ -307,7 +307,7 @@ class ConstructorInfo(MethodInfo):
             template: Optional[TemplateInfo] = None,
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
-            requires: Optional[List[Union[str, ConceptInfo]]] = None,
+            requires: Optional[List[Union[str, ConceptUsage]]] = None,
             access_specifier: Optional[AccessSpecifier] = None,
             type: Optional[MethodType] = None, # noqa pylint: disable=redefined-builtin
             initializer_list: Optional[List[InitializerInfo]] = None,
@@ -419,7 +419,7 @@ class DestructorInfo(MethodInfo):
             template: Optional[TemplateInfo] = None,
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
-            requires: Optional[List[Union[str, ConceptInfo]]] = None,
+            requires: Optional[List[Union[str, ConceptUsage]]] = None,
             access_specifier: Optional[AccessSpecifier] = None,
     ) -> "DestructorInfo":
         return cls(None, parent)

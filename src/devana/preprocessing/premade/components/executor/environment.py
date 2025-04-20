@@ -92,7 +92,7 @@ class Environment(Generic[T]):
             matches = [e for e in self._executables if self._compare_signatures(e.signature, data.signature)]
 
             # now we need to find executable for specific target
-            matches = [m for m in matches if issubclass(m.scope.target, type(data.target))]
+            matches = [m for m in matches if m.scope.target is None or issubclass(m.scope.target, type(data.target))]
             if not matches:
                 raise RuntimeError(f"No executable found for {data} call.")
 
