@@ -42,7 +42,7 @@ class Variable(IBasicCreatable, ISyntaxElement):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
@@ -139,7 +139,7 @@ class GlobalVariable(Variable, ICursorValidate):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,

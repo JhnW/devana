@@ -47,7 +47,7 @@ class IncludeInfo(ISyntaxElement, IFromParamsCreatable):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             value: Optional[str] = None,
@@ -213,7 +213,7 @@ class SourceFile(CodeContainer):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument, arguments-renamed
+    def from_params( # pylint: disable=unused-argument, arguments-renamed, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             content: Optional[List[Any]] = None,

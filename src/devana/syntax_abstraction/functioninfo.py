@@ -281,7 +281,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
 
         @classmethod
         @init_params(skip={"parent"})
-        def from_params( # pylint: disable=unused-argument
+        def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
@@ -356,7 +356,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             attributes: Optional[List[AttributeDeclaration]] = None,

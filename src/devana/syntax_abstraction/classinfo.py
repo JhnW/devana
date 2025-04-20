@@ -195,7 +195,7 @@ class MethodInfo(FunctionInfo, ClassMember):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument, arguments-renamed
+    def from_params( # pylint: disable=unused-argument too-many-positional-arguments, arguments-renamed
             cls,
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
@@ -295,7 +295,7 @@ class ConstructorInfo(MethodInfo):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument, arguments-renamed
+    def from_params( # pylint: disable=unused-argument, arguments-renamed, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
@@ -407,7 +407,7 @@ class DestructorInfo(MethodInfo):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params(  # pylint: disable=unused-argument, arguments-differ
+    def from_params(  # pylint: disable=unused-argument, arguments-differ, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             arguments: Optional[List[FunctionInfo.Argument]] = None,
@@ -482,7 +482,7 @@ class FieldInfo(Variable, ClassMember, ICursorValidate, DescriptiveByAttributes)
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             name: Optional[str] = None,
@@ -663,7 +663,7 @@ class InheritanceInfo(IFromCursorCreatable, IFromParamsCreatable, ISyntaxElement
 
         @classmethod
         @init_params(skip={"parent"})
-        def from_params( # pylint: disable=unused-argument
+        def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
                 cls,
                 parent: Optional[ISyntaxElement] = None,
                 access_specifier: Optional[AccessSpecifier] = None,
@@ -898,7 +898,7 @@ class ClassInfo(CodeContainer, DescriptiveByAttributes):
 
     @classmethod
     @init_params(skip={"parent"})
-    def from_params( # pylint: disable=unused-argument
+    def from_params( # pylint: disable=unused-argument, too-many-positional-arguments
             cls,
             parent: Optional[ISyntaxElement] = None,
             content: Optional[List[Any]] = None,

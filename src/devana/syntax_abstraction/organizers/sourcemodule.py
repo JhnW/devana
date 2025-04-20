@@ -16,8 +16,9 @@ class ModuleFilter:
 
 
 class SourceModule:
-    """Logic unit of code as named collection of source files."""
+    """Logic unit of code as a named collection of source files."""
 
+    # pylint: disable=too-many-positional-arguments
     def __init__(self, name: str, root_path: str, module_filter: Optional[ModuleFilter] = None,
                  parent: Optional[Any] = None, configuration: Optional[Configuration] = None):
         self._path = root_path
@@ -52,8 +53,7 @@ class SourceModule:
     def files(self) -> Iterable[SourceFile]:
         """List of SourceFile from module."""
         if not self._configuration.parsing.file_by_file_parsing and self._files is not LazyNotInit:
-            for file in self._files: # noqa
-                yield file
+            yield from self._files # noqa
 
         self._files = []
         allowed = []
@@ -88,8 +88,7 @@ class SourceModule:
                     self._files.append(SourceFile(p, self, self._configuration))
 
         if not self._configuration.parsing.file_by_file_parsing:
-            for file in self._files:
-                yield file
+            yield from self._files
 
     @property
     def parent(self):
