@@ -668,7 +668,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     @property
     @lazy_invoke
     def requires(self) -> Optional[List[Union[ConceptUsage, str]]]:
-        """Extracts constraints from the 'requires' clause of the function. None if absent."""
+        """Extracts constraints from the 'requires' clause of the function like void foo() requires Example. None if absent."""
 
         # Need to get rid of the template line, because it could also have a requires clause,
         # which we don't want to touch, since the template has its own property.

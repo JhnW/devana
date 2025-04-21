@@ -142,6 +142,13 @@ class TestConceptUsage(unittest.TestCase):
             configuration=Configuration(ParsingConfiguration(language_version=LanguageStandard.CPP_20))
         )
 
+    def test_concept_is_linked_to_definition(self):
+        result = self.file.content[11]
+        self.assertEqual(result.template.parameters[0].specifier.name, "ConceptStaticValue")
+        self.assertEqual(type(result.template.parameters[0].specifier), ConceptUsage)
+        self.assertEqual(result.template.parameters[0].specifier.concept, self.file.content[8])
+
+
     def test_basic_concept_class(self):
         result = self.file.content[11]
         self.assertTrue(result.is_class)
@@ -358,3 +365,10 @@ class TestConceptUsage(unittest.TestCase):
         self.assertEqual(param.name, "T")
         self.assertEqual(param.specifier.name, "ConceptInNamespace")
         self.assertEqual(param.specifier.namespaces, ["ConceptNamespace"])
+
+    def test_std_argument_concept(self):
+        result: ClassInfo = self.file.content[18]
+        self.assertEqual(result.name, "UsedStdInTemplate")
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.template.parameters[0].specifier.name, "integral")
+        self.assertEqual(result.template.parameters[0].specifier.namespaces, ["std"])

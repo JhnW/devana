@@ -162,6 +162,7 @@ class ConceptUsage(IBasicCreatable, ICursorValidate, ISyntaxElement):
     @classmethod
     def create_default(cls, parent: Optional = None) -> "ConceptUsage":
         return cls(None, parent)
+
     @classmethod
     def from_cursor(cls, cursor: cindex.Cursor, parent: Optional = None) -> Optional["ConceptUsage"]:
         if cls.is_cursor_valid(cursor):
@@ -193,7 +194,9 @@ class ConceptUsage(IBasicCreatable, ICursorValidate, ISyntaxElement):
             lambda c: c.referenced and c.referenced.kind == cindex.CursorKind.CONCEPT_DECL,
             self._cursor.get_children())
         )
-        self._concept = ConceptInfo.from_cursor(concept_cursors[0].referenced)
+        self._concept = self._lexicon.find_type(concept_cursors[0].referenced)
+        if self._concept is None: # case for std and other headers outside module
+            self._concept = ConceptInfo.from_cursor(concept_cursors[0].referenced)
         return self._concept
 
     @concept.setter

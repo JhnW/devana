@@ -113,7 +113,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         def specifier(self) -> Union[ConceptUsage, str]:
             """Keyword or ConceptUsage instance preceding the name."""
 
-            if maybe_concept := ConceptUsage.from_cursor(cursor=self._cursor):
+            if maybe_concept := ConceptUsage.from_cursor(cursor=self._cursor, parent=self):
                 self._specifier = maybe_concept
                 return self._specifier
 
@@ -415,7 +415,7 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         self._parameters = []
         for c in self._cursor.get_children():
             try:
-                self._parameters.append(self.TemplateParameter(c))
+                self._parameters.append(self.TemplateParameter(c, self.parent))
             except ValueError:
                 break
         return self._parameters
@@ -479,7 +479,8 @@ class TemplateInfo(IBasicCreatable, ICursorValidate, ISyntaxElement):
         cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
         for raw_element in raw_elements:
             if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
-                maybe_concept = ConceptUsage.from_cursor(cursor=cursors.pop(0))
+
+                maybe_concept = ConceptUsage.from_cursor(cursor=cursors.pop(0), parent=self.parent)
                 if maybe_concept is not None:
                     self._requires.append(maybe_concept)
                     continue

@@ -1,3 +1,5 @@
+#include <concepts>
+
 template<typename T>
 concept ConceptRequiresExpr = requires(T a, T b) {
     { a + b };
@@ -81,3 +83,8 @@ int function_with_requires_2(T a = 1) requires ConceptParenExpr<T  > and  (true)
 
 template<ConceptNamespace::ConceptInNamespace T>
 T function_with_concept_namespace();
+
+template<std::integral T>
+struct UsedStdInTemplate {
+T a;
+};

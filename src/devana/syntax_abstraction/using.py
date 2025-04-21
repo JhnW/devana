@@ -109,7 +109,7 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
     @lazy_invoke
     def template(self) -> Optional[TemplateInfo]:
         """Template associated with this using."""
-        self._template = TemplateInfo.from_cursor(self._cursor)
+        self._template = TemplateInfo.from_cursor(self._cursor, self)
         return self._template
 
     @template.setter

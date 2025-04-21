@@ -699,8 +699,8 @@ class TypeExpression(IBasicCreatable, ISyntaxElement):
     def details(self) -> ISyntaxElement:
         """Object linked to all type information.
 
-        This field linked to first type information. If TypeExpression is used by alias, details contain typedef
-        information, so jump to root of typedef declaration may be needed."""
+        This field linked to the first type of information. If TypeExpression is used by alias, details contain typedef
+        information, so a jump to the root of the typedef declaration may be needed."""
         # pylint: disable=import-outside-toplevel
         type_c = self._base_type_c
         if self.modification.is_array:
