@@ -2,8 +2,9 @@ import unittest
 import clang.cindex
 import clang
 import os
+
 from tests.helpers import find_by_name, stub_lexicon
-from devana.syntax_abstraction.typeexpression import BasicType, TypeModification, TypeExpression
+from devana.syntax_abstraction.typeexpression import BasicType, TypeModification
 from devana.syntax_abstraction.functioninfo import FunctionInfo, FunctionModification
 from devana.syntax_abstraction.organizers.sourcefile import SourceFile
 from devana.utility.errors import CodeError
@@ -251,7 +252,9 @@ class TestFunctionsTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_functions.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/template_functions.hpp"
+        ).cursor
 
     def test_common_function_template(self):
         node = find_by_name(self.cursor, "simple_function_typename")
@@ -276,6 +279,8 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "typename")
         self.assertEqual(result.template.parameters[0].default_value, None)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
         node = find_by_name(self.cursor, "simple_function_class")
         result = FunctionInfo.from_cursor(node)
@@ -299,6 +304,8 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "class")
         self.assertEqual(result.template.parameters[0].default_value, None)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
     def test_complex_function_template(self):
         node = find_by_name(self.cursor, "complex_function")
@@ -339,12 +346,15 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[1].specifier, "typename")
         self.assertEqual(result.template.parameters[1].default_value, "const float")
         self.assertEqual(len(result.template.specialisations), 0)
+        self.assertEqual(result.template.requires, None)
+        self.assertEqual(result.requires, None)
 
     def test_specialisation_function_template(self):
         node = find_by_name(self.cursor, "specialisation_function")
         result = FunctionInfo.from_cursor(node)
         stub_lexicon(result)
         self.assertFalse(result.template is None)
+        self.assertEqual(result.requires, None)
         self.assertTrue(result.template.is_empty)
         self.assertEqual(result.name, "specialisation_function")
         self.assertEqual(len(result.arguments), 4)
@@ -372,7 +382,7 @@ class TestFunctionsTemplate(unittest.TestCase):
         self.assertTrue(result.return_type.modification.is_pointer)
         self.assertTrue(result.return_type.modification.is_const)
         self.assertEqual(result.body, None)
-
+        self.assertEqual(result.template.requires, None)
 
 class TestFunctionsOverload(unittest.TestCase):
     def setUp(self):

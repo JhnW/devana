@@ -3,6 +3,7 @@ from clang import cindex
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.typeexpression import TypeExpression
 from devana.syntax_abstraction.organizers.codecontainer import CodeContainer
+from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
 from devana.utility.errors import ParserError
@@ -24,6 +25,7 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
             self._text_source = None
             self._name = ""
             self._associated_comment = None
+            self._template = None
         else:
             if not self.is_cursor_valid(cursor):
                 raise ParserError("Element is not using type alias.")
@@ -31,6 +33,7 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
             self._text_source = LazyNotInit
             self._name = LazyNotInit
             self._associated_comment = LazyNotInit
+            self._template = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @classmethod
@@ -46,20 +49,31 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
             parent: Optional[ISyntaxElement] = None,
             type_info: Union[TypeExpression, ISyntaxElement, None] = None,
             name: Optional[str] = None,
+            template: Optional[TemplateInfo] = None,
             lexicon: Optional[Lexicon] = None,
-            associated_comment: Optional[Comment] = None,
+            associated_comment: Optional[Comment] = None
     ) -> "Using":
         return cls(None, parent)
 
     @staticmethod
     def is_cursor_valid(cursor: cindex.Cursor) -> bool:
-        return cursor.kind == cindex.CursorKind.TYPE_ALIAS_DECL
+        return cursor.kind in (
+            cindex.CursorKind.TYPE_ALIAS_DECL,
+            cindex.CursorKind.TYPE_ALIAS_TEMPLATE_DECL
+        )
 
     @property
     @lazy_invoke
     def type_info(self) -> Union[TypeExpression, "ISyntaxElement"]:
         """Type alias can be true type or next typedef."""
-        self._type_info = TypeExpression(self._cursor, self)
+        cursor = self._cursor
+        for child in self._cursor.get_children():
+            # template using scenario
+            if child.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
+                cursor = child
+                break
+
+        self._type_info = TypeExpression(cursor, self)
         return self._type_info
 
     @type_info.setter
@@ -70,7 +84,14 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
     @lazy_invoke
     def name(self) -> str:
         """Typedef alias name."""
-        self._name = self._cursor.type.get_typedef_name()
+        cursor = self._cursor
+        for child in self._cursor.get_children():
+            # template using scenario
+            if child.kind == cindex.CursorKind.TYPE_ALIAS_DECL:
+                cursor = child
+                break
+
+        self._name = cursor.type.get_typedef_name()
         return self._name
 
     @name.setter
@@ -83,6 +104,17 @@ class Using(IFromCursorCreatable, ICursorValidate, IFromParamsCreatable, ISyntax
         """Source of this element."""
         self._text_source = CodePiece(self._cursor)
         return self._text_source
+
+    @property
+    @lazy_invoke
+    def template(self) -> Optional[TemplateInfo]:
+        """Template associated with this using."""
+        self._template = TemplateInfo.from_cursor(self._cursor, self)
+        return self._template
+
+    @template.setter
+    def template(self, value: Optional[TemplateInfo]) -> None:
+        self._template = value
 
     @property
     def parent(self) -> CodeContainer:

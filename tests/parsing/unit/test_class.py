@@ -432,7 +432,9 @@ class TestClassTemplate(unittest.TestCase):
 
     def setUp(self):
         index = clang.cindex.Index.create()
-        self.cursor = index.parse(os.path.dirname(__file__) + r"/source_files/template_class.hpp").cursor
+        self.cursor = index.parse(
+            os.path.dirname(__file__) + r"/source_files/template_class.hpp"
+        ).cursor
 
     def test_simple_template_class(self):
         node = find_by_name(self.cursor, "simple_template_struct_1")
@@ -659,12 +661,12 @@ class TestClassTemplate(unittest.TestCase):
             self.assertEqual(content.template.parameters[0].name, "D")
             self.assertEqual(content.template.parameters[0].default_value, None)
 
-    def test_struct_varidaic_template(self):
-        node = find_by_name(self.cursor, "struct_varidaic_template")
+    def test_struct_variadic_template(self):
+        node = find_by_name(self.cursor, "struct_variadic_template")
         result = ClassInfo.from_cursor(node)
         self.assertTrue(result.is_struct)
         self.assertFalse(result.template is None)
-        self.assertEqual(result.name, "struct_varidaic_template")
+        self.assertEqual(result.name, "struct_variadic_template")
         self.assertEqual(len(result.template.parameters), 3)
         self.assertEqual(result.template.parameters[0].name, "T")
         self.assertEqual(result.template.parameters[0].specifier, "typename")
@@ -678,6 +680,20 @@ class TestClassTemplate(unittest.TestCase):
         self.assertEqual(result.template.parameters[2].specifier, "typename")
         self.assertEqual(result.template.parameters[2].default_value, None)
         self.assertTrue(result.template.parameters[2].is_variadic)
+        self.assertIsNone(result.template.requires)
+
+    def test_struct_variadic_template2(self):
+        node = find_by_name(self.cursor, "struct_variadic_template2")
+        result = ClassInfo.from_cursor(node)
+        self.assertTrue(result.is_struct)
+        self.assertFalse(result.template is None)
+        self.assertEqual(result.name, "struct_variadic_template2")
+        self.assertEqual(len(result.template.parameters), 1)
+        self.assertEqual(result.template.parameters[0].name, "Args")
+        self.assertEqual(result.template.parameters[0].specifier, "typename")
+        self.assertEqual(result.template.parameters[0].default_value, None)
+        self.assertTrue(result.template.parameters[0].is_variadic)
+        self.assertIsNone(result.template.requires)
 
     def test_multiple_pointer_type_template(self):
         node = find_by_name(self.cursor, "multiple_pointer_struct")
@@ -694,7 +710,7 @@ class TestClassTemplate(unittest.TestCase):
         self.assertTrue(content.type.is_generic)
         self.assertEqual(content.type.modification.pointer_order, 2)
         self.assertEqual(content.type.details.name, "T")
-
+        self.assertIsNone(result.template.requires)
 
 class TestClassTemplatePartial(unittest.TestCase):
 

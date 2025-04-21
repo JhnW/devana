@@ -1,7 +1,8 @@
-from typing import Optional, Tuple, List, Any, Union
+from typing import Optional, Tuple, List, Any, Union, Iterable
 from enum import auto, IntFlag
 import re
 from clang import cindex
+
 from devana.syntax_abstraction.variable import Variable
 from devana.syntax_abstraction.typeexpression import TypeExpression, BasicType
 from devana.syntax_abstraction.organizers.lexicon import Lexicon
@@ -10,6 +11,7 @@ from devana.syntax_abstraction.comment import Comment
 from devana.syntax_abstraction.codepiece import CodePiece
 from devana.syntax_abstraction.templateinfo import TemplateInfo
 from devana.syntax_abstraction.attribute import DescriptiveByAttributes, AttributeDeclaration
+from devana.syntax_abstraction.conceptinfo import ConceptUsage
 from devana.utility import FakeEnum
 from devana.utility.lazy import LazyNotInit, lazy_invoke
 from devana.utility.traits import IBasicCreatable, ICursorValidate
@@ -319,6 +321,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             self._template = None
             self._namespaces = None
             self._associated_comment = None
+            self._requires = None
         else:
             if not self.is_cursor_valid(cursor):
                 msg = f"It is not a valid type cursor: {cursor.kind}."
@@ -333,6 +336,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             self._template = LazyNotInit
             self._namespaces = LazyNotInit
             self._associated_comment = LazyNotInit
+            self._requires = LazyNotInit
         self._lexicon = Lexicon.create(self)
 
     @classmethod
@@ -366,6 +370,7 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
             template: Optional[TemplateInfo] = None,
             associated_comment: Optional[Comment] = None,
             prefix: Optional[str] = None,
+            requires: Optional[List[Union[str, ConceptUsage]]] = None
     ) -> "FunctionInfo":
         return cls(None, parent)
 
@@ -659,6 +664,59 @@ class FunctionInfo(IBasicCreatable, ICursorValidate, DescriptiveByAttributes, IS
     @prefix.setter
     def prefix(self, value: str):
         self._prefix = value
+
+    @property
+    @lazy_invoke
+    def requires(self) -> Optional[List[Union[ConceptUsage, str]]]:
+        """Extracts constraints from the 'requires' clause of the function like void foo() requires Example. None if absent."""
+
+        # Need to get rid of the template line, because it could also have a requires clause,
+        # which we don't want to touch, since the template has its own property.
+        code = re.sub(
+            r'(?m)^template[^\n]*(?:\r?\n(?:[ \t]+.*|requires\b.*))*\r?\n?',
+            '',
+            CodePiece(self._cursor).text
+        )
+        match = re.search(r"requires\s+([\s\S]*)", code)
+        if not match:
+            self._requires = None
+            return self._requires
+        self._requires = []
+
+        def find_concepts(cursor: cindex.Cursor) -> Iterable[cindex.Cursor]:
+            for child in cursor.get_children():
+                if child.location.line < self._cursor.location.line:
+                    # Ignore template elements.
+                    continue
+                if child.kind == cindex.CursorKind.CONCEPT_SPECIALIZATION_EXPR:
+                    yield child
+                if child.kind in (
+                        cindex.CursorKind.BINARY_OPERATOR,
+                        cindex.CursorKind.PAREN_EXPR
+                ):
+                    yield from find_concepts(child)
+
+        # clang does not provide detailed info for all things in the requires (e.g., 'or', 'true'),
+        raw_elements: List[str] = re.findall(
+            r'\(|\)|[^\s()<]+(?:\s*<\s*[^\s>]+(?:\s+[^\s>]+)*\s*>)?',
+            match.group(1)
+        )
+        cursors: List[cindex.Cursor] = list(find_concepts(self._cursor))
+        for raw_element in raw_elements:
+            if len(cursors) > 0 and re.search(r'<[^>]+>', raw_element):
+                maybe_concept = ConceptUsage.from_cursor(
+                    cursor=cursors.pop(0),
+                    parent=self
+                )
+                if maybe_concept is not None:
+                    self._requires.append(maybe_concept)
+                    continue
+            self._requires.append(raw_element.strip())
+        return self._requires
+
+    @requires.setter
+    def requires(self, value: Optional[List[Union[ConceptUsage, str]]]) -> None:
+        self._requires = value
 
     def __repr__(self):
         return f"{type(self).__name__}:{self.name} ({super().__repr__()})"

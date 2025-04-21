@@ -14,6 +14,8 @@ from devana.code_generation.printers.default.externcprinter import ExternCPrinte
 from devana.code_generation.printers.default.commentprinter import CommentPrinter
 from devana.code_generation.printers.default.functiontypeprinter import FunctionTypePrinter
 from devana.code_generation.printers.default.stubtypeprinter import StubTypePrinter
+from devana.code_generation.printers.default.conceptprinter import ConceptPrinter, ConceptUsagePrinter
+from devana.syntax_abstraction.conceptinfo import ConceptInfo, ConceptUsage
 from devana.syntax_abstraction.classinfo import ClassInfo
 from devana.syntax_abstraction.templateinfo import GenericTypeParameter
 from devana.syntax_abstraction.typedefinfo import TypedefInfo
@@ -72,5 +74,6 @@ def create_default_printer() -> CodePrinter:
     printer.register(StubTypePrinter, StubType)
     printer.register(AttributePrinter, Attribute)
     printer.register(AttributeDeclarationPrinter, AttributeDeclaration)
-
+    printer.register(ConceptPrinter, ConceptInfo)
+    printer.register(ConceptUsagePrinter, ConceptPrinter)
     return printer
