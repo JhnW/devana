@@ -88,3 +88,6 @@ template<std::integral T>
 struct UsedStdInTemplate {
 T a;
 };
+
+template<typename T> requires ConceptRequiresExpr<T>
+void foo_function_with_concept();

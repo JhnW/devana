@@ -218,13 +218,20 @@ class ConceptUsage(IBasicCreatable, ICursorValidate, ISyntaxElement):
 
     @property
     @lazy_invoke
-    def parameters(self) -> List[TypeExpression]:
+    def parameters(self) -> List[str]:
         """Retrieves the concept parameters '<...>'."""
         self._parameters = []
+        for c in self._cursor.get_children():
+            if c.kind == cindex.CursorKind.TYPE_REF:
+                self._parameters.append(c.spelling)
         return self._parameters
 
+
+        #self._parameters = []
+        #return self._parameters
+
     @parameters.setter
-    def parameters(self, value: List[TypeExpression]) -> None:
+    def parameters(self, value: List[str]):
         self._parameters = value
 
     @property

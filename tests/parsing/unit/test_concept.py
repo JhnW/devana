@@ -372,3 +372,13 @@ class TestConceptUsage(unittest.TestCase):
         self.assertEqual(result.template.requires, None)
         self.assertEqual(result.template.parameters[0].specifier.name, "integral")
         self.assertEqual(result.template.parameters[0].specifier.namespaces, ["std"])
+
+    def test_concept_parameters(self):
+        result: FunctionInfo = self.file.content[19]
+        self.assertEqual(result.name, "foo_function_with_concept")
+        self.assertEqual(len(result.template.requires), 1)
+        require = result.template.requires[0]
+        self.assertEqual(require.name, "ConceptRequiresExpr")
+        self.assertEqual(len(require.parameters), 1)
+        self.assertEqual(require.parameters[0], "T")
+
