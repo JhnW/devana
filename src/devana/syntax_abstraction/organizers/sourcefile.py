@@ -247,7 +247,7 @@ class SourceFile(CodeContainer):
 
     @property
     def name(self) -> str:
-        """Name of a source file without extension."""
+        """Name of a source file."""
         return self.path.name
 
     @property
