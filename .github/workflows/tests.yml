@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.12]
-        os-environment: [ubuntu-24.04, windows-2019] # enable macos-14: https://github.com/sighingnow/libclang/issues/71
+        os-environment: [ubuntu-24.04, windows-2025] # enable macos-14: https://github.com/sighingnow/libclang/issues/71
     runs-on: ${{ matrix.os-environment }}
     steps:
       - uses: actions/checkout@v4
