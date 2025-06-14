@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.premade.components.parser.functionparser &mdash; devana 2.4.0 documentation</title>
+      <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/preprocessing/premade/components/parser/functionparser.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../../../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../how_to_start.html">How to start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../api/modules.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../../../index.html">Module code</a> &raquo;</li>
+      <li>devana.preprocessing.premade.components.parser.functionparser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for devana.preprocessing.premade.components.parser.functionparser</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">NoReturn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<div class="viewcode-block" id="FunctionEntity"><a class="viewcode-back" href="../../../../../../api/devana.preprocessing.premade.components.parser.html#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionEntity</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parsing function information, argument are provided as string for another parser.&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">namespaces</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="FunctionParser"><a class="viewcode-back" href="../../../../../../api/devana.preprocessing.premade.components.parser.html#devana.preprocessing.premade.components.parser.functionparser.FunctionParser">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class realized parsing function.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FunctionParser.StateName"><a class="viewcode-back" href="../../../../../../api/devana.preprocessing.premade.components.parser.html#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName">[docs]</a>    <span class="k">class</span><span class="w"> </span><span class="nc">StateName</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Name of state.&quot;&quot;&quot;</span>
+        <span class="n">SEARCH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">NAMESPACE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">NAMESPACE_SEPARATOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">FUNCTION_SEPARATOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">ARGS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">STRING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">STRING_ESCAPE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">END</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+        <span class="n">ERROR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_search</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">SEARCH</span>
+        <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_namespace</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">END</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE_SEPARATOR</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ARGS</span>
+        <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">or</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;_&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE</span>
+        <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">FUNCTION_SEPARATOR</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;,&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">FUNCTION_SEPARATOR</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_namespace_separator</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_function_separator</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">END</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;,&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">SEARCH</span>
+        <span class="k">if</span> <span class="n">character</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">FUNCTION_SEPARATOR</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;)&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">FUNCTION_SEPARATOR</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ARGS</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ARGS</span>
+        <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">STRING_ESCAPE</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">STRING</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_string_escape</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">STRING</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_error</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">END</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_transactions_end</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">StateName</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">END</span>
+
+<div class="viewcode-block" id="FunctionParser.State"><a class="viewcode-back" href="../../../../../../api/devana.preprocessing.premade.components.parser.html#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State">[docs]</a>    <span class="nd">@dataclass</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">State</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;State information of parser. &quot;&quot;&quot;</span>
+        <span class="n">transactions</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="s2">&quot;FunctionParser.StateName&quot;</span><span class="p">]</span>
+        <span class="n">on_enter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">NoReturn</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">on_exit</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">NoReturn</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">on_self</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">NoReturn</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_accumulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span> <span class="o">+=</span> <span class="n">character</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">+=</span> <span class="n">character</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FunctionEntity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to parse function.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FunctionEntity</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_states</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_search</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_namespace</span><span class="p">,</span>
+                                                       <span class="n">on_self</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate</span><span class="p">,</span>
+                                                       <span class="n">on_enter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">ch</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                       <span class="n">on_exit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_name</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">NAMESPACE_SEPARATOR</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_namespace_separator</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">FUNCTION_SEPARATOR</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_function_separator</span><span class="p">,</span> <span class="n">on_exit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_function</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ARGS</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_args</span><span class="p">,</span> <span class="n">on_self</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_arguments</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_string</span><span class="p">,</span>
+                                                    <span class="n">on_self</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_accumulate</span><span class="p">,</span>
+                                                    <span class="n">on_enter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_accumulate</span><span class="p">,</span>
+                                                    <span class="n">on_exit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_function</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">STRING_ESCAPE</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_string_escape</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">END</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_end</span><span class="p">,</span> <span class="n">on_exit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_function</span><span class="p">),</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transactions_error</span><span class="p">,</span> <span class="n">on_enter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_error</span><span class="p">)</span>
+                  <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">next_state</span><span class="p">:</span> <span class="n">StateName</span><span class="p">,</span> <span class="n">current_state</span><span class="p">:</span> <span class="n">StateName</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">next_state</span> <span class="o">==</span> <span class="n">current_state</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">on_self</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">on_exit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">next_state</span><span class="p">]</span><span class="o">.</span><span class="n">on_enter</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FunctionParser.parse"><a class="viewcode-back" href="../../../../../../api/devana.preprocessing.premade.components.parser.html#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.parse">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">FunctionEntity</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse line to find functions.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_name_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StateName</span><span class="o">.</span><span class="n">SEARCH</span>
+        <span class="k">for</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+            <span class="n">next_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">transactions</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_state</span><span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">current_state</span><span class="p">)</span>
+            <span class="n">current_state</span> <span class="o">=</span> <span class="n">next_state</span>
+        <span class="n">next_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">transactions</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_state</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">current_state</span><span class="p">)</span>
+        <span class="n">current_state</span> <span class="o">=</span> <span class="n">next_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_states</span><span class="p">[</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">on_exit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_functions</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

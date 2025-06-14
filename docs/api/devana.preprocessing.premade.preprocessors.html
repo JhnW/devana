@@ -4,10 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.preprocessing.components &mdash; devana 2.3.0 documentation</title>
+  <title>devana.preprocessing.premade.preprocessors &mdash; devana 2.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.components.html" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.premade.preprocessors.html" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -21,8 +21,8 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="devana.preprocessing.components.extractors" href="devana.preprocessing.components.extractors.html" />
-    <link rel="prev" title="devana.preprocessing" href="devana.preprocessing.html" /> 
+    <link rel="next" title="devana.syntax_abstraction" href="devana.syntax_abstraction.html" />
+    <link rel="prev" title="devana.preprocessing.premade.components.savers" href="devana.preprocessing.premade.components.savers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -82,7 +82,8 @@
           <li><a href="modules.html">API reference</a> &raquo;</li>
           <li><a href="devana.html">devana</a> &raquo;</li>
           <li><a href="devana.preprocessing.html">devana.preprocessing</a> &raquo;</li>
-      <li>devana.preprocessing.components</li>
+          <li><a href="devana.preprocessing.premade.html">devana.preprocessing.premade</a> &raquo;</li>
+      <li>devana.preprocessing.premade.preprocessors</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -91,51 +92,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="devana-preprocessing-components">
-<h1>devana.preprocessing.components<a class="headerlink" href="#devana-preprocessing-components" title="Permalink to this heading"></a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="devana.preprocessing.components.extractors.html">devana.preprocessing.components.extractors</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.components.extractors.html#module-devana.preprocessing.components.extractors.attributeextractor">devana.preprocessing.components.extractors.attributeextractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.components.extractors.html#module-devana.preprocessing.components.extractors.commentextractor">devana.preprocessing.components.extractors.commentextractor</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="devana.preprocessing.components.property.html">devana.preprocessing.components.property</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="devana.preprocessing.components.property.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html">devana.preprocessing.components.property.parsers</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.attributeparser">devana.preprocessing.components.property.parsers.attributeparser</a></li>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.configuration">devana.preprocessing.components.property.parsers.configuration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.descriptions">devana.preprocessing.components.property.parsers.descriptions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.parser">devana.preprocessing.components.property.parsers.parser</a></li>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.result">devana.preprocessing.components.property.parsers.result</a></li>
-<li class="toctree-l4"><a class="reference internal" href="devana.preprocessing.components.property.parsers.html#module-devana.preprocessing.components.property.parsers.types">devana.preprocessing.components.property.parsers.types</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<span class="target" id="module-devana.preprocessing.components"></span><p>A collection of ready-made preprocessor elements such as ISource, IDestination and IGenerator implementations,
-as well as helper classes that allow you to implement your own preprocessor parts.</p>
-</section>
+  <section id="module-devana.preprocessing.premade.preprocessors">
+<span id="devana-preprocessing-premade-preprocessors"></span><h1>devana.preprocessing.premade.preprocessors<a class="headerlink" href="#module-devana.preprocessing.premade.preprocessors" title="Permalink to this heading"></a></h1>
+<p>Already constructed preprocessor or easy to usage sets of builders for your own version of preprocessor.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="devana.preprocessing.html" class="btn btn-neutral float-left" title="devana.preprocessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="devana.preprocessing.components.extractors.html" class="btn btn-neutral float-right" title="devana.preprocessing.components.extractors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="devana.preprocessing.premade.components.savers.html" class="btn btn-neutral float-left" title="devana.preprocessing.premade.components.savers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.syntax_abstraction.html" class="btn btn-neutral float-right" title="devana.syntax_abstraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, JhnW.</p>
+    <p>&#169; Copyright 2025, JhnW.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.default.functionprinter &mdash; devana 2.3.0 documentation</title>
+  <title>devana.code_generation.printers.default.functionprinter &mdash; devana 2.4.0 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/default/functionprinter.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -74,23 +74,23 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.code_generation.printers.default.functionprinter</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.icodeprinter</span> <span class="kn">import</span> <span class="n">ICodePrinter</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functioninfo</span> <span class="kn">import</span> <span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">FunctionModification</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.classinfo</span> <span class="kn">import</span> <span class="n">ClassInfo</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.externc</span> <span class="kn">import</span> <span class="n">ExternC</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.dispatcherinjectable</span> <span class="kn">import</span> <span class="n">DispatcherInjectable</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.configuration</span> <span class="kn">import</span> <span class="n">PrinterConfiguration</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.formatter</span> <span class="kn">import</span> <span class="n">Formatter</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.default.variableprinter</span> <span class="kn">import</span> <span class="n">VariablePrinter</span>
-<span class="kn">from</span> <span class="nn">.utilityprinters</span> <span class="kn">import</span> <span class="n">namespaces_string</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.icodeprinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ICodePrinter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.functioninfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">FunctionModification</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.classinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassInfo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.externc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExternC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.dispatcherinjectable</span><span class="w"> </span><span class="kn">import</span> <span class="n">DispatcherInjectable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">PrinterConfiguration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.formatter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Formatter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.default.variableprinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">VariablePrinter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilityprinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">namespaces_string</span>
 
 
-<div class="viewcode-block" id="FunctionPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.FunctionPrinter">[docs]</a><span class="k">class</span> <span class="nc">FunctionPrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
+<div class="viewcode-block" id="FunctionPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.FunctionPrinter">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionPrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">,</span> <span class="n">DispatcherInjectable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Printer for function declaration.&quot;&quot;&quot;</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_is_modification_scope</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_modification_scope</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine to print modifications only in class scope.&quot;&quot;&quot;</span>
         <span class="n">mod</span><span class="p">:</span> <span class="n">FunctionModification</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span>
         <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="n">is_explicit</span> <span class="ow">or</span> <span class="n">mod</span><span class="o">.</span><span class="n">is_final</span> <span class="ow">or</span> <span class="n">mod</span><span class="o">.</span><span class="n">is_virtual</span> <span class="ow">or</span> <span class="n">mod</span><span class="o">.</span><span class="n">is_override</span><span class="p">:</span>
@@ -98,7 +98,7 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="FunctionPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.FunctionPrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="FunctionPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.FunctionPrinter.print">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
               <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
@@ -117,6 +117,13 @@
                 <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">source</span><span class="p">))</span>
             <span class="n">parameters</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
             <span class="n">template_prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;template&lt;</span><span class="si">{</span><span class="n">parameters</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+            <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">requires</span><span class="p">:</span>
+                <span class="n">template_prefix</span> <span class="o">+=</span> <span class="s2">&quot; requires&quot;</span>
+                <span class="k">for</span> <span class="n">req</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">requires</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">template_prefix</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">req</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">continue</span>
+                    <span class="n">template_prefix</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
             <span class="n">specialisation_values</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -147,6 +154,13 @@
             <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">return_type</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">template_suffix</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">template_suffix</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">requires</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot; requires&quot;</span>
+            <span class="k">for</span> <span class="n">req</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">requires</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">req</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">continue</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">printer_dispatcher</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="k">if</span> <span class="n">source</span><span class="o">.</span><span class="n">modification</span><span class="o">.</span><span class="n">is_static</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;static &quot;</span> <span class="o">+</span> <span class="n">result</span>
@@ -217,10 +231,10 @@
         <span class="k">return</span> <span class="n">formatter</span><span class="o">.</span><span class="n">text</span></div></div>
 
 
-<div class="viewcode-block" id="ArgumentPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.ArgumentPrinter">[docs]</a><span class="k">class</span> <span class="nc">ArgumentPrinter</span><span class="p">(</span><span class="n">VariablePrinter</span><span class="p">):</span>
+<div class="viewcode-block" id="ArgumentPrinter"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.ArgumentPrinter">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ArgumentPrinter</span><span class="p">(</span><span class="n">VariablePrinter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Printer for arguments used in function declaration.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ArgumentPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.ArgumentPrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="o">.</span><span class="n">Argument</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="ArgumentPrinter.print"><a class="viewcode-back" href="../../../../../api/devana.code_generation.printers.default.html#devana.code_generation.printers.default.functionprinter.ArgumentPrinter.print">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">FunctionInfo</span><span class="o">.</span><span class="n">Argument</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
         <span class="n">attributes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
@@ -238,7 +252,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, JhnW.</p>
+    <p>&#169; Copyright 2025, JhnW.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

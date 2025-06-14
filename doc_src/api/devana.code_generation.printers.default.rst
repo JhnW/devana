@@ -35,6 +35,14 @@ devana.code\_generation.printers.default.commentprinter
    :undoc-members:
    :show-inheritance:
 
+devana.code\_generation.printers.default.conceptprinter
+-------------------------------------------------------
+
+.. automodule:: devana.code_generation.printers.default.conceptprinter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.code\_generation.printers.default.defaultprinter
 -------------------------------------------------------
 

@@ -1,0 +1,20 @@
+devana.preprocessing.premade.components.savers 
+===============================================
+
+
+
+devana.preprocessing.premade.components.savers.filesaver
+--------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.savers.filesaver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
+
+.. automodule:: devana.preprocessing.premade.components.savers
+   :members:
+   :undoc-members:
+   :show-inheritance:

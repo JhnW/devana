@@ -2,6 +2,40 @@ Changelog
 =========
 
 
+v2.4.0 (2025-06-14)
+-------------------
+
+New
+~~~
+- C++ concept initial support. [JhnW]
+
+  Early but fully functional version of C++20 concept support. Details may change such as representation of logical concept terms (or, end etc.) as more specific types than current strings and parameter specializations.
+  We don't expect any breaking changes in the future.
+- An example of using the preprocessor in a low-level way. [JhnW]
+
+  An example of using the preprocessor in a low-level way, without the auxiliary classes that build the preprocessor - because at the time it is added, they do not exist yet.
+- More ways to write floating point numbers for the preprocessor.
+  [Kuba_Z2]
+
+  Updated the preprocessor to handle floats with leading or trailing decimal points like .5, 7., -.5, -7., +.5, and +7.
+- Implementation of preprocessor components. [JhnW]
+
+  Ready-made elements from which you can create your own C++ preprocessor. In the future, more ready-made preprocessors, helper functions and additional functionalities will appear.
+- Basic implementation of saving files created by the processor. [JhnW]
+
+Fix
+~~~
+- Docstring SourceFile name fixed. [JhnW]
+- Minor example change. [JhnW]
+
+Other
+~~~~~
+- Pkg: chg: Version up. [JhnW]
+- Pkg: CI/CD python 3.12 welcome. [JhnW]
+- Pkg: CI/CD Ubuntu 24 welcome. [JhnW]
+- Pkg: Update pylint. [JhnW]
+
+
 v2.3.0 (2024-10-06)
 -------------------
 

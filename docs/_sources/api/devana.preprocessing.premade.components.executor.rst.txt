@@ -1,0 +1,44 @@
+devana.preprocessing.premade.components.executor 
+=================================================
+
+
+
+devana.preprocessing.premade.components.executor.editor
+-------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.executor.editor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.executor.environment
+------------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.executor.environment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.executor.executable
+-----------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.executor.executable
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.executor.executor
+---------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.executor.executor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
+
+.. automodule:: devana.preprocessing.premade.components.executor
+   :members:
+   :undoc-members:
+   :show-inheritance:

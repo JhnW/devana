@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.syntax_abstraction.namespaceinfo &mdash; devana 2.3.0 documentation</title>
+  <title>devana.syntax_abstraction.namespaceinfo &mdash; devana 2.4.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/syntax_abstraction/namespaceinfo.html" />
@@ -30,7 +30,7 @@
             <a href="../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,25 +74,25 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.syntax_abstraction.namespaceinfo</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">from</span> <span class="nn">clang</span> <span class="kn">import</span> <span class="n">cindex</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.codecontainer</span> <span class="kn">import</span> <span class="n">CodeContainer</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.organizers.lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.codepiece</span> <span class="kn">import</span> <span class="n">CodePiece</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.functioninfo</span> <span class="kn">import</span> <span class="n">FunctionInfo</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.comment</span> <span class="kn">import</span> <span class="n">Comment</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.attribute</span> <span class="kn">import</span> <span class="n">DescriptiveByAttributes</span><span class="p">,</span> <span class="n">AttributeDeclaration</span>
-<span class="kn">from</span> <span class="nn">devana.syntax_abstraction.syntax</span> <span class="kn">import</span> <span class="n">ISyntaxElement</span>
-<span class="kn">from</span> <span class="nn">devana.utility.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
-<span class="kn">from</span> <span class="nn">devana.utility.lazy</span> <span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
-<span class="kn">from</span> <span class="nn">devana.utility.init_params</span> <span class="kn">import</span> <span class="n">init_params</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">clang</span><span class="w"> </span><span class="kn">import</span> <span class="n">cindex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.organizers.codecontainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodeContainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.organizers.lexicon</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lexicon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.codepiece</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodePiece</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.functioninfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionInfo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.comment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Comment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.attribute</span><span class="w"> </span><span class="kn">import</span> <span class="n">DescriptiveByAttributes</span><span class="p">,</span> <span class="n">AttributeDeclaration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.syntax</span><span class="w"> </span><span class="kn">import</span> <span class="n">ISyntaxElement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.utility.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.utility.lazy</span><span class="w"> </span><span class="kn">import</span> <span class="n">LazyNotInit</span><span class="p">,</span> <span class="n">lazy_invoke</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.utility.init_params</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_params</span>
 
 
-<div class="viewcode-block" id="NamespaceInfo"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.namespaceinfo.NamespaceInfo">[docs]</a><span class="k">class</span> <span class="nc">NamespaceInfo</span><span class="p">(</span><span class="n">CodeContainer</span><span class="p">,</span> <span class="n">DescriptiveByAttributes</span><span class="p">):</span>
+<div class="viewcode-block" id="NamespaceInfo"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.namespaceinfo.NamespaceInfo">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NamespaceInfo</span><span class="p">(</span><span class="n">CodeContainer</span><span class="p">,</span> <span class="n">DescriptiveByAttributes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Object representation of current scope namespace, for example usage in file or global namespace with all</span>
 <span class="sd">    namespaces component placed in many files.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodeContainer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodeContainer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cursor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span> <span class="o">=</span> <span class="kc">None</span>
@@ -108,7 +108,7 @@
 
 <div class="viewcode-block" id="NamespaceInfo.from_params"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.namespaceinfo.NamespaceInfo.from_params">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="nd">@init_params</span><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parent&quot;</span><span class="p">})</span>
-    <span class="k">def</span> <span class="nf">from_params</span><span class="p">(</span> <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_params</span><span class="p">(</span> <span class="c1"># pylint: disable=unused-argument, too-many-positional-arguments</span>
             <span class="bp">cls</span><span class="p">,</span>
             <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ISyntaxElement</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -121,36 +121,36 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NamespaceInfo.is_cursor_valid"><a class="viewcode-back" href="../../../api/devana.syntax_abstraction.html#devana.syntax_abstraction.namespaceinfo.NamespaceInfo.is_cursor_valid">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_cursor_valid</span><span class="p">(</span><span class="n">cursor</span><span class="p">:</span> <span class="n">cindex</span><span class="o">.</span><span class="n">Cursor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">cindex</span><span class="o">.</span><span class="n">CursorKind</span><span class="o">.</span><span class="n">NAMESPACE</span></div>
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="o">.</span><span class="n">displayname</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
 
     <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodePiece</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CodePiece</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Source of this element.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span> <span class="o">=</span> <span class="n">CodePiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_source</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Lexicon</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Lexicon</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span>
 
     <span class="nd">@lexicon</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lexicon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexicon</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
     <span class="nd">@lazy_invoke</span>
-    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Comment</span><span class="p">]:</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
         <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;bind_comment&quot;</span><span class="p">):</span>
@@ -161,25 +161,26 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@associated_comment</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">associated_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_associated_comment</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_content_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_content_types</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
         <span class="c1"># pylint: disable=import-outside-toplevel</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.usingnamespace</span> <span class="kn">import</span> <span class="n">UsingNamespace</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.using</span> <span class="kn">import</span> <span class="n">Using</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.classinfo</span> <span class="kn">import</span> <span class="n">ClassInfo</span><span class="p">,</span> <span class="n">MethodInfo</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.enuminfo</span> <span class="kn">import</span> <span class="n">EnumInfo</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.typedefinfo</span> <span class="kn">import</span> <span class="n">TypedefInfo</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.variable</span> <span class="kn">import</span> <span class="n">GlobalVariable</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.unioninfo</span> <span class="kn">import</span> <span class="n">UnionInfo</span>
-        <span class="kn">from</span> <span class="nn">devana.syntax_abstraction.externc</span> <span class="kn">import</span> <span class="n">ExternC</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.usingnamespace</span><span class="w"> </span><span class="kn">import</span> <span class="n">UsingNamespace</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.using</span><span class="w"> </span><span class="kn">import</span> <span class="n">Using</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.classinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassInfo</span><span class="p">,</span> <span class="n">MethodInfo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.enuminfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnumInfo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.typedefinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedefInfo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.variable</span><span class="w"> </span><span class="kn">import</span> <span class="n">GlobalVariable</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.unioninfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnionInfo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.externc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExternC</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">devana.syntax_abstraction.conceptinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConceptInfo</span>
         <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">FunctionInfo</span><span class="p">,</span> <span class="n">NamespaceInfo</span><span class="p">,</span> <span class="n">UsingNamespace</span><span class="p">,</span> <span class="n">ClassInfo</span><span class="p">,</span> <span class="n">EnumInfo</span><span class="p">,</span> <span class="n">TypedefInfo</span><span class="p">,</span> <span class="n">MethodInfo</span><span class="p">,</span> <span class="n">UnionInfo</span><span class="p">,</span>
-                 <span class="n">GlobalVariable</span><span class="p">,</span> <span class="n">ExternC</span><span class="p">,</span> <span class="n">Using</span><span class="p">]</span>
+                 <span class="n">GlobalVariable</span><span class="p">,</span> <span class="n">ExternC</span><span class="p">,</span> <span class="n">Using</span><span class="p">,</span> <span class="n">ConceptInfo</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">types</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 </pre></div>
 
@@ -190,7 +191,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, JhnW.</p>
+    <p>&#169; Copyright 2025, JhnW.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

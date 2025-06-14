@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.premade.components.parser &mdash; devana 2.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.premade.components.parser.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="devana.preprocessing.premade.components.savers" href="devana.preprocessing.premade.components.savers.html" />
+    <link rel="prev" title="devana.preprocessing.premade.components.executor" href="devana.preprocessing.premade.components.executor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_start.html">How to start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="devana.html">devana</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="devana.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.utility.html">devana.utility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="devana.html#module-devana.configuration">devana.configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">API reference</a> &raquo;</li>
+          <li><a href="devana.html">devana</a> &raquo;</li>
+          <li><a href="devana.preprocessing.html">devana.preprocessing</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.html">devana.preprocessing.premade</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.components.html">devana.preprocessing.premade.components</a> &raquo;</li>
+      <li>devana.preprocessing.premade.components.parser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="devana-preprocessing-premade-components-parser">
+<h1>devana.preprocessing.premade.components.parser<a class="headerlink" href="#devana-preprocessing-premade-components-parser" title="Permalink to this heading"></a></h1>
+<section id="module-devana.preprocessing.premade.components.parser.argumentsparser">
+<span id="devana-preprocessing-premade-components-parser-argumentsparser"></span><h2>devana.preprocessing.premade.components.parser.argumentsparser<a class="headerlink" href="#module-devana.preprocessing.premade.components.parser.argumentsparser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArgumentGenericTypeParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_creator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ArgumentGenericTypeParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable" title="devana.preprocessing.premade.components.parser.argumentsparser.IParsable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsable</span></code></a></p>
+<p>Universal type parser created based on regex and callback function or based on enum to create enum parser.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser.create_from_enum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_enum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enum</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ArgumentGenericTypeParser.create_from_enum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser.create_from_enum" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatcher</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ArgumentGenericTypeParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ArgumentGenericTypeParser.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Should get text and return parsed token as python value (except named argument - it is a dictionary).
+This method should call dispatcher argument with the rest of the text string to allow to parse
+the whole text with recursion. For example [value, <a href="#id1"><span class="problematic" id="id2">*</span></a>dispatcher(test_text)] is a typical return value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.NoValue" title="devana.preprocessing.premade.components.parser.argumentsparser.NoValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoValue</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ArgumentsParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArgumentsParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extra_parsers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ArgumentsParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ArgumentsParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper class to parse function arguments (provided as text) and return list of python values.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ArgumentsParser.tokenize">
+<span class="sig-name descname"><span class="pre">tokenize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ArgumentsParser.tokenize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ArgumentsParser.tokenize" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.IParsable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IParsable</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#IParsable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for parsable token element.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.IParsable.end_pattern">
+<span class="sig-name descname"><span class="pre">end_pattern</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\\s*((?P&lt;comma&gt;,.*)|(?P&lt;empty&gt;\\s*))$'</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable.end_pattern" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.IParsable.parse">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatcher</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#IParsable.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Should get text and return parsed token as python value (except named argument - it is a dictionary).
+This method should call dispatcher argument with the rest of the text string to allow to parse
+the whole text with recursion. For example [value, <a href="#id3"><span class="problematic" id="id4">*</span></a>dispatcher(test_text)] is a typical return value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.NoValue" title="devana.preprocessing.premade.components.parser.argumentsparser.NoValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoValue</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ListArgumentParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ListArgumentParser</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ListArgumentParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ListArgumentParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable" title="devana.preprocessing.premade.components.parser.argumentsparser.IParsable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsable</span></code></a></p>
+<p>Implementation of a parsing list type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.ListArgumentParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatcher</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#ListArgumentParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.ListArgumentParser.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Should get text and return parsed token as python value (except named argument - it is a dictionary).
+This method should call dispatcher argument with the rest of the text string to allow to parse
+the whole text with recursion. For example [value, <a href="#id5"><span class="problematic" id="id6">*</span></a>dispatcher(test_text)] is a typical return value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.NoValue" title="devana.preprocessing.premade.components.parser.argumentsparser.NoValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoValue</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.NameArgumentParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NameArgumentParser</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#NameArgumentParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.NameArgumentParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.IParsable" title="devana.preprocessing.premade.components.parser.argumentsparser.IParsable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IParsable</span></code></a></p>
+<p>Implementation of parsing named argument like name=value.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.NameArgumentParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatcher</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#NameArgumentParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.NameArgumentParser.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Should get text and return parsed token as python value (except named argument - it is a dictionary).
+This method should call dispatcher argument with the rest of the text string to allow to parse
+the whole text with recursion. For example [value, <a href="#id7"><span class="problematic" id="id8">*</span></a>dispatcher(test_text)] is a typical return value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.argumentsparser.NoValue" title="devana.preprocessing.premade.components.parser.argumentsparser.NoValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoValue</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.argumentsparser.NoValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NoValue</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/argumentsparser.html#NoValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.argumentsparser.NoValue" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Stub class to not-find argument token. We can’t use None because None is a valid value.</p>
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.parser.extractor">
+<span id="devana-preprocessing-premade-components-parser-extractor"></span><h2>devana.preprocessing.premade.components.parser.extractor<a class="headerlink" href="#module-devana.preprocessing.premade.components.parser.extractor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.CommentExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CommentExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modules</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/extractor.html#CommentExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.CommentExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.parser.extractor.IExtractor" title="devana.preprocessing.premade.components.parser.extractor.IExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">IExtractor</span></code></a></p>
+<p>This function extracts function parsable data from comments in C++ source files.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.CommentExtractor.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/extractor.html#CommentExtractor.extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.CommentExtractor.extract" title="Permalink to this definition"></a></dt>
+<dd><p>Extract from source - managed by this class - to specifics data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.extractor.ExtractedFunction" title="devana.preprocessing.premade.components.parser.extractor.ExtractedFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtractedFunction</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.ExtractedFunction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExtractedFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/extractor.html#ExtractedFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.ExtractedFunction" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>One line (can contain none, one or more functions) of text and parent of this line.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.ExtractedFunction.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><span class="pre">ISyntaxElement</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.ExtractedFunction.parent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.ExtractedFunction.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.ExtractedFunction.text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.IExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IExtractor</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/extractor.html#IExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.IExtractor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for extract functions strings to parser.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.extractor.IExtractor.extract">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/extractor.html#IExtractor.extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.extractor.IExtractor.extract" title="Permalink to this definition"></a></dt>
+<dd><p>Extract from source - managed by this class - to specifics data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.extractor.ExtractedFunction" title="devana.preprocessing.premade.components.parser.extractor.ExtractedFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtractedFunction</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.parser.functionparser">
+<span id="devana-preprocessing-premade-components-parser-functionparser"></span><h2>devana.preprocessing.premade.components.parser.functionparser<a class="headerlink" href="#module-devana.preprocessing.premade.components.parser.functionparser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionEntity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FunctionEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/functionparser.html#FunctionEntity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parsing function information, argument are provided as string for another parser.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.arguments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.namespaces">
+<span class="sig-name descname"><span class="pre">namespaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity.namespaces" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FunctionParser</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/functionparser.html#FunctionParser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class realized parsing function.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transactions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_enter=&lt;function</span> <span class="pre">FunctionParser.State.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_exit=&lt;function</span> <span class="pre">FunctionParser.State.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_self=&lt;function</span> <span class="pre">FunctionParser.State.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/functionparser.html#FunctionParser.State"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>State information of parser.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_enter">
+<span class="sig-name descname"><span class="pre">on_enter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_enter" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_exit">
+<span class="sig-name descname"><span class="pre">on_exit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_exit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_self">
+<span class="sig-name descname"><span class="pre">on_self</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.on_self" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.transactions">
+<span class="sig-name descname"><span class="pre">transactions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName" title="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName"><span class="pre">StateName</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.State.transactions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StateName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/functionparser.html#FunctionParser.StateName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Name of state.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.ARGS">
+<span class="sig-name descname"><span class="pre">ARGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.ARGS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.END">
+<span class="sig-name descname"><span class="pre">END</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.END" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.FUNCTION_SEPARATOR">
+<span class="sig-name descname"><span class="pre">FUNCTION_SEPARATOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.FUNCTION_SEPARATOR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.NAMESPACE">
+<span class="sig-name descname"><span class="pre">NAMESPACE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.NAMESPACE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.NAMESPACE_SEPARATOR">
+<span class="sig-name descname"><span class="pre">NAMESPACE_SEPARATOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.NAMESPACE_SEPARATOR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.SEARCH">
+<span class="sig-name descname"><span class="pre">SEARCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.SEARCH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.STRING">
+<span class="sig-name descname"><span class="pre">STRING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.STRING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.STRING_ESCAPE">
+<span class="sig-name descname"><span class="pre">STRING_ESCAPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.StateName.STRING_ESCAPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.functionparser.FunctionParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/functionparser.html#FunctionParser.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionParser.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Parse line to find functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.parser.functionparser.FunctionEntity" title="devana.preprocessing.premade.components.parser.functionparser.FunctionEntity"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionEntity</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.parser.parser">
+<span id="devana-preprocessing-premade-components-parser-parser"></span><h2>devana.preprocessing.premade.components.parser.parser<a class="headerlink" href="#module-devana.preprocessing.premade.components.parser.parser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.parser.Parser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Parser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extractor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signatures</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/parser.html#Parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.parser.Parser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="devana.preprocessing.html#devana.preprocessing.preprocessor.ISource" title="devana.preprocessing.preprocessor.ISource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISource</span></code></a></p>
+<p>Parser of preprocessor functions given as string. Extractor must provide string of function, or example,
+from source code.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.parser.Parser.feed">
+<span class="sig-name descname"><span class="pre">feed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/parser.html#Parser.feed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.parser.Parser.feed" title="Permalink to this definition"></a></dt>
+<dd><p>Create data, one by one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">CallingData</span></code>[<a class="reference internal" href="devana.syntax_abstraction.html#devana.syntax_abstraction.syntax.ISyntaxElement" title="devana.syntax_abstraction.syntax.ISyntaxElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISyntaxElement</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.parser.Parser.get_produced_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_produced_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/parser.html#Parser.get_produced_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.parser.Parser.get_produced_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies a result type, typically as an interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.parser.typechecker">
+<span id="devana-preprocessing-premade-components-parser-typechecker"></span><h2>devana.preprocessing.premade.components.parser.typechecker<a class="headerlink" href="#module-devana.preprocessing.premade.components.parser.typechecker" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.typechecker.is_arguments_valid">
+<span class="sig-name descname"><span class="pre">is_arguments_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">given</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/typechecker.html#is_arguments_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.typechecker.is_arguments_valid" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.parser.typechecker.is_type_valid">
+<span class="sig-name descname"><span class="pre">is_type_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maybe_hint</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/parser/typechecker.html#is_type_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.parser.typechecker.is_type_valid" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-devana.preprocessing.premade.components.parser"></span><p>Components for create your own function calls parser for preprocessor.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devana.preprocessing.premade.components.executor.html" class="btn btn-neutral float-left" title="devana.preprocessing.premade.components.executor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.preprocessing.premade.components.savers.html" class="btn btn-neutral float-right" title="devana.preprocessing.premade.components.savers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
