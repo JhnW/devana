@@ -1,0 +1,9 @@
+devana.preprocessing.premade.preprocessors 
+===========================================
+
+
+
+.. automodule:: devana.preprocessing.premade.preprocessors
+   :members:
+   :undoc-members:
+   :show-inheritance:

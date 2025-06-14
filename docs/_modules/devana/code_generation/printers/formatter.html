@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.formatter &mdash; devana 2.3.0 documentation</title>
+  <title>devana.code_generation.printers.formatter &mdash; devana 2.4.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/formatter.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -74,50 +74,50 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.code_generation.printers.formatter</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">devana.code_generation.printers.configuration</span> <span class="kn">import</span> <span class="n">PrinterConfiguration</span><span class="p">,</span> <span class="n">Indent</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">PrinterConfiguration</span><span class="p">,</span> <span class="n">Indent</span>
 
 
-<div class="viewcode-block" id="Formatter"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter">[docs]</a><span class="k">class</span> <span class="nc">Formatter</span><span class="p">:</span>
+<div class="viewcode-block" id="Formatter"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Formatter</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A class that helps create text strings based on a known configuration.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PrinterConfiguration</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PrinterConfiguration</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="p">:</span> <span class="n">PrinterConfiguration</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Current processing line.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line</span>
 
     <span class="nd">@line</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Formatter.next_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.next_line">[docs]</a>    <span class="k">def</span> <span class="nf">next_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Formatter.next_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.next_line">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">next_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Format current processing line indent and newline character, next append it to text.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="o">.</span><span class="n">format_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_line</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="Formatter.accumulate_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.accumulate_line">[docs]</a>    <span class="k">def</span> <span class="nf">accumulate_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Formatter.accumulate_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.accumulate_line">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">accumulate_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append current processing line to text without formatting.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Result text.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Indent</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">indent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Indent</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="o">.</span><span class="n">indent</span>
 
-<div class="viewcode-block" id="Formatter.print_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.print_line">[docs]</a>    <span class="k">def</span> <span class="nf">print_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format next part of text and accumulate this to text.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Formatter.print_line"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.print_line">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format the next part of text and accumulate this to text.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cfg</span><span class="o">.</span><span class="n">format_line</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Formatter.clear"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Formatter.clear"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.formatter.Formatter.clear">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear formatter state.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div></div>
@@ -130,7 +130,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, JhnW.</p>
+    <p>&#169; Copyright 2025, JhnW.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

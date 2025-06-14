@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.premade.components.executor &mdash; devana 2.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.premade.components.executor.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="devana.preprocessing.premade.components.parser" href="devana.preprocessing.premade.components.parser.html" />
+    <link rel="prev" title="devana.preprocessing.premade.components" href="devana.preprocessing.premade.components.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_start.html">How to start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="devana.html">devana</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="devana.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.utility.html">devana.utility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="devana.html#module-devana.configuration">devana.configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">API reference</a> &raquo;</li>
+          <li><a href="devana.html">devana</a> &raquo;</li>
+          <li><a href="devana.preprocessing.html">devana.preprocessing</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.html">devana.preprocessing.premade</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.components.html">devana.preprocessing.premade.components</a> &raquo;</li>
+      <li>devana.preprocessing.premade.components.executor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="devana-preprocessing-premade-components-executor">
+<h1>devana.preprocessing.premade.components.executor<a class="headerlink" href="#devana-preprocessing-premade-components-executor" title="Permalink to this heading"></a></h1>
+<section id="module-devana.preprocessing.premade.components.executor.editor">
+<span id="devana-preprocessing-premade-components-executor-editor"></span><h2>devana.preprocessing.premade.components.executor.editor<a class="headerlink" href="#module-devana.preprocessing.premade.components.executor.editor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.IEditable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IEditable</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/editor.html#IEditable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Basic interface for an object to an edition in the context of calling preprocessor.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.IEditable.destiny">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">destiny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><span class="pre">IDestiny</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.IEditable.destiny" title="Permalink to this definition"></a></dt>
+<dd><p>Should give information of destiny of content.
+If an editable object has similarity information inside it, this property has higher priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDestiny</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.IEditable.editable">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">editable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.IEditable.editable" title="Permalink to this definition"></a></dt>
+<dd><p>Should return an editable object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileDestiny">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SourceFileDestiny</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/editor.html#SourceFileDestiny"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileDestiny" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDestiny</span></code></a></p>
+<p>Source file destiny to using editable parent information and code printer to generate content.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.content">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.content" title="Permalink to this definition"></a></dt>
+<dd><p>The contents of the file as test - it will be saved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the file, including the extension. This will be used to save as the file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.path_prefix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileDestiny.path_prefix" title="Permalink to this definition"></a></dt>
+<dd><p>If set, it will be added to the root write path after which further path modifications are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileEditor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SourceFileEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/editor.html#SourceFileEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileEditor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditable</span></code></a></p>
+<p>Implementation fof C/C++ source file.
+Please remember that name, path and other information like that from source file instance will be ignored in the
+context of destiny.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileEditor.destiny">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">destiny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><span class="pre">IDestiny</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileEditor.destiny" title="Permalink to this definition"></a></dt>
+<dd><p>Should give information of destiny of content.
+If an editable object has similarity information inside it, this property has higher priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDestiny</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.editor.SourceFileEditor.editable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">editable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.editor.SourceFileEditor.editable" title="Permalink to this definition"></a></dt>
+<dd><p>Should return an editable object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.executor.environment">
+<span id="devana-preprocessing-premade-components-executor-environment"></span><h2>devana.preprocessing.premade.components.executor.environment<a class="headerlink" href="#module-devana.preprocessing.premade.components.executor.environment" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">executables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calling_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>An environment is a set of multiple Executables into one group that share the same context during execution.
+It is used to group calls to allow working on a common output.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.CallingData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CallingData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signature</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment.CallingData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.CallingData" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Data for a single Executable call based on which the CallFrame will be created.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.CallingData.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments" title="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments"><span class="pre">Arguments</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.CallingData.arguments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.CallingData.signature">
+<span class="sig-name descname"><span class="pre">signature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.Signature" title="devana.preprocessing.premade.components.executor.executable.Signature"><span class="pre">Signature</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.CallingData.signature" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.CallingData.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.CallingData.target" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.Context">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">editors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment.Context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.Context" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">IContext</span></code></a></p>
+<p>Internal implementation of IContext.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.Context.editors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">editors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><span class="pre">IEditable</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.Context.editors" title="Permalink to this definition"></a></dt>
+<dd><p>Returns list of all editors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditable</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.Context.get_editor">
+<span class="sig-name descname"><span class="pre">get_editor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment.Context.get_editor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.Context.get_editor" title="Permalink to this definition"></a></dt>
+<dd><p>Returns by name the identifier of the mutable object used as the output artifact of the executable.
+In the case of multiple executables sharing the same context (typical case), the object will be shared.
+It is allowed to throw an exception in case of non-existent editors or to create an editor. The first
+approach is recommended, leaving the creation of the contexts’ content to the executable grouping class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditable</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.Context.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment.Context.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.Context.get_state" title="Permalink to this definition"></a></dt>
+<dd><p>Returns by name, which is the identifier of an immutable object used as general configuration information
+for the given context. It is allowed and recommended to throw an exception when the object with the
+requested identifier does not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#Environment.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.call" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.Environment.context">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext"><span class="pre">IContext</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.Environment.context" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">IContext</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.EnvironmentCreator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EnvironmentCreator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">creator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#EnvironmentCreator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.EnvironmentCreator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Helper class to take care an environment creation process.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.environment.EnvironmentCreator.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/environment.html#EnvironmentCreator.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.environment.EnvironmentCreator.create" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.executor.environment.Environment" title="devana.preprocessing.premade.components.executor.environment.Environment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.executor.executable">
+<span id="devana-preprocessing-premade-components-executor-executable"></span><h2>devana.preprocessing.premade.components.executor.executable<a class="headerlink" href="#module-devana.preprocessing.premade.components.executor.executable" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CallFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Calling data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positional=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">named=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame.Arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Calling arguments.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame.Arguments.Value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The current value of the argument with which it will be called.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value.content">
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value.content" title="Permalink to this definition"></a></dt>
+<dd><p>Python value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value.type" title="Permalink to this definition"></a></dt>
+<dd><p>Python type of content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.named">
+<span class="sig-name descname"><span class="pre">named</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value" title="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value"><span class="pre">Value</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.named" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary of named argument types - those that do not have a clearly defined order and the user can.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.positional">
+<span class="sig-name descname"><span class="pre">positional</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value" title="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.Value"><span class="pre">Value</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments.positional" title="Permalink to this definition"></a></dt>
+<dd><p>A list of types, in order of appearance of the positional arguments they take.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IContext</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame.IContext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>A description of the current function call context. This is used to share common state between calls to
+multiple executables, for example, to allow multiple executables to work on the contents of a single file.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.editors">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">editors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><span class="pre">IEditable</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.editors" title="Permalink to this definition"></a></dt>
+<dd><p>Returns list of all editors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditable</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.get_editor">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_editor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame.IContext.get_editor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.get_editor" title="Permalink to this definition"></a></dt>
+<dd><p>Returns by name the identifier of the mutable object used as the output artifact of the executable.
+In the case of multiple executables sharing the same context (typical case), the object will be shared.
+It is allowed to throw an exception in case of non-existent editors or to create an editor. The first
+approach is recommended, leaving the creation of the contexts’ content to the executable grouping class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.editor.IEditable" title="devana.preprocessing.premade.components.executor.editor.IEditable"><code class="xref py py-class docutils literal notranslate"><span class="pre">IEditable</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.get_state">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#CallFrame.IContext.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext.get_state" title="Permalink to this definition"></a></dt>
+<dd><p>Returns by name, which is the identifier of an immutable object used as general configuration information
+for the given context. It is allowed and recommended to throw an exception when the object with the
+requested identifier does not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.arguments">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments" title="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments"><span class="pre">Arguments</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.arguments" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments" title="devana.preprocessing.premade.components.executor.executable.CallFrame.Arguments"><code class="xref py py-class docutils literal notranslate"><span class="pre">Arguments</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.context">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext"><span class="pre">IContext</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.context" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.IContext" title="devana.preprocessing.premade.components.executor.executable.CallFrame.IContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">IContext</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.CallFrame.target">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.CallFrame.target" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Executable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Executable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Basic, executable fragment. The function should take all arguments listed in the signature, preserve
+names of non-positional parameters and the order of positional arguments, and take a context instance as the
+first argument.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable.TargetScope">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TargetScope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Executable.TargetScope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable.TargetScope" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
+<p>Configuration of the current scope. The template specialization denotes what type the target’s base type
+is in the inheritance ladder.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable.TargetScope.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable.TargetScope.target" title="Permalink to this definition"></a></dt>
+<dd><p>The specific requested type supported by the scope. If none, the is more generic.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Executable.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable.call" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable.scope">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TargetScope</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable.scope" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetScope</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">T</span></code>)]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Executable.signature">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">signature</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.Signature" title="devana.preprocessing.premade.components.executor.executable.Signature"><span class="pre">Signature</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Executable.signature" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.Signature" title="devana.preprocessing.premade.components.executor.executable.Signature"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signature</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Invoking target identification data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.Arguments">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positional=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">named=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Signature.Arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.Arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Description of the arguments accepted by executable.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.Arguments.named">
+<span class="sig-name descname"><span class="pre">named</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.Arguments.named" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary of named argument types - those that do not have a clearly defined order and the user can
+access them by name. In the current version, it is assumed that each positional argument must have
+a default value (not included in the signature).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.Arguments.positional">
+<span class="sig-name descname"><span class="pre">positional</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Type</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.Arguments.positional" title="Permalink to this definition"></a></dt>
+<dd><p>A list of types, in order of appearance of the positional arguments they take
+- those that cannot be accessed by name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.Signature.Arguments" title="devana.preprocessing.premade.components.executor.executable.Signature.Arguments"><span class="pre">Arguments</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Description of the arguments accepted by executable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.from_function">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executable.html#Signature.from_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.from_function" title="Permalink to this definition"></a></dt>
+<dd><p>Create a Signature from a function. Type hints for all function parameters are required.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.executor.executable.Signature" title="devana.preprocessing.premade.components.executor.executable.Signature"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signature</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executable.Signature.namespaces">
+<span class="sig-name descname"><span class="pre">namespaces</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executable.Signature.namespaces" title="Permalink to this definition"></a></dt>
+<dd><p>List of supported namespaces, in order from outermost. It is recommended to use at least one
+‘devana’ namespace (or the name of your preprocessor) to get better support for data sources
+such as c++ attributes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-devana.preprocessing.premade.components.executor.executor">
+<span id="devana-preprocessing-premade-components-executor-executor"></span><h2>devana.preprocessing.premade.components.executor.executor<a class="headerlink" href="#module-devana.preprocessing.premade.components.executor.executor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executor.Executor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">creator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executables</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executor.html#Executor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executor.Executor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>], <a class="reference internal" href="devana.preprocessing.html#devana.preprocessing.preprocessor.IGenerator" title="devana.preprocessing.preprocessor.IGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGenerator</span></code></a></p>
+<p>An object that executes all user function commands within the processing framework in its own context.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executor.Executor.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executor.html#Executor.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executor.Executor.generate" title="Permalink to this definition"></a></dt>
+<dd><p>Generate data like generate code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="devana.preprocessing.premade.components.savers.html#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDestiny</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executor.Executor.get_produced_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_produced_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executor.html#Executor.get_produced_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executor.Executor.get_produced_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies a result type, typically as an interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.executor.executor.Executor.get_required_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_required_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/executor/executor.html#Executor.get_required_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.executor.executor.Executor.get_required_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies the required input type. In common cases should be interfaced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-devana.preprocessing.premade.components.executor"></span><p>Component to create runtime to handle calling hooks and do core preprocessor job.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devana.preprocessing.premade.components.html" class="btn btn-neutral float-left" title="devana.preprocessing.premade.components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.preprocessing.premade.components.parser.html" class="btn btn-neutral float-right" title="devana.preprocessing.premade.components.parser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

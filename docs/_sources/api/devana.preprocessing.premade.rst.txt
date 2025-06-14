@@ -1,0 +1,17 @@
+devana.preprocessing.premade 
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   devana.preprocessing.premade.components
+   devana.preprocessing.premade.preprocessors
+
+
+
+.. automodule:: devana.preprocessing.premade
+   :members:
+   :undoc-members:
+   :show-inheritance:

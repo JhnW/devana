@@ -1,0 +1,52 @@
+devana.preprocessing.premade.components.parser 
+===============================================
+
+
+
+devana.preprocessing.premade.components.parser.argumentsparser
+--------------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.parser.argumentsparser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.parser.extractor
+--------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.parser.extractor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.parser.functionparser
+-------------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.parser.functionparser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.parser.parser
+-----------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.parser.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+devana.preprocessing.premade.components.parser.typechecker
+----------------------------------------------------------
+
+.. automodule:: devana.preprocessing.premade.components.parser.typechecker
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
+
+.. automodule:: devana.preprocessing.premade.components.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:

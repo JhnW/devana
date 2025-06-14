@@ -6,7 +6,7 @@ Subpackages
 
 .. toctree::
 
-   devana.preprocessing.components
+   devana.preprocessing.premade
 
 
 

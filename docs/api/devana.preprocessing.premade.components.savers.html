@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devana.preprocessing.premade.components.savers &mdash; devana 2.4.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://jhnw.github.io/devana/api/devana.preprocessing.premade.components.savers.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="devana.preprocessing.premade.preprocessors" href="devana.preprocessing.premade.preprocessors.html" />
+    <link rel="prev" title="devana.preprocessing.premade.components.parser" href="devana.preprocessing.premade.components.parser.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> devana
+          </a>
+              <div class="version">
+                2.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Devana</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_start.html">How to start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="devana.html">devana</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="devana.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="devana.code_generation.html">devana.code_generation</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="devana.preprocessing.html">devana.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.syntax_abstraction.html">devana.syntax_abstraction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="devana.utility.html">devana.utility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="devana.html#module-devana.configuration">devana.configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance.html">Maintenance</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">devana</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">API reference</a> &raquo;</li>
+          <li><a href="devana.html">devana</a> &raquo;</li>
+          <li><a href="devana.preprocessing.html">devana.preprocessing</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.html">devana.preprocessing.premade</a> &raquo;</li>
+          <li><a href="devana.preprocessing.premade.components.html">devana.preprocessing.premade.components</a> &raquo;</li>
+      <li>devana.preprocessing.premade.components.savers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="devana-preprocessing-premade-components-savers">
+<h1>devana.preprocessing.premade.components.savers<a class="headerlink" href="#devana-preprocessing-premade-components-savers" title="Permalink to this heading"></a></h1>
+<section id="module-devana.preprocessing.premade.components.savers.filesaver">
+<span id="devana-preprocessing-premade-components-savers-filesaver"></span><h2>devana.preprocessing.premade.components.savers.filesaver<a class="headerlink" href="#module-devana.preprocessing.premade.components.savers.filesaver" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileSaver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/savers/filesaver.html#FileSaver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="devana.preprocessing.html#devana.preprocessing.preprocessor.IDestination" title="devana.preprocessing.preprocessor.IDestination"><code class="xref py py-class docutils literal notranslate"><span class="pre">IDestination</span></code></a></p>
+<p>Implementation that provides text file saving. It supports dynamically generated paths
+(in real use, probably based on the file extension extracted from the name) and supports defined path prefixes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_prefix_generator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/savers/filesaver.html#FileSaver.Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Core FileSaver configuration</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration.path_prefix_generator">
+<span class="sig-name descname"><span class="pre">path_prefix_generator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="devana.preprocessing.premade.components.savers.filesaver.IDestiny"><span class="pre">IDestiny</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration.path_prefix_generator" title="Permalink to this definition"></a></dt>
+<dd><p>If it exists, the function is called for each IDestiny and the generated prefix is
+appended after the fixed prefix from the IDestiny.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration.root_path">
+<span class="sig-name descname"><span class="pre">root_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration.root_path" title="Permalink to this definition"></a></dt>
+<dd><p>Base path relative to which prefixes are added.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.configuration">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configuration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration" title="devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration"><span class="pre">Configuration</span></a></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.configuration" title="Permalink to this definition"></a></dt>
+<dd><p>Current configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration" title="devana.preprocessing.premade.components.savers.filesaver.FileSaver.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configuration</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.consume">
+<span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/savers/filesaver.html#FileSaver.consume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.consume" title="Permalink to this definition"></a></dt>
+<dd><p>Consume data from generator and save it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="devana.preprocessing.html#devana.preprocessing.preprocessor.IDestination.Artifacts" title="devana.preprocessing.preprocessor.IDestination.Artifacts"><code class="xref py py-class docutils literal notranslate"><span class="pre">Artifacts</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.FileSaver.get_required_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_required_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/savers/filesaver.html#FileSaver.get_required_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.FileSaver.get_required_type" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies the required input type. In common cases should be interfaced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.IDestiny">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IDestiny</span></span><a class="reference internal" href="../_modules/devana/preprocessing/premade/components/savers/filesaver.html#IDestiny"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.IDestiny" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>The basic element on which FileSaver operates.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.IDestiny.content">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.IDestiny.content" title="Permalink to this definition"></a></dt>
+<dd><p>The contents of the file as test - it will be saved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.IDestiny.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.IDestiny.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the file, including the extension. This will be used to save as the file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="devana.preprocessing.premade.components.savers.filesaver.IDestiny.path_prefix">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#devana.preprocessing.premade.components.savers.filesaver.IDestiny.path_prefix" title="Permalink to this definition"></a></dt>
+<dd><p>If set, it will be added to the root write path after which further path modifications are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-devana.preprocessing.premade.components.savers"></span><p>Classes that implement the interface to provide file writing functionality.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devana.preprocessing.premade.components.parser.html" class="btn btn-neutral float-left" title="devana.preprocessing.premade.components.parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="devana.preprocessing.premade.preprocessors.html" class="btn btn-neutral float-right" title="devana.preprocessing.premade.preprocessors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, JhnW.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

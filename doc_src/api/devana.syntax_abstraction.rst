@@ -50,6 +50,14 @@ devana.syntax\_abstraction.comment
    :undoc-members:
    :show-inheritance:
 
+devana.syntax\_abstraction.conceptinfo
+--------------------------------------
+
+.. automodule:: devana.syntax_abstraction.conceptinfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 devana.syntax\_abstraction.enuminfo
 -----------------------------------
 

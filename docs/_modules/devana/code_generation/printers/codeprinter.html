@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>devana.code_generation.printers.codeprinter &mdash; devana 2.3.0 documentation</title>
+  <title>devana.code_generation.printers.codeprinter &mdash; devana 2.4.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://jhnw.github.io/devana/_modules/devana/code_generation/printers/codeprinter.html" />
@@ -30,7 +30,7 @@
             <a href="../../../../index.html" class="icon icon-home"> devana
           </a>
               <div class="version">
-                2.3
+                2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -74,34 +74,34 @@
            <div itemprop="articleBody">
              
   <h1>Source code for devana.code_generation.printers.codeprinter</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.icodeprinter</span> <span class="kn">import</span> <span class="n">ICodePrinter</span>
-<span class="kn">from</span> <span class="nn">devana.code_generation.printers.configuration</span> <span class="kn">import</span> <span class="n">PrinterConfiguration</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.icodeprinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ICodePrinter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">devana.code_generation.printers.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">PrinterConfiguration</span>
 
 
 <div class="viewcode-block" id="PrinterRecord"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterRecord">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">PrinterRecord</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PrinterRecord</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Light abstraction layer for a printer that does not implement the full set of functionalities. &quot;&quot;&quot;</span>
     <span class="n">printer</span><span class="p">:</span> <span class="n">ICodePrinter</span>
     <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="PrinterRecord.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterRecord.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PrinterRecord.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterRecord.print">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">printer</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="PrinterGroup"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup">[docs]</a><span class="k">class</span> <span class="nc">PrinterGroup</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">):</span>
+<div class="viewcode-block" id="PrinterGroup"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PrinterGroup</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of low-level printers for one type. Helps you find the right printer for context requirements.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PrinterRecord</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="PrinterGroup.append"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
+<div class="viewcode-block" id="PrinterGroup.append"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup.append">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">printer</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">printer</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PrinterGroup.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PrinterGroup.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.PrinterGroup.print">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Empty printer.&quot;</span><span class="p">)</span>
         <span class="n">printer</span> <span class="o">=</span> <span class="kc">None</span>
@@ -123,40 +123,40 @@
         <span class="k">return</span> <span class="n">printer</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="CodePrinter"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter">[docs]</a><span class="k">class</span> <span class="nc">CodePrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">):</span>
+<div class="viewcode-block" id="CodePrinter"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CodePrinter</span><span class="p">(</span><span class="n">ICodePrinter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of low-level printers for many types. CodePrinter will match correct printer to source object type.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">is_fallback_allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">is_fallback_allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ICodePrinter</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_fallback_allowed</span> <span class="o">=</span> <span class="n">is_fallback_allowed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="n">configuration</span> <span class="k">if</span> <span class="n">configuration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">PrinterConfiguration</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_fallback_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_fallback_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Determines whether in the absence of a printer for a given type,</span>
 <span class="sd">        it is possible to use a printer of its base type. &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fallback_allowed</span>
 
     <span class="nd">@is_fallback_allowed</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">is_fallback_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_fallback_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_fallback_allowed</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PrinterConfiguration</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PrinterConfiguration</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span>
 
     <span class="nd">@configuration</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="CodePrinter.register"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter.register">[docs]</a>    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_printer</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CodePrinter.register"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter.register">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_printer</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new printer to the collection of the given type.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">source_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">[</span><span class="n">source_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrinterGroup</span><span class="p">()</span>
         <span class="n">record</span> <span class="o">=</span> <span class="n">PrinterRecord</span><span class="p">(</span><span class="n">cls_printer</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">context</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">[</span><span class="n">source_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="c1"># noqa</span></div>
 
-<div class="viewcode-block" id="CodePrinter.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="CodePrinter.print"><a class="viewcode-back" href="../../../../api/devana.code_generation.printers.html#devana.code_generation.printers.codeprinter.CodePrinter.print">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PrinterConfiguration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Prints code from a given source dynamically looking for suitable printers.&quot;&quot;&quot;</span>
         <span class="n">cfg</span> <span class="o">=</span> <span class="n">config</span> <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_printers</span><span class="p">:</span>
@@ -177,7 +177,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, JhnW.</p>
+    <p>&#169; Copyright 2025, JhnW.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
