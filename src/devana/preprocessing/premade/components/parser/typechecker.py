@@ -3,7 +3,7 @@ from typing import Any, Optional, List, Union
 from devana.preprocessing.premade.components.executor.executable import CallFrame, Signature
 
 def is_type_valid(value, maybe_hint) -> bool:
-    # check typing without parameters and tread is as Any
+    # check typing without parameters, and tread is as Any
     hint = maybe_hint
     if isinstance(maybe_hint, tuple):
         hint = maybe_hint[1]
