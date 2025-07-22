@@ -34,7 +34,7 @@ class ISource(IOutputContract, ABC):
 
 class IDestination(IInputContract, ABC):
     """Interface specifying a class that manages the recording of preprocessor output artifacts.
-    Typical use case is the generation of c++ code to files on disk, but other outputs are also possible,
+    A typical use case is the generation of c++ code to files on disk, but other outputs are also possible,
     although the artifacts are generally focused on the disk."""
 
     @dataclass
@@ -45,7 +45,7 @@ class IDestination(IInputContract, ABC):
 
     @abstractmethod
     def consume(self, data: List[Any]) -> Optional[Artifacts]:
-        """Consume data from generator and save it."""
+        """Consume data from the generator and save it."""
 
 
 class IGenerator(IInputContract, IOutputContract, ABC):

@@ -62,7 +62,7 @@ class CallFrame(Generic[T]):
         @property
         @abstractmethod
         def editors(self) -> List[IEditable]:
-            """Returns list of all editors."""
+            """Returns a list of all editors."""
 
         @abstractmethod
         def get_editor(self, name: str) -> IEditable:

@@ -29,7 +29,7 @@ from devana.syntax_abstraction.functioninfo import FunctionInfo
 module_filter = ModuleFilter([r"in\.hpp"])
 module = SourceModule("MyAPICodeBase", "./input", module_filter)
 
-#The class implementing the IExtractor interface provides input data - we'll use an extractor that
+# The class implementing the IExtractor interface provides input data - we'll use an extractor that
 # works on comments in the code. You can write your own or use others (if they already exist).
 extractor = CommentExtractor([module])
 
@@ -37,9 +37,9 @@ extractor = CommentExtractor([module])
 # Preparing the function
 # --------------------------------------------------
 
-#We will prepare some sample preprocessor functions. They do not do any meaningful work,
+# We will prepare some sample preprocessor functions. They do not do any meaningful work,
 # they are just a demonstration of using the API
-# Context and target parameters are required and passed by runtime.
+# Context, and target parameters are required and passed by runtime.
 
 # the most primitive function
 def basic_log_all_fnc(context: CallFrame.IContext, target: Any):
@@ -86,7 +86,7 @@ signature_3 = Signature.from_function(basic_log_only_enum_fnc, "Logger2")
 signature_4 = Signature.from_function(generate_stupid_function_based_on_class, namespaces=["test_nm"])
 
 
-# now create final parser used as input of preprocessor; we need to provide all used signatures
+# now create the final parser used as input of preprocessor; we need to provide all used signatures
 parser = Parser(extractor, [signature_1, signature_2, signature_3, signature_4])
 
 # --------------------------------------------------
