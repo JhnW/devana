@@ -1,11 +1,11 @@
-from typing import List, Type, Any, TypeVar
+from typing import List, Type, Any
 from devana.preprocessing.preprocessor import ISource
 from devana.preprocessing.premade.components.executor.environment import Environment
-T = TypeVar('T')
 
 
 class SourceMergeCallingData(ISource):
     """Merges multiple sources into one."""
+
     def __init__(self, sources: List[ISource]):
         if len(sources) == 0:
             raise ValueError("No sources provided.")
