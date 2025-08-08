@@ -25,7 +25,7 @@ class TestSyntaxElementDataProvider(unittest.TestCase):
         self._module = SourceModule("Elements", os.path.dirname(__file__) + r"/source_files/elements")
 
     def test_syntax_element_data_provider(self):
-        provider = SyntaxElementDataProvider([self._module], data_factory)
+        provider = SyntaxElementDataProvider([self._module], [data_factory])
         result = provider.feed()
         self.assertEqual(len(result), 2)
 

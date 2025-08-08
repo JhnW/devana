@@ -7,15 +7,15 @@ from devana.preprocessing.preprocessor import ISource
 
 class SyntaxElementDataProvider(ISource):
     """Scans syntax elements across provided source modules and produces a list of
-    Environment.CallingData instances via a custom factory function."""
+    Environment.CallingData instances using custom factory functions."""
 
     def __init__(
             self,
             modules: List[SourceModule],
-            data_factory: Callable[[ISyntaxElement], Optional[Environment.CallingData]]
+            data_factories: List[Callable[[ISyntaxElement], Optional[Environment.CallingData]]]
     ):
         self._modules = modules
-        self._data_factory = data_factory
+        self._data_factories = data_factories
 
     @classmethod
     def get_produced_type(cls) -> Type:
@@ -25,7 +25,8 @@ class SyntaxElementDataProvider(ISource):
         result = []
         elements = (content for module in self._modules for file in module.files for content in file.content)
         for element in elements:
-            if data := self._data_factory(element):
-                assert isinstance(data, Environment.CallingData), "Data is not an instance of Environment.CallingData"
-                result.append(data)
+            for factory in self._data_factories:
+                if data := factory(element):
+                    assert isinstance(data, Environment.CallingData), "Data is not an instance of Environment.CallingData"
+                    result.append(data)
         return result
