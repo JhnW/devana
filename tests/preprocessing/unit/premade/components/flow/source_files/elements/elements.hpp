@@ -7,3 +7,7 @@ struct Abc {
 };
 
 class p_Class;
+
+namespace test_namespace {
+    struct p_Struct{};
+}
